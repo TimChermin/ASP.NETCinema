@@ -1,1 +1,35 @@
 View uses Css html and javascript but not C#
+View is just a part of your page
+
+controllers link the view with the data
+
+
+
+HomeController : Controller
+
+public actionresult index()
+return view
+
+will look for the Home file in views and then Index
+
+
+
+Model is a class with properties
+
+
+
+@RenderBody takes the view in there (from Index for example)
+if you want to go to the about page it takes the index code out of the @Ren
+and puts the about in 
+
+@ says that its going to use C# stuff
+@Html.ActionLink("Home", "Index", "Home")
+Home controller, Index cshtml, page is called Home
+
+
+
+Database query stuff
+https://www.youtube.com/watch?v=bIiEv__QNxw
+
+login and register
+https://www.youtube.com/watch?v=kpSwmLlMu9E
