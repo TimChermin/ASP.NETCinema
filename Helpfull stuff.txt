@@ -26,7 +26,7 @@ and puts the about in
 @Html.ActionLink("Home", "Index", "Home")
 Home controller, Index cshtml, page is called Home
 
-
+https://www.youtube.com/watch?v=phyV-OQNeRM
 
 Database query stuff
 https://www.youtube.com/watch?v=bIiEv__QNxw
