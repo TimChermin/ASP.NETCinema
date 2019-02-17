@@ -7,6 +7,14 @@ namespace ASPNETCinema.Models
 {
     public class MovieModel
     {
+        public MovieModel(int iD, string name, string description, string movieType)
+        {
+            ID = iD;
+            Name = name;
+            Description = description;
+            MovieType = movieType;
+        }
+
         public int ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
