@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ASP.NETCinema.Models;
+using ASPNETCinema.Models;
 
-namespace ASP.NETCinema.Controllers
+namespace ASPNETCinema.Controllers
 {
     public class HomeController : Controller
     {

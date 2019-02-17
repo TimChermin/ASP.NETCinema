@@ -1,6 +1,6 @@
 using System;
 
-namespace ASP.NETCinema.Models
+namespace ASPNETCinema.Models
 {
     public class ErrorViewModel
     {
