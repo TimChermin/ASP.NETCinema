@@ -52,9 +52,28 @@ namespace ASPNETCinema.Controllers
             return View(movies);
         }
 
-        public IActionResult Create()
+        public ActionResult Create()
         {
             return View();
         }
+
+        // POST: Movies/Create
+        [HttpPost]
+        public ActionResult Create(string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght)
+        {
+            connection.Open();
+            MovieModel movie = new MovieModel(name, description, releaseDate, lastScreeningDate, movieType, movieLenght);
+
+            string query = "INSERT INTO Movies OUTPUT Inserted.Id VALUES ('" + movie.Name + "', '" + movie.Description + "', '" + movie.ReleaseDate + "', '" + movie.LastScreeningDate + "', '" + movie.MovieType + "', '" + movie.MovieLenght + "')";
+            SqlCommand command = new SqlCommand(query, connection);
+            movie.ID = (int)command.ExecuteScalar();
+
+            connection.Close();
+
+            //check for reportName parameter value now
+            //to do : Return something
+            return View(movie);
+        }
+
     }
 }
