@@ -51,5 +51,10 @@ namespace ASPNETCinema.Controllers
             connection.Close();
             return View(movies);
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }
