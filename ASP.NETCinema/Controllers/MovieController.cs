@@ -26,7 +26,7 @@ namespace ASPNETCinema.Controllers
             //using ASPNETCinema.Models; added
             List<MovieModel> movies = new List<MovieModel>();
 
-            string query = "SELECT  Id, Name, Description, MovieType, MovieLenght " +
+            string query = "SELECT  Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght " +
             "FROM Movies ";
 
             //Open the connection and make the SQL command with query
@@ -40,7 +40,7 @@ namespace ASPNETCinema.Controllers
                 while (reader.Read())
                 {
                     //Read the data in Movies (from table to object)
-                    MovieModel movie = new MovieModel(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4));
+                    MovieModel movie = new MovieModel(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetDateTime(4), reader.GetString(5), reader.GetString(6));
 
                     //Add the Movies to the list
                     movies.Add(movie);
