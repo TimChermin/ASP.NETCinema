@@ -72,7 +72,7 @@ namespace ASPNETCinema.Controllers
 
             //check for reportName parameter value now
             //to do : Return something
-            return View(movie);
+            return RedirectToAction("ListMovies");
         }
 
     }
