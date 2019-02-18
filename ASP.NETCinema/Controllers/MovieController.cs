@@ -52,14 +52,14 @@ namespace ASPNETCinema.Controllers
             return View(movies);
         }
 
-        public ActionResult Create()
+        public ActionResult AddMovie()
         {
             return View();
         }
 
         // POST: Movies/Create
         [HttpPost]
-        public ActionResult Create(string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght)
+        public ActionResult AddMovie(string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght)
         {
             //open the connection
             connection.Open();
