@@ -7,12 +7,17 @@ namespace ASPNETCinema.Models
 {
     public class MovieModel
     {
-        public MovieModel(int iD, string name, string description, string movieType)
+        public MovieModel(int iD, string name, string description, string movieType, string movieLenght)
         {
             ID = iD;
             Name = name;
             Description = description;
             MovieType = movieType;
+            MovieLenght = movieLenght;
+        }
+
+        public MovieModel()
+        {
         }
 
         public int ID { get; set; }
@@ -21,6 +26,7 @@ namespace ASPNETCinema.Models
         public DateTime ReleaseDate { get; set; }
         public DateTime LastScreeningDate { get; set; }
         public string MovieType { get; set; }
+        public string MovieLenght { get; set; }
 
 
 
