@@ -61,18 +61,24 @@ namespace ASPNETCinema.Controllers
         [HttpPost]
         public ActionResult Create(string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght)
         {
+            //open the connection
             connection.Open();
             MovieModel movie = new MovieModel(name, description, releaseDate, lastScreeningDate, movieType, movieLenght);
 
+            //create the query
             string query = "INSERT INTO Movies OUTPUT Inserted.Id VALUES ('" + movie.Name + "', '" + movie.Description + "', '" + movie.ReleaseDate + "', '" + movie.LastScreeningDate + "', '" + movie.MovieType + "', '" + movie.MovieLenght + "')";
             SqlCommand command = new SqlCommand(query, connection);
+            //run the query and get the new iD
             movie.ID = (int)command.ExecuteScalar();
 
+            //close the connection and go to the ListMovies view 
             connection.Close();
-
-            //check for reportName parameter value now
-            //to do : Return something
             return RedirectToAction("ListMovies");
+        }
+
+        public ActionResult Home()
+        {
+            return View();
         }
 
     }
