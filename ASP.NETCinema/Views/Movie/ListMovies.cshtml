@@ -55,9 +55,9 @@
                 @Html.DisplayFor(modelItem => item.MovieType)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Edit", "EditMovie", new { id=item.ID }) |
+                @Html.ActionLink("Details", "DetailsMovie", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "DeleteMovie", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
 }

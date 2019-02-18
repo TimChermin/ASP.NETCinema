@@ -76,7 +76,22 @@ namespace ASPNETCinema.Controllers
             return RedirectToAction("ListMovies");
         }
 
-        public ActionResult Home()
+        public ActionResult EditMovie(int id)
+        {
+            
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult EditMovie(string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght)
+        {
+           
+            return View();
+        }
+
+
+            public ActionResult Home()
         {
             return View();
         }
