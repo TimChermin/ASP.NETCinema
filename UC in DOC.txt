@@ -1,0 +1,29 @@
+Te doen
+Unit test Container
+Misschien nog wat feedback verwerken
+typen bij database ontw en class d (ook deze nog verbeteren)
+testmatrix,  ja dat ding met TC en FR samen 
+
+
+Misschien doen
+
+
+tot left = 20
+tot right = 10
+7/2 = 3 - 1
+middle 	= 3
+i 	= 3
+ 
+left > right     i>middle
+
+0, 1, 2, 3, 4, 5, 6
+
+val
+norm
+val c
+c
+
+l = 13 + 12
+R = 11 + 10
+
+7 and 5 wrong side
