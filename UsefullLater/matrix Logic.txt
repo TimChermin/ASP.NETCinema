@@ -1,0 +1,26 @@
+beperken wat kan wel/niet
+kwaliteit, moet ergens aan voldoen. BV foutmelding.
+
+
+
+
+
+	       TC
+FR-13 = UC01 = 01, 2, 3
+FR-14 = UC02 = 04, 5, 6
+FR-06 = UC03 = 07, 9
+FR-01 = UC04 = 08, 10, 11, 12, 13,
+FR-03 = UC05 = 14, 15
+FR-02 = UC06 = 16, 17, 18, 19, 20
+FR-07 = UC07 = 21
+FR-05 = UC07 = 21
+FR-04 = UC08 = 22, 23, 24, 25, 26
+FR-08 = UC09 = 27, 28, 29
+FR-12 = UC09 = 27, 28, 29
+FR-09 = UC10 = 30, 
+FR-10 = UC11 = 31, 32, 33
+FR-11 = UC12 = 34, 35
+FR-15 = UC13 = 36, 37
+FR-16 = UC14 = 38, 39
+FR-16 = UC15 = 40, 41, 42
+FR-18 = UC16 = 43, 44
