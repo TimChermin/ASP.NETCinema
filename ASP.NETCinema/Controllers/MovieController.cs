@@ -27,7 +27,7 @@ namespace ASPNETCinema.Controllers
             List<MovieModel> movies = new List<MovieModel>();
 
             string query = "SELECT  Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght " +
-            "FROM Movies ";
+            "FROM Movie ";
 
             //Open the connection and make the SQL command with query
             connection.Open();
@@ -66,7 +66,7 @@ namespace ASPNETCinema.Controllers
             MovieModel movie = new MovieModel(name, description, releaseDate, lastScreeningDate, movieType, movieLenght);
 
             //create the query
-            string query = "INSERT INTO Movies OUTPUT Inserted.Id VALUES ('" + movie.Name + "', '" + movie.Description + "', '" + movie.ReleaseDate + "', '" + movie.LastScreeningDate + "', '" + movie.MovieType + "', '" + movie.MovieLenght + "')";
+            string query = "INSERT INTO Movie OUTPUT Inserted.Id VALUES ('" + movie.Name + "', '" + movie.Description + "', '" + movie.ReleaseDate + "', '" + movie.LastScreeningDate + "', '" + movie.MovieType + "', '" + movie.MovieLenght + "')";
             SqlCommand command = new SqlCommand(query, connection);
             //run the query and get the new iD
             movie.ID = (int)command.ExecuteScalar();
