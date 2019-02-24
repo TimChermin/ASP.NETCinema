@@ -7,6 +7,11 @@ namespace ASPNETCinema.Models
 {
     public class CinemaModel
     {
+        public CinemaModel()
+        {
+        }
+
+
         public List<MovieModel> Movies { get; set; }
         public List<UserModel> Users { get; set; }
         public List<HallModel> Halls { get; set; }
@@ -15,9 +20,7 @@ namespace ASPNETCinema.Models
 
 
         
-        public CinemaModel()
-        {
-        }
+        
 
 
     }

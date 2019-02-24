@@ -7,6 +7,14 @@ namespace ASPNETCinema.Models
 {
     public class HallModel
     {
+        public HallModel()
+        {
+
+
+
+        }
+
+
         public int Id { get; set; }
         public int Seats { get; set; }
         public int ScreenType { get; set; }
@@ -16,11 +24,6 @@ namespace ASPNETCinema.Models
 
 
 
-        public HallModel()
-        {
-
-
-
-        }
+        
     }
 }
