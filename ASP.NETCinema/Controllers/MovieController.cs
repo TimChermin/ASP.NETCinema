@@ -39,18 +39,24 @@ namespace ASPNETCinema.Controllers
             return RedirectToAction("ListMovies");
         }
 
-        public ActionResult EditMovie(int id)
+        public ActionResult EditMovie(int? id)
         {
-            
+            foreach (MovieModel movie in database.GetMovies())
+            {
+                if (id == movie.ID && id != null)
+                {
+                    return View(movie);
+                }
+            }
             return View();
         }
 
-
+        // GET: Movies/Edit/5
         [HttpPost]
-        public ActionResult EditMovie(string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght)
+        public ActionResult EditMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght)
         {
-           
-            return View();
+            database.EditMovie(id, name, description, releaseDate, lastScreeningDate, movieType, movieLenght);
+            return RedirectToAction("ListMovies");
         }
 
 

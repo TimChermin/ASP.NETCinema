@@ -65,5 +65,17 @@ namespace ASPNETCinema
             connection.Close();
         }
 
+        public void EditMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght)
+        {
+            connection.Open();
+            string query = "UPDATE Movie SET name = " + name + ", description = " + description + ", " +
+                "releaseDate = " + releaseDate + ", lastScreeningDate = " + lastScreeningDate + ", movieType = " + movieType + ", " +
+                "movieLenght = " + movieLenght + " WHERE Id = 1";
+            SqlCommand command = new SqlCommand(query, connection);
+            command.ExecuteNonQuery();
+
+            connection.Close();
+        }
+
     }
 }
