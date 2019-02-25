@@ -20,14 +20,21 @@ namespace ASPNETCinema.Logic
 
         public List<MovieModel> OrderBy(string orderBy)
         {
-            if (orderBy != null)
+            List<MovieModel> movies = null;
+            if (orderBy != "MoviesToday")
             {
-                orderBy = orderBy.Replace(" ", "");
+                //orderBy = orderBy.Replace(" ", "");
                 database.OrderBy = orderBy;
+                movies = database.GetMovies();
             }
-            List<MovieModel> movies = database.GetMovies();
+            else if (orderBy != null)
+            {
+                movies = database.GetMoviesToday();
+            }
+            
             return movies;
         }
+        
 
         public MovieModel GetDetailsMovie(int? id)
         {

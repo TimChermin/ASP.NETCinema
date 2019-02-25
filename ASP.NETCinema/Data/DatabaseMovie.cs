@@ -91,5 +91,26 @@ namespace ASPNETCinema
             connection.Close();
         }
 
+        public List<MovieModel> GetMoviesToday()
+        {
+            //using ASPNETCinema.Models; added
+            movies = new List<MovieModel>();
+            connection.Open();
+            SqlCommand command = new SqlCommand("SELECT * FROM Movie GROUP BY Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght HAVING ReleaseDate = @Today", connection);
+            command.Parameters.AddWithValue("@Today", DateTime.Today);
+
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    MovieModel movie = new MovieModel(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetDateTime(4), reader.GetString(5), reader.GetString(6));
+                    movies.Add(movie);
+                }
+            }
+
+            connection.Close();
+            return (movies);
+        }
+
     }
 }
