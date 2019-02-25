@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using ASPNETCinema.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
+using ASPNETCinema.Logic;
 
 namespace ASPNETCinema.Controllers
 {
     public class MovieController : Controller
     {
         DatabaseMovie database = new DatabaseMovie();
+        MovieLogic movieLogic = new MovieLogic();
        
 
 
@@ -22,8 +24,7 @@ namespace ASPNETCinema.Controllers
 
         public ActionResult ListMovies()
         {
-            List<MovieModel> movies = database.GetMovies();
-            return View(movies);
+            return View(movieLogic.GetMovies());
         }
 
         public ActionResult AddMovie()
@@ -35,27 +36,20 @@ namespace ASPNETCinema.Controllers
         [HttpPost]
         public ActionResult AddMovie(string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght)
         {
-            database.AddMovie(name, description, releaseDate, lastScreeningDate, movieType, movieLenght);
+            movieLogic.AddMovie(name, description, releaseDate, lastScreeningDate, movieType, movieLenght);
             return RedirectToAction("ListMovies");
         }
 
         public ActionResult EditMovie(int? id)
         {
-            foreach (MovieModel movie in database.GetMovies())
-            {
-                if (id == movie.ID && id != null)
-                {
-                    return View(movie);
-                }
-            }
-            return View();
+            return View(movieLogic.EditMovie(id));
         }
 
         // GET: Movies/Edit/5
         [HttpPost]
         public ActionResult EditMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght)
         {
-            database.EditMovie(id, name, description, releaseDate, lastScreeningDate, movieType, movieLenght);
+            movieLogic.EditMovie(id, name, description, releaseDate, lastScreeningDate, movieType, movieLenght);
             return RedirectToAction("ListMovies");
         }
 
