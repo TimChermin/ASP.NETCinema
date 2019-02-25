@@ -42,7 +42,7 @@ namespace ASPNETCinema.Controllers
 
         public ActionResult EditMovie(int? id)
         {
-            return View(movieLogic.EditMovie(id));
+            return View(movieLogic.GetToEditMovie(id));
         }
 
         // GET: Movies/Edit/5
@@ -57,7 +57,7 @@ namespace ASPNETCinema.Controllers
         // GET: Movies/Delete/5
         public ActionResult DeleteMovie(int? id)
         {
-            return View(movieLogic.DeleteMovie(id));
+            return View(movieLogic.GetToDeleteMovie(id));
         }
 
         // POST: Movies/Delete/5
@@ -65,13 +65,7 @@ namespace ASPNETCinema.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteMovie(int id)
         {
-            foreach (MovieModel movie in database.GetMovies())
-            {
-                if (id == movie.ID)
-                {
-                    database.DeleteMovie(id);
-                }
-            }
+            movieLogic.DeleteMovie(id);
             return RedirectToAction("ListMovies");
         }
         

@@ -23,7 +23,7 @@ namespace ASPNETCinema.Logic
             database.AddMovie(name, description, releaseDate, lastScreeningDate, movieType, movieLenght);
         }
 
-        public MovieModel EditMovie(int? id)
+        public MovieModel GetToEditMovie(int? id)
         {
             foreach (MovieModel movie in database.GetMovies())
             {
@@ -41,7 +41,7 @@ namespace ASPNETCinema.Logic
         }
 
 
-        public MovieModel DeleteMovie(int? id)
+        public MovieModel GetToDeleteMovie(int? id)
         {
             foreach (MovieModel movie in database.GetMovies())
             {
