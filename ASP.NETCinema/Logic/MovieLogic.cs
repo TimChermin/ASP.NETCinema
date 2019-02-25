@@ -18,6 +18,21 @@ namespace ASPNETCinema.Logic
             return movies;
         }
 
+
+        public MovieModel GetDetailsMovie(int? id)
+        {
+            foreach (MovieModel movie in database.GetMovies())
+            {
+                if (id == movie.ID && id != null)
+                {
+                    return movie;
+                }
+            }
+            return null;
+        }
+
+
+
         public void AddMovie(string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght)
         {
             database.AddMovie(name, description, releaseDate, lastScreeningDate, movieType, movieLenght);

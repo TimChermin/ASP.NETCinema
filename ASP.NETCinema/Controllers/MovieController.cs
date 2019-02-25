@@ -27,6 +27,11 @@ namespace ASPNETCinema.Controllers
             return View(movieLogic.GetMovies());
         }
 
+        public ActionResult DetailsMovie(int? id)
+        {
+            return View(movieLogic.GetDetailsMovie(id));
+        }
+
         public ActionResult AddMovie()
         {
             return View();
