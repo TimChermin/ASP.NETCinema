@@ -22,8 +22,7 @@ namespace ASPNETCinema
             //using ASPNETCinema.Models; added
             movies = new List<MovieModel>();
 
-            string query = "SELECT  Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght " +
-            "FROM Movie ";
+            string query = "SELECT * FROM Movie ";
             
             connection.Open();
             SqlCommand command = new SqlCommand(query, connection);
@@ -58,8 +57,8 @@ namespace ASPNETCinema
         public void DeleteMovie(int id)
         {
             connection.Open();
-            string query = "DELETE FROM Movie WHERE ID = " + id;
-            SqlCommand command = new SqlCommand(query, connection);
+            SqlCommand command = new SqlCommand("DELETE FROM Movie WHERE ID = @Id", connection);
+            command.Parameters.AddWithValue("@Id", id);
             command.ExecuteNonQuery();
 
             connection.Close();
@@ -68,11 +67,18 @@ namespace ASPNETCinema
         public void EditMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght)
         {
             connection.Open();
-            string query = "UPDATE Movie SET name = " + name + ", description = " + description + ", " +
-                "releaseDate = " + releaseDate + ", lastScreeningDate = " + lastScreeningDate + ", movieType = " + movieType + ", " +
-                "movieLenght = " + movieLenght + " WHERE Id = 1";
-            SqlCommand command = new SqlCommand(query, connection);
+            SqlCommand command = new SqlCommand("UPDATE Movie SET Name = @Name, Description = @Description, ReleaseDate = @ReleaseDate, " +
+                "LastScreeningDate = @LastScreeningDate, MovieType = @MovieType, MovieLenght = @MovieLenght WHERE ID = @Id", connection);
+            command.Parameters.AddWithValue("@Name", name);
+            command.Parameters.AddWithValue("@Description", description);
+            command.Parameters.AddWithValue("@ReleaseDate", releaseDate);
+            command.Parameters.AddWithValue("@LastScreeningDate", lastScreeningDate);
+            command.Parameters.AddWithValue("@MovieType", movieType);
+            command.Parameters.AddWithValue("@MovieLenght", movieLenght);
+            command.Parameters.AddWithValue("@Id", id);
+
             command.ExecuteNonQuery();
+
 
             connection.Close();
         }
