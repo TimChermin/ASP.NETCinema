@@ -70,7 +70,7 @@ namespace ASPNETCinema.Controllers
         // POST: Movies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeletedMovie(int id)
+        public ActionResult DeleteMovie(int id)
         {
             foreach (MovieModel movie in database.GetMovies())
             {

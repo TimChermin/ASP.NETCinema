@@ -13,12 +13,14 @@ namespace ASPNETCinema
         private static string connectionString = "Server =tcp:cintim.database.windows.net,1433;Initial Catalog=Cinema;Persist Security Info=False;User ID=GamerIsTheNamer;Password=Ikbencool20042000!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
         private SqlConnection connection = new SqlConnection(connectionString);
 
+        public List<MovieModel> movies { get; set; }
+
 
 
         public List<MovieModel> GetMovies()
         {
             //using ASPNETCinema.Models; added
-            List<MovieModel> movies = new List<MovieModel>();
+            movies = new List<MovieModel>();
 
             string query = "SELECT  Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght " +
             "FROM Movie ";
@@ -46,7 +48,6 @@ namespace ASPNETCinema
         {
             connection.Open();
            
-            
             string query = "INSERT INTO Movie OUTPUT Inserted.Id VALUES ('" + name + "', '" + description + "', '" + releaseDate + "', '" + lastScreeningDate + "', '" + movieType + "', '" + movieLenght + "')";
             SqlCommand command = new SqlCommand(query, connection);
             MovieModel movie = new MovieModel(((int)command.ExecuteScalar()), name, description, releaseDate, lastScreeningDate, movieType, movieLenght);

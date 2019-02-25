@@ -55,7 +55,8 @@
         </dd>
     </dl>
     
-    <form asp-action="DeleteMovie">
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ID" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
         <a asp-action="ListMovies">Back to List</a>
     </form>
