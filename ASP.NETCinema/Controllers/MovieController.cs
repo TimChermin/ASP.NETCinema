@@ -79,7 +79,7 @@ namespace ASPNETCinema.Controllers
                     database.DeleteMovie(id);
                 }
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("ListMovies");
         }
         
 
