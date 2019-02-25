@@ -1,0 +1,62 @@
+﻿@model ASPNETCinema.Models.MovieModel
+
+@{
+    ViewData["Title"] = "DeleteMovie";
+}
+
+<h2>DeleteMovie</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>MovieModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ReleaseDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ReleaseDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastScreeningDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastScreeningDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MovieType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MovieType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MovieLenght)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MovieLenght)
+        </dd>
+    </dl>
+    
+    <form asp-action="DeleteMovie">
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="ListMovies">Back to List</a>
+    </form>
+</div>

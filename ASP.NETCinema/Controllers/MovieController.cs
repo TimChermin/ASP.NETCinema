@@ -54,7 +54,33 @@ namespace ASPNETCinema.Controllers
         }
 
 
-            public ActionResult Home()
+        // GET: Movies/Delete/5
+        public ActionResult DeleteMovie(int? id)
+        {
+            foreach (MovieModel movie in database.GetMovies())
+            {
+                if (id == movie.ID && id != null)
+                {
+                    return View(movie);
+                }
+            }
+            return NotFound();
+        }
+
+        /*// POST: Movies/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var movie = await _context.Movie.FindAsync(id);
+            _context.Movie.Remove(movie);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+        */
+
+
+        public ActionResult Home()
         {
             return View();
         }
