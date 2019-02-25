@@ -1,0 +1,60 @@
+﻿@model ASPNETCinema.Models.MovieModel
+
+@{
+    ViewData["Title"] = "DetailsMovie";
+}
+
+<h2>DetailsMovie</h2>
+
+<div>
+    <h4>MovieModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ReleaseDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ReleaseDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastScreeningDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastScreeningDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MovieType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MovieType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MovieLenght)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MovieLenght)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    <a asp-action="ListMovies">Back to List</a>
+</div>

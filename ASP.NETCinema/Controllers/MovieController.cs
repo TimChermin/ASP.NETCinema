@@ -10,7 +10,7 @@ namespace ASPNETCinema.Controllers
 {
     public class MovieController : Controller
     {
-        Database database = new Database();
+        DatabaseMovie database = new DatabaseMovie();
        
 
 

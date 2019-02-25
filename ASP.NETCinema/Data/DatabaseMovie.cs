@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 
 namespace ASPNETCinema
 {
-    public class Database
+    public class DatabaseMovie
     {
         private static string connectionString = "Server =tcp:cintim.database.windows.net,1433;Initial Catalog=Cinema;Persist Security Info=False;User ID=GamerIsTheNamer;Password=Ikbencool20042000!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
         private SqlConnection connection = new SqlConnection(connectionString);
@@ -21,19 +21,14 @@ namespace ASPNETCinema
         {
             //using ASPNETCinema.Models; added
             movies = new List<MovieModel>();
-
-            string query = "SELECT * FROM Movie ";
-            
             connection.Open();
-            SqlCommand command = new SqlCommand(query, connection);
-
-
+            SqlCommand command = new SqlCommand("SELECT * FROM Movie", connection);
+            
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
                     MovieModel movie = new MovieModel(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetDateTime(4), reader.GetString(5), reader.GetString(6));
-                    
                     movies.Add(movie);
                 }
             }
@@ -83,8 +78,7 @@ namespace ASPNETCinema
             command.Parameters.AddWithValue("@Id", id);
 
             command.ExecuteNonQuery();
-
-
+            
             connection.Close();
         }
 
