@@ -67,17 +67,21 @@ namespace ASPNETCinema.Controllers
             return NotFound();
         }
 
-        /*// POST: Movies/Delete/5
+        // POST: Movies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public ActionResult DeletedMovie(int id)
         {
-            var movie = await _context.Movie.FindAsync(id);
-            _context.Movie.Remove(movie);
-            await _context.SaveChangesAsync();
+            foreach (MovieModel movie in database.GetMovies())
+            {
+                if (id == movie.ID)
+                {
+                    database.DeleteMovie(id);
+                }
+            }
             return RedirectToAction(nameof(Index));
         }
-        */
+        
 
 
         public ActionResult Home()

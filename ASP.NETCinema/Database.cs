@@ -54,5 +54,17 @@ namespace ASPNETCinema
             connection.Close();
         }
 
+        public void DeleteMovie(int id)
+        {
+            connection.Open();
+
+
+            string query = "DELETE FROM Movie WHERE ID = " + id;
+            SqlCommand command = new SqlCommand(query, connection);
+            command.ExecuteNonQuery();
+
+            connection.Close();
+        }
+
     }
 }
