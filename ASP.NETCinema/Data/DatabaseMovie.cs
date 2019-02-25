@@ -22,7 +22,7 @@ namespace ASPNETCinema
             //using ASPNETCinema.Models; added
             movies = new List<MovieModel>();
             connection.Open();
-            SqlCommand command = new SqlCommand("SELECT * FROM Movie", connection);
+            SqlCommand command = new SqlCommand("SELECT * FROM Movie ORDER BY ReleaseDate", connection);
             
             using (SqlDataReader reader = command.ExecuteReader())
             {

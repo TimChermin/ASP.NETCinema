@@ -2,13 +2,30 @@
 
 @{
     ViewData["Title"] = "ListMovies";
+    Layout = "~/css/Movie.css";
 }
 
 <h2>ListMovies</h2>
 
 <p>
     <a asp-action="AddMovie">Add New Movie</a>
+
+
 </p>
+
+
+    <span> <a asp-action="AddMovie">Order By Name</a>        </span>
+   
+    <span><a asp-action="AddMovie">Order By ReleaseDate</a></span>
+    
+
+    <a asp-action="AddMovie">Order By MovieType</a>
+<div class="test">
+    healp
+</div>
+
+
+
 <table class="table">
     <thead>
         <tr>
@@ -34,32 +51,33 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReleaseDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastScreeningDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MovieType)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "EditMovie", new { id=item.ID }) |
-                @Html.ActionLink("Details", "DetailsMovie", new { id=item.ID }) |
-                @Html.ActionLink("Delete", "DeleteMovie", new { id=item.ID })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReleaseDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastScreeningDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MovieType)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditMovie", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "DetailsMovie", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "DeleteMovie", new { id = item.ID })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
