@@ -47,8 +47,13 @@ namespace ASPNETCinema
         {
             connection.Open();
            
-            string query = "INSERT INTO Movie OUTPUT Inserted.Id VALUES ('" + name + "', '" + description + "', '" + releaseDate + "', '" + lastScreeningDate + "', '" + movieType + "', '" + movieLenght + "')";
-            SqlCommand command = new SqlCommand(query, connection);
+            SqlCommand command = new SqlCommand("INSERT INTO Movie OUTPUT Inserted.ID VALUES (@Name, @Description, @ReleaseDate, @LastScreeningDate, @MovieType, @MovieLenght)", connection);
+            command.Parameters.AddWithValue("@Name", name);
+            command.Parameters.AddWithValue("@Description", description);
+            command.Parameters.AddWithValue("@ReleaseDate", releaseDate);
+            command.Parameters.AddWithValue("@LastScreeningDate", lastScreeningDate);
+            command.Parameters.AddWithValue("@MovieType", movieType);
+            command.Parameters.AddWithValue("@MovieLenght", movieLenght);
             MovieModel movie = new MovieModel(((int)command.ExecuteScalar()), name, description, releaseDate, lastScreeningDate, movieType, movieLenght);
             
             connection.Close();
