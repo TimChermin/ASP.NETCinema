@@ -93,7 +93,6 @@ namespace ASPNETCinema
 
         public List<MovieModel> GetMoviesToday()
         {
-            //using ASPNETCinema.Models; added
             movies = new List<MovieModel>();
             connection.Open();
             SqlCommand command = new SqlCommand("SELECT * FROM Movie GROUP BY Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght HAVING ReleaseDate = @Today", connection);

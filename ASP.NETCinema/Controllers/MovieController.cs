@@ -24,7 +24,7 @@ namespace ASPNETCinema.Controllers
 
         public ActionResult ListMovies(string OrderBy)
         {
-            return View(movieLogic.OrderBy(OrderBy));
+            return View(movieLogic.GetMoviesAndOrderBy(OrderBy));
         }
 
 

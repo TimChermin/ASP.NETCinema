@@ -11,14 +11,8 @@ namespace ASPNETCinema.Logic
     public class MovieLogic
     {
         DatabaseMovie database = new DatabaseMovie();
-
-        public List<MovieModel> GetMovies()
-        {
-            List<MovieModel> movies = database.GetMovies();
-            return movies;
-        }
-
-        public List<MovieModel> OrderBy(string orderBy)
+        
+        public List<MovieModel> GetMoviesAndOrderBy(string orderBy)
         {
             List<MovieModel> movies = null;
             if (orderBy != "MoviesToday")
