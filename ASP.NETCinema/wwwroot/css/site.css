@@ -35,3 +35,13 @@ body {
         display: none;
     }
 }
+
+
+test {
+    width: 298px;
+    border: 1px solid #c1c1c1;
+    margin: 20px 30px;
+    padding: 0 5px;
+    float: left;
+    background-color: white;
+}

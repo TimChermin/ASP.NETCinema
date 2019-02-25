@@ -37,6 +37,12 @@ namespace ASPNETCinema.Controllers
             return View();
         }
 
+        public ActionResult OrderByName()
+        {
+
+            return View();
+        }
+
         // POST: Movies/Create
         [HttpPost]
         public ActionResult AddMovie(string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght)

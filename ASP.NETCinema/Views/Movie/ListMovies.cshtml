@@ -2,28 +2,17 @@
 
 @{
     ViewData["Title"] = "ListMovies";
-    Layout = "~/css/Movie.css";
-}
-
-<h2>ListMovies</h2>
-
-<p>
-    <a asp-action="AddMovie">Add New Movie</a>
-
-
-</p>
-
-
-    <span> <a asp-action="AddMovie">Order By Name</a>        </span>
-   
-    <span><a asp-action="AddMovie">Order By ReleaseDate</a></span>
     
-
-    <a asp-action="AddMovie">Order By MovieType</a>
-<div class="test">
-    healp
+}
+<link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+<h2>ListMovies</h2>
+<div class="form-group">
+    <a asp-action="AddMovie">Order By name</a>
 </div>
-
+<a asp-action="AddMovie">Add New Movie</a> 
+<a asp-action="OrderByName">Order By Name</a>
+<a asp-action="OrderByMovieType">Order By MovieType</a>
+<a asp-action="OrderByReleaseDate">Order By ReleaseDate</a>
 
 
 <table class="table">
