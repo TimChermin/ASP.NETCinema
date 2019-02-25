@@ -21,11 +21,19 @@ namespace ASPNETCinema.Controllers
         {
             return View();
         }
-
+        /*
         public ActionResult ListMovies()
         {
             return View(movieLogic.GetMovies());
         }
+        */
+        //You can of course assess that value to perform different operations with a switch block.
+
+        public ActionResult ListMovies(string OrderBy)
+        {
+            return View(movieLogic.OrderBy(OrderBy));
+        }
+
 
         public ActionResult DetailsMovie(int? id)
         {

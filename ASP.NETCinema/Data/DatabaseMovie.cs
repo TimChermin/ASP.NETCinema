@@ -12,17 +12,26 @@ namespace ASPNETCinema
     {
         private static string connectionString = "Server =tcp:cintim.database.windows.net,1433;Initial Catalog=Cinema;Persist Security Info=False;User ID=GamerIsTheNamer;Password=Ikbencool20042000!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
         private SqlConnection connection = new SqlConnection(connectionString);
+        private string orderBy = null;
 
         public List<MovieModel> movies { get; set; }
-
-
+        public string OrderBy { get => orderBy; set => orderBy = value; }
 
         public List<MovieModel> GetMovies()
         {
             //using ASPNETCinema.Models; added
             movies = new List<MovieModel>();
             connection.Open();
-            SqlCommand command = new SqlCommand("SELECT * FROM Movie ORDER BY ReleaseDate", connection);
+            SqlCommand command;
+            if (orderBy != null)
+            {
+                command = new SqlCommand("SELECT * FROM Movie ORDER BY " + orderBy, connection);
+                //command.Parameters.AddWithValue("@OrderBy", orderBy);
+            }
+            else
+            {
+                command = new SqlCommand("SELECT * FROM Movie", connection);
+            }
             
             using (SqlDataReader reader = command.ExecuteReader())
             {

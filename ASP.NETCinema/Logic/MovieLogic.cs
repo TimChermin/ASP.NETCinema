@@ -18,6 +18,16 @@ namespace ASPNETCinema.Logic
             return movies;
         }
 
+        public List<MovieModel> OrderBy(string orderBy)
+        {
+            if (orderBy != null)
+            {
+                orderBy = orderBy.Replace(" ", "");
+                database.OrderBy = orderBy;
+            }
+            List<MovieModel> movies = database.GetMovies();
+            return movies;
+        }
 
         public MovieModel GetDetailsMovie(int? id)
         {
@@ -78,6 +88,7 @@ namespace ASPNETCinema.Logic
                 }
             }
         }
+
 
     }
 }

@@ -2,18 +2,18 @@
 
 @{
     ViewData["Title"] = "ListMovies";
-    
+
 }
 <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
 <h2>ListMovies</h2>
-<div class="form-group">
-    <a asp-action="AddMovie">Order By name</a>
-</div>
-<a asp-action="AddMovie">Add New Movie</a> 
-<a asp-action="OrderByName">Order By Name</a>
-<a asp-action="OrderByMovieType">Order By MovieType</a>
-<a asp-action="OrderByReleaseDate">Order By ReleaseDate</a>
+<a asp-action="AddMovie">Add New Movie</a>
 
+
+<form asp-action="ListMovies">
+    <input name="OrderBy" type="submit" id="submit" value="Name" />
+    <input name="OrderBy" type="submit" id="process" value="MovieType" />
+    <input name="OrderBy" type="submit" id="process" value="ReleaseDate" />
+</form>
 
 <table class="table">
     <thead>
