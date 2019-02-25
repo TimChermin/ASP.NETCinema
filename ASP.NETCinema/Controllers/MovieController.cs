@@ -57,14 +57,7 @@ namespace ASPNETCinema.Controllers
         // GET: Movies/Delete/5
         public ActionResult DeleteMovie(int? id)
         {
-            foreach (MovieModel movie in database.GetMovies())
-            {
-                if (id == movie.ID && id != null)
-                {
-                    return View(movie);
-                }
-            }
-            return NotFound();
+            return View(movieLogic.DeleteMovie(id));
         }
 
         // POST: Movies/Delete/5

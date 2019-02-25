@@ -41,18 +41,28 @@ namespace ASPNETCinema.Logic
         }
 
 
-        public ActionResult DeleteMovie(int? id)
+        public MovieModel DeleteMovie(int? id)
         {
             foreach (MovieModel movie in database.GetMovies())
             {
                 if (id == movie.ID && id != null)
                 {
-                    return View(movie);
+                    return movie;
                 }
             }
-            return NotFound();
+            return null;
         }
 
+        public void DeleteMovie(int id)
+        {
+            foreach (MovieModel movie in database.GetMovies())
+            {
+                if (id == movie.ID)
+                {
+                    database.DeleteMovie(id);
+                }
+            }
+        }
 
     }
 }
