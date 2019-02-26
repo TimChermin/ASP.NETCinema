@@ -59,8 +59,8 @@ namespace ASPNETCinema.Models
         [Display(Name = "Movie Lenght")]
         [Required(ErrorMessage = "You need to fill in the movie lenght")]
         public string MovieLenght { get; set; }
-        
 
+        public string ImageString { get; set; }
 
     }
 }
