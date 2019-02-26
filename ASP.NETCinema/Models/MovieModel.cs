@@ -62,6 +62,8 @@ namespace ASPNETCinema.Models
         [Required(ErrorMessage = "You need to fill in the movie lenght")]
         public string MovieLenght { get; set; }
 
+        [Display(Name = "Link To Movie Image")]
+        [Required(ErrorMessage = "You need to add an image")]
         public string ImageString { get; set; }
 
     }

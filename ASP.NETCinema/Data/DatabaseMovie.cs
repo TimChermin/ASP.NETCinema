@@ -51,13 +51,14 @@ namespace ASPNETCinema
         {
             connection.Open();
            
-            SqlCommand command = new SqlCommand("INSERT INTO Movie OUTPUT Inserted.ID VALUES (@Name, @Description, @ReleaseDate, @LastScreeningDate, @MovieType, @MovieLenght)", connection);
+            SqlCommand command = new SqlCommand("INSERT INTO Movie OUTPUT Inserted.ID VALUES (@Name, @Description, @ReleaseDate, @LastScreeningDate, @MovieType, @MovieLenght, @ImageString)", connection);
             command.Parameters.AddWithValue("@Name", name);
             command.Parameters.AddWithValue("@Description", description);
             command.Parameters.AddWithValue("@ReleaseDate", releaseDate);
             command.Parameters.AddWithValue("@LastScreeningDate", lastScreeningDate);
             command.Parameters.AddWithValue("@MovieType", movieType);
             command.Parameters.AddWithValue("@MovieLenght", movieLenght);
+            command.Parameters.AddWithValue("@ImageString", imageString);
             MovieModel movie = new MovieModel(((int)command.ExecuteScalar()), name, description, releaseDate, lastScreeningDate, movieType, movieLenght, imageString);
             
             connection.Close();
@@ -96,7 +97,7 @@ namespace ASPNETCinema
         {
             movies = new List<MovieModel>();
             connection.Open();
-            SqlCommand command = new SqlCommand("SELECT * FROM Movie GROUP BY Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght HAVING ReleaseDate = @Today", connection);
+            SqlCommand command = new SqlCommand("SELECT * FROM Movie GROUP BY Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString HAVING ReleaseDate = @Today", connection);
             command.Parameters.AddWithValue("@Today", DateTime.Today);
 
             using (SqlDataReader reader = command.ExecuteReader())
