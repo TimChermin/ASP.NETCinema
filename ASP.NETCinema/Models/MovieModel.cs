@@ -48,10 +48,12 @@ namespace ASPNETCinema.Models
         //[Range(DateTime.Today, DateTime.Today, ErrorMessage = "This ID isn't good")]
         [Display(Name = "Release date")]
         [Required(ErrorMessage = "The Release Date field is required.")]
+        [DataType(DataType.Date)]
         public DateTime ReleaseDate { get; set; }
 
         [Display(Name = "Last Screening Date")]
         [Required(ErrorMessage = "The Last Screening Date field is required.")]
+        [DataType(DataType.Date)]
         public DateTime LastScreeningDate { get; set; }
 
         [Display(Name = "Movie Type")]
