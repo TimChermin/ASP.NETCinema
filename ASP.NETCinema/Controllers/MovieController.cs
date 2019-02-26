@@ -46,9 +46,9 @@ namespace ASPNETCinema.Controllers
 
         // POST: Movies/Create
         [HttpPost]
-        public ActionResult AddMovie(string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght)
+        public ActionResult AddMovie(string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)
         {
-            movieLogic.AddMovie(name, description, releaseDate, lastScreeningDate, movieType, movieLenght);
+            movieLogic.AddMovie(name, description, releaseDate, lastScreeningDate, movieType, movieLenght, imageString);
             return RedirectToAction("ListMovies");
         }
 
@@ -59,9 +59,9 @@ namespace ASPNETCinema.Controllers
 
         // GET: Movies/Edit/5
         [HttpPost]
-        public ActionResult EditMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght)
+        public ActionResult EditMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)
         {
-            movieLogic.EditMovie(id, name, description, releaseDate, lastScreeningDate, movieType, movieLenght);
+            movieLogic.EditMovie(id, name, description, releaseDate, lastScreeningDate, movieType, movieLenght, imageString);
             return RedirectToAction("ListMovies");
         }
 

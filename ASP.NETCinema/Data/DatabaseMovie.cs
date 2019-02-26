@@ -37,7 +37,7 @@ namespace ASPNETCinema
             {
                 while (reader.Read())
                 {
-                    MovieModel movie = new MovieModel(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetDateTime(4), reader.GetString(5), reader.GetString(6));
+                    MovieModel movie = new MovieModel(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetDateTime(4), reader.GetString(5), reader.GetString(6), reader.GetString(7));
                     movies.Add(movie);
                 }
             }
@@ -47,7 +47,7 @@ namespace ASPNETCinema
         }
 
 
-        public void AddMovie(string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght)
+        public void AddMovie(string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)
         {
             connection.Open();
            
@@ -58,7 +58,7 @@ namespace ASPNETCinema
             command.Parameters.AddWithValue("@LastScreeningDate", lastScreeningDate);
             command.Parameters.AddWithValue("@MovieType", movieType);
             command.Parameters.AddWithValue("@MovieLenght", movieLenght);
-            MovieModel movie = new MovieModel(((int)command.ExecuteScalar()), name, description, releaseDate, lastScreeningDate, movieType, movieLenght);
+            MovieModel movie = new MovieModel(((int)command.ExecuteScalar()), name, description, releaseDate, lastScreeningDate, movieType, movieLenght, imageString);
             
             connection.Close();
         }
@@ -73,11 +73,11 @@ namespace ASPNETCinema
             connection.Close();
         }
 
-        public void EditMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght)
+        public void EditMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)
         {
             connection.Open();
             SqlCommand command = new SqlCommand("UPDATE Movie SET Name = @Name, Description = @Description, ReleaseDate = @ReleaseDate, " +
-                "LastScreeningDate = @LastScreeningDate, MovieType = @MovieType, MovieLenght = @MovieLenght WHERE ID = @Id", connection);
+                "LastScreeningDate = @LastScreeningDate, MovieType = @MovieType, MovieLenght = @MovieLenght, ImageString = @ImageString WHERE ID = @Id", connection);
             command.Parameters.AddWithValue("@Name", name);
             command.Parameters.AddWithValue("@Description", description);
             command.Parameters.AddWithValue("@ReleaseDate", releaseDate);
@@ -85,6 +85,7 @@ namespace ASPNETCinema
             command.Parameters.AddWithValue("@MovieType", movieType);
             command.Parameters.AddWithValue("@MovieLenght", movieLenght);
             command.Parameters.AddWithValue("@Id", id);
+            command.Parameters.AddWithValue("@ImageString", imageString);
 
             command.ExecuteNonQuery();
             
@@ -102,7 +103,7 @@ namespace ASPNETCinema
             {
                 while (reader.Read())
                 {
-                    MovieModel movie = new MovieModel(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetDateTime(4), reader.GetString(5), reader.GetString(6));
+                    MovieModel movie = new MovieModel(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetDateTime(4), reader.GetString(5), reader.GetString(6), reader.GetString(7));
                     movies.Add(movie);
                 }
             }

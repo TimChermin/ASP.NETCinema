@@ -8,7 +8,7 @@ namespace ASPNETCinema.Models
 {
     public class MovieModel
     {
-        public MovieModel(string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght)
+        public MovieModel(string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)
         {
             Name = name;
             Description = description;
@@ -16,9 +16,10 @@ namespace ASPNETCinema.Models
             LastScreeningDate = lastScreeningDate;
             MovieType = movieType;
             MovieLenght = movieLenght;
+            ImageString = imageString;
         }
 
-        public MovieModel(int iD, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght)
+        public MovieModel(int iD, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)
         {
             ID = iD;
             Name = name;
@@ -27,6 +28,7 @@ namespace ASPNETCinema.Models
             LastScreeningDate = lastScreeningDate;
             MovieType = movieType;
             MovieLenght = movieLenght;
+            ImageString = imageString;
         }
 
         public MovieModel()
