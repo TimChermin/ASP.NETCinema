@@ -17,11 +17,12 @@ namespace ASPNETCinema.Data
         {
             connection.Open();
 
-            SqlCommand command = new SqlCommand("INSERT INTO Users (Username, Password) OUTPUT Inserted.ID VALUES ('@Name', '@Password')", connection);
+            SqlCommand command = new SqlCommand("INSERT INTO Users (Username, Password, Administrator) OUTPUT Inserted.ID VALUES ('@Name', '@Password', '@Administrator')", connection);
             command.Parameters.AddWithValue("@Name", user.Name);
             command.Parameters.AddWithValue("@Password", user.Password);
+            command.Parameters.AddWithValue("@Administrator", user.Administrator);
             //command.Parameters.AddWithValue("@ReleaseDate", user.ReleaseDate);
-            UserModel newUser = new UserModel(((int)command.ExecuteScalar()), user.Name, user.Password);
+            UserModel newUser = new UserModel(((int)command.ExecuteScalar()), user.Name, user.Password, user.Administrator);
 
             connection.Close();
         }

@@ -39,9 +39,9 @@ namespace ASPNETCinema.Controllers
             if (ModelState.IsValid)
             {
                 database.AddUser(user);
-                return RedirectToAction("ListMovies");
+                return Redirect("/");
             }
-            return View();
+            return Redirect("/");
         }
 
         [HttpPost]
@@ -51,7 +51,7 @@ namespace ASPNETCinema.Controllers
             {
                 var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, userModel.Name)
+                new Claim(ClaimTypes.Name, userModel.Name, userModel.Administrator)
             };
 
                 var userIdentity = new ClaimsIdentity(claims, "login");
