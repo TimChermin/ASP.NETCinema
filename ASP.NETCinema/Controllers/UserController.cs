@@ -71,5 +71,15 @@ namespace ASPNETCinema.Controllers
             //For now just return true. 
             return true;
         }
+
+        public async Task<IActionResult> LogoutUser()
+        {
+            if (User.Identity.IsAuthenticated == true)
+            {
+                await HttpContext.SignOutAsync();
+                return Redirect("/");
+            }
+            return View("/");
+        }
     }
 }
