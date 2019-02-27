@@ -47,11 +47,11 @@ namespace ASPNETCinema.Controllers
         // POST: Movies/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddMovie(MovieModel movie, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)
+        public ActionResult AddMovie(MovieModel movie)
         {
             if (ModelState.IsValid)
             {
-                movieLogic.AddMovie(name, description, releaseDate, lastScreeningDate, movieType, movieLenght, imageString);
+                movieLogic.AddMovie(movie);
                 return RedirectToAction("ListMovies");
             }
             return View();
@@ -64,9 +64,9 @@ namespace ASPNETCinema.Controllers
 
         // GET: Movies/Edit/5
         [HttpPost]
-        public ActionResult EditMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)
+        public ActionResult EditMovie(MovieModel movie)
         {
-            movieLogic.EditMovie(id, name, description, releaseDate, lastScreeningDate, movieType, movieLenght, imageString);
+            movieLogic.EditMovie(movie);
             return RedirectToAction("ListMovies");
         }
 
