@@ -10,7 +10,7 @@ using ASPNETCinema.Data;
 
 namespace ASPNETCinema.Controllers
 {
-    public class AccountController : Controller
+    public class UserController : Controller
     {
         DatabaseUser database = new DatabaseUser();
         [HttpGet]
