@@ -3,7 +3,9 @@ View is just a part of your page
 
 controllers link the view with the data
 
-
+[HttpPost]
+method 
+this sends data from the form to this method
 
 HomeController : Controller
 
@@ -11,7 +13,6 @@ public actionresult index()
 return view
 
 will look for the Home file in views and then Index
-
 
 
 Model is a class with properties

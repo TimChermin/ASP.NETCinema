@@ -44,9 +44,9 @@ namespace ASPNETCinema.Logic
 
 
 
-        public void AddMovie(string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght)
+        public void AddMovie(MovieModel movie)
         {
-            database.AddMovie(name, description, releaseDate, lastScreeningDate, movieType, movieLenght);
+            database.AddMovie(movie);
         }
 
         public MovieModel GetToEditMovie(int? id)
@@ -61,9 +61,9 @@ namespace ASPNETCinema.Logic
             return null;
         }
 
-        public void EditMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght)
+        public void EditMovie(MovieModel movie)
         {
-            database.EditMovie(id, name, description, releaseDate, lastScreeningDate, movieType, movieLenght);
+            database.EditMovie(movie);
         }
 
 

@@ -1,10 +1,29 @@
-TODO:
+WAYY later:
+Adding seat picker.
+Adding users.
+Deleting screenings.
+Deleting tasks.
+Adding Employees
+Deleting Employees
 
+
+Later:
+Adding tasks.
+Adding Employees.
+Adding daily screenings.
+Adding ticket reserveration.
+Adding employees to tasks.
+Adding task view.
+
+
+TODO:
+Adding screenings.
+Adding halls.
 
 
 ONGOING:
-
+Adding starting unit tests.
 
 
 FINISHED:
-Movies Add/Edit/Remove/Details
+Movies Add/Edit/Remove/Details.
