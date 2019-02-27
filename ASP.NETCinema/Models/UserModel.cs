@@ -8,6 +8,14 @@ namespace ASPNETCinema.Models
 {
     public class UserModel
     {
+        public UserModel(int id, string name, string password)
+        {
+            Id = id;
+            Name = name;
+            Password = password;
+        }
+
+
         public UserModel()
         {
         }

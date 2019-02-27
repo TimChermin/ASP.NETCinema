@@ -6,14 +6,34 @@ using Microsoft.AspNetCore.Mvc;
 using ASPNETCinema.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
+using ASPNETCinema.Data;
 
 namespace ASPNETCinema.Controllers
 {
     public class AccountController : Controller
     {
+        DatabaseUser database = new DatabaseUser();
         [HttpGet]
         public IActionResult Login()
         {
+            return View();
+        }
+
+        public ActionResult AddUser()
+        {
+            return View();
+        }
+
+        // POST: Movies/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddUser(UserModel user)
+        {
+            if (ModelState.IsValid)
+            {
+                database.AddUser(user);
+                return RedirectToAction("ListMovies");
+            }
             return View();
         }
 
