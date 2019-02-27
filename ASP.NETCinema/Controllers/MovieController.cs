@@ -46,10 +46,15 @@ namespace ASPNETCinema.Controllers
 
         // POST: Movies/Create
         [HttpPost]
-        public ActionResult AddMovie(string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)
+        [ValidateAntiForgeryToken]
+        public ActionResult AddMovie(MovieModel movie, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)
         {
-            movieLogic.AddMovie(name, description, releaseDate, lastScreeningDate, movieType, movieLenght, imageString);
-            return RedirectToAction("ListMovies");
+            if (ModelState.IsValid)
+            {
+                movieLogic.AddMovie(name, description, releaseDate, lastScreeningDate, movieType, movieLenght, imageString);
+                return RedirectToAction("ListMovies");
+            }
+            return View();
         }
 
         public ActionResult EditMovie(int? id)
