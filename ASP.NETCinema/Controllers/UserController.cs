@@ -7,15 +7,22 @@ using ASPNETCinema.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using ASPNETCinema.Data;
+using ASPNETCinema.Logic;
 
 namespace ASPNETCinema.Controllers
 {
     public class UserController : Controller
     {
         DatabaseUser database = new DatabaseUser();
+        UserLogic userLogic = new UserLogic();
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult LoginUser()
         {
+            if (User.Identity.IsAuthenticated == true)
+            {
+                return Redirect("/");
+            }
+            
             return View();
         }
 
@@ -38,7 +45,7 @@ namespace ASPNETCinema.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(UserModel userModel)
+        public async Task<IActionResult> LoginUser(UserModel userModel)
         {
             if (LoginUser(userModel.Name, userModel.Password))
             {
