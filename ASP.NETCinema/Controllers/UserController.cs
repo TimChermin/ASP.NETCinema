@@ -34,12 +34,12 @@ namespace ASPNETCinema.Controllers
         // POST: Movies/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddUser(UserModel user)
+        public async Task<ActionResult> AddUser(UserModel user)
         {
             if (ModelState.IsValid)
             {
                 database.AddUser(user);
-                return Redirect("/");
+                await LoginUser(user);
             }
             return Redirect("/");
         }
@@ -69,7 +69,7 @@ namespace ASPNETCinema.Controllers
         {
             //As an example. This method would go to our data store and validate that the combination is correct. 
             //For now just return true. 
-            return true;
+            return userLogic.CheckIfThisLoginIsCorrect(name, password);
         }
 
         public async Task<IActionResult> LogoutUser()
