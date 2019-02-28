@@ -47,7 +47,7 @@ namespace ASPNETCinema.Controllers
         [HttpPost]
         public async Task<IActionResult> LoginUser(UserModel userModel)
         {
-            if (LoginUser(userModel.Name, userModel.Password))
+            if (userLogic.CheckIfThisLoginIsCorrect(userModel.Name, userModel.Password))
             {
                 var claims = new List<Claim>
             {
@@ -63,13 +63,6 @@ namespace ASPNETCinema.Controllers
                 return Redirect("/");
             }
             return View();
-        }
-
-        private bool LoginUser(string name, string password)
-        {
-            //As an example. This method would go to our data store and validate that the combination is correct. 
-            //For now just return true. 
-            return userLogic.CheckIfThisLoginIsCorrect(name, password);
         }
 
         public async Task<IActionResult> LogoutUser()
