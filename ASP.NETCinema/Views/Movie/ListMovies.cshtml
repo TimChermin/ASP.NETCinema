@@ -74,7 +74,7 @@
                 @Html.DisplayFor(modelItem => item.MovieLenght)
             </td>
             <td>
-                @if (User.IsInRole("true") || User.IsInRole("1") || User.IsInRole("True") || User.IsInRole("0"))
+                @if (User.IsInRole("Administrator"))
                 {
                     @Html.ActionLink("Edit", "EditMovie", new { id = item.ID });
                     @Html.ActionLink("Details", "DetailsMovie", new { id = item.ID });

@@ -59,7 +59,7 @@ namespace ASPNETCinema.Controllers
                 var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, userModel.Name),
-                new Claim(ClaimTypes.Role, userLogic.IsThisUserAnAdmin(userModel).ToString())
+                new Claim(ClaimTypes.Role, userRole)
             };
 
                 var userIdentity = new ClaimsIdentity(claims, "login");
