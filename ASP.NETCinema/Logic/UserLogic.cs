@@ -28,5 +28,9 @@ namespace ASPNETCinema.Logic
             return false;
         }
 
+        public bool IsThisUserAnAdmin(UserModel user)
+        {
+            return true;
+        }
     }
 }

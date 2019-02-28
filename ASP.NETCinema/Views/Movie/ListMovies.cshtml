@@ -74,9 +74,14 @@
                 @Html.DisplayFor(modelItem => item.MovieLenght)
             </td>
             <td>
-                @Html.ActionLink("Edit", "EditMovie", new { id = item.ID }) |
-                @Html.ActionLink("Details", "DetailsMovie", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "DeleteMovie", new { id = item.ID })
+                @if (User.IsInRole("true") || User.IsInRole("1") || User.IsInRole("True") || User.IsInRole("0"))
+                {
+                    @Html.ActionLink("Edit", "EditMovie", new { id = item.ID });
+                    @Html.ActionLink("Details", "DetailsMovie", new { id = item.ID });
+                    @Html.ActionLink("Delete", "DeleteMovie", new { id = item.ID });
+                }
+
+
             </td>
         </tr>
         }

@@ -15,9 +15,15 @@ namespace ASPNETCinema.Controllers
     {
         DatabaseUser database = new DatabaseUser();
         UserLogic userLogic = new UserLogic();
+
         [HttpGet]
         public IActionResult LoginUser()
         {
+            if (User.IsInRole("True") || User.IsInRole("1"))
+            {
+
+            }
+
             if (User.Identity.IsAuthenticated == true)
             {
                 return Redirect("/");
@@ -47,11 +53,13 @@ namespace ASPNETCinema.Controllers
         [HttpPost]
         public async Task<IActionResult> LoginUser(UserModel userModel)
         {
+            userLogic.IsThisUserAnAdmin(userModel).ToString();
             if (userLogic.CheckIfThisLoginIsCorrect(userModel.Name, userModel.Password))
             {
                 var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, userModel.Name, userModel.Administrator)
+                new Claim(ClaimTypes.Name, userModel.Name),
+                new Claim(ClaimTypes.Role, userLogic.IsThisUserAnAdmin(userModel).ToString())
             };
 
                 var userIdentity = new ClaimsIdentity(claims, "login");

@@ -22,9 +22,7 @@ namespace ASPNETCinema.Data
             command.Parameters.AddWithValue("@Name", user.Name);
             command.Parameters.AddWithValue("@Password", user.Password);
             command.Parameters.AddWithValue("@Administrator", user.Administrator);
-            //command.Parameters.AddWithValue("@ReleaseDate", user.ReleaseDate);
-            UserModel newUser = new UserModel(((int)command.ExecuteScalar()), user.Name, user.Password, user.Administrator);
-
+            command.ExecuteScalar();
             connection.Close();
         }
 
