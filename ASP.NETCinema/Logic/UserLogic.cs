@@ -30,9 +30,12 @@ namespace ASPNETCinema.Logic
 
         public string IsThisUserAnAdmin(UserModel user)
         {
-            string userRole = "Normal";
-            userRole = "Administrator";
-            return userRole;
+            if (databaseUser.GetUserRole(user) == 1)
+            {
+                return "Administrator";
+            }
+            
+            return "Normal";
         }
     }
 }

@@ -47,24 +47,18 @@ namespace ASPNETCinema.Data
             return users;
         }
 
-        public List<UserModel> GetUsersRoles()
+        public int GetUserRole(UserModel user)
         {
             connection.Open();
             users = new List<UserModel>();
-            SqlCommand command = new SqlCommand("SELECT * FROM Users", connection);
+            SqlCommand command = new SqlCommand("SELECT Administrator FROM Users WHERE (Username = @Name AND Password = @Password)", connection);
             //command.Parameters.AddWithValue("@ReleaseDate", user.ReleaseDate);
-
-            using (SqlDataReader reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    UserModel user = new UserModel(reader.GetInt32(0), reader.GetString(2), reader.GetString(3));
-                    users.Add(user);
-                }
-            }
+            command.Parameters.AddWithValue("@Name", user.Name);
+            command.Parameters.AddWithValue("@Password", user.Password);
+            int AdminOrNot = (int)command.ExecuteScalar();
             connection.Close();
 
-            return users;
+            return AdminOrNot;
         }
     }
 }
