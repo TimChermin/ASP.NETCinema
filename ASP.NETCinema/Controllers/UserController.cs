@@ -53,7 +53,7 @@ namespace ASPNETCinema.Controllers
         [HttpPost]
         public async Task<IActionResult> LoginUser(UserModel userModel)
         {
-            userLogic.IsThisUserAnAdmin(userModel).ToString();
+            string userRole = userLogic.IsThisUserAnAdmin(userModel);
             if (userLogic.CheckIfThisLoginIsCorrect(userModel.Name, userModel.Password))
             {
                 var claims = new List<Claim>
