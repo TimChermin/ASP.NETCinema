@@ -2,12 +2,12 @@
 
 @{
     ViewData["Title"] = "ListMovies";
+    
 
 }
 <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
 <h2>Movies</h2>
 <a asp-action="AddMovie">Add New Movie</a>
-
 
 <form asp-action="ListMovies">
     <input name="OrderBy" type="submit" id="submit" value="Name" />
@@ -77,9 +77,9 @@
                 @if (User.IsInRole("Administrator"))
                 {
                     @Html.ActionLink("Edit", "EditMovie", new { id = item.ID });
-                    @Html.ActionLink("Details", "DetailsMovie", new { id = item.ID });
                     @Html.ActionLink("Delete", "DeleteMovie", new { id = item.ID });
                 }
+                @Html.ActionLink("Details", "DetailsMovie", new { id = item.ID })
 
 
             </td>
