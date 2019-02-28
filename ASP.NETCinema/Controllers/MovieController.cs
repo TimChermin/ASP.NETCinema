@@ -42,7 +42,6 @@ namespace ASPNETCinema.Controllers
 
         public ActionResult OrderByName()
         {
-
             return View();
         }
 
