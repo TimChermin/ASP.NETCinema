@@ -11,6 +11,7 @@ namespace ASPNETCinema.Data
     {
         private static string connectionString = "Server =tcp:cintim.database.windows.net,1433;Initial Catalog=Cinema;Persist Security Info=False;User ID=GamerIsTheNamer;Password=Ikbencool20042000!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
         private SqlConnection connection = new SqlConnection(connectionString);
+        private List<HallModel> halls;
 
         public void AddHall(HallModel hall)
         {
@@ -24,6 +25,26 @@ namespace ASPNETCinema.Data
             HallModel newHall = new HallModel(((int)command.ExecuteScalar()), hall.Price, hall.ScreenType, hall.Seats, hall.SeatsTaken);
 
             connection.Close();
+        }
+
+        public List<HallModel> GetHalls()
+        {
+            //using ASPNETCinema.Models; added
+            halls = new List<HallModel>();
+            connection.Open();
+            SqlCommand command = new SqlCommand("SELECT * FROM Hall", connection);
+
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    HallModel hall = new HallModel(reader.GetInt32(0), reader.GetDecimal(1), reader.GetString(2), reader.GetInt32(3), reader.GetInt32(4));
+                    halls.Add(hall);
+                }
+            }
+
+            connection.Close();
+            return (halls);
         }
 
 
