@@ -30,6 +30,9 @@ namespace ASPNETCinema.Models
 
 
         public int Id { get; set; }
+
+        [Display(Name = "Name")]
+        [Required(ErrorMessage = "You must have a Name")]
         public string Name { get; set; }
 
         [Display(Name = "Password")]
@@ -39,10 +42,12 @@ namespace ASPNETCinema.Models
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
+        [Required(ErrorMessage = "This field is required")]
         [Compare("Password", ErrorMessage = "Your password and confirm password do not match.")]
         public string ConfirmPassword { get; set; }
-        
 
+        [Range(0, 1, ErrorMessage = "Can only be between 0 and 1")]
+        [Required(ErrorMessage = "This field is required")]
         public int Administrator { get; set; }
         
         public List<ScreeningModel> Tickets { get; set; }

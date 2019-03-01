@@ -8,6 +8,8 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using ASPNETCinema.Data;
 using ASPNETCinema.Logic;
+using System.ComponentModel.DataAnnotations;
+using System.Net;
 
 namespace ASPNETCinema.Controllers
 {
@@ -46,21 +48,24 @@ namespace ASPNETCinema.Controllers
             {
                 database.AddUser(user);
                 await LoginUser(user);
+                return Redirect("/");
             }
-            return Redirect("/");
+            return View();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> LoginUser(UserModel userModel)
         {
-            string userRole = userLogic.IsThisUserAnAdmin(userModel);
+            
             if (userLogic.CheckIfThisLoginIsCorrect(userModel.Name, userModel.Password))
             {
+                string userRole = userLogic.IsThisUserAnAdmin(userModel);
                 var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, userModel.Name),
-                new Claim(ClaimTypes.Role, userRole)
-            };
+                {
+                    new Claim(ClaimTypes.Name, userModel.Name),
+                    new Claim(ClaimTypes.Role, userRole)
+                };
 
                 var userIdentity = new ClaimsIdentity(claims, "login");
 
@@ -70,14 +75,8 @@ namespace ASPNETCinema.Controllers
                 //Just redirect to our index after logging in. 
                 return Redirect("/");
             }
+            
             return View();
-        }
-
-        private bool LoginUser(string name, string password)
-        {  
-            //As an example. This method would go to our data store and validate that the combination is correct. 
-            //For now just return true. 
-            return true;
         }
 
         public async Task<IActionResult> LogoutUser()
