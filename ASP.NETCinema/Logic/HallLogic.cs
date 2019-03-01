@@ -25,8 +25,7 @@ namespace ASPNETCinema.Logic
 
         public List<HallModel> GetHalls()
         {
-            halls = databaseHall.GetHalls();
-            return halls;
+            return databaseHall.GetHalls();
         }
 
 
