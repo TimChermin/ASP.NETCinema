@@ -66,7 +66,7 @@ namespace ASPNETCinema.Controllers
         }
 
         private bool LoginUser(string name, string password)
-        {
+        {  
             //As an example. This method would go to our data store and validate that the combination is correct. 
             //For now just return true. 
             return true;
