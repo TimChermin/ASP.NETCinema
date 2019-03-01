@@ -41,5 +41,11 @@ namespace ASPNETCinema.Controllers
         {
             return View(hallLogic.GetHalls());
         }
+
+
+        public ActionResult DeleteHall(int? id)
+        {
+            return View(hallLogic.GetHall(id));
+        }
     }
 }

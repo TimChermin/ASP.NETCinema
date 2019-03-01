@@ -46,7 +46,5 @@ namespace ASPNETCinema.Data
             connection.Close();
             return (halls);
         }
-
-
     }
 }

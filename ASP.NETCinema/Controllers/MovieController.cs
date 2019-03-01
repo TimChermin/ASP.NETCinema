@@ -24,7 +24,7 @@ namespace ASPNETCinema.Controllers
 
         public ActionResult DetailsMovie(int? id)
         {
-            return View(movieLogic.GetDetailsMovie(id));
+            return View(movieLogic.GetMovie(id));
         }
 
         [Authorize(Roles = "Administrator")]
@@ -55,7 +55,7 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult EditMovie(int? id)
         {
-            return View(movieLogic.GetToEditMovie(id));
+            return View(movieLogic.GetMovie(id));
         }
 
 
@@ -74,7 +74,7 @@ namespace ASPNETCinema.Controllers
         {
             if (User.IsInRole("Administrator"))
             {
-                return View(movieLogic.GetToDeleteMovie(id));
+                return View(movieLogic.GetMovie(id));
             }
             //Redirects to standard
             return Redirect("/");

@@ -30,18 +30,6 @@ namespace ASPNETCinema.Logic
         }
         
 
-        public MovieModel GetDetailsMovie(int? id)
-        {
-            foreach (MovieModel movie in database.GetMovies())
-            {
-                if (id == movie.ID && id != null)
-                {
-                    return movie;
-                }
-            }
-            return null;
-        }
-
 
 
         public void AddMovie(MovieModel movie)
@@ -49,7 +37,7 @@ namespace ASPNETCinema.Logic
             database.AddMovie(movie);
         }
 
-        public MovieModel GetToEditMovie(int? id)
+        public MovieModel GetMovie(int? id)
         {
             foreach (MovieModel movie in database.GetMovies())
             {
@@ -65,19 +53,7 @@ namespace ASPNETCinema.Logic
         {
             database.EditMovie(movie);
         }
-
-
-        public MovieModel GetToDeleteMovie(int? id)
-        {
-            foreach (MovieModel movie in database.GetMovies())
-            {
-                if (id == movie.ID && id != null)
-                {
-                    return movie;
-                }
-            }
-            return null;
-        }
+        
 
         public void DeleteMovie(int id)
         {

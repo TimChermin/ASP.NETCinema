@@ -1,0 +1,50 @@
+﻿@model ASPNETCinema.Models.HallModel
+
+@{
+    ViewData["Title"] = "DeleteHall";
+}
+
+<h2>DeleteHall</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>HallModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Seats)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Seats)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SeatsTaken)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SeatsTaken)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ScreenType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ScreenType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+    </dl>
+    
+    <form asp-action="DeleteHall">
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

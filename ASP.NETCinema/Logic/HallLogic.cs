@@ -28,6 +28,16 @@ namespace ASPNETCinema.Logic
             return databaseHall.GetHalls();
         }
 
-
+        public HallModel GetHall(int? id)
+        {
+            foreach (HallModel hall in databaseHall.GetHalls())
+            {
+                if (id == hall.Id && id != null)
+                {
+                    return hall;
+                }
+            }
+            return null;
+        }
     }
 }
