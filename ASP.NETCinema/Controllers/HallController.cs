@@ -12,6 +12,8 @@ namespace ASPNETCinema.Controllers
     public class HallController : Controller
     {
         HallLogic hallLogic = new HallLogic();
+
+
         [Authorize(Roles = "Administrator")]
         public ActionResult AddHall()
         {
@@ -33,7 +35,7 @@ namespace ASPNETCinema.Controllers
             return View();
         }
 
-
+        [Authorize(Roles = "Administrator")]
         public ActionResult ListHalls()
         {
             return View(hallLogic.GetHalls());

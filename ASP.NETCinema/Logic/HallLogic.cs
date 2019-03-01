@@ -10,7 +10,7 @@ namespace ASPNETCinema.Logic
     public class HallLogic
     {
         DatabaseHall databaseHall = new DatabaseHall();
-        private List<HallModel> halls;
+
         public HallLogic()
         {
 
