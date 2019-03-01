@@ -14,13 +14,13 @@ namespace ASPNETCinema
         private SqlConnection connection = new SqlConnection(connectionString);
         private string orderBy = null;
 
-        public List<MovieModel> movies { get; set; }
+        public List<MovieModel> Movies { get; set; }
         public string OrderBy { get => orderBy; set => orderBy = value; }
 
         public List<MovieModel> GetMovies()
         {
             //using ASPNETCinema.Models; added
-            movies = new List<MovieModel>();
+            Movies = new List<MovieModel>();
             connection.Open();
             SqlCommand command;
             if (orderBy != null)
@@ -38,12 +38,12 @@ namespace ASPNETCinema
                 while (reader.Read())
                 {
                     MovieModel movie = new MovieModel(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetDateTime(4), reader.GetString(5), reader.GetString(6), reader.GetString(7));
-                    movies.Add(movie);
+                    Movies.Add(movie);
                 }
             }
             
             connection.Close();
-            return (movies);
+            return (Movies);
         }
 
 
@@ -95,7 +95,7 @@ namespace ASPNETCinema
 
         public List<MovieModel> GetMoviesToday()
         {
-            movies = new List<MovieModel>();
+            Movies = new List<MovieModel>();
             connection.Open();
             SqlCommand command = new SqlCommand("SELECT * FROM Movie GROUP BY Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString HAVING ReleaseDate = @Today", connection);
             command.Parameters.AddWithValue("@Today", DateTime.Today);
@@ -105,12 +105,12 @@ namespace ASPNETCinema
                 while (reader.Read())
                 {
                     MovieModel movie = new MovieModel(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetDateTime(4), reader.GetString(5), reader.GetString(6), reader.GetString(7));
-                    movies.Add(movie);
+                    Movies.Add(movie);
                 }
             }
 
             connection.Close();
-            return (movies);
+            return (Movies);
         }
 
     }

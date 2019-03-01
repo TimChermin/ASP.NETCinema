@@ -63,6 +63,9 @@
         </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "EditMovie", new { id = Model.ID }) |
+    @if (User.IsInRole("Administrator"))
+    {
+        @Html.ActionLink("Edit", "EditMovie", new { id = Model.ID })
+    }
     <a asp-action="ListMovies">Back to List</a>
 </div>

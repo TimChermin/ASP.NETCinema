@@ -8,6 +8,21 @@ namespace ASPNETCinema.Models
 {
     public class UserModel
     {
+        public UserModel(int id, string name, string password, int administrator)
+        {
+            Id = id;
+            Name = name;
+            Password = password;
+            Administrator = administrator;
+        }
+
+        public UserModel(int id, string name, string password)
+        {
+            Id = id;
+            Name = name;
+            Password = password;
+        }
+
         public UserModel()
         {
         }
@@ -15,6 +30,9 @@ namespace ASPNETCinema.Models
 
 
         public int Id { get; set; }
+
+        [Display(Name = "Name")]
+        [Required(ErrorMessage = "You must have a Name")]
         public string Name { get; set; }
 
         [Display(Name = "Password")]
@@ -24,9 +42,14 @@ namespace ASPNETCinema.Models
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
+        [Required(ErrorMessage = "This field is required")]
         [Compare("Password", ErrorMessage = "Your password and confirm password do not match.")]
         public string ConfirmPassword { get; set; }
-        public bool Administrator { get; set; }
+
+        [Range(0, 1, ErrorMessage = "Can only be between 0 and 1")]
+        [Required(ErrorMessage = "This field is required")]
+        public int Administrator { get; set; }
+        
         public List<ScreeningModel> Tickets { get; set; }
 
 

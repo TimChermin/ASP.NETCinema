@@ -6,6 +6,7 @@ using ASPNETCinema.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
 using ASPNETCinema.Logic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ASPNETCinema.Controllers
 {
@@ -33,6 +34,7 @@ namespace ASPNETCinema.Controllers
             return View(movieLogic.GetDetailsMovie(id));
         }
 
+        [Authorize(Roles = "Administrator")]
         public ActionResult AddMovie()
         {
             return View();
@@ -40,13 +42,13 @@ namespace ASPNETCinema.Controllers
 
         public ActionResult OrderByName()
         {
-
             return View();
         }
 
         // POST: Movies/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public ActionResult AddMovie(MovieModel movie)
         {
             if (ModelState.IsValid)
@@ -57,13 +59,16 @@ namespace ASPNETCinema.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Administrator")]
         public ActionResult EditMovie(int? id)
         {
             return View(movieLogic.GetToEditMovie(id));
         }
 
+
         // GET: Movies/Edit/5
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         public ActionResult EditMovie(MovieModel movie)
         {
             movieLogic.EditMovie(movie);
@@ -74,12 +79,19 @@ namespace ASPNETCinema.Controllers
         // GET: Movies/Delete/5
         public ActionResult DeleteMovie(int? id)
         {
-            return View(movieLogic.GetToDeleteMovie(id));
+            if (User.IsInRole("Administrator"))
+            {
+                return View(movieLogic.GetToDeleteMovie(id));
+            }
+            return Redirect("/");
+
+
         }
 
         // POST: Movies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public ActionResult DeleteMovie(int id)
         {
             movieLogic.DeleteMovie(id);
