@@ -16,13 +16,6 @@ namespace ASPNETCinema.Controllers
         MovieLogic movieLogic = new MovieLogic();
        
 
-
-        //GET
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         public ActionResult ListMovies(string OrderBy)
         {
             return View(movieLogic.GetMoviesAndOrderBy(OrderBy));
@@ -83,9 +76,8 @@ namespace ASPNETCinema.Controllers
             {
                 return View(movieLogic.GetToDeleteMovie(id));
             }
+            //Redirects to standard
             return Redirect("/");
-
-
         }
 
         // POST: Movies/Delete/5

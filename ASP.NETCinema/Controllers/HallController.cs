@@ -30,7 +30,8 @@ namespace ASPNETCinema.Controllers
             if (ModelState.IsValid)
             {
                 hallLogic.AddHall(hall);
-                return RedirectToAction("ListMovies", "Movie");
+                return RedirectToAction("ListHalls");
+                //return RedirectToAction("ListMovies", "Movie");
             }
             return View();
         }
