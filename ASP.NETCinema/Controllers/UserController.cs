@@ -15,9 +15,15 @@ namespace ASPNETCinema.Controllers
     {
         DatabaseUser database = new DatabaseUser();
         UserLogic userLogic = new UserLogic();
+
         [HttpGet]
         public IActionResult LoginUser()
         {
+            if (User.IsInRole("True") || User.IsInRole("1"))
+            {
+
+            }
+
             if (User.Identity.IsAuthenticated == true)
             {
                 return Redirect("/");
@@ -34,12 +40,12 @@ namespace ASPNETCinema.Controllers
         // POST: Movies/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddUser(UserModel user)
+        public async Task<ActionResult> AddUser(UserModel user)
         {
             if (ModelState.IsValid)
             {
                 database.AddUser(user);
-                return Redirect("/");
+                await LoginUser(user);
             }
             return Redirect("/");
         }
@@ -47,11 +53,13 @@ namespace ASPNETCinema.Controllers
         [HttpPost]
         public async Task<IActionResult> LoginUser(UserModel userModel)
         {
-            if (LoginUser(userModel.Name, userModel.Password))
+            string userRole = userLogic.IsThisUserAnAdmin(userModel);
+            if (userLogic.CheckIfThisLoginIsCorrect(userModel.Name, userModel.Password))
             {
                 var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, userModel.Name, userModel.Administrator)
+                new Claim(ClaimTypes.Name, userModel.Name),
+                new Claim(ClaimTypes.Role, userRole)
             };
 
                 var userIdentity = new ClaimsIdentity(claims, "login");

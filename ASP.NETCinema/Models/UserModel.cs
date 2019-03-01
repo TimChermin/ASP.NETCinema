@@ -8,7 +8,7 @@ namespace ASPNETCinema.Models
 {
     public class UserModel
     {
-        public UserModel(int id, string name, string password, string administrator)
+        public UserModel(int id, string name, string password, int administrator)
         {
             Id = id;
             Name = name;
@@ -16,6 +16,12 @@ namespace ASPNETCinema.Models
             Administrator = administrator;
         }
 
+        public UserModel(int id, string name, string password)
+        {
+            Id = id;
+            Name = name;
+            Password = password;
+        }
 
         public UserModel()
         {
@@ -35,7 +41,10 @@ namespace ASPNETCinema.Models
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Your password and confirm password do not match.")]
         public string ConfirmPassword { get; set; }
-        public string Administrator { get; set; }
+        
+
+        public int Administrator { get; set; }
+        
         public List<ScreeningModel> Tickets { get; set; }
 
 
