@@ -77,10 +77,15 @@ namespace ASPNETCinema.Controllers
 
 
         // GET: Movies/Delete/5
-        [Authorize(Roles = "Administrator")]
         public ActionResult DeleteMovie(int? id)
         {
-            return View(movieLogic.GetToDeleteMovie(id));
+            if (User.IsInRole("Administrator"))
+            {
+                return View(movieLogic.GetToDeleteMovie(id));
+            }
+            return Redirect("/");
+
+
         }
 
         // POST: Movies/Delete/5
