@@ -10,6 +10,7 @@ namespace ASPNETCinema.Logic
     public class HallLogic
     {
         DatabaseHall databaseHall = new DatabaseHall();
+        private List<HallModel> halls;
         public HallLogic()
         {
 
@@ -20,6 +21,12 @@ namespace ASPNETCinema.Logic
         public void AddHall(HallModel hall)
         {
             databaseHall.AddHall(hall);
+        }
+
+        public List<HallModel> GetHalls()
+        {
+            halls = databaseHall.GetHalls();
+            return halls;
         }
 
 

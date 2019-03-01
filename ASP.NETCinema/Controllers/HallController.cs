@@ -19,7 +19,7 @@ namespace ASPNETCinema.Controllers
         }
 
 
-        // POST: Movies/Create
+        // POST: Hall/AddHall
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
@@ -28,9 +28,15 @@ namespace ASPNETCinema.Controllers
             if (ModelState.IsValid)
             {
                 hallLogic.AddHall(hall);
-                return RedirectToAction("ListMovies");
+                return RedirectToAction("ListMovies", "Movie");
             }
             return View();
+        }
+
+
+        public ActionResult ListHalls()
+        {
+            return View(hallLogic.GetHalls());
         }
     }
 }
