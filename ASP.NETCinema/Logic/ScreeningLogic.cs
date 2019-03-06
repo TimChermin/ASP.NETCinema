@@ -10,14 +10,39 @@ namespace ASPNETCinema.Logic
     public class ScreeningLogic
     {
         DatabaseScreening database = new DatabaseScreening();
+        DatabaseMovie databaseMovie = new DatabaseMovie();
+        List<ScreeningModel> screeningsWithMovies;
         public List<ScreeningModel> GetScreenings()
         {
             List<ScreeningModel> screenings = null;
             screenings = database.GetScreenings();
-            return screenings;
-
+            return AddTheMovieToTheScreenings(screenings);
         }
-        
+
+
+        public List<ScreeningModel> AddTheMovieToTheScreenings(List<ScreeningModel> screenings)
+        {
+            screeningsWithMovies = new List<ScreeningModel>();
+            foreach (ScreeningModel screening in screenings)
+            {
+                screeningsWithMovies.Add(AddTheMovieToTheScreening(screening));
+            }
+            return screeningsWithMovies;
+        }
+
+        public ScreeningModel AddTheMovieToTheScreening(ScreeningModel screening)
+        {
+            foreach (MovieModel movie in databaseMovie.GetMovies())
+            {
+                if (screening.MovieId == movie.ID)
+                {
+                    screening.Movie = movie;
+                }
+            }
+            return screening;
+        }
+
+
 
 
 
