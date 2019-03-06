@@ -15,7 +15,10 @@ namespace ASPNETCinema.Controllers
         HallLogic hallLogic = new HallLogic();
 
 
-
+        public ActionResult ListScreenings()
+        {
+            return View(screeningLogic.GetScreenings());
+        }
 
 
 

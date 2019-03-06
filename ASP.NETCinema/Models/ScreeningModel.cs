@@ -7,6 +7,14 @@ namespace ASPNETCinema.Models
 {
     public class ScreeningModel
     {
+        public ScreeningModel(int id, int movieId, int hallId, DateTime timeAndDayOfScreening)
+        {
+            Id = id;
+            MovieId = movieId;
+            HallId = hallId;
+            TimeAndDayOfScreening = timeAndDayOfScreening;
+        }
+
         public ScreeningModel()
         {
         }
