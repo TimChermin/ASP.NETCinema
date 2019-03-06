@@ -20,6 +20,11 @@ namespace ASPNETCinema.Controllers
             return View(screeningLogic.GetScreenings());
         }
 
+        public ActionResult AddScreening()
+        {
+            return View();
+        }
+
 
 
 
