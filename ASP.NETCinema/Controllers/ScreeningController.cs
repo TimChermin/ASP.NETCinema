@@ -25,6 +25,14 @@ namespace ASPNETCinema.Controllers
             return View();
         }
 
+        public List<MovieModel> GetMovies()
+        {
+            List<MovieModel> movies = new List<MovieModel>();
+            MovieModel movie = new MovieModel();
+            movies.Add(movie);
+            return movies;
+        }
+
 
 
 
