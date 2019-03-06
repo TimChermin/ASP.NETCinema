@@ -35,22 +35,19 @@ namespace ASPNETCinema.Controllers
             }
             return View();
         }
-
-        [ValidateAntiForgeryToken]
+        
         [Authorize(Roles = "Administrator")]
         public ActionResult ListHalls()
         {
             return View(hallLogic.GetHalls());
         }
-
-        [ValidateAntiForgeryToken]
+        
         [Authorize(Roles = "Administrator")]
         public ActionResult DeleteHall(int? id)
         {
             return View(hallLogic.GetHall(id));
         }
-
-        [ValidateAntiForgeryToken]
+        
         [Authorize(Roles = "Administrator")]
         public ActionResult EditHall(int? id)
         {
