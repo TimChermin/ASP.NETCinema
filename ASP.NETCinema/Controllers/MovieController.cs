@@ -15,6 +15,11 @@ namespace ASPNETCinema.Controllers
         DatabaseMovie database = new DatabaseMovie();
         MovieLogic movieLogic = new MovieLogic();
 
+        //Add
+        //List
+        //details
+        //Edit
+        //Delete
 
         [Authorize(Roles = "Administrator")]
         public ActionResult AddMovie()

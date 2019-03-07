@@ -11,6 +11,13 @@ namespace ASPNETCinema.Logic
     {
         DatabaseHall database = new DatabaseHall();
 
+        //Add
+        //List
+        //details
+        //Edit
+        //Delete
+
+
         public HallLogic()
         {
 
@@ -40,15 +47,14 @@ namespace ASPNETCinema.Logic
             return null;
         }
 
-        public void DeleteHall(int id)
+        public void DeleteHall(HallModel hall)
         {
-            foreach (HallModel hall in database.GetHalls())
-            {
-                if (id == hall.Id)
-                {
-                    database.DeleteHall(id);
-                }
-            }
+            database.DeleteHall(hall.Id);
+        }
+
+        public void EditHall(HallModel hall)
+        {
+            database.EditHall(hall);
         }
     }
 }

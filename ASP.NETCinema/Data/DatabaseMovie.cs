@@ -17,6 +17,14 @@ namespace ASPNETCinema
         public List<MovieModel> Movies { get; set; }
         public string OrderBy { get => orderBy; set => orderBy = value; }
 
+
+        //Add
+        //List
+        //details
+        //Edit
+        //Delete
+
+
         public List<MovieModel> GetMovies()
         {
             //using ASPNETCinema.Models; added

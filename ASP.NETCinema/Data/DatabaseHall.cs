@@ -14,6 +14,12 @@ namespace ASPNETCinema.Data
         private List<HallModel> halls;
 
 
+        //Add
+        //List
+        //details
+        //Edit
+        //Delete
+
         public List<HallModel> GetHalls()
         {
             //using ASPNETCinema.Models; added
@@ -53,6 +59,22 @@ namespace ASPNETCinema.Data
             connection.Open();
             SqlCommand command = new SqlCommand("DELETE FROM Hall WHERE Id = @Id", connection);
             command.Parameters.AddWithValue("@Id", id);
+            command.ExecuteNonQuery();
+
+            connection.Close();
+        }
+
+        public void EditHall(HallModel hall)
+        {
+            connection.Open();
+            SqlCommand command = new SqlCommand("UPDATE Hall SET Price = @Price, ScreenType = @ScreenType, Seats = @Seats, " +
+                "SeatsTaken = @SeatsTaken WHERE Id = @Id", connection);
+            command.Parameters.AddWithValue("@Id", hall.Id);
+            command.Parameters.AddWithValue("@Price", hall.Price);
+            command.Parameters.AddWithValue("@ScreenType", hall.ScreenType);
+            command.Parameters.AddWithValue("@Seats", hall.Seats);
+            command.Parameters.AddWithValue("@SeatsTaken", hall.SeatsTaken);
+
             command.ExecuteNonQuery();
 
             connection.Close();
