@@ -35,7 +35,6 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult AddScreening(ScreeningModel screening)
         {
-            ViewBag.HasError = false;
             if (ModelState.IsValid && screeningLogic.IsThisDateAndTimeAvailable(screening))
             {
                 screeningLogic.AddScreening(screening);

@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 WAYY later:
 Adding seat picker.
 Adding users.
@@ -8,15 +7,6 @@ Adding Employees
 Deleting Employees
 GROUP BY
 INNER JOIN/OUTER JOIN
-
-
-WAYY later:
-Adding seat picker.
-Adding users.
-Deleting screenings.
-Deleting tasks.
-Adding Employees
-Deleting Employees
 
 
 Later:
@@ -35,7 +25,6 @@ Adding starting unit tests.
 
 
 ONGOING:
-Screening date logic 
 adding/removeing/editing screenings
 changeing int id to object instance 
 
@@ -44,3 +33,5 @@ FINISHED:
 Movies Add/Edit/Remove/Details.
 place everything in the right order (first add the list enz....)
 Halls Add/Edit/Remove/Details.
+
+Screening date logic (only specific time for now)
