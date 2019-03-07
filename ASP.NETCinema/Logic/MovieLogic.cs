@@ -12,37 +12,12 @@ namespace ASPNETCinema.Logic
     {
         DatabaseMovie database = new DatabaseMovie();
 
+        //other things
         //List
         //Add
         //details
         //Edit
         //Delete
-
-
-        public List<MovieModel> GetMoviesAndOrderBy(string orderBy)
-        {
-            List<MovieModel> movies = null;
-            if (orderBy != "MoviesToday")
-            {
-                //orderBy = orderBy.Replace(" ", "");
-                database.OrderBy = orderBy;
-                movies = database.GetMovies();
-            }
-            else if (orderBy != null)
-            {
-                movies = database.GetMoviesToday();
-            }
-            
-            return movies;
-        }
-        
-
-
-
-        public void AddMovie(MovieModel movie)
-        {
-            database.AddMovie(movie);
-        }
 
         public MovieModel GetMovie(int? id)
         {
@@ -56,6 +31,29 @@ namespace ASPNETCinema.Logic
             return null;
         }
 
+        public List<MovieModel> GetMoviesAndOrderBy(string orderBy)
+        {
+            List<MovieModel> movies = null;
+            if (orderBy != "MoviesToday")
+            {
+                database.OrderBy = orderBy;
+                movies = database.GetMovies();
+            }
+            else if (orderBy != null)
+            {
+                movies = database.GetMoviesToday();
+            }
+            
+            return movies;
+        }
+
+        public void AddMovie(MovieModel movie)
+        {
+            database.AddMovie(movie);
+        }
+
+        
+
         public void EditMovie(MovieModel movie)
         {
             database.EditMovie(movie);
@@ -65,14 +63,6 @@ namespace ASPNETCinema.Logic
         public void DeleteMovie(MovieModel movie)
         {
             database.DeleteMovie(movie.ID);
-            /*foreach (MovieModel movie in database.GetMovies())
-            {
-                if (id == movie.ID)
-                {
-                    database.DeleteMovie(id);
-                }
-            }
-            */
         }
 
 

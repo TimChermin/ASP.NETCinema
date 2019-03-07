@@ -15,6 +15,7 @@ namespace ASPNETCinema.Controllers
         DatabaseMovie database = new DatabaseMovie();
         MovieLogic movieLogic = new MovieLogic();
 
+        //other things
         //List
         //Add
         //details

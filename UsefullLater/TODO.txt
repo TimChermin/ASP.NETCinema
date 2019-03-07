@@ -51,7 +51,8 @@ HallController
 databasehall
 
 movie database
-
+movie logic
+movie controller
 
 FINISHED:
 Movies Add/Edit/Remove/Details.
