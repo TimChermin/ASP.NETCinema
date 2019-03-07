@@ -13,17 +13,6 @@ namespace ASPNETCinema.Data
         private SqlConnection connection = new SqlConnection(connectionString);
         private List<HallModel> halls;
 
-        public void AddHall(HallModel hall)
-        {
-            connection.Open();
-            SqlCommand command = new SqlCommand("INSERT INTO Hall OUTPUT Inserted.ID VALUES (@Price, @ScreenType, @Seats, @SeatsTaken)", connection);
-            command.Parameters.AddWithValue("@Price", hall.Price);
-            command.Parameters.AddWithValue("@ScreenType", hall.ScreenType);
-            command.Parameters.AddWithValue("@Seats", hall.Seats);
-            command.Parameters.AddWithValue("@SeatsTaken", hall.SeatsTaken);
-            HallModel newHall = new HallModel(((int)command.ExecuteScalar()), hall.Price, hall.ScreenType, hall.Seats, hall.SeatsTaken);
-            connection.Close();
-        }
 
         public List<HallModel> GetHalls()
         {
@@ -43,6 +32,30 @@ namespace ASPNETCinema.Data
 
             connection.Close();
             return (halls);
+        }
+
+        public void AddHall(HallModel hall)
+        {
+            connection.Open();
+            SqlCommand command = new SqlCommand("INSERT INTO Hall OUTPUT Inserted.ID VALUES (@Price, @ScreenType, @Seats, @SeatsTaken)", connection);
+            command.Parameters.AddWithValue("@Price", hall.Price);
+            command.Parameters.AddWithValue("@ScreenType", hall.ScreenType);
+            command.Parameters.AddWithValue("@Seats", hall.Seats);
+            command.Parameters.AddWithValue("@SeatsTaken", hall.SeatsTaken);
+            HallModel newHall = new HallModel(((int)command.ExecuteScalar()), hall.Price, hall.ScreenType, hall.Seats, hall.SeatsTaken);
+            connection.Close();
+        }
+
+        
+
+        public void DeleteHall(int id)
+        {
+            connection.Open();
+            SqlCommand command = new SqlCommand("DELETE FROM Hall WHERE Id = @Id", connection);
+            command.Parameters.AddWithValue("@Id", id);
+            command.ExecuteNonQuery();
+
+            connection.Close();
         }
     }
 }
