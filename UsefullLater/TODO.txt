@@ -6,16 +6,10 @@ Deleting screenings.
 Deleting tasks.
 Adding Employees
 Deleting Employees
-=======
-<<<<<<< HEAD
-TODO:
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-
-=======
 GROUP BY
 INNER JOIN/OUTER JOIN
-=======
+
+
 WAYY later:
 Adding seat picker.
 Adding users.
@@ -23,13 +17,8 @@ Deleting screenings.
 Deleting tasks.
 Adding Employees
 Deleting Employees
->>>>>>> Stashed changes
 
-<<<<<<< Updated upstream
-=======
->>>>>>> master
 
->>>>>>> Stashed changes
 Later:
 Adding tasks.
 Adding Employees.
@@ -42,10 +31,12 @@ Adding task view.
 TODO:
 Adding screenings.
 Adding halls.
+Adding starting unit tests.
 
 
 ONGOING:
-Adding starting unit tests.
+adding/removeing/editing halls
+adding/removeing/editing screenings
 
 
 FINISHED:
