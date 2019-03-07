@@ -37,6 +37,7 @@ Adding starting unit tests.
 ONGOING:
 adding/removeing/editing halls
 adding/removeing/editing screenings
+changeing int id to object instance 
 
 
 FINISHED:

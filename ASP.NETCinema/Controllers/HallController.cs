@@ -61,5 +61,13 @@ namespace ASPNETCinema.Controllers
         {
             return View(hallLogic.GetHall(id));
         }
+
+        [HttpPost]
+        [Authorize(Roles = "Administrator")]
+        public ActionResult EditHall(HallModel hall)
+        {
+           // hallLogic.EditHall(hall);
+            return RedirectToAction("ListMovies");
+        }
     }
 }

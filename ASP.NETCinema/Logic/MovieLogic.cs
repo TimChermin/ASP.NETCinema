@@ -55,15 +55,17 @@ namespace ASPNETCinema.Logic
         }
         
 
-        public void DeleteMovie(int id)
+        public void DeleteMovie(MovieModel movie)
         {
-            foreach (MovieModel movie in database.GetMovies())
+            database.DeleteMovie(movie.ID);
+            /*foreach (MovieModel movie in database.GetMovies())
             {
                 if (id == movie.ID)
                 {
                     database.DeleteMovie(id);
                 }
             }
+            */
         }
 
 

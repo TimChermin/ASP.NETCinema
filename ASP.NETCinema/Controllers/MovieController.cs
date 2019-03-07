@@ -86,9 +86,9 @@ namespace ASPNETCinema.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
-        public ActionResult DeleteMovie(int id)
+        public ActionResult DeleteMovie(MovieModel movie)
         {
-            movieLogic.DeleteMovie(id);
+            movieLogic.DeleteMovie(movie);
             return RedirectToAction("ListMovies");
         }
         
