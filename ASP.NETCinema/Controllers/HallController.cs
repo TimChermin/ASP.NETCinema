@@ -48,12 +48,12 @@ namespace ASPNETCinema.Controllers
             return View(hallLogic.GetHall(id));
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [Authorize(Roles = "Administrator")]
-        public ActionResult DeleteMovie(int id)
+        public ActionResult DeleteHall(int id)
         {
             hallLogic.DeleteHall(id);
-            return RedirectToAction("ListMovies");
+            return RedirectToAction("ListHalls");
         }
 
         [Authorize(Roles = "Administrator")]
