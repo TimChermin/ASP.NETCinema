@@ -14,6 +14,13 @@ namespace ASPNETCinema.Data
 
         public List<ScreeningModel> Screenings { get; set; }
 
+        //other things
+        //List
+        //Add
+        //details
+        //Edit
+        //Delete
+
         public List<ScreeningModel> GetScreenings()
         {
             //using ASPNETCinema.Models; added
@@ -21,7 +28,6 @@ namespace ASPNETCinema.Data
             connection.Open();
             SqlCommand command = new SqlCommand("SELECT * FROM Screening", connection);
             
-
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
@@ -34,10 +40,5 @@ namespace ASPNETCinema.Data
             connection.Close();
             return (Screenings);
         }
-
-        /* [Id]                     INT      IDENTITY (1, 1) NOT NULL,
-    [IdMovie]                INT      NULL,
-    [IdHall]                 INT      NULL,
-    [DateAndTimeOfScreening] DATETIME NULL,*/
     }
 }
