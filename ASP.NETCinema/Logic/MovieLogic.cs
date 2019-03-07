@@ -11,13 +11,31 @@ namespace ASPNETCinema.Logic
     public class MovieLogic
     {
         DatabaseMovie database = new DatabaseMovie();
-        
+
+        //other things
+        //List
+        //Add
+        //details
+        //Edit
+        //Delete
+
+        public MovieModel GetMovie(int? id)
+        {
+            foreach (MovieModel movie in database.GetMovies())
+            {
+                if (id == movie.ID && id != null)
+                {
+                    return movie;
+                }
+            }
+            return null;
+        }
+
         public List<MovieModel> GetMoviesAndOrderBy(string orderBy)
         {
             List<MovieModel> movies = null;
             if (orderBy != "MoviesToday")
             {
-                //orderBy = orderBy.Replace(" ", "");
                 database.OrderBy = orderBy;
                 movies = database.GetMovies();
             }
@@ -28,66 +46,23 @@ namespace ASPNETCinema.Logic
             
             return movies;
         }
-        
-
-        public MovieModel GetDetailsMovie(int? id)
-        {
-            foreach (MovieModel movie in database.GetMovies())
-            {
-                if (id == movie.ID && id != null)
-                {
-                    return movie;
-                }
-            }
-            return null;
-        }
-
-
 
         public void AddMovie(MovieModel movie)
         {
             database.AddMovie(movie);
         }
 
-        public MovieModel GetToEditMovie(int? id)
-        {
-            foreach (MovieModel movie in database.GetMovies())
-            {
-                if (id == movie.ID && id != null)
-                {
-                    return movie;
-                }
-            }
-            return null;
-        }
+        
 
         public void EditMovie(MovieModel movie)
         {
             database.EditMovie(movie);
         }
+        
 
-
-        public MovieModel GetToDeleteMovie(int? id)
+        public void DeleteMovie(MovieModel movie)
         {
-            foreach (MovieModel movie in database.GetMovies())
-            {
-                if (id == movie.ID && id != null)
-                {
-                    return movie;
-                }
-            }
-            return null;
-        }
-
-        public void DeleteMovie(int id)
-        {
-            foreach (MovieModel movie in database.GetMovies())
-            {
-                if (id == movie.ID)
-                {
-                    database.DeleteMovie(id);
-                }
-            }
+            database.DeleteMovie(movie.ID);
         }
 
 

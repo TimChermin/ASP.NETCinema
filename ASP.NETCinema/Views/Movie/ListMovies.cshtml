@@ -80,9 +80,9 @@
                 @if (User.IsInRole("Administrator"))
                 {
                     @Html.ActionLink("Edit", "EditMovie", new { id = item.ID });
-                    <a> - </a>
+                <a> | </a>
                     @Html.ActionLink("Delete", "DeleteMovie", new { id = item.ID });
-                    <a> - </a>
+                <a> | </a>
                 }
                 @Html.ActionLink("Details", "DetailsMovie", new { id = item.ID })
 

@@ -1,0 +1,60 @@
+﻿@model ASPNETCinema.Models.ScreeningModel
+
+@{
+    ViewData["Title"] = "AddScreening";
+
+    bool hasError = ViewBag.HasError ?? false;
+    string message = ViewBag.ErrorMessage;
+}
+
+<h2>AddScreening</h2>
+
+<h4>ScreeningModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddScreening">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MovieId" class="control-label"></label>
+                <input asp-for="MovieId" class="form-control" />
+                <span asp-validation-for="MovieId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HallId" class="control-label"></label>
+                <input asp-for="HallId" class="form-control" />
+                <span asp-validation-for="HallId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfScreening" class="control-label"></label>
+                <input asp-for="DateOfScreening" class="form-control" />
+                <span asp-validation-for="DateOfScreening" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TimeOfScreening" class="control-label"></label>
+                <input asp-for="TimeOfScreening" class="form-control" />
+                <span asp-validation-for="TimeOfScreening" class="text-danger"></span>
+            </div>
+            @if(hasError)
+            {
+                <div class="col-md-10 text-danger">
+                    @message
+                </div>
+                hasError = false;
+            }
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="ListScreenings">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

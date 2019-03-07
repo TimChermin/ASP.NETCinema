@@ -17,6 +17,35 @@ namespace ASPNETCinema
         public List<MovieModel> Movies { get; set; }
         public string OrderBy { get => orderBy; set => orderBy = value; }
 
+
+        //other things
+        //List
+        //Add
+        //details
+        //Edit
+        //Delete
+
+
+        public List<MovieModel> GetMoviesToday()
+        {
+            Movies = new List<MovieModel>();
+            connection.Open();
+            SqlCommand command = new SqlCommand("SELECT * FROM Movie GROUP BY Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString HAVING ReleaseDate = @Today", connection);
+            command.Parameters.AddWithValue("@Today", DateTime.Today);
+
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    MovieModel movie = new MovieModel(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetDateTime(4), reader.GetString(5), reader.GetString(6), reader.GetString(7));
+                    Movies.Add(movie);
+                }
+            }
+
+            connection.Close();
+            return (Movies);
+        }
+
         public List<MovieModel> GetMovies()
         {
             //using ASPNETCinema.Models; added
@@ -64,16 +93,6 @@ namespace ASPNETCinema
             connection.Close();
         }
 
-        public void DeleteMovie(int id)
-        {
-            connection.Open();
-            SqlCommand command = new SqlCommand("DELETE FROM Movie WHERE ID = @Id", connection);
-            command.Parameters.AddWithValue("@Id", id);
-            command.ExecuteNonQuery();
-
-            connection.Close();
-        }
-
         public void EditMovie(MovieModel movie)
         {
             connection.Open();
@@ -89,29 +108,18 @@ namespace ASPNETCinema
             command.Parameters.AddWithValue("@Id", movie.ID);
 
             command.ExecuteNonQuery();
-            
+
             connection.Close();
         }
 
-        public List<MovieModel> GetMoviesToday()
+        public void DeleteMovie(int id)
         {
-            Movies = new List<MovieModel>();
             connection.Open();
-            SqlCommand command = new SqlCommand("SELECT * FROM Movie GROUP BY Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString HAVING ReleaseDate = @Today", connection);
-            command.Parameters.AddWithValue("@Today", DateTime.Today);
-
-            using (SqlDataReader reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    MovieModel movie = new MovieModel(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetDateTime(4), reader.GetString(5), reader.GetString(6), reader.GetString(7));
-                    Movies.Add(movie);
-                }
-            }
+            SqlCommand command = new SqlCommand("DELETE FROM Movie WHERE ID = @Id", connection);
+            command.Parameters.AddWithValue("@Id", id);
+            command.ExecuteNonQuery();
 
             connection.Close();
-            return (Movies);
         }
-
     }
 }

@@ -14,14 +14,13 @@ namespace ASPNETCinema.Controllers
     {
         DatabaseMovie database = new DatabaseMovie();
         MovieLogic movieLogic = new MovieLogic();
-       
 
-
-        //GET
-        public IActionResult Index()
-        {
-            return View();
-        }
+        //other things
+        //List
+        //Add
+        //details
+        //Edit
+        //Delete
 
         public ActionResult ListMovies(string OrderBy)
         {
@@ -29,23 +28,12 @@ namespace ASPNETCinema.Controllers
         }
 
 
-        public ActionResult DetailsMovie(int? id)
-        {
-            return View(movieLogic.GetDetailsMovie(id));
-        }
-
         [Authorize(Roles = "Administrator")]
         public ActionResult AddMovie()
         {
             return View();
         }
-
-        public ActionResult OrderByName()
-        {
-            return View();
-        }
-
-        // POST: Movies/Create
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
@@ -59,14 +47,22 @@ namespace ASPNETCinema.Controllers
             return View();
         }
 
+
+        public ActionResult DetailsMovie(int? id)
+        {
+            return View(movieLogic.GetMovie(id));
+        }
+
+        
+       
+
         [Authorize(Roles = "Administrator")]
         public ActionResult EditMovie(int? id)
         {
-            return View(movieLogic.GetToEditMovie(id));
+            return View(movieLogic.GetMovie(id));
         }
+        
 
-
-        // GET: Movies/Edit/5
         [HttpPost]
         [Authorize(Roles = "Administrator")]
         public ActionResult EditMovie(MovieModel movie)
@@ -75,35 +71,27 @@ namespace ASPNETCinema.Controllers
             return RedirectToAction("ListMovies");
         }
 
-
-        // GET: Movies/Delete/5
+        
+        [Authorize(Roles = "Administrator")]
         public ActionResult DeleteMovie(int? id)
         {
             if (User.IsInRole("Administrator"))
             {
-                return View(movieLogic.GetToDeleteMovie(id));
+                return View(movieLogic.GetMovie(id));
             }
+            //Redirects to standard
             return Redirect("/");
-
-
         }
 
         // POST: Movies/Delete/5
-        [HttpPost, ActionName("Delete")]
+        //[HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
-        public ActionResult DeleteMovie(int id)
+        public ActionResult DeleteMovie(MovieModel movie)
         {
-            movieLogic.DeleteMovie(id);
+            movieLogic.DeleteMovie(movie);
             return RedirectToAction("ListMovies");
         }
-        
-
-
-        public ActionResult Home()
-        {
-            return View();
-        }
-
     }
 }
