@@ -35,11 +35,18 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult AddScreening(ScreeningModel screening)
         {
+            ViewBag.HasError = false;
             if (ModelState.IsValid && screeningLogic.IsThisDateAndTimeAvailable(screening))
             {
                 screeningLogic.AddScreening(screening);
                 return RedirectToAction("ListScreenings");
             }
+            else
+            {
+                ViewBag.HasError = true;
+                ViewBag.ErrorMessage = "This Hall already has a screening on this day and time!";
+            }
+            
             return View();
         }
 

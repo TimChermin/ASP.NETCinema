@@ -2,6 +2,9 @@
 
 @{
     ViewData["Title"] = "AddScreening";
+
+    bool hasError = ViewBag.HasError ?? false;
+    string message = ViewBag.ErrorMessage;
 }
 
 <h2>AddScreening</h2>
@@ -32,6 +35,13 @@
                 <input asp-for="TimeOfScreening" class="form-control" />
                 <span asp-validation-for="TimeOfScreening" class="text-danger"></span>
             </div>
+            @if(hasError)
+            {
+                <div class="col-md-10 text-danger">
+                    @message
+                </div>
+                hasError = false;
+            }
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
