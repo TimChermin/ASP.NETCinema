@@ -12,13 +12,13 @@ namespace ASPNETCinema.Logic
         DatabaseScreening database = new DatabaseScreening();
         DatabaseMovie databaseMovie = new DatabaseMovie();
         List<ScreeningModel> screeningsWithMovies;
-        public List<ScreeningModel> GetScreenings()
-        {
-            List<ScreeningModel> screenings = null;
-            screenings = database.GetScreenings();
-            return AddTheMovieToTheScreenings(screenings);
-        }
 
+        //other things
+        //List
+        //Add
+        //details
+        //Edit
+        //Delete
 
         public List<ScreeningModel> AddTheMovieToTheScreenings(List<ScreeningModel> screenings)
         {
@@ -42,7 +42,12 @@ namespace ASPNETCinema.Logic
             return screening;
         }
 
-
+        public List<ScreeningModel> GetScreenings()
+        {
+            List<ScreeningModel> screenings = null;
+            screenings = database.GetScreenings();
+            return AddTheMovieToTheScreenings(screenings);
+        }
 
 
 

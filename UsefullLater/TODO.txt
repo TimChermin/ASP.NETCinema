@@ -37,22 +37,9 @@ Adding starting unit tests.
 ONGOING:
 adding/removeing/editing screenings
 changeing int id to object instance 
-place everything in the right order (first add the list enz....)
-	//other things
-	//List
-        //Add
-        //details
-        //Edit
-        //Delete
 
-
-HallLogic Done
-HallController
-databasehall
-
-movie database
-movie logic
-movie controller
 
 FINISHED:
 Movies Add/Edit/Remove/Details.
+place everything in the right order (first add the list enz....)
+Halls Add/Edit/Remove/Details.
