@@ -35,7 +35,7 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult AddScreening(ScreeningModel screening)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && screeningLogic.IsThisDateAndTimeAvailable(screening))
             {
                 screeningLogic.AddScreening(screening);
                 return RedirectToAction("ListScreenings");

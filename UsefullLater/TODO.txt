@@ -35,6 +35,7 @@ Adding starting unit tests.
 
 
 ONGOING:
+Screening date logic 
 adding/removeing/editing screenings
 changeing int id to object instance 
 

@@ -54,5 +54,22 @@ namespace ASPNETCinema.Logic
             database.AddScreening(screening);
         }
 
+
+
+        public bool IsThisDateAndTimeAvailable(ScreeningModel screening)
+        {
+            foreach (ScreeningModel screeningDatabase in database.GetScreenings())
+            {
+                if (screeningDatabase.HallId == screening.HallId && screeningDatabase.DateOfScreening == screening.DateOfScreening)
+                {
+                    if (screeningDatabase.TimeOfScreening == screening.TimeOfScreening)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
     }
 }
