@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ASPNETCinema.Logic;
 using ASPNETCinema.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ASPNETCinema.Controllers
@@ -11,8 +12,6 @@ namespace ASPNETCinema.Controllers
     public class ScreeningController : Controller
     {
         ScreeningLogic screeningLogic = new ScreeningLogic();
-        HallModel hallModel = new HallModel();
-        HallLogic hallLogic = new HallLogic();
 
         //other things
         //List
@@ -30,7 +29,20 @@ namespace ASPNETCinema.Controllers
         {
             return View();
         }
-        
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
+        public ActionResult AddScreening(ScreeningModel screening)
+        {
+            if (ModelState.IsValid)
+            {
+                screeningLogic.AddScreening(screening);
+                return RedirectToAction("ListScreenings");
+            }
+            return View();
+        }
+
 
     }
 }

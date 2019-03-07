@@ -49,7 +49,10 @@ namespace ASPNETCinema.Logic
             return AddTheMovieToTheScreenings(screenings);
         }
 
-
+        public void AddScreening(ScreeningModel screening)
+        {
+            database.AddScreening(screening);
+        }
 
     }
 }

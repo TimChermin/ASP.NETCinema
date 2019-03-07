@@ -40,5 +40,20 @@ namespace ASPNETCinema.Data
             connection.Close();
             return (Screenings);
         }
+
+
+        public void AddScreening(ScreeningModel screening)
+        {
+            connection.Open();
+
+            SqlCommand command = new SqlCommand("INSERT INTO Screening OUTPUT Inserted.Id VALUES (@IdMovie, @IdHall, @DateOfScreening, @TimeOfScreening)", connection);
+            command.Parameters.AddWithValue("@IdMovie", screening.MovieId);
+            command.Parameters.AddWithValue("@IdHall", screening.HallId);
+            command.Parameters.AddWithValue("@DateOfScreening", screening.DateOfScreening);
+            command.Parameters.AddWithValue("@TimeOfScreening", screening.TimeOfScreening);
+            //MovieModel newMovie = new MovieModel(((int)command.ExecuteScalar()), screening.Id, screening.MovieId);
+            command.ExecuteScalar();
+            connection.Close();
+        }
     }
 }
