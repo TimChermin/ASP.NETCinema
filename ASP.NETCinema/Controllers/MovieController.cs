@@ -70,6 +70,7 @@ namespace ASPNETCinema.Controllers
 
 
         // GET: Movies/Delete/5
+        [Authorize(Roles = "Administrator")]
         public ActionResult DeleteMovie(int? id)
         {
             if (User.IsInRole("Administrator"))

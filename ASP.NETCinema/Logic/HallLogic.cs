@@ -9,7 +9,7 @@ namespace ASPNETCinema.Logic
 {
     public class HallLogic
     {
-        DatabaseHall databaseHall = new DatabaseHall();
+        DatabaseHall database = new DatabaseHall();
 
         public HallLogic()
         {
@@ -20,17 +20,17 @@ namespace ASPNETCinema.Logic
 
         public void AddHall(HallModel hall)
         {
-            databaseHall.AddHall(hall);
+            database.AddHall(hall);
         }
 
         public List<HallModel> GetHalls()
         {
-            return databaseHall.GetHalls();
+            return database.GetHalls();
         }
 
         public HallModel GetHall(int? id)
         {
-            foreach (HallModel hall in databaseHall.GetHalls())
+            foreach (HallModel hall in database.GetHalls())
             {
                 if (id == hall.Id && id != null)
                 {
@@ -38,6 +38,17 @@ namespace ASPNETCinema.Logic
                 }
             }
             return null;
+        }
+
+        public void DeleteHall(int id)
+        {
+            foreach (HallModel hall in database.GetHalls())
+            {
+                if (id == hall.Id)
+                {
+                    database.DeleteHall(id);
+                }
+            }
         }
     }
 }
