@@ -14,31 +14,14 @@ namespace ASPNETCinema.Controllers
     {
         DatabaseMovie database = new DatabaseMovie();
         MovieLogic movieLogic = new MovieLogic();
-       
 
-        public ActionResult ListMovies(string OrderBy)
-        {
-            return View(movieLogic.GetMoviesAndOrderBy(OrderBy));
-        }
-
-
-        public ActionResult DetailsMovie(int? id)
-        {
-            return View(movieLogic.GetMovie(id));
-        }
 
         [Authorize(Roles = "Administrator")]
         public ActionResult AddMovie()
         {
             return View();
         }
-
-        public ActionResult OrderByName()
-        {
-            return View();
-        }
-
-        // POST: Movies/Create
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
@@ -52,14 +35,28 @@ namespace ASPNETCinema.Controllers
             return View();
         }
 
+
+        public ActionResult ListMovies(string OrderBy)
+        {
+            return View(movieLogic.GetMoviesAndOrderBy(OrderBy));
+        }
+
+
+        public ActionResult DetailsMovie(int? id)
+        {
+            return View(movieLogic.GetMovie(id));
+        }
+
+        
+       
+
         [Authorize(Roles = "Administrator")]
         public ActionResult EditMovie(int? id)
         {
             return View(movieLogic.GetMovie(id));
         }
+        
 
-
-        // GET: Movies/Edit/5
         [HttpPost]
         [Authorize(Roles = "Administrator")]
         public ActionResult EditMovie(MovieModel movie)
@@ -68,8 +65,7 @@ namespace ASPNETCinema.Controllers
             return RedirectToAction("ListMovies");
         }
 
-
-        // GET: Movies/Delete/5
+        
         [Authorize(Roles = "Administrator")]
         public ActionResult DeleteMovie(int? id)
         {
@@ -91,13 +87,5 @@ namespace ASPNETCinema.Controllers
             movieLogic.DeleteMovie(movie);
             return RedirectToAction("ListMovies");
         }
-        
-
-
-        public ActionResult Home()
-        {
-            return View();
-        }
-
     }
 }
