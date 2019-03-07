@@ -13,9 +13,9 @@ namespace ASPNETCinema.Data
         private SqlConnection connection = new SqlConnection(connectionString);
         private List<HallModel> halls;
 
-
-        //Add
+        //other things
         //List
+        //Add
         //details
         //Edit
         //Delete
@@ -52,18 +52,6 @@ namespace ASPNETCinema.Data
             connection.Close();
         }
 
-        
-
-        public void DeleteHall(int id)
-        {
-            connection.Open();
-            SqlCommand command = new SqlCommand("DELETE FROM Hall WHERE Id = @Id", connection);
-            command.Parameters.AddWithValue("@Id", id);
-            command.ExecuteNonQuery();
-
-            connection.Close();
-        }
-
         public void EditHall(HallModel hall)
         {
             connection.Open();
@@ -79,5 +67,17 @@ namespace ASPNETCinema.Data
 
             connection.Close();
         }
+
+        public void DeleteHall(int id)
+        {
+            connection.Open();
+            SqlCommand command = new SqlCommand("DELETE FROM Hall WHERE Id = @Id", connection);
+            command.Parameters.AddWithValue("@Id", id);
+            command.ExecuteNonQuery();
+
+            connection.Close();
+        }
+
+        
     }
 }

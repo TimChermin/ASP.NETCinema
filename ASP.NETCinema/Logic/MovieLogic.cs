@@ -12,8 +12,8 @@ namespace ASPNETCinema.Logic
     {
         DatabaseMovie database = new DatabaseMovie();
 
-        //Add
         //List
+        //Add
         //details
         //Edit
         //Delete

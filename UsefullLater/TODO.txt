@@ -35,9 +35,22 @@ Adding starting unit tests.
 
 
 ONGOING:
-adding/removeing/editing halls
 adding/removeing/editing screenings
 changeing int id to object instance 
+place everything in the right order (first add the list enz....)
+	//other things
+	//List
+        //Add
+        //details
+        //Edit
+        //Delete
+
+
+HallLogic Done
+HallController
+databasehall
+
+movie database
 
 
 FINISHED:

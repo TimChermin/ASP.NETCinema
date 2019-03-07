@@ -15,11 +15,17 @@ namespace ASPNETCinema.Controllers
         DatabaseMovie database = new DatabaseMovie();
         MovieLogic movieLogic = new MovieLogic();
 
-        //Add
         //List
+        //Add
         //details
         //Edit
         //Delete
+
+        public ActionResult ListMovies(string OrderBy)
+        {
+            return View(movieLogic.GetMoviesAndOrderBy(OrderBy));
+        }
+
 
         [Authorize(Roles = "Administrator")]
         public ActionResult AddMovie()
@@ -38,12 +44,6 @@ namespace ASPNETCinema.Controllers
                 return RedirectToAction("ListMovies");
             }
             return View();
-        }
-
-
-        public ActionResult ListMovies(string OrderBy)
-        {
-            return View(movieLogic.GetMoviesAndOrderBy(OrderBy));
         }
 
 

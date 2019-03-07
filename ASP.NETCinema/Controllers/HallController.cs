@@ -13,12 +13,19 @@ namespace ASPNETCinema.Controllers
     {
         HallLogic hallLogic = new HallLogic();
 
-        //Add
+        //other things
         //List
+        //Add
         //details
         //Edit
         //Delete
 
+
+        [Authorize(Roles = "Administrator")]
+        public ActionResult ListHalls()
+        {
+            return View(hallLogic.GetHalls());
+        }
 
         [Authorize(Roles = "Administrator")]
         public ActionResult AddHall()
@@ -41,26 +48,6 @@ namespace ASPNETCinema.Controllers
             }
             return View();
         }
-        
-        [Authorize(Roles = "Administrator")]
-        public ActionResult ListHalls()
-        {
-            return View(hallLogic.GetHalls());
-        }
-        
-        [Authorize(Roles = "Administrator")]
-        public ActionResult DeleteHall(int? id)
-        {
-            return View(hallLogic.GetHall(id));
-        }
-
-        [HttpPost]
-        [Authorize(Roles = "Administrator")]
-        public ActionResult DeleteHall(HallModel hall)
-        {
-            hallLogic.DeleteHall(hall);
-            return RedirectToAction("ListHalls");
-        }
 
         [Authorize(Roles = "Administrator")]
         public ActionResult EditHall(int? id)
@@ -75,5 +62,21 @@ namespace ASPNETCinema.Controllers
             hallLogic.EditHall(hall);
             return RedirectToAction("ListHalls");
         }
+
+        [Authorize(Roles = "Administrator")]
+        public ActionResult DeleteHall(int? id)
+        {
+            return View(hallLogic.GetHall(id));
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Administrator")]
+        public ActionResult DeleteHall(HallModel hall)
+        {
+            hallLogic.DeleteHall(hall);
+            return RedirectToAction("ListHalls");
+        }
+
+        
     }
 }
