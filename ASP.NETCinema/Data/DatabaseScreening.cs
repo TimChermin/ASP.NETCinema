@@ -32,7 +32,7 @@ namespace ASPNETCinema.Data
             {
                 while (reader.Read())
                 {
-                    ScreeningModel screening = new ScreeningModel(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), reader.GetDateTime(3));
+                    ScreeningModel screening = new ScreeningModel(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), reader.GetDateTime(3), reader.GetTimeSpan(4));
                     Screenings.Add(screening);
                 }
             }

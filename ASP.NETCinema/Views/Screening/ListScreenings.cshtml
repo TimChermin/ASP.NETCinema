@@ -25,7 +25,10 @@
                 @Html.DisplayNameFor(model => model.Movie.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TimeAndDayOfScreening)
+                @Html.DisplayNameFor(model => model.DateOfScreening)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TimeOfScreening)
             </th>
             <th></th>
         </tr>
@@ -46,7 +49,10 @@
                 @Html.DisplayFor(modelItem => item.Movie.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TimeAndDayOfScreening)
+                @Html.DisplayFor(modelItem => item.DateOfScreening)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeOfScreening)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |

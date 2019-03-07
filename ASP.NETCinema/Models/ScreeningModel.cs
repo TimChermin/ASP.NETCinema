@@ -8,12 +8,13 @@ namespace ASPNETCinema.Models
 {
     public class ScreeningModel
     {
-        public ScreeningModel(int id, int movieId, int hallId, DateTime timeAndDayOfScreening)
+        public ScreeningModel(int id, int movieId, int hallId, DateTime dateOfScreening, TimeSpan timeOfScreening)
         {
             Id = id;
             MovieId = movieId;
             HallId = hallId;
-            TimeAndDayOfScreening = timeAndDayOfScreening;
+            DateOfScreening = dateOfScreening;
+            TimeOfScreening = timeOfScreening;
         }
 
         public ScreeningModel()
@@ -30,11 +31,16 @@ namespace ASPNETCinema.Models
         public HallModel Hall { get; set; }
         
 
-        [Display(Name = "Screening date and Time")]
-        [DisplayFormat(DataFormatString = "{0:dd/MMM/yyy HH:mm}")]
+        [Display(Name = "Screening date and Time: dd/mm/yyyy")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         [Required(ErrorMessage = "The Date field is required.")]
-        [DataType(DataType.DateTime)]
-        public DateTime TimeAndDayOfScreening { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime DateOfScreening { get; set; }
+
+        [Display(Name = "Screening Time")]
+        [Required(ErrorMessage = "The Time field is required.")]
+        [DataType(DataType.Time)]
+        public TimeSpan TimeOfScreening { get; set; }
 
         public TaskModel Task { get; set; }
 
