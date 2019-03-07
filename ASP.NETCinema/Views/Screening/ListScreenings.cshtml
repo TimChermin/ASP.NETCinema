@@ -55,9 +55,9 @@
                 @Html.DisplayFor(modelItem => item.TimeOfScreening)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Edit", "EditScreening", new { item.Id }) |
+                @Html.ActionLink("Details", "DetailsScreening", new { item.Id }) |
+                @Html.ActionLink("Delete", "DeleteScreening", new { item.Id })
             </td>
         </tr>
 }

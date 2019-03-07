@@ -49,6 +49,12 @@ namespace ASPNETCinema.Controllers
             return View();
         }
 
+        public ActionResult DetailsScreening(int? id)
+        {
+
+            return View(screeningLogic.GetScreening(id));
+        }
+
 
     }
 }

@@ -20,6 +20,18 @@ namespace ASPNETCinema.Logic
         //Edit
         //Delete
 
+        public ScreeningModel GetScreening(int? id)
+        {
+            foreach (ScreeningModel screening in database.GetScreenings())
+            {
+                if (id == screening.Id && id != null)
+                {
+                    return screening;
+                }
+            }
+            return null;
+        }
+
         public List<ScreeningModel> AddTheMovieToTheScreenings(List<ScreeningModel> screenings)
         {
             screeningsWithMovies = new List<ScreeningModel>();
