@@ -44,6 +44,7 @@
     </dl>
     
     <form asp-action="DeleteHall">
+        <input type="hidden" asp-for="Id" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
         <a asp-action="ListHalls">Back to List</a>
     </form>
