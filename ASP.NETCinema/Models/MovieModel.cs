@@ -19,9 +19,9 @@ namespace ASPNETCinema.Models
             ImageString = imageString;
         }
 
-        public MovieModel(int iD, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)
+        public MovieModel(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)
         {
-            ID = iD;
+            Id = id;
             Name = name;
             Description = description;
             ReleaseDate = releaseDate;
@@ -37,7 +37,7 @@ namespace ASPNETCinema.Models
 
         
         //[Range(100000, 999999, ErrorMessage = "This ID isn't good")]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "The Name field is required.")]
         public string Name { get; set; }

@@ -80,7 +80,7 @@ namespace ASPNETCinema
         {
             connection.Open();
            
-            SqlCommand command = new SqlCommand("INSERT INTO Movie OUTPUT Inserted.ID VALUES (@Name, @Description, @ReleaseDate, @LastScreeningDate, @MovieType, @MovieLenght, @ImageString)", connection);
+            SqlCommand command = new SqlCommand("INSERT INTO Movie OUTPUT Inserted.Id VALUES (@Name, @Description, @ReleaseDate, @LastScreeningDate, @MovieType, @MovieLenght, @ImageString)", connection);
             command.Parameters.AddWithValue("@Name", movie.Name);
             command.Parameters.AddWithValue("@Description", movie.Description);
             command.Parameters.AddWithValue("@ReleaseDate", movie.ReleaseDate);
@@ -97,7 +97,7 @@ namespace ASPNETCinema
         {
             connection.Open();
             SqlCommand command = new SqlCommand("UPDATE Movie SET Name = @Name, Description = @Description, ReleaseDate = @ReleaseDate, " +
-                "LastScreeningDate = @LastScreeningDate, MovieType = @MovieType, MovieLenght = @MovieLenght, ImageString = @ImageString WHERE ID = @Id", connection);
+                "LastScreeningDate = @LastScreeningDate, MovieType = @MovieType, MovieLenght = @MovieLenght, ImageString = @ImageString WHERE Id = @Id", connection);
             command.Parameters.AddWithValue("@Name", movie.Name);
             command.Parameters.AddWithValue("@Description", movie.Description);
             command.Parameters.AddWithValue("@ReleaseDate", movie.ReleaseDate);
@@ -105,7 +105,7 @@ namespace ASPNETCinema
             command.Parameters.AddWithValue("@MovieType", movie.MovieType);
             command.Parameters.AddWithValue("@MovieLenght", movie.MovieLenght);
             command.Parameters.AddWithValue("@ImageString", movie.ImageString);
-            command.Parameters.AddWithValue("@Id", movie.ID);
+            command.Parameters.AddWithValue("@Id", movie.Id);
 
             command.ExecuteNonQuery();
 
@@ -115,7 +115,7 @@ namespace ASPNETCinema
         public void DeleteMovie(int id)
         {
             connection.Open();
-            SqlCommand command = new SqlCommand("DELETE FROM Movie WHERE ID = @Id", connection);
+            SqlCommand command = new SqlCommand("DELETE FROM Movie WHERE Id = @Id", connection);
             command.Parameters.AddWithValue("@Id", id);
             command.ExecuteNonQuery();
 

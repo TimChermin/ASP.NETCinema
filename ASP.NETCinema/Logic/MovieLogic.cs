@@ -23,7 +23,7 @@ namespace ASPNETCinema.Logic
         {
             foreach (MovieModel movie in database.GetMovies())
             {
-                if (id == movie.ID && id != null)
+                if (id == movie.Id && id != null)
                 {
                     return movie;
                 }
@@ -62,7 +62,7 @@ namespace ASPNETCinema.Logic
 
         public void DeleteMovie(MovieModel movie)
         {
-            database.DeleteMovie(movie.ID);
+            database.DeleteMovie(movie.Id);
         }
 
 

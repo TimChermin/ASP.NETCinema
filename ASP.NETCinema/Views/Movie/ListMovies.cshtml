@@ -21,7 +21,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ID)
+                @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
@@ -50,14 +50,14 @@
         <tr>
             <td>
 
-                @Html.DisplayFor(modelItem => item.ID)
+                @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
 
-                <a href="/Movie/DetailsMovie/@Html.DisplayFor(modelItem => item.ID)">
+                <a href="/Movie/DetailsMovie/@Html.DisplayFor(modelItem => item.Id)">
                     <img src="@Html.DisplayFor(modelItem => item.ImageString)" alt="Image: @Html.DisplayFor(modelItem => item.Name)" width="120" height="160">
                 </a>
-                <p>@Html.ActionLink(item.Name, "DetailsMovie", new { id = item.ID })</p>
+                <p>@Html.ActionLink(item.Name, "DetailsMovie", new { id = item.Id })</p>
                 <!--<img src="https://www.w3schools.com/images/w3schools_green.jpg" alt="W3Schools.com">-->
 
             </td>
@@ -79,12 +79,12 @@
             <td>
                 @if (User.IsInRole("Administrator"))
                 {
-                    @Html.ActionLink("Edit", "EditMovie", new { id = item.ID });
+                    @Html.ActionLink("Edit", "EditMovie", new { id = item.Id });
                 <a> | </a>
-                    @Html.ActionLink("Delete", "DeleteMovie", new { id = item.ID });
+                    @Html.ActionLink("Delete", "DeleteMovie", new { id = item.Id });
                 <a> | </a>
                 }
-                @Html.ActionLink("Details", "DetailsMovie", new { id = item.ID })
+                @Html.ActionLink("Details", "DetailsMovie", new { id = item.Id })
 
 
             </td>

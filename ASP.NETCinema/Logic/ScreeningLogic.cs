@@ -46,7 +46,7 @@ namespace ASPNETCinema.Logic
         {
             foreach (MovieModel movie in databaseMovie.GetMovies())
             {
-                if (screening.MovieId == movie.ID)
+                if (screening.MovieId == movie.Id)
                 {
                     screening.Movie = movie;
                 }

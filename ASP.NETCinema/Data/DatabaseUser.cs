@@ -18,7 +18,7 @@ namespace ASPNETCinema.Data
         {
             connection.Open();
 
-            SqlCommand command = new SqlCommand("INSERT INTO Users (Username, Password, Administrator) OUTPUT Inserted.ID VALUES (@Name, @Password, @Administrator)", connection);
+            SqlCommand command = new SqlCommand("INSERT INTO Users (Username, Password, Administrator) OUTPUT Inserted.Id VALUES (@Name, @Password, @Administrator)", connection);
             command.Parameters.AddWithValue("@Name", user.Name);
             command.Parameters.AddWithValue("@Password", user.Password);
             command.Parameters.AddWithValue("@Administrator", user.Administrator);
