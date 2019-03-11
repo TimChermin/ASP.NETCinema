@@ -51,8 +51,31 @@ namespace ASPNETCinema.Controllers
 
         public ActionResult DetailsScreening(int? id)
         {
-
             return View(screeningLogic.GetScreening(id));
+        }
+
+        public ActionResult EditScreening(int? id)
+        {
+            return View(screeningLogic.GetScreening(id));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
+        public ActionResult EditScreening(ScreeningModel screening)
+        {
+            if (ModelState.IsValid && screeningLogic.IsThisDateAndTimeAvailable(screening))
+            {
+                screeningLogic.EditScreening(screening);
+                return RedirectToAction("ListScreenings");
+            }
+            else
+            {
+                ViewBag.HasError = true;
+                ViewBag.ErrorMessage = "This Hall already has a screening on this day and time!";
+            }
+
+            return View();
         }
 
 

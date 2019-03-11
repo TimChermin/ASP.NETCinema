@@ -40,7 +40,6 @@ namespace ASPNETCinema.Models
         [Display(Name = "Screening Time")]
         [Required(ErrorMessage = "The Time field is required.")]
         [DataType(DataType.Time)]
-        [DisplayFormat(DataFormatString = "{0:T}")]
         public TimeSpan TimeOfScreening { get; set; }
 
         public TaskModel Task { get; set; }

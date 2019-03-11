@@ -55,5 +55,21 @@ namespace ASPNETCinema.Data
             command.ExecuteScalar();
             connection.Close();
         }
+
+        public void EditScreening(ScreeningModel screening)
+        {
+            connection.Open();
+            SqlCommand command = new SqlCommand("UPDATE Screening SET IdMovie = @IdMovie, IdHall = @IdHall, DateOfScreening = @DateOfScreening, " +
+                "TimeOfScreening = @TimeOfScreening WHERE Id = @Id", connection);
+            command.Parameters.AddWithValue("@Id", screening.Id);
+            command.Parameters.AddWithValue("@IdMovie", screening.MovieId);
+            command.Parameters.AddWithValue("@IdHall", screening.HallId);
+            command.Parameters.AddWithValue("@DateOfScreening", screening.DateOfScreening);
+            command.Parameters.AddWithValue("@TimeOfScreening", screening.TimeOfScreening);
+
+            command.ExecuteNonQuery();
+
+            connection.Close();
+        }
     }
 }
