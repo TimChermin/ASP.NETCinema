@@ -34,6 +34,10 @@ namespace ASPNETCinema.Logic
             {
                 return "Administrator";
             }
+            else if (databaseUser.GetUserRole(user) == 2)
+            {
+                return "Employee";
+            }
             
             return "Normal";
         }

@@ -46,7 +46,7 @@ namespace ASPNETCinema.Models
         [Compare("Password", ErrorMessage = "Your password and confirm password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        [Range(0, 1, ErrorMessage = "Can only be between 0 and 1")]
+        [Range(0, 2, ErrorMessage = "Can only be between 0 and 2: 0 = Normal - 1 = Admin - 2 = Employee")]
         [Required(ErrorMessage = "This field is required")]
         public int Administrator { get; set; }
         

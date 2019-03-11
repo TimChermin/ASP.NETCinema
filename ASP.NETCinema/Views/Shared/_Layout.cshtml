@@ -47,8 +47,11 @@
                     {
                         <li><a asp-area="" asp-controller="Hall" asp-action="ListHalls">Halls</a></li>
                         <li><a asp-area="" asp-controller="Screening" asp-action="ListScreenings">Screenings</a></li>
+                    }
 
-
+                    @if (User.IsInRole("Employee"))
+                    {
+                        <li><a asp-area="" asp-controller="Screening" asp-action="ListScreenings">Screenings</a></li>
                     }
 
 
