@@ -28,7 +28,7 @@ namespace ASPNETCinema.Logic
             return false;
         }
 
-        public string IsThisUserAnAdmin(UserModel user)
+        public string GetRoleUser(UserModel user)
         {
             if (databaseUser.GetUserRole(user) == 1)
             {

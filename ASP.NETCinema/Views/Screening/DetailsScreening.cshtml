@@ -45,7 +45,7 @@
 <div>
     @if (User.IsInRole("Administrator"))
     {
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+        @Html.ActionLink("Edit", "EditScreening", new { id = Model.Id })
 }
     <a asp-action="ListScreenings">Back to List</a>
 </div>
