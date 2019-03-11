@@ -25,6 +25,7 @@ namespace ASPNETCinema.Controllers
             return View(screeningLogic.GetScreenings());
         }
 
+        [Authorize(Roles = "Administrator")]
         public ActionResult AddScreening()
         {
             return View();
@@ -49,11 +50,13 @@ namespace ASPNETCinema.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Administrator, Employee")]
         public ActionResult DetailsScreening(int? id)
         {
             return View(screeningLogic.GetScreening(id));
         }
 
+        [Authorize(Roles = "Administrator")]
         public ActionResult EditScreening(int? id)
         {
             return View(screeningLogic.GetScreening(id));

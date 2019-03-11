@@ -30,7 +30,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Movie" asp-action="Home">Home</a></li>
+                    <li><a asp-area="" asp-controller="Movie" asp-action="ListMovies">Home</a></li>
                     <li><a asp-area="" asp-controller="Movie" asp-action="ListMovies">Movies</a></li>
                     @if (User.Identity.IsAuthenticated == false)
                     {
