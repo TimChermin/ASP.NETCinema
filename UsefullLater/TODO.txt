@@ -19,19 +19,18 @@ Adding task view.
 
 
 TODO:
-Adding screenings.
-Adding halls.
 Adding starting unit tests.
 
 
-ONGOING:
-adding/removeing/editing screenings
-changeing int id to object instance 
+ONGOING: 
 
 
 FINISHED:
 Movies Add/Edit/Remove/Details.
 place everything in the right order (first add the list enz....)
 Halls Add/Edit/Remove/Details.
+adding/removeing/editing screenings
+changeing int id to object instance
+Adding halls.
 
 Screening date logic (only specific time for now)
