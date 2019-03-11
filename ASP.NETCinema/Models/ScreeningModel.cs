@@ -38,6 +38,7 @@ namespace ASPNETCinema.Models
         public DateTime DateOfScreening { get; set; }
 
         [Display(Name = "Screening Time")]
+        //[DisplayFormat(DataFormatString = "{0:HH:mm}")]
         [Required(ErrorMessage = "The Time field is required.")]
         [DataType(DataType.Time)]
         public TimeSpan TimeOfScreening { get; set; }
