@@ -7,6 +7,12 @@ namespace ASPNETCinema.Models
 {
     public class EmployeeModel
     {
+        public EmployeeModel(int id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
+
         public EmployeeModel()
         {
         }

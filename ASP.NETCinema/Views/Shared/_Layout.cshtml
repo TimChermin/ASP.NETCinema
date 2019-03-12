@@ -54,6 +54,7 @@
                         <li><a asp-area="" asp-controller="Hall" asp-action="ListHalls">Halls</a></li>
                         <li><a asp-area="" asp-controller="Screening" asp-action="ListScreenings">Screenings</a></li>
                         <li><a asp-area="" asp-controller="Task" asp-action="ListTasks">Tasks</a></li>
+                        <li><a asp-area="" asp-controller="Employee" asp-action="ListEmployees">Employees</a></li>
                     }
 
                     @if (User.IsInRole("Employee"))
@@ -61,6 +62,7 @@
                         <li><a>Role: Employee</a></li>
                         <li><a asp-area="" asp-controller="Screening" asp-action="ListScreenings">Screenings</a></li>
                         <li><a asp-area="" asp-controller="Task" asp-action="ListTasks">Tasks</a></li>
+                        <li><a asp-area="" asp-controller="Employee" asp-action="ListEmployees">Employees</a></li>
                     }
 
 

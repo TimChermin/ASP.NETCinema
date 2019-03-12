@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace ASPNETCinema.Logic
 {
-    public class TaskLogic
+    public class EmployeeLogic
     {
-        DatabaseTask database = new DatabaseTask();
+        DatabaseEmployee database = new DatabaseEmployee();
         DatabaseMovie databaseMovie = new DatabaseMovie();
-        //List<TaskModel> TasksWithMovies;
+        List<EmployeeModel> EmployeeWithMovies;
 
         //other things
         //List
@@ -21,9 +21,10 @@ namespace ASPNETCinema.Logic
         //Delete
 
 
-        public List<TaskModel> GetTasks()
+        public List<EmployeeModel> GetEmployees()
         {
-            return database.GetTasks();
+            return database.GetEmployees();
         }
+
     }
 }
