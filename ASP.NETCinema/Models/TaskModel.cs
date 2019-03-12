@@ -14,6 +14,8 @@ namespace ASPNETCinema.Models
 
         public int Id { get; set; }
         public int ScreeningId { get; set; }
+        public int TaskType { get; set; }
+        public ScreeningModel Screening { get; set; }
         public List<EmployeeModel> Employees { get; set; }
 
 

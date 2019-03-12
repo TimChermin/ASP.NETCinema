@@ -1,7 +1,5 @@
 WAYY later:
 Adding seat picker.
-Adding users.
-Deleting screenings.
 Deleting tasks.
 Adding Employees
 Deleting Employees
@@ -10,7 +8,6 @@ INNER JOIN/OUTER JOIN
 
 
 Later:
-Adding tasks.
 Adding Employees.
 Adding daily screenings.
 Adding ticket reserveration.
@@ -23,6 +20,7 @@ Adding starting unit tests.
 
 
 ONGOING: 
+Adding tasks.
 
 
 FINISHED:
@@ -32,5 +30,7 @@ Halls Add/Edit/Remove/Details.
 adding/removeing/editing screenings
 changeing int id to object instance
 Adding halls.
+Adding users.
+Deleting screenings.
 
 Screening date logic (only specific time for now)
