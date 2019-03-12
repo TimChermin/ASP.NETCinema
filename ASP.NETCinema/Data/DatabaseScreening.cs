@@ -71,5 +71,14 @@ namespace ASPNETCinema.Data
 
             connection.Close();
         }
+
+        public void DeleteScreening(ScreeningModel screening)
+        {
+            connection.Open();
+            SqlCommand command = new SqlCommand("DELETE FROM Screening WHERE Id = @Id", connection);
+            command.Parameters.AddWithValue("@Id", screening.Id);
+            command.ExecuteNonQuery();
+            connection.Close();
+        }
     }
 }

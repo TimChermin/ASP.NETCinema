@@ -86,6 +86,15 @@ namespace ASPNETCinema.Controllers
             return View(screeningLogic.GetScreening(id));
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
+        public ActionResult DeleteScreening(ScreeningModel screening)
+        {
+            screeningLogic.DeleteScreening(screening);
+            return RedirectToAction("ListScreenings");
+        }
+
 
     }
 }

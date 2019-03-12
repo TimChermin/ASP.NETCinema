@@ -71,6 +71,11 @@ namespace ASPNETCinema.Logic
             database.EditScreening(screening);
         }
 
+        public void DeleteScreening(ScreeningModel screening)
+        {
+            database.DeleteScreening(screening);
+        }
+
 
         public bool IsThisDateAndTimeAvailable(ScreeningModel screening)
         {
