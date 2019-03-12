@@ -81,6 +81,11 @@ namespace ASPNETCinema.Controllers
             return View();
         }
 
+        public ActionResult DeleteScreening(int? id)
+        {
+            return View(screeningLogic.GetScreening(id));
+        }
+
 
     }
 }

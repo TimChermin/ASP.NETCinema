@@ -1,0 +1,50 @@
+﻿@model ASPNETCinema.Models.ScreeningModel
+
+@{
+    ViewData["Title"] = "DeleteScreening";
+}
+
+<h2>DeleteScreening</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ScreeningModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MovieId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MovieId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HallId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HallId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfScreening)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateOfScreening)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TimeOfScreening)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TimeOfScreening)
+        </dd>
+    </dl>
+    
+    <form asp-action="DeleteScreening">
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="ListScreenings">Back to List</a>
+    </form>
+</div>
