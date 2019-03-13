@@ -18,7 +18,7 @@ namespace MovieTests
 
 
         [Fact]
-        public void Should_ReturnAListOfMovies_WhenLoadingMoviesByName()
+        public void Should_ReturnAListOfMoviesOrderedByName_WhenLoadingMoviesByName()
         {
             //Arrange
             //try to add a test database later to put stuff in it first 
@@ -37,9 +37,9 @@ namespace MovieTests
                 foreach (var movie2 in movies2)
                 {
 
-                    if (movie.Id == movie2.Id && movieNr == movie2Nr)
+                    if (comparer.Equals(movie, movie2) && movieNr == movie2Nr)
                     {
-                        Assert.True(comparer.Equals(movie, movie2));
+                        Assert.True(true);
                         found = true;
                     }
                     movie2Nr++;
@@ -53,7 +53,7 @@ namespace MovieTests
         }
 
         [Fact]
-        public void Should_ReturnAListOfMovies_WhenLoadingMoviesByNull()
+        public void Should_ReturnAListOfMoviesOrderedByNull_WhenLoadingMoviesByNull()
         {
             //Arrange
             //try to add a test database later to put stuff in it first 
@@ -72,9 +72,9 @@ namespace MovieTests
                 foreach (var movie2 in movies2)
                 {
 
-                    if (movie.Id == movie2.Id && movieNr == movie2Nr)
+                    if (comparer.Equals(movie, movie2) && movieNr == movie2Nr)
                     {
-                        Assert.True(comparer.Equals(movie, movie2));
+                        Assert.True(true);
                         found = true;
                     }
                     movie2Nr++;
@@ -89,7 +89,7 @@ namespace MovieTests
 
 
         [Fact]
-        public void Should_ReturnAListOfMovies_WhenLoadingMoviesByToday()
+        public void Should_ReturnAListOfMoviesOrderedByToday_WhenLoadingMoviesByToday()
         {
             //Arrange
             //try to add a test database later to put stuff in it first 
@@ -108,9 +108,9 @@ namespace MovieTests
                 foreach (var movie2 in movies2)
                 {
                     
-                    if (movie.Id == movie2.Id && movieNr == movie2Nr)
+                    if (comparer.Equals(movie, movie2) && movieNr == movie2Nr)
                     {
-                        Assert.True(comparer.Equals(movie, movie2));
+                        Assert.True(true);
                         found = true;
                     }
                     movie2Nr++;
@@ -124,7 +124,7 @@ namespace MovieTests
         }
 
         [Fact]
-        public void Should_ReturnAListOfMovies_WhenLoadingMoviesByReleaseAndName()
+        public void Should_ReturnAListOfMoviesOrderedByReleaseAndName_WhenLoadingMoviesByReleaseAndName()
         {
             //Arrange
             //try to add a test database later to put stuff in it first 
@@ -143,12 +143,12 @@ namespace MovieTests
                 found = false;
                 foreach (var movie2 in movies2)
                 {
-                    if (movie.Id == movie2.Id && movieNr == movie2Nr && diffOrder == false && movies.Count > 4)
+                    if (comparer.Equals(movie, movie2) && movieNr == movie2Nr && diffOrder == false && movies.Count > 4)
                     {
                         Assert.False(comparer.Equals(movie, movie2) == diffOrder);
                         found = true;
                     }
-                    else if (movie.Id == movie2.Id)
+                    else if (comparer.Equals(movie, movie2))
                     {
                         Assert.True(comparer.Equals(movie, movie2));
                         found = true;
