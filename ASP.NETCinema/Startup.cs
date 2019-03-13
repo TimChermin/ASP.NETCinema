@@ -36,19 +36,10 @@ namespace ASPNETCinema
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
         .AddCookie(options => {
-            options.LoginPath = "/Account/Login/";
+            options.LoginPath = "/User/LoginUser/";
         });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
-
-        /*services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-	.AddCookie(options => {
-		options.Events.OnRedirectToLogin = (context) =>
-		{
-			context.Response.StatusCode = 401;
-			return Task.CompletedTask;
-		};
-	});*/
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

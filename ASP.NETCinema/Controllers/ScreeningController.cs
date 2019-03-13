@@ -25,6 +25,7 @@ namespace ASPNETCinema.Controllers
             return View(screeningLogic.GetScreenings());
         }
 
+        [Authorize(Roles = "Administrator")]
         public ActionResult AddScreening()
         {
             return View();
@@ -49,11 +50,13 @@ namespace ASPNETCinema.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Administrator, Employee")]
         public ActionResult DetailsScreening(int? id)
         {
             return View(screeningLogic.GetScreening(id));
         }
 
+        [Authorize(Roles = "Administrator")]
         public ActionResult EditScreening(int? id)
         {
             return View(screeningLogic.GetScreening(id));
@@ -76,6 +79,20 @@ namespace ASPNETCinema.Controllers
             }
 
             return View();
+        }
+
+        public ActionResult DeleteScreening(int? id)
+        {
+            return View(screeningLogic.GetScreening(id));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
+        public ActionResult DeleteScreening(ScreeningModel screening)
+        {
+            screeningLogic.DeleteScreening(screening);
+            return RedirectToAction("ListScreenings");
         }
 
 

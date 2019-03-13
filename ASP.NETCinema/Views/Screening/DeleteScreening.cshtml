@@ -1,11 +1,12 @@
 ﻿@model ASPNETCinema.Models.ScreeningModel
 
 @{
-    ViewData["Title"] = "DetailsScreening";
+    ViewData["Title"] = "DeleteScreening";
 }
 
-<h2>DetailsScreening</h2>
+<h2>DeleteScreening</h2>
 
+<h3>Are you sure you want to delete this?</h3>
 <div>
     <h4>ScreeningModel</h4>
     <hr />
@@ -41,11 +42,9 @@
             @Html.DisplayFor(model => model.TimeOfScreening)
         </dd>
     </dl>
-</div>
-<div>
-    @if (User.IsInRole("Administrator"))
-    {
-        @Html.ActionLink("Edit", "EditScreening", new { id = Model.Id })
-}
-    <a asp-action="ListScreenings">Back to List</a>
+    
+    <form asp-action="DeleteScreening">
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="ListScreenings">Back to List</a>
+    </form>
 </div>

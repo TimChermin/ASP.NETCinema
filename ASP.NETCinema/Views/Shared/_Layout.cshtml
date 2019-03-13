@@ -26,11 +26,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Movie" asp-action="Home" class="navbar-brand">CinTim</a>
+                <a asp-area="" asp-controller="Movie" asp-action="ListMovies" class="navbar-brand">CinTim</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Movie" asp-action="Home">Home</a></li>
+                    <li><a asp-area="" asp-controller="Movie" asp-action="ListMovies">Home</a></li>
                     <li><a asp-area="" asp-controller="Movie" asp-action="ListMovies">Movies</a></li>
                     @if (User.Identity.IsAuthenticated == false)
                     {
@@ -43,12 +43,26 @@
                         <li><a asp-area="" asp-controller="" asp-action="">Username: @User.Identity.Name</a></li>
                     }
 
+                    @if (User.IsInRole("Normal"))
+                    {
+                        <li><a>Role: Normal</a></li>
+                    }
+
                     @if (User.IsInRole("Administrator"))
                     {
+                        <li><a>Role: Administrator</a></li>
                         <li><a asp-area="" asp-controller="Hall" asp-action="ListHalls">Halls</a></li>
                         <li><a asp-area="" asp-controller="Screening" asp-action="ListScreenings">Screenings</a></li>
+                        <li><a asp-area="" asp-controller="Task" asp-action="ListTasks">Tasks</a></li>
+                        <li><a asp-area="" asp-controller="Employee" asp-action="ListEmployees">Employees</a></li>
+                    }
 
-
+                    @if (User.IsInRole("Employee"))
+                    {
+                        <li><a>Role: Employee</a></li>
+                        <li><a asp-area="" asp-controller="Screening" asp-action="ListScreenings">Screenings</a></li>
+                        <li><a asp-area="" asp-controller="Task" asp-action="ListTasks">Tasks</a></li>
+                        <li><a asp-area="" asp-controller="Employee" asp-action="ListEmployees">Employees</a></li>
                     }
 
 

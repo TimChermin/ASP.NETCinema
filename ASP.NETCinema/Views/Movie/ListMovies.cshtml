@@ -2,93 +2,96 @@
 
 @{
     ViewData["Title"] = "ListMovies";
-    
+
 
 }
 <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
 <h2>Movies</h2>
-<a asp-action="AddMovie">Add New Movie</a>
+@if (User.IsInRole("Administrator"))
+{
+    <a asp-action="AddMovie">Add New Movie</a>
+}
 
-<form asp-action="ListMovies">
-    <input name="OrderBy" type="submit" id="submit" value="Name" />
-    <input name="OrderBy" type="submit" id="process" value="MovieType" />
-    <input name="OrderBy" type="submit" id="process" value="ReleaseDate" />
-    <input name="OrderBy" type="submit" id="process" value="MoviesToday" />
+    <form asp-action="ListMovies">
+        <input name="OrderBy" type="submit" id="submit" value="Name" />
+        <input name="OrderBy" type="submit" id="process" value="MovieType" />
+        <input name="OrderBy" type="submit" id="process" value="ReleaseDate" />
+        <input name="OrderBy" type="submit" id="process" value="MoviesToday" />
 
-</form>
+    </form>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ReleaseDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastScreeningDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MovieType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MovieLenght)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ReleaseDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastScreeningDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MovieType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MovieLenght)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
 
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
 
-                <a href="/Movie/DetailsMovie/@Html.DisplayFor(modelItem => item.Id)">
-                    <img src="@Html.DisplayFor(modelItem => item.ImageString)" alt="Image: @Html.DisplayFor(modelItem => item.Name)" width="120" height="160">
-                </a>
-                <p>@Html.ActionLink(item.Name, "DetailsMovie", new { id = item.Id })</p>
-                <!--<img src="https://www.w3schools.com/images/w3schools_green.jpg" alt="W3Schools.com">-->
+                        <a href="/Movie/DetailsMovie/@Html.DisplayFor(modelItem => item.Id)">
+                            <img src="@Html.DisplayFor(modelItem => item.ImageString)" alt="Image: @Html.DisplayFor(modelItem => item.Name)" width="120" height="160">
+                        </a>
+                        <p>@Html.ActionLink(item.Name, "DetailsMovie", new { id = item.Id })</p>
+                        <!--<img src="https://www.w3schools.com/images/w3schools_green.jpg" alt="W3Schools.com">-->
 
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReleaseDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastScreeningDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MovieType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MovieLenght)
-            </td>
-            <td>
-                @if (User.IsInRole("Administrator"))
-                {
-                    @Html.ActionLink("Edit", "EditMovie", new { id = item.Id });
-                <a> | </a>
-                    @Html.ActionLink("Delete", "DeleteMovie", new { id = item.Id });
-                <a> | </a>
-                }
-                @Html.ActionLink("Details", "DetailsMovie", new { id = item.Id })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReleaseDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastScreeningDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MovieType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MovieLenght)
+                    </td>
+                    <td>
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            @Html.ActionLink("Edit", "EditMovie", new { id = item.Id });
+                            <a> | </a>
+                            @Html.ActionLink("Delete", "DeleteMovie", new { id = item.Id });
+                            <a> | </a>
+                        }
+                        @Html.ActionLink("Details", "DetailsMovie", new { id = item.Id })
 
 
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

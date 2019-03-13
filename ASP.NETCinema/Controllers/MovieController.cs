@@ -12,7 +12,6 @@ namespace ASPNETCinema.Controllers
 {
     public class MovieController : Controller
     {
-        DatabaseMovie database = new DatabaseMovie();
         MovieLogic movieLogic = new MovieLogic();
 
         //other things
@@ -75,12 +74,7 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult DeleteMovie(int? id)
         {
-            if (User.IsInRole("Administrator"))
-            {
-                return View(movieLogic.GetMovie(id));
-            }
-            //Redirects to standard
-            return Redirect("/");
+            return View(movieLogic.GetMovie(id));
         }
 
         // POST: Movies/Delete/5
