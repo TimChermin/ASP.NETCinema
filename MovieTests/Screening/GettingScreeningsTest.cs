@@ -20,35 +20,24 @@ namespace ScreeningTests
         public void Should_ReturnAListOfScreenings_WhenLoadingScreenings()
         {
             //Arrange
-            //try to add a test database later to put stuff in it first 
-
-            //Act
             screenings = screeningLogic.GetScreenings();
             screenings2 = screeningLogic.GetScreenings();
 
-            bool found = false;
-            int screeningNr = 0;
-            int screeningNr2 = 0;
+            //Act
+            int matchCount = 0;
             foreach (var screening in screenings)
             {
-                screeningNr2 = 0;
-                found = false;
                 foreach (var screening2 in screenings2)
                 {
-
-                    if (comparer.Equals(screening, screening2) && screeningNr == screeningNr2)
+                    if (comparer.Equals(screening, screening2))
                     {
-                        Assert.True(true);
-                        found = true;
+                        matchCount++;
                     }
-                    screeningNr2++;
                 }
-                if (found == false)
-                {
-                    Assert.True(false);
-                }
-                screeningNr++;
             }
+            
+            //Assert
+            Assert.Equal(screenings.Count, matchCount);
         }
 
 
