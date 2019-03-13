@@ -8,18 +8,17 @@ using Xunit;
 
 namespace MovieTests
 {
-    public class MovieTests
+    public class GettingMoviesTest
     {
         MovieLogic movieLogic = new MovieLogic();
         MovieController movieController = new MovieController();
         List<MovieModel> movies = new List<MovieModel>();
         List<MovieModel> movies2 = new List<MovieModel>();
-
         ThingEqualityComparer comparer = new ThingEqualityComparer();
 
 
         [Fact]
-        public void Should_ReturnAListOfMovies_WhenLoadingTheListMoviesViewName()
+        public void Should_ReturnAListOfMovies_WhenLoadingMoviesByName()
         {
             //Arrange
             //try to add a test database later to put stuff in it first 
@@ -48,7 +47,7 @@ namespace MovieTests
         }
 
         [Fact]
-        public void Should_ReturnAListOfMovies_WhenLoadingTheListMoviesView()
+        public void Should_ReturnAListOfMovies_WhenLoadingMoviesByNull()
         {
             //Arrange
             //try to add a test database later to put stuff in it first 
@@ -78,7 +77,7 @@ namespace MovieTests
 
 
         [Fact]
-        public void Should_ReturnAListOfMovies_WhenLoadingTheListMoviesViewMoviesToday()
+        public void Should_ReturnAListOfMovies_WhenLoadingMoviesByToday()
         {
             //Arrange
             //try to add a test database later to put stuff in it first 
