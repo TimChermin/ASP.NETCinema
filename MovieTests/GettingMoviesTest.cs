@@ -26,23 +26,29 @@ namespace MovieTests
             //Act
             movies = movieLogic.GetMoviesAndOrderBy("Name");
             movies2 = movieLogic.GetMoviesAndOrderBy("Name");
-            
+
             bool found = false;
+            int movieNr = 0;
+            int movie2Nr = 0;
             foreach (var movie in movies)
             {
+                movie2Nr = 0;
                 found = false;
                 foreach (var movie2 in movies2)
                 {
-                    if (movie.Id == movie2.Id)
+
+                    if (movie.Id == movie2.Id && movieNr == movie2Nr)
                     {
                         Assert.True(comparer.Equals(movie, movie2));
                         found = true;
                     }
+                    movie2Nr++;
                 }
                 if (found == false)
                 {
                     Assert.True(false);
                 }
+                movieNr++;
             }
         }
 
@@ -57,21 +63,27 @@ namespace MovieTests
             movies2 = movieLogic.GetMoviesAndOrderBy(null);
 
             bool found = false;
+            int movieNr = 0;
+            int movie2Nr = 0;
             foreach (var movie in movies)
             {
+                movie2Nr = 0;
                 found = false;
                 foreach (var movie2 in movies2)
                 {
-                    if (movie.Id == movie2.Id)
+
+                    if (movie.Id == movie2.Id && movieNr == movie2Nr)
                     {
                         Assert.True(comparer.Equals(movie, movie2));
                         found = true;
                     }
+                    movie2Nr++;
                 }
                 if (found == false)
                 {
                     Assert.True(false);
                 }
+                movieNr++;
             }
         }
 
@@ -87,21 +99,69 @@ namespace MovieTests
             movies2 = movieLogic.GetMoviesAndOrderBy("MoviesToday");
 
             bool found = false;
+            int movieNr = 0;
+            int movie2Nr = 0;
             foreach (var movie in movies)
             {
+                movie2Nr = 0;
                 found = false;
                 foreach (var movie2 in movies2)
                 {
-                    if (movie.Id == movie2.Id)
+                    
+                    if (movie.Id == movie2.Id && movieNr == movie2Nr)
                     {
                         Assert.True(comparer.Equals(movie, movie2));
                         found = true;
                     }
+                    movie2Nr++;
                 }
                 if (found == false)
                 {
                     Assert.True(false);
                 }
+                movieNr++;
+            }
+        }
+
+        [Fact]
+        public void Should_ReturnAListOfMovies_WhenLoadingMoviesByReleaseAndName()
+        {
+            //Arrange
+            //try to add a test database later to put stuff in it first 
+
+            //Act
+            movies = movieLogic.GetMoviesAndOrderBy("ReleaseDate");
+            movies2 = movieLogic.GetMoviesAndOrderBy("Name");
+
+            bool found = false;
+            bool diffOrder = false;
+            int movieNr = 0;
+            int movie2Nr = 0;
+            foreach (var movie in movies)
+            {
+                movie2Nr = 0;
+                found = false;
+                foreach (var movie2 in movies2)
+                {
+                    if (movie.Id == movie2.Id && movieNr == movie2Nr && diffOrder == false && movies.Count > 4)
+                    {
+                        Assert.False(comparer.Equals(movie, movie2) == diffOrder);
+                        found = true;
+                    }
+                    else if (movie.Id == movie2.Id)
+                    {
+                        Assert.True(comparer.Equals(movie, movie2));
+                        found = true;
+                        diffOrder = true;
+                    }
+                    movie2Nr++;
+                }
+
+                if (found == false)
+                {
+                    Assert.True(false);
+                }
+                movieNr++;
             }
         }
 
@@ -122,30 +182,5 @@ namespace MovieTests
                 return obj.GetHashCode();
             }
         }
-
-        /*
-    <input name = "OrderBy" type="submit" id="submit" value="Name" />
-    <input name = "OrderBy" type="submit" id="process" value="MovieType" />
-    <input name = "OrderBy" type="submit" id="process" value="ReleaseDate" />
-    <input name = "OrderBy" type="submit" id="process" value="MoviesToday" />*/
-
-        /*[TestMethod()]
-        public void Should_ReturnTrue_When_TheLocationWilNotBlockAValuable()
-        {
-            //Arrange
-            shipArray = new Container[5, 4, 5];
-            ship = new Ship(5, 4, 5, 1000, shipArray);
-            shipArray[0, 0, 0] = cont = new Container(20, true, true);
-            shipArray[1, 0, 0] = cont = new Container(20, true, false);
-            cont2 = new Container(20, false, false);
-            cont = new Container(20, true, false);
-
-            //Act
-
-            //Assert
-            Assert.IsTrue(ship.DoesTheLocationHaveAnValuable(0, 0, 1, cont2, true) == true);
-            Assert.IsTrue(ship.DoesTheLocationHaveAnValuable(1, 0, 1, cont, true) == false);
-        }
-        */
     }
 }
