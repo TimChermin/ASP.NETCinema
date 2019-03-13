@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ASP.NETCinema\ASPNETCinema.csproj" />
+    <ProjectReference Include="..\ASP.NETCinema\ControllerAndViewLayer.csproj" />
   </ItemGroup>
 
 </Project>
