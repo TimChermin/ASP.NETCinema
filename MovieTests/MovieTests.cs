@@ -3,6 +3,7 @@ using ASPNETCinema.Logic;
 using ASPNETCinema.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace MovieTests
@@ -11,6 +12,40 @@ namespace MovieTests
     {
         MovieLogic movieLogic = new MovieLogic();
         MovieController movieController = new MovieController();
+        List<MovieModel> movies = new List<MovieModel>();
+        List<MovieModel> movies2 = new List<MovieModel>();
+
+        ThingEqualityComparer comparer = new ThingEqualityComparer();
+
+
+        [Fact]
+        public void Should_ReturnAListOfMovies_WhenLoadingTheListMoviesViewName()
+        {
+            //Arrange
+            //try to add a test database later to put stuff in it first 
+
+            //Act
+            movies = movieLogic.GetMoviesAndOrderBy("Name");
+            movies2 = movieLogic.GetMoviesAndOrderBy("Name");
+            
+            bool found = false;
+            foreach (var movie in movies)
+            {
+                found = false;
+                foreach (var movie2 in movies2)
+                {
+                    if (movie.Id == movie2.Id)
+                    {
+                        Assert.True(comparer.Equals(movie, movie2));
+                        found = true;
+                    }
+                }
+                if (found == false)
+                {
+                    Assert.True(false);
+                }
+            }
+        }
 
         [Fact]
         public void Should_ReturnAListOfMovies_WhenLoadingTheListMoviesView()
@@ -19,24 +54,74 @@ namespace MovieTests
             //try to add a test database later to put stuff in it first 
 
             //Act
-            List<MovieModel> movies = movieLogic.GetMoviesAndOrderBy("MoviesToday");
-            List<MovieModel> movies2 = movieLogic.GetMoviesAndOrderBy("MoviesToday");
+            movies = movieLogic.GetMoviesAndOrderBy(null);
+            movies2 = movieLogic.GetMoviesAndOrderBy(null);
+
+            bool found = false;
+            foreach (var movie in movies)
+            {
+                found = false;
+                foreach (var movie2 in movies2)
+                {
+                    if (movie.Id == movie2.Id)
+                    {
+                        Assert.True(comparer.Equals(movie, movie2));
+                        found = true;
+                    }
+                }
+                if (found == false)
+                {
+                    Assert.True(false);
+                }
+            }
+        }
+
+
+        [Fact]
+        public void Should_ReturnAListOfMovies_WhenLoadingTheListMoviesViewMoviesToday()
+        {
+            //Arrange
+            //try to add a test database later to put stuff in it first 
+
+            //Act
+            movies = movieLogic.GetMoviesAndOrderBy("MoviesToday");
+            movies2 = movieLogic.GetMoviesAndOrderBy("MoviesToday");
+
+            bool found = false;
+            foreach (var movie in movies)
+            {
+                found = false;
+                foreach (var movie2 in movies2)
+                {
+                    if (movie.Id == movie2.Id)
+                    {
+                        Assert.True(comparer.Equals(movie, movie2));
+                        found = true;
+                    }
+                }
+                if (found == false)
+                {
+                    Assert.True(false);
+                }
+            }
+        }
 
 
 
-            //Assert
-            //Assert.Same(movies, movies2);
-            //Assert.Equal(movies, movies2);
-           // Assert.True(movies.Equals(movies2));
-     
-            //Assert.Equal(movies, movies2);
-            //Assert.NotEqual(movies, movies2);
+        class ThingEqualityComparer : IEqualityComparer<MovieModel>
+        {
+            public bool Equals(MovieModel x, MovieModel y)
+            {
+                if (x == null || y == null)
+                    return false;
 
-            //Assert.Equal(movies2, actual: movies);
+                return (x.Id == y.Id && x.Name == y.Name);
+            }
 
-
-
-            //Assert.Equal("[MovieModel { Description = WATAAAAAAAAAAR, ID = 13, ImageString = https://www.movieposters4u.com/images/a/AquamanAdv..., LastScreeningDate = 2019-03-02T00:00:00.0000000, MovieLenght = 70, ... }, MovieModel { Description = TestEdit, ID = 1, ImageString = https://www.movieposters4u.com/images/b/BladeRunne..., LastScreeningDate = 2020-10-05T00:00:00.0000000, MovieLenght = 144, ... }, MovieModel { Description = PIKA, ID = 15, ImageString = https://m.media-amazon.com/images/M/MV5BMTk1MjgwNj..., LastScreeningDate = 2019-02-28T00:00:00.0000000, MovieLenght = 136, ... }, MovieModel { Description = About a dude, ID = 14, ImageString = https://www.movieposter.com/posters/archive/main/3..., LastScreeningDate = 2019-03-10T00:00:00.0000000, MovieLenght = 154, ... }, MovieModel { Description = Gaat over Jader, ID = 6, ImageString = https://images-na.ssl-images-amazon.com/images/I/5..., LastScreeningDate = 2019-02-04T00:00:00.0000000, MovieLenght = 122, ... }, ...]", "[MovieModel { Description = WATAAAAAAAAAAR, ID = 13, ImageString = https://www.movieposters4u.com/images/a/AquamanAdv..., LastScreeningDate = 2019-03-02T00:00:00.0000000, MovieLenght = 70, ... }, MovieModel { Description = TestEdit, ID = 1, ImageString = https://www.movieposters4u.com/images/b/BladeRunne..., LastScreeningDate = 2020-10-05T00:00:00.0000000, MovieLenght = 144, ... }, MovieModel { Description = PIKA, ID = 15, ImageString = https://m.media-amazon.com/images/M/MV5BMTk1MjgwNj..., LastScreeningDate = 2019-02-28T00:00:00.0000000, MovieLenght = 136, ... }, MovieModel { Description = About a dude, ID = 14, ImageString = https://www.movieposter.com/posters/archive/main/3..., LastScreeningDate = 2019-03-10T00:00:00.0000000, MovieLenght = 154, ... }, MovieModel { Description = Gaat over Jader, ID = 6, ImageString = https://images-na.ssl-images-amazon.com/images/I/5..., LastScreeningDate = 2019-02-04T00:00:00.0000000, MovieLenght = 122, ... }, ...]");
+            public int GetHashCode(MovieModel obj)
+            {
+                return obj.GetHashCode();
+            }
         }
 
         /*

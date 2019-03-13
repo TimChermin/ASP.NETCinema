@@ -12,7 +12,6 @@ namespace ASPNETCinema.Controllers
 {
     public class MovieController : Controller
     {
-        DatabaseMovie database = new DatabaseMovie();
         MovieLogic movieLogic = new MovieLogic();
 
         //other things
