@@ -19,4 +19,9 @@
     <ProjectReference Include="..\ASP.NETCinema\ControllerAndViewLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Hall\" />
+    <Folder Include="User\" />
+  </ItemGroup>
+
 </Project>

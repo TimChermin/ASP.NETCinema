@@ -18,6 +18,22 @@ namespace MovieTests
 
 
         [Fact]
+        public void Should_ReturnTheMovieWithTHeSameId_WhenLoadingMovieDetials()
+        {
+            //Arrange
+            movies = movieLogic.GetMoviesAndOrderBy(null);
+
+            //Act
+            foreach (var movie in movies)
+            {
+                Assert.True(comparer.Equals(movie, movieLogic.GetMovie(movie.Id)));
+            }
+
+            //Assert
+        }
+
+
+        [Fact]
         public void Should_ReturnAListOfMoviesOrderedByName_WhenLoadingMoviesByName()
         {
             //Arrange
