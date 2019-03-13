@@ -174,7 +174,9 @@ namespace MovieTests
                 if (x == null || y == null)
                     return false;
 
-                return (x.Id == y.Id && x.Name == y.Name);
+                return (x.Id == y.Id && x.Name == y.Name && x.Description == y.Description && x.ReleaseDate == y.ReleaseDate
+                    && x.LastScreeningDate == y.LastScreeningDate && x.MovieType == y.MovieType && x.MovieLenght == y.MovieLenght
+                    && x.ImageString == y.ImageString);
             }
 
             public int GetHashCode(MovieModel obj)
