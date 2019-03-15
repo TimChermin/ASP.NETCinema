@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ASPNETCinema.Models
+namespace ASPNETCinema.ViewModels
 {
-    public class EmployeeModel
+    public class EmployeeViewModel
     {
-        public EmployeeModel(int id, string name)
+        public EmployeeViewModel(int id, string name)
         {
             Id = id;
             Name = name;
         }
 
-        public EmployeeModel()
+        public EmployeeViewModel()
         {
         }
 

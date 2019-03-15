@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using ASPNETCinema.Models;
 
-namespace ASPNETCinema.Models
+namespace ASPNETCinema.ViewModels
 {
-    public class UserModel
+    public class UserViewModel
     {
-        public UserModel(int id, string name, string password, int administrator)
+        public UserViewModel(int id, string name, string password, int administrator)
         {
             Id = id;
             Name = name;
@@ -16,14 +17,14 @@ namespace ASPNETCinema.Models
             Administrator = administrator;
         }
 
-        public UserModel(int id, string name, string password)
+        public UserViewModel(int id, string name, string password)
         {
             Id = id;
             Name = name;
             Password = password;
         }
 
-        public UserModel()
+        public UserViewModel()
         {
         }
 

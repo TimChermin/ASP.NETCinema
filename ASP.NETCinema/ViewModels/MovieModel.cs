@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace ASPNETCinema.Models
+namespace ASPNETCinema.ViewModels
 {
-    public class MovieModel
+    public class MovieViewModel
     {
-        public MovieModel(string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)
+        public MovieViewModel(string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)
         {
             Name = name;
             Description = description;
@@ -19,7 +19,7 @@ namespace ASPNETCinema.Models
             ImageString = imageString;
         }
 
-        public MovieModel(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)
+        public MovieViewModel(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)
         {
             Id = id;
             Name = name;
@@ -31,7 +31,7 @@ namespace ASPNETCinema.Models
             ImageString = imageString;
         }
 
-        public MovieModel()
+        public MovieViewModel()
         {
         }
 

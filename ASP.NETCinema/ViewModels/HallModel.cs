@@ -1,13 +1,14 @@
-﻿using System;
+﻿using ASPNETCinema.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ASPNETCinema.Models
+namespace ASPNETCinema.ViewModels
 {
-    public class HallModel
+    public class HallViewModel
     {
-        public HallModel(decimal price, string screenType, int seats, int seatsTaken)
+        public HallViewModel(decimal price, string screenType, int seats, int seatsTaken)
         {
             Price = price;
             ScreenType = screenType;
@@ -15,7 +16,7 @@ namespace ASPNETCinema.Models
             SeatsTaken = seatsTaken;
         }
 
-        public HallModel(int id, decimal price, string screenType, int seats, int seatsTaken)
+        public HallViewModel(int id, decimal price, string screenType, int seats, int seatsTaken)
         {
             Id = id;
             Price = price;
@@ -24,7 +25,7 @@ namespace ASPNETCinema.Models
             SeatsTaken = seatsTaken;
         }
 
-        public HallModel()
+        public HallViewModel()
         {
 
         }

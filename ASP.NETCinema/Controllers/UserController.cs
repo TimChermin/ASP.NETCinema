@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using ASPNETCinema.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
-using ASPNETCinema.Data;
+using ASPNETCinema.DataLayer;
 using ASPNETCinema.Logic;
 using System.ComponentModel.DataAnnotations;
 using System.Net;

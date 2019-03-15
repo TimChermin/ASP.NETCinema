@@ -1,13 +1,14 @@
-﻿using System;
+﻿using ASPNETCinema.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ASPNETCinema.Models
+namespace ASPNETCinema.ViewModels
 {
-    public class CinemaModel
+    public class CinemaViewModel
     {
-        public CinemaModel()
+        public CinemaViewModel()
         {
         }
 

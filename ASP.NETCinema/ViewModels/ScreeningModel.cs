@@ -1,14 +1,15 @@
-﻿using System;
+﻿using ASPNETCinema.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ASPNETCinema.Models
+namespace ASPNETCinema.ViewModels
 {
-    public class ScreeningModel
+    public class ScreeningViewModel
     {
-        public ScreeningModel(int id, int movieId, int hallId, DateTime dateOfScreening, TimeSpan timeOfScreening)
+        public ScreeningViewModel(int id, int movieId, int hallId, DateTime dateOfScreening, TimeSpan timeOfScreening)
         {
             Id = id;
             MovieId = movieId;
@@ -17,7 +18,7 @@ namespace ASPNETCinema.Models
             TimeOfScreening = timeOfScreening;
         }
 
-        public ScreeningModel()
+        public ScreeningViewModel()
         {
         }
 

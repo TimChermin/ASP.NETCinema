@@ -1,13 +1,14 @@
-﻿using System;
+﻿using ASPNETCinema.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ASPNETCinema.Models
+namespace ASPNETCinema.ViewModels
 {
-    public class TaskModel
+    public class TaskViewModel
     {
-        public TaskModel(int id, int idScreening, int taskType)
+        public TaskViewModel(int id, int idScreening, int taskType)
         {
             Id = id;
             IdScreening = idScreening;
@@ -15,7 +16,7 @@ namespace ASPNETCinema.Models
         }
 
 
-        public TaskModel()
+        public TaskViewModel()
         {
         }
 
