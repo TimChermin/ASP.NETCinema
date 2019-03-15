@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using ASPNETCinema.Models;
 using System.Data.SqlClient;
 
-namespace ASPNETCinema.Data
+namespace ASPNETCinema.DataLayer
 {
     public class DatabaseUser
     {

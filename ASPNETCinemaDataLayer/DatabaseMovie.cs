@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using ASPNETCinema.Models;
 using System.Data.SqlClient;
 
-namespace ASPNETCinema
+namespace ASPNETCinema.DataLayer
 {
     public class DatabaseMovie
     {

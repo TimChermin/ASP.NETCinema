@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ASPNETCinema.Data
+namespace ASPNETCinema.DataLayer
 {
     public class DatabaseTask
     {

@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using ASPNETCinema.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using ASPNETCinema.DataLayer;
 
 namespace ASPNETCinema
 {
@@ -38,14 +39,14 @@ namespace ASPNETCinema
         .AddCookie(options => {
             options.LoginPath = "/User/LoginUser/";
         });
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-
-
+            
 
             //test
             // Add the whole configuration object here.
             services.AddSingleton<IConfiguration>(Configuration);
+            services.AddTransient(_ => new DatabaseConnection(Configuration.GetConnectionString("DefaultConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
