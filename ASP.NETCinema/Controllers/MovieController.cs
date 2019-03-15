@@ -7,13 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
 using ASPNETCinema.Logic;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Configuration;
 
 namespace ASPNETCinema.Controllers
 {
+    
     public class MovieController : Controller
     {
         MovieLogic movieLogic = new MovieLogic();
-
+        private readonly IConfiguration configuration;
         //other things
         //List
         //Add
@@ -87,5 +89,12 @@ namespace ASPNETCinema.Controllers
             movieLogic.DeleteMovie(movie);
             return RedirectToAction("ListMovies");
         }
+
+        public MovieController(IConfiguration config)
+        {
+            configuration = config;
+        }
+
+        //connectionString = configuration.GetConnectionString("DefaultConnection");
     }
 }

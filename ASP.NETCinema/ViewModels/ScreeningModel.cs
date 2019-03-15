@@ -30,9 +30,19 @@ namespace ASPNETCinema.Models
         public int HallId { get; set; }
         public HallModel Hall { get; set; }
         
-        
+
+        [Display(Name = "Screening date and Time: dd/mm/yyyy")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [Required(ErrorMessage = "The Date field is required.")]
+        [DataType(DataType.Date)]
         public DateTime DateOfScreening { get; set; }
+
+        [Display(Name = "Screening Time")]
+        //[DisplayFormat(DataFormatString = "{0:HH:mm}")]
+        [Required(ErrorMessage = "The Time field is required.")]
+        [DataType(DataType.Time)]
         public TimeSpan TimeOfScreening { get; set; }
+
         public TaskModel Task { get; set; }
 
 

@@ -6,7 +6,7 @@ Deleting Employees
 GROUP BY
 INNER JOIN/OUTER JOIN
 
-t
+
 Later:
 Adding Employees.
 Adding daily screenings.

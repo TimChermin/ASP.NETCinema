@@ -16,12 +16,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ASP.NETCinema\ControllerAndViewLayer.csproj" />
+    <Folder Include="Hall\" />
+    <Folder Include="User\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Hall\" />
-    <Folder Include="User\" />
+    <ProjectReference Include="..\ASP.NETCinema\aMVCLayer.csproj" />
   </ItemGroup>
 
 </Project>

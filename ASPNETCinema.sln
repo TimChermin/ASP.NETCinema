@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControllerAndViewLayer", "ASP.NETCinema\ControllerAndViewLayer.csproj", "{AEFEFECC-4FF0-4CE3-A84A-969F5DA3191B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aMVCLayer", "ASP.NETCinema\aMVCLayer.csproj", "{AEFEFECC-4FF0-4CE3-A84A-969F5DA3191B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "MovieTests\UnitTests.csproj", "{FA30B6F3-74EF-44FF-BC3F-DC02213081AB}"
 EndProject

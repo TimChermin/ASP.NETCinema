@@ -11,7 +11,7 @@ namespace MovieTests
     public class GettingMoviesTest
     {
         MovieLogic movieLogic = new MovieLogic();
-        MovieController movieController = new MovieController();
+        //MovieController movieController = new MovieController();
         List<MovieModel> movies = new List<MovieModel>();
         List<MovieModel> movies2 = new List<MovieModel>();
         ThingEqualityComparer comparer = new ThingEqualityComparer();

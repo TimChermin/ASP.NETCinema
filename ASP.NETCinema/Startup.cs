@@ -39,6 +39,13 @@ namespace ASPNETCinema
             options.LoginPath = "/User/LoginUser/";
         });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+
+
+
+            //test
+            // Add the whole configuration object here.
+            services.AddSingleton<IConfiguration>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,5 +72,7 @@ namespace ASPNETCinema
                     template: "{controller=Movie}/{action=ListMovies}/{id?}");
             });
         }
+        
+
     }
 }
