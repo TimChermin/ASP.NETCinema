@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ASPNETCinema.Logic;
 using ASPNETCinema.Models;
+using ASPNETCinema.ViewModels;
 using Interfaces;
 using Interfaces.Outside_interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,16 @@ namespace ASPNETCinema.Controllers
         public ActionResult ListEmployees()
         {
             IEmployee employee = new Employee();
-            List<EmployeeModel> employees = employee.GetEmployees();
+            List<EmployeeViewModel> employees = new List<EmployeeViewModel>();
+            foreach (var emp in employee.GetEmployees())
+            {
+                employees.Add(new EmployeeViewModel
+                {
+                    Id = emp.Id,
+                    Name = emp.Name
+                });
+            }
+            //List<EmployeeModel> employees = employee.GetEmployees();
             return View(employees);
             //test
 
