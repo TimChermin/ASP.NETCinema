@@ -13,13 +13,19 @@ namespace ASPNETCinema.Controllers
 {
     public class EmployeeController : Controller
     {
+
+        IEmployee _employee;
+        public EmployeeController()
+        {
+            _employee = new Employee();
+        }
+
         EmployeeLogic employeeLogic = new EmployeeLogic();
 
         public ActionResult ListEmployees()
         {
-            IEmployee employee = new Employee();
             List<EmployeeViewModel> employees = new List<EmployeeViewModel>();
-            foreach (var emp in employee.GetEmployees())
+            foreach (var emp in _employee.GetEmployees())
             {
                 employees.Add(new EmployeeViewModel
                 {
@@ -37,8 +43,7 @@ namespace ASPNETCinema.Controllers
 
         public ActionResult DetailsEmployee()
         {
-            IEmployee employee = new Employee();
-            ViewBag.employeeName = employee.GetName(1);
+            ViewBag.employeeName = _employee.GetName(1);
             return View();
         }
 
