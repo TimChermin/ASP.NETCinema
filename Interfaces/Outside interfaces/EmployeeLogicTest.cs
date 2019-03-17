@@ -8,6 +8,7 @@ namespace Interfaces.Outside_interfaces
 {
     public class Employee : IEmployee
     {
+
         DatabaseEmployee database = new DatabaseEmployee();
         public string GetName(int id)
         {

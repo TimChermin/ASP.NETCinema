@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using ASPNETCinema.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using ASPNETCinema.DataLayer;
+using Interfaces;
+using Interfaces.Outside_interfaces;
 
 namespace ASPNETCinema
 {
@@ -41,9 +43,10 @@ namespace ASPNETCinema
         });
             
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            
+
 
             //test
+            services.AddScoped<IEmployee, Employee>();
             // Add the whole configuration object here.
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddTransient(_ => new DatabaseConnection(Configuration.GetConnectionString("DefaultConnection")));

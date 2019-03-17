@@ -13,14 +13,14 @@ namespace ASPNETCinema.Controllers
 {
     public class EmployeeController : Controller
     {
+        private readonly IEmployee _employee;
 
-        IEmployee _employee;
-        public EmployeeController()
+        //added scoped stuff in startup 
+        public EmployeeController(IEmployee employee)
         {
-            _employee = new Employee();
+            _employee = employee;
         }
-
-        EmployeeLogic employeeLogic = new EmployeeLogic();
+        
 
         public ActionResult ListEmployees()
         {
