@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Models\Models.csproj" />
+    <ProjectReference Include="..\ASPNETCinemaDataLayer\DataLayer.csproj" />
   </ItemGroup>
 
 </Project>

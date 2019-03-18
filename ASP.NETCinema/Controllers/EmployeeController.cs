@@ -13,10 +13,10 @@ namespace ASPNETCinema.Controllers
 {
     public class EmployeeController : Controller
     {
-        private readonly IEmployee _employee;
+        private readonly IEmployeeContext _employee;
 
         //added scoped stuff in startup 
-        public EmployeeController(IEmployee employee)
+        public EmployeeController(IEmployeeContext employee)
         {
             _employee = employee;
         }
@@ -24,8 +24,9 @@ namespace ASPNETCinema.Controllers
 
         public ActionResult ListEmployees()
         {
+            var employeeLogic = new Employee(_employee);
             List<EmployeeViewModel> employees = new List<EmployeeViewModel>();
-            foreach (var emp in _employee.GetEmployees())
+            foreach (var emp in employeeLogic.GetEmployees())
             {
                 employees.Add(new EmployeeViewModel
                 {

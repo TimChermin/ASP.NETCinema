@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicLayer", "LogicLayer\LogicLayer.csproj", "{A034D1F1-14F2-435F-82E3-D2D23DF037D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "Interfaces\Interfaces.csproj", "{D34C11C6-263C-42B2-8F28-C0258A0F0327}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{4598392B-9E2E-4468-A1FC-C58ECE96D04B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{A034D1F1-14F2-435F-82E3-D2D23DF037D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A034D1F1-14F2-435F-82E3-D2D23DF037D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A034D1F1-14F2-435F-82E3-D2D23DF037D5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D34C11C6-263C-42B2-8F28-C0258A0F0327}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D34C11C6-263C-42B2-8F28-C0258A0F0327}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D34C11C6-263C-42B2-8F28-C0258A0F0327}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D34C11C6-263C-42B2-8F28-C0258A0F0327}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4598392B-9E2E-4468-A1FC-C58ECE96D04B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4598392B-9E2E-4468-A1FC-C58ECE96D04B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4598392B-9E2E-4468-A1FC-C58ECE96D04B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4598392B-9E2E-4468-A1FC-C58ECE96D04B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

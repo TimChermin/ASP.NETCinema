@@ -46,7 +46,7 @@ namespace ASPNETCinema
 
 
             //test
-            services.AddScoped<IEmployee, Employee>();
+            services.AddScoped<IEmployeeContext, DatabaseEmployee>();
             // Add the whole configuration object here.
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddTransient(_ => new DatabaseConnection(Configuration.GetConnectionString("DefaultConnection")));

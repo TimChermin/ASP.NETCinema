@@ -1,6 +1,7 @@
 ﻿using ASPNETCinema.Controllers;
 using ASPNETCinema.Logic;
 using ASPNETCinema.Models;
+using Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,11 @@ namespace Employee
     public class GettingEmployeesTest
     {
         EmployeeLogic employeeLogic = new EmployeeLogic();
-        EmployeeController employeeController = new EmployeeController();
+        //EmployeeController employeeController = new EmployeeController();
         List<EmployeeModel> employees = new List<EmployeeModel>();
         List<EmployeeModel> employee2 = new List<EmployeeModel>();
         ThingEqualityComparer comparer = new ThingEqualityComparer();
+
 
         [Fact]
         public void Should_ReturnTheMovieWithTHeSameId_WhenLoadingMovieDetials()
