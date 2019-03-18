@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ASPNETCinema.Models;
 using System.Data.SqlClient;
-using ASPNETCinema.DataLayer;
+using ASPNETCinema.DAL;
 
 namespace ASPNETCinema.Logic
 {

@@ -1,4 +1,4 @@
-﻿using ASPNETCinema.DataLayer;
+﻿using ASPNETCinema.DAL;
 using ASPNETCinema.Models;
 using System;
 using System.Collections.Generic;
