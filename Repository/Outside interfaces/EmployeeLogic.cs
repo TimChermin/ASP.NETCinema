@@ -7,12 +7,12 @@ using Repository;
 
 namespace Interfaces.Outside_interfaces
 {
-    public class Employee
+    public class EmployeeLogic
     {
         DatabaseEmployee database = new DatabaseEmployee();
         private EmployeeRepository Repository { get; }
 
-        public Employee(IEmployeeContext context)
+        public EmployeeLogic(IEmployeeContext context)
         {
             Repository = new EmployeeRepository(context);
         }

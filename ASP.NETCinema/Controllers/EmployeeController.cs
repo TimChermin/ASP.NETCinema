@@ -24,7 +24,7 @@ namespace ASPNETCinema.Controllers
 
         public ActionResult ListEmployees()
         {
-            var employeeLogic = new Employee(_employee);
+            var employeeLogic = new EmployeeLogic(_employee);
             List<EmployeeViewModel> employees = new List<EmployeeViewModel>();
             foreach (var emp in employeeLogic.GetEmployees())
             {
