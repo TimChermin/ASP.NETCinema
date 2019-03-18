@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using ASPNETCinema.DAL;
-using ASPNETCinema.Interfaces;
+using Interfaces;
 
-namespace Repository
+namespace DAL.Repository
 {
     public class EmployeeRepository
     {

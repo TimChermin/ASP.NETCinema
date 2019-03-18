@@ -44,14 +44,16 @@ namespace ASPNETCinema.Logic
 
         public ScreeningModel AddTheMovieToTheScreening(ScreeningModel screening)
         {
-            foreach (MovieModel movie in databaseMovie.GetMovies())
+            /*foreach (MovieModel movie in databaseMovie.GetMovies())
             {
                 if (screening.MovieId == movie.Id)
                 {
                     screening.Movie = movie;
                 }
             }
-            return screening;
+            */
+            //return screening;
+            return null;
         }
 
         public List<ScreeningModel> GetScreenings()

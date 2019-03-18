@@ -5,12 +5,22 @@ using System.Threading.Tasks;
 using ASPNETCinema.Models;
 using System.Data.SqlClient;
 using ASPNETCinema.DAL;
+using DAL.Repository;
+using DAL;
+using Interfaces;
 
 namespace ASPNETCinema.Logic
 {
     public class MovieLogic
     {
         DatabaseMovie database = new DatabaseMovie();
+
+        private MovieRepository Repository { get; }
+
+        public MovieLogic(IMovieContext context)
+        {
+            Repository = new MovieRepository(context);
+        }
 
         //other things
         //List
@@ -21,30 +31,28 @@ namespace ASPNETCinema.Logic
 
         public MovieModel GetMovie(int? id)
         {
-            foreach (MovieModel movie in database.GetMovies())
+            /*foreach (MovieModel movie in database.GetMovies())
             {
                 if (id == movie.Id && id != null)
                 {
                     return movie;
                 }
             }
+            */
             return null;
         }
 
-        public List<MovieModel> GetMoviesAndOrderBy(string orderBy)
+        public IEnumerable<IMovie> GetMovies(string orderBy)
         {
-            List<MovieModel> movies = null;
             if (orderBy != "MoviesToday")
             {
                 database.OrderBy = orderBy;
-                movies = database.GetMovies();
             }
             else if (orderBy != null)
             {
-                movies = database.GetMoviesToday();
+                database.OrderBy = "MoviesToday";
             }
-            
-            return movies;
+            return Repository.GetMovies();
         }
 
         public void AddMovie(MovieModel movie)

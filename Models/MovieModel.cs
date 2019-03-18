@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Interfaces;
 
 namespace ASPNETCinema.Models
 {
-    public class MovieModel
+    public class MovieModel : IMovie
     {
         public MovieModel(string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)
         {
@@ -33,6 +34,7 @@ namespace ASPNETCinema.Models
 
         public MovieModel()
         {
+
         }
 
         

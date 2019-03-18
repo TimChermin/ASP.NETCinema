@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using ASPNETCinema.DAL;
-using ASPNETCinema.Interfaces;
+using Interfaces;
 using ASPNETCinema.Models;
-using Repository;
+using DAL.Repository;
 
 namespace ASPNETCinema.Logic
 {

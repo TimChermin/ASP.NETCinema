@@ -16,7 +16,7 @@ namespace ASPNETCinema.DAL
         //other things
         //List
         //Add
-        //details
+        //Details
         //Edit
         //Delete
 

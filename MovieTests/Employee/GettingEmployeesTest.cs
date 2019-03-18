@@ -11,7 +11,7 @@ namespace Employee
 {
     public class GettingEmployeesTest
     {
-        EmployeeLogic employeeLogic = new EmployeeLogic();
+        /*EmployeeLogic employeeLogic = new EmployeeLogic();
         //EmployeeController employeeController = new EmployeeController();
         List<EmployeeModel> employees = new List<EmployeeModel>();
         List<EmployeeModel> employee2 = new List<EmployeeModel>();
@@ -56,5 +56,7 @@ namespace Employee
                 return obj.GetHashCode();
             }
         }
+        */
     }
+    
 }

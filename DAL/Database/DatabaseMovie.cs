@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using ASPNETCinema.Models;
 using System.Data.SqlClient;
+using DAL;
+using Interfaces;
 
 namespace ASPNETCinema.DAL
 {
-    public class DatabaseMovie
+    public class DatabaseMovie : IMovieContext
     {
         private static string connectionString = "Server =tcp:cintim.database.windows.net,1433;Initial Catalog=Cinema;Persist Security Info=False;User ID=GamerIsTheNamer;Password=Ikbencool20042000!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
         private SqlConnection connection = new SqlConnection(connectionString);
@@ -23,57 +25,54 @@ namespace ASPNETCinema.DAL
         //details
         //Edit
         //Delete
+        
 
-
-        public List<MovieModel> GetMoviesToday()
-        {
-            Movies = new List<MovieModel>();
-            connection.Open();
-            SqlCommand command = new SqlCommand("SELECT * FROM Movie GROUP BY Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString HAVING ReleaseDate = @Today", connection);
-            command.Parameters.AddWithValue("@Today", DateTime.Today);
-
-            using (SqlDataReader reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    MovieModel movie = new MovieModel(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetDateTime(4), reader.GetString(5), reader.GetString(6), reader.GetString(7));
-                    Movies.Add(movie);
-                }
-            }
-
-            connection.Close();
-            return (Movies);
-        }
-
-        public List<MovieModel> GetMovies()
+        IEnumerable<IMovie> IMovieContext.GetMovies()
         {
             //using ASPNETCinema.Models; added
             Movies = new List<MovieModel>();
             connection.Open();
             SqlCommand command;
-            if (orderBy != null)
+            if (orderBy == "MoviesToday")
             {
-                command = new SqlCommand("SELECT * FROM Movie ORDER BY " + orderBy, connection);
-                //command.Parameters.AddWithValue("@OrderBy", orderBy);
+                command = new SqlCommand("SELECT * FROM Movie GROUP BY Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString HAVING ReleaseDate = @Today", connection);
+                command.Parameters.AddWithValue("@Today", DateTime.Today);
+            }
+            else if (orderBy != null)
+            {
+                command = new SqlCommand("SELECT * FROM Movie ORDER BY @orderBy", connection);
+                command.Parameters.AddWithValue("@OrderBy", orderBy);
             }
             else
             {
                 command = new SqlCommand("SELECT * FROM Movie", connection);
             }
-            
+
+            var movies = new List<IMovie>();
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    MovieModel movie = new MovieModel(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetDateTime(3), reader.GetDateTime(4), reader.GetString(5), reader.GetString(6), reader.GetString(7));
-                    Movies.Add(movie);
+                    var movie = new MovieModel
+                    {
+                        Id = (int)reader["Id"],
+                        Name = reader["Name"]?.ToString(),
+                        Description = reader["Description"]?.ToString(),
+                        ReleaseDate = (DateTime)reader["ReleaseDate"],
+                        LastScreeningDate = (DateTime)reader["LastScreeningDate"],
+                        MovieType = reader["MovieType"]?.ToString(),
+                        MovieLenght = reader["MovieLenght"]?.ToString(),
+                        ImageString = reader["ImageString"]?.ToString()
+                        
+                    };
+
+                    movies.Add(movie);
                 }
             }
-            
-            connection.Close();
-            return (Movies);
-        }
 
+            connection.Close();
+            return (movies);
+        }
 
         public void AddMovie(MovieModel movie)
         {
@@ -120,5 +119,12 @@ namespace ASPNETCinema.DAL
 
             connection.Close();
         }
+
+        public string GetName(int id)
+        {
+            return null;
+        }
+
+       
     }
 }

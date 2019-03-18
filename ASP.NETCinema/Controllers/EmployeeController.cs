@@ -7,7 +7,7 @@ using ASPNETCinema.Models;
 using ASPNETCinema.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using ASPNETCinema.DAL;
-using ASPNETCinema.Interfaces;
+using Interfaces;
 
 namespace ASPNETCinema.Controllers
 {

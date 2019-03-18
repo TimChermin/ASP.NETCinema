@@ -1,4 +1,4 @@
-﻿using ASPNETCinema.Interfaces;
+﻿using Interfaces;
 using ASPNETCinema.Models;
 using System;
 using System.Collections.Generic;
