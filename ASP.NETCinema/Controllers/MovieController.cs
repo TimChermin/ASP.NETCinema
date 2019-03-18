@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using ASPNETCinema.ViewModels;
 using DAL;
+using Interfaces;
 
 namespace ASPNETCinema.Controllers
 {
@@ -66,27 +67,42 @@ namespace ASPNETCinema.Controllers
             var movieLogic = new MovieLogic(_movie);
             if (ModelState.IsValid)
             {
-                movieLogic.AddMovie(movie);
+                _movie.Add(movie);
                 return RedirectToAction("ListMovies");
             }
             return View();
         }
 
 
-        public ActionResult DetailsMovie(int? id)
+        public ActionResult DetailsMovie(int id)
         {
             var movieLogic = new MovieLogic(_movie);
-            return View(movieLogic.GetMovie(id));
+            if (ModelState.IsValid)
+            {
+                IMovie movie = _movie.GetById(id);
+                MovieViewModel ViewMovie = new MovieViewModel
+                {
+                    Name = movie.Name,
+                    Description = movie.Description,
+                    ReleaseDate = movie.ReleaseDate,
+                    LastScreeningDate = movie.LastScreeningDate,
+                    MovieType = movie.MovieType,
+                    MovieLenght = movie.MovieLenght,
+                    ImageString = movie.ImageString
+                };
+                return View(ViewMovie);
+            }
+            return RedirectToAction("ListMovies");
         }
 
         
        
 
         [Authorize(Roles = "Administrator")]
-        public ActionResult EditMovie(int? id)
+        public ActionResult EditMovie(int id)
         {
             var movieLogic = new MovieLogic(_movie);
-            return View(movieLogic.GetMovie(id));
+            return View(movieLogic.GetById(id));
         }
         
 
@@ -101,10 +117,10 @@ namespace ASPNETCinema.Controllers
 
         
         [Authorize(Roles = "Administrator")]
-        public ActionResult DeleteMovie(int? id)
+        public ActionResult DeleteMovie(int id)
         {
             var movieLogic = new MovieLogic(_movie);
-            return View(movieLogic.GetMovie(id));
+            return View(movieLogic.GetById(id));
         }
 
         // POST: Movies/Delete/5

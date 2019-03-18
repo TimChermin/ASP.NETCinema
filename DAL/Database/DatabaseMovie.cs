@@ -63,7 +63,6 @@ namespace ASPNETCinema.DAL
                         MovieType = reader["MovieType"]?.ToString(),
                         MovieLenght = reader["MovieLenght"]?.ToString(),
                         ImageString = reader["ImageString"]?.ToString()
-                        
                     };
 
                     movies.Add(movie);
@@ -74,10 +73,10 @@ namespace ASPNETCinema.DAL
             return (movies);
         }
 
-        public void AddMovie(MovieModel movie)
+        public void Add(IMovie movie)
         {
             connection.Open();
-           
+
             SqlCommand command = new SqlCommand("INSERT INTO Movie OUTPUT Inserted.Id VALUES (@Name, @Description, @ReleaseDate, @LastScreeningDate, @MovieType, @MovieLenght, @ImageString)", connection);
             command.Parameters.AddWithValue("@Name", movie.Name);
             command.Parameters.AddWithValue("@Description", movie.Description);
@@ -87,8 +86,36 @@ namespace ASPNETCinema.DAL
             command.Parameters.AddWithValue("@MovieLenght", movie.MovieLenght);
             command.Parameters.AddWithValue("@ImageString", movie.ImageString);
             MovieModel newMovie = new MovieModel(((int)command.ExecuteScalar()), movie.Name, movie.Description, movie.ReleaseDate, movie.LastScreeningDate, movie.MovieType, movie.MovieLenght, movie.ImageString);
-            
+
             connection.Close();
+        }
+
+        public IMovie GetById(int id)
+        {
+            Movies = new List<MovieModel>();
+            connection.Open();
+            SqlCommand command = new SqlCommand("SELECT * FROM Movie WHERE Id = @Id", connection);
+            command.Parameters.AddWithValue("@Id", id);
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    IMovie movie = new MovieModel
+                    {
+                        Id = (int)reader["Id"],
+                        Name = reader["Name"]?.ToString(),
+                        Description = reader["Description"]?.ToString(),
+                        ReleaseDate = (DateTime)reader["ReleaseDate"],
+                        LastScreeningDate = (DateTime)reader["LastScreeningDate"],
+                        MovieType = reader["MovieType"]?.ToString(),
+                        MovieLenght = reader["MovieLenght"]?.ToString(),
+                        ImageString = reader["ImageString"]?.ToString()
+                    };
+
+                    return movie;
+                }
+            }
+            return null;
         }
 
         public void EditMovie(MovieModel movie)
@@ -110,21 +137,15 @@ namespace ASPNETCinema.DAL
             connection.Close();
         }
 
-        public void DeleteMovie(int id)
+        public void Delete(IMovie movie)
         {
             connection.Open();
             SqlCommand command = new SqlCommand("DELETE FROM Movie WHERE Id = @Id", connection);
-            command.Parameters.AddWithValue("@Id", id);
+            command.Parameters.AddWithValue("@Id", movie.Id);
             command.ExecuteNonQuery();
 
             connection.Close();
         }
-
-        public string GetName(int id)
-        {
-            return null;
-        }
-
-       
+        
     }
 }

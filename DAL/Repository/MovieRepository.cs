@@ -14,6 +14,13 @@ namespace DAL.Repository
             _context = context;
         }
 
+        //other things
+        //List
+        //Add
+        //details
+        //Edit
+        //Delete
+
         public void GetName(IMovieContext person)
         {
             //_context.GetName();
@@ -22,6 +29,21 @@ namespace DAL.Repository
         public IEnumerable<IMovie> GetMovies()
         {
             return _context.GetMovies();
+        }
+
+        public void Add(IMovie movie)
+        {
+            _context.Add(movie);
+        }
+
+        public void Delete(IMovie movie)
+        {
+            _context.Add(movie);
+        }
+
+        public IMovie GetById(int id)
+        {
+            return _context.GetById(id);
         }
 
 

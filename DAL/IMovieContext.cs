@@ -7,7 +7,9 @@ namespace DAL
 {
     public interface IMovieContext
     {
-        string GetName(int id);
         IEnumerable<IMovie> GetMovies();
+        void Add(IMovie movie);
+        void Delete(IMovie movie);
+        IMovie GetById(int id);
     }
 }
