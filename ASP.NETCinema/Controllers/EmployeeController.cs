@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using ASPNETCinema.Logic;
 using ASPNETCinema.Models;
 using ASPNETCinema.ViewModels;
-using Interfaces;
-using Interfaces.Outside_interfaces;
 using Microsoft.AspNetCore.Mvc;
+using ASPNETCinema.DAL;
+using ASPNETCinema.Interfaces;
 
 namespace ASPNETCinema.Controllers
 {

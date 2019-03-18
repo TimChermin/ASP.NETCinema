@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Interfaces;
+using ASPNETCinema.DAL;
+using ASPNETCinema.Interfaces;
 
 namespace Repository
 {
-    class EmployeeRepository
+    public class EmployeeRepository
     {
         private readonly IEmployeeContext _context;
 

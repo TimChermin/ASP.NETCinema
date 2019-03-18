@@ -1,9 +1,10 @@
-﻿using ASPNETCinema.Models;
+﻿using ASPNETCinema.Interfaces;
+using ASPNETCinema.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Interfaces
+namespace ASPNETCinema.DAL
 {
     public interface IEmployeeContext
     {

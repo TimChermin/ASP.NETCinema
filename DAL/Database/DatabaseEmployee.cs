@@ -1,5 +1,5 @@
-﻿using ASPNETCinema.Models;
-using Interfaces;
+﻿using ASPNETCinema.Interfaces;
+using ASPNETCinema.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -18,7 +18,7 @@ namespace ASPNETCinema.DAL
         //other things
         //List
         //Add
-        //details
+        //Details
         //Edit
         //Delete
 

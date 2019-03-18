@@ -13,8 +13,6 @@ using Microsoft.EntityFrameworkCore;
 using ASPNETCinema.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using ASPNETCinema.DAL;
-using Interfaces;
-using Interfaces.Outside_interfaces;
 
 namespace ASPNETCinema
 {

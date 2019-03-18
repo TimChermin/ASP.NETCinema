@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Interfaces
+namespace ASPNETCinema.Interfaces
 {
     public interface IEmployee
     {

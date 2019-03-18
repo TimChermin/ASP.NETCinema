@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using ASPNETCinema.DAL;
+using ASPNETCinema.Interfaces;
 using ASPNETCinema.Models;
 using Repository;
 
-namespace Interfaces.Outside_interfaces
+namespace ASPNETCinema.Logic
 {
     public class EmployeeLogic
     {
-        DatabaseEmployee database = new DatabaseEmployee();
         private EmployeeRepository Repository { get; }
 
         public EmployeeLogic(IEmployeeContext context)
@@ -21,17 +21,6 @@ namespace Interfaces.Outside_interfaces
         {
             return "test " + id;
         }
-        /*public List<EmployeeModel> GetEmployees()
-        {
-            List<EmployeeModel> employees = new List<EmployeeModel>();
-            foreach (var employee in database.GetEmployees())
-            {
-                employees.Add(new EmployeeModel { Name = employee.Name, Id = employee.Id });
-            }
-            
-            return employees;
-        }
-        */
 
         public IEnumerable<IEmployee> GetEmployees()
         {
