@@ -39,8 +39,13 @@ namespace ASPNETCinema.Logic
             return Repository.GetMovies(orderBy);
         }
 
-        public void AddMovie(MovieModel movie)
+        public void AddMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)
         {
+            var movie = new MovieModel
+            { Id = id,Name = name,Description = description,ReleaseDate = releaseDate,
+              LastScreeningDate = lastScreeningDate,MovieType = movieType,
+              MovieLenght = movieLenght, ImageString = imageString
+            };
             Repository.AddMovie(movie);
         }
 

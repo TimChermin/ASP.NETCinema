@@ -46,6 +46,20 @@ namespace MovieTests
         }
 
 
+        [Fact]
+        public void Should_ReturnAddAMovieToTheList_WhenAddingAMovie()
+        {
+            var movieLogic = new MovieLogic(new MovieContextMock());
+            //var result =  movieLogic.GetAllCustomers();
+            var movies = movieLogic.GetMovies(orderBy);
+            movieLogic.AddMovie(3, "DFilm", "Mooie film", DateTime.Today, new DateTime(2220, 10, 3), "3D Imax", "100", "TestString");
+            var movies2 = movieLogic.GetMovies(orderBy);
+
+            if (movies.Count() != movies2.Count())
+            {
+                Assert.True(true);
+            }
+        }
 
 
 
@@ -77,159 +91,7 @@ namespace MovieTests
         }
 
 
-        /*
-
-
-        [Fact]
-        public void Should_ReturnAListOfMoviesOrderedByName_WhenLoadingMoviesByName()
-        {
-            //Arrange
-            //try to add a test database later to put stuff in it first 
-
-            //Act
-            movies = movieLogic.GetMoviesAndOrderBy("Name");
-            movies2 = movieLogic.GetMoviesAndOrderBy("Name");
-
-            bool found = false;
-            int movieNr = 0;
-            int movie2Nr = 0;
-            foreach (var movie in movies)
-            {
-                movie2Nr = 0;
-                found = false;
-                foreach (var movie2 in movies2)
-                {
-
-                    if (comparer.Equals(movie, movie2) && movieNr == movie2Nr)
-                    {
-                        Assert.True(true);
-                        found = true;
-                    }
-                    movie2Nr++;
-                }
-                if (found == false)
-                {
-                    Assert.True(false);
-                }
-                movieNr++;
-            }
-        }
-
-        [Fact]
-        public void Should_ReturnAListOfMoviesOrderedByNull_WhenLoadingMoviesByNull()
-        {
-            //Arrange
-            //try to add a test database later to put stuff in it first 
-
-            //Act
-            movies = movieLogic.GetMoviesAndOrderBy(null);
-            movies2 = movieLogic.GetMoviesAndOrderBy(null);
-
-            bool found = false;
-            int movieNr = 0;
-            int movie2Nr = 0;
-            foreach (var movie in movies)
-            {
-                movie2Nr = 0;
-                found = false;
-                foreach (var movie2 in movies2)
-                {
-
-                    if (comparer.Equals(movie, movie2) && movieNr == movie2Nr)
-                    {
-                        Assert.True(true);
-                        found = true;
-                    }
-                    movie2Nr++;
-                }
-                if (found == false)
-                {
-                    Assert.True(false);
-                }
-                movieNr++;
-            }
-        }
-
-
-        [Fact]
-        public void Should_ReturnAListOfMoviesOrderedByToday_WhenLoadingMoviesByToday()
-        {
-            //Arrange
-            //try to add a test database later to put stuff in it first 
-
-            //Act
-            movies = movieLogic.GetMoviesAndOrderBy("MoviesToday");
-            movies2 = movieLogic.GetMoviesAndOrderBy("MoviesToday");
-
-            bool found = false;
-            int movieNr = 0;
-            int movie2Nr = 0;
-            foreach (var movie in movies)
-            {
-                movie2Nr = 0;
-                found = false;
-                foreach (var movie2 in movies2)
-                {
-                    
-                    if (comparer.Equals(movie, movie2) && movieNr == movie2Nr)
-                    {
-                        Assert.True(true);
-                        found = true;
-                    }
-                    movie2Nr++;
-                }
-                if (found == false)
-                {
-                    Assert.True(false);
-                }
-                movieNr++;
-            }
-        }
-
-        [Fact]
-        public void Should_ReturnAListOfMoviesOrderedByReleaseAndName_WhenLoadingMoviesByReleaseAndName()
-        {
-            //Arrange
-            //try to add a test database later to put stuff in it first 
-
-            //Act
-            movies = movieLogic.GetMoviesAndOrderBy("ReleaseDate");
-            movies2 = movieLogic.GetMoviesAndOrderBy("Name");
-
-            bool found = false;
-            bool diffOrder = false;
-            int movieNr = 0;
-            int movie2Nr = 0;
-            foreach (var movie in movies)
-            {
-                movie2Nr = 0;
-                found = false;
-                foreach (var movie2 in movies2)
-                {
-                    if (comparer.Equals(movie, movie2) && movieNr == movie2Nr && diffOrder == false && movies.Count > 4)
-                    {
-                        Assert.False(comparer.Equals(movie, movie2) == diffOrder);
-                        found = true;
-                    }
-                    else if (comparer.Equals(movie, movie2))
-                    {
-                        Assert.True(comparer.Equals(movie, movie2));
-                        found = true;
-                        diffOrder = true;
-                    }
-                    movie2Nr++;
-                }
-
-                if (found == false)
-                {
-                    Assert.True(false);
-                }
-                movieNr++;
-            }
-        }
-
-    */
-
+       
         class ThingEqualityComparer : IEqualityComparer<IMovie>
         {
             public bool Equals(IMovie x, IMovie y)

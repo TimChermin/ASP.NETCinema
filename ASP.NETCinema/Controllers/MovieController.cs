@@ -67,7 +67,8 @@ namespace ASPNETCinema.Controllers
             var movieLogic = new MovieLogic(_movie);
             if (ModelState.IsValid)
             {
-                movieLogic.AddMovie(movie);
+                movieLogic.AddMovie(movie.Id, movie.Name, movie.Description, movie.ReleaseDate, movie.LastScreeningDate,
+                    movie.MovieType, movie.MovieLenght, movie.ImageString);
                 return RedirectToAction("ListMovies");
             }
             return View();

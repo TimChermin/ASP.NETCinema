@@ -10,6 +10,9 @@ namespace UnitTests.Movie.MockContext
 {
     class MovieContextMock : IMovieContext
     {
+        List<IMovie> movies = new List<IMovie>();
+        List<IMovie> moviesTemp = new List<IMovie>();
+
         //other things
         //List
         //Add
@@ -18,9 +21,10 @@ namespace UnitTests.Movie.MockContext
         //Delete
         public IEnumerable<IMovie> GetMovies(string orderBy)
         {
-            var movies = new List<IMovie>();
             movies = AddMoviesInOrderBy(movies, orderBy);
-            return movies;
+            moviesTemp = movies;
+            movies.Clear();
+            return moviesTemp;
         }
 
         public List<IMovie> AddMoviesInOrderBy(List<IMovie> movies, string orderBy)
@@ -74,15 +78,15 @@ namespace UnitTests.Movie.MockContext
             });
             if (orderBy == "Name")
             {
-                return movies.OrderByDescending(movie => movie.Name).ToList();
+                return movies.OrderBy(movie => movie.Name).ToList();
             }
             else if (orderBy == "ReleaseDate")
             {
-                return movies.OrderByDescending(movie => movie.ReleaseDate).ToList();
+                return movies.OrderBy(movie => movie.ReleaseDate).ToList();
             }
             else if (orderBy == "MovieType")
             {
-                return movies.OrderByDescending(movie => movie.MovieType).ToList();
+                return movies.OrderBy(movie => movie.MovieType).ToList();
             }
             else if (orderBy == "MovieToday")
             {
@@ -97,12 +101,21 @@ namespace UnitTests.Movie.MockContext
                 return moviesToday;
             }
             return movies;
-            
         }
 
         public void AddMovie(IMovie movie)
         {
-            throw new NotImplementedException();
+            movies.Add(new MovieDto
+            {
+                Id = movie.Id,
+                Name = movie.Name,
+                Description = movie.Description,
+                ReleaseDate = movie.ReleaseDate,
+                LastScreeningDate = movie.LastScreeningDate,
+                MovieType = movie.MovieType,
+                MovieLenght = movie.MovieLenght,
+                ImageString = movie.ImageString
+            });
         }
 
         public void EditMovie(IMovie movie)
