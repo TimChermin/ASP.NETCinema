@@ -43,7 +43,7 @@ namespace DAL.Repository
 
         public void DeleteMovie(IMovie movie)
         {
-            _context.AddMovie(movie);
+            _context.DeleteMovie(movie);
         }
 
         
