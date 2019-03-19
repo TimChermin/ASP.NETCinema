@@ -44,13 +44,10 @@ namespace ASPNETCinema.Logic
             Repository.AddMovie(movie);
         }
 
-        
-
         public void EditMovie(MovieModel movie)
         {
-            database.EditMovie(movie);
+            Repository.EditMovie(movie);
         }
-        
 
         public void DeleteMovie(MovieModel movie)
         {

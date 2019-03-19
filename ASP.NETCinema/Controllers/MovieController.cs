@@ -67,7 +67,7 @@ namespace ASPNETCinema.Controllers
             var movieLogic = new MovieLogic(_movie);
             if (ModelState.IsValid)
             {
-                _movie.AddMovie(movie);
+                movieLogic.AddMovie(movie);
                 return RedirectToAction("ListMovies");
             }
             return View();
@@ -79,7 +79,7 @@ namespace ASPNETCinema.Controllers
             var movieLogic = new MovieLogic(_movie);
             if (ModelState.IsValid)
             {
-                IMovie movie = _movie.GetMovieById(id);
+                IMovie movie = movieLogic.GetMovieById(id);
                 MovieViewModel ViewMovie = new MovieViewModel
                 {
                     Name = movie.Name,
@@ -104,7 +104,7 @@ namespace ASPNETCinema.Controllers
             var movieLogic = new MovieLogic(_movie);
             if (ModelState.IsValid)
             {
-                IMovie movie = _movie.GetMovieById(id);
+                IMovie movie = movieLogic.GetMovieById(id);
                 MovieViewModel ViewMovie = new MovieViewModel
                 {
                     Name = movie.Name,
@@ -126,7 +126,6 @@ namespace ASPNETCinema.Controllers
         public ActionResult EditMovie(MovieModel movie)
         {
             var movieLogic = new MovieLogic(_movie);
-
             movieLogic.EditMovie(movie);
             return RedirectToAction("ListMovies");
         }
@@ -136,7 +135,22 @@ namespace ASPNETCinema.Controllers
         public ActionResult DeleteMovie(int id)
         {
             var movieLogic = new MovieLogic(_movie);
-            return View(movieLogic.GetMovieById(id));
+            if (ModelState.IsValid)
+            {
+                IMovie movie = movieLogic.GetMovieById(id);
+                MovieViewModel ViewMovie = new MovieViewModel
+                {
+                    Name = movie.Name,
+                    Description = movie.Description,
+                    ReleaseDate = movie.ReleaseDate,
+                    LastScreeningDate = movie.LastScreeningDate,
+                    MovieType = movie.MovieType,
+                    MovieLenght = movie.MovieLenght,
+                    ImageString = movie.ImageString
+                };
+                return View(ViewMovie);
+            }
+            return RedirectToAction("ListMovies");
         }
 
         // POST: Movies/Delete/5

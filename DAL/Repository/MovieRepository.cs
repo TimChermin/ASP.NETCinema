@@ -21,11 +21,6 @@ namespace DAL.Repository
         //Edit
         //Delete
 
-        public void GetName(IMovieContext person)
-        {
-            //_context.GetName();
-        }
-
         public IEnumerable<IMovie> GetMovies(string orderBy)
         {
             return _context.GetMovies(orderBy);
@@ -36,15 +31,22 @@ namespace DAL.Repository
             _context.AddMovie(movie);
         }
 
+        public IMovie GetMovieById(int id)
+        {
+            return _context.GetMovieById(id);
+        }
+
+        public void EditMovie(IMovie movie)
+        {
+            _context.EditMovie(movie);
+        }
+
         public void DeleteMovie(IMovie movie)
         {
             _context.AddMovie(movie);
         }
 
-        public IMovie GetMovieById(int id)
-        {
-            return _context.GetMovieById(id);
-        }
+        
 
 
     }
