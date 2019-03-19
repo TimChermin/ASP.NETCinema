@@ -27,7 +27,7 @@ namespace ASPNETCinema.DAL
         //Delete
         
 
-        IEnumerable<IMovie> IMovieContext.GetMovies()
+        IEnumerable<IMovie> IMovieContext.GetMovies(string orderBy)
         {
             //using ASPNETCinema.Models; added
             Movies = new List<MovieModel>();

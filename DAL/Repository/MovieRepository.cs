@@ -26,9 +26,9 @@ namespace DAL.Repository
             //_context.GetName();
         }
 
-        public IEnumerable<IMovie> GetMovies()
+        public IEnumerable<IMovie> GetMovies(string orderBy)
         {
-            return _context.GetMovies();
+            return _context.GetMovies(orderBy);
         }
 
         public void Add(IMovie movie)

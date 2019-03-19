@@ -36,15 +36,7 @@ namespace ASPNETCinema.Logic
 
         public IEnumerable<IMovie> GetMovies(string orderBy)
         {
-            if (orderBy != "MoviesToday")
-            {
-                database.OrderBy = orderBy;
-            }
-            else if (orderBy != null)
-            {
-                database.OrderBy = "MoviesToday";
-            }
-            return Repository.GetMovies();
+            return Repository.GetMovies(orderBy);
         }
 
         public void AddMovie(MovieModel movie)
