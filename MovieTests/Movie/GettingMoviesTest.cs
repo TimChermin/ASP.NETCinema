@@ -1,36 +1,83 @@
 using ASPNETCinema.Controllers;
 using ASPNETCinema.Logic;
-using ASPNETCinema.Models;
+using Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnitTests.Movie.Dtos;
+using UnitTests.Movie.MockContext;
 using Xunit;
 
 namespace MovieTests
 {
     public class GettingMoviesTest
     {
-        MovieLogic movieLogic = new MovieLogic();
-        //MovieController movieController = new MovieController();
-        List<MovieModel> movies = new List<MovieModel>();
-        List<MovieModel> movies2 = new List<MovieModel>();
+        MovieLogic _movieLogic;
         ThingEqualityComparer comparer = new ThingEqualityComparer();
+        string orderBy = "";
 
+        public GettingMoviesTest()
+        {
+            _movieLogic = new MovieLogic(new MovieContextMock());
+        }
 
         [Fact]
-        public void Should_ReturnTheMovieWithTHeSameId_WhenLoadingMovieDetials()
+        public void Should_ReturnAListOfMovies_WhenGettingMovies()
         {
-            //Arrange
-            movies = movieLogic.GetMoviesAndOrderBy(null);
+            var movieLogic = new MovieLogic(new MovieContextMock());
+            
+            //var result =  movieLogic.GetAllCustomers();
+            var movies = movieLogic.GetMovies(orderBy);
+            var movies2 = movieLogic.GetMovies(orderBy);
+            
+            Assert.True(AreTheyInTheSameOrder(movies, movies2));
+        }
 
-            //Act
+        [Fact]
+        public void Should_ReturnAListOfMoviesInADifferentOrder_WhenGettingMovies()
+        {
+            var movieLogic = new MovieLogic(new MovieContextMock());
+            //var result =  movieLogic.GetAllCustomers();
+            var movies = movieLogic.GetMovies(orderBy);
+            orderBy = "Name";
+            var movies2 = movieLogic.GetMovies(orderBy);
+
+            Assert.False(AreTheyInTheSameOrder(movies, movies2));
+        }
+
+
+
+
+
+        public bool AreTheyInTheSameOrder(IEnumerable<IMovie> movies, IEnumerable<IMovie> movies2)
+        {
+            bool found;
+            int movieNr = 0;
+            int movie2Nr = 0;
             foreach (var movie in movies)
             {
-                Assert.True(comparer.Equals(movie, movieLogic.GetMovie(movie.Id)));
+                movie2Nr = 0;
+                found = false;
+                foreach (var movie2 in movies2)
+                {
+                    if (comparer.Equals(movie, movie2) && movieNr == movie2Nr)
+                    {
+                        Assert.True(true);
+                        found = true;
+                    }
+                    movie2Nr++;
+                }
+                if (found == false)
+                {
+                    return false;
+                }
+                movieNr++;
             }
-
-            //Assert
+            return true;
         }
+
+
+        /*
 
 
         [Fact]
@@ -181,11 +228,11 @@ namespace MovieTests
             }
         }
 
+    */
 
-
-        class ThingEqualityComparer : IEqualityComparer<MovieModel>
+        class ThingEqualityComparer : IEqualityComparer<IMovie>
         {
-            public bool Equals(MovieModel x, MovieModel y)
+            public bool Equals(IMovie x, IMovie y)
             {
                 if (x == null || y == null)
                     return false;
@@ -195,7 +242,7 @@ namespace MovieTests
                     && x.ImageString == y.ImageString);
             }
 
-            public int GetHashCode(MovieModel obj)
+            public int GetHashCode(IMovie obj)
             {
                 return obj.GetHashCode();
             }
