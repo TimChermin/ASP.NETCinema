@@ -117,7 +117,7 @@ namespace ASPNETCinema.DAL
             return null;
         }
 
-        public void EditMovie(MovieModel movie)
+        public void EditMovie(IMovie movie)
         {
             connection.Open();
             SqlCommand command = new SqlCommand("UPDATE Movie SET Name = @Name, Description = @Description, ReleaseDate = @ReleaseDate, " +
@@ -145,6 +145,5 @@ namespace ASPNETCinema.DAL
 
             connection.Close();
         }
-        
     }
 }

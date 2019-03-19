@@ -7,9 +7,17 @@ namespace DAL
 {
     public interface IMovieContext
     {
+        //other things
+        //List
+        //Add
+        //details
+        //Edit
+        //Delete
         IEnumerable<IMovie> GetMovies(string orderBy);
         void AddMovie(IMovie movie);
-        void DeleteMovie(IMovie movie);
         IMovie GetMovieById(int id);
+        void EditMovie(IMovie movie);
+        void DeleteMovie(IMovie movie);
+        
     }
 }
