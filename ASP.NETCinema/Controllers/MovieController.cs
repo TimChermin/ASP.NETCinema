@@ -82,6 +82,7 @@ namespace ASPNETCinema.Controllers
                 IMovie movie = movieLogic.GetMovieById(id);
                 MovieViewModel ViewMovie = new MovieViewModel
                 {
+                    Id = movie.Id,
                     Name = movie.Name,
                     Description = movie.Description,
                     ReleaseDate = movie.ReleaseDate,
@@ -107,6 +108,7 @@ namespace ASPNETCinema.Controllers
                 IMovie movie = movieLogic.GetMovieById(id);
                 MovieViewModel ViewMovie = new MovieViewModel
                 {
+                    Id = movie.Id,
                     Name = movie.Name,
                     Description = movie.Description,
                     ReleaseDate = movie.ReleaseDate,
@@ -140,6 +142,7 @@ namespace ASPNETCinema.Controllers
                 IMovie movie = movieLogic.GetMovieById(id);
                 MovieViewModel ViewMovie = new MovieViewModel
                 {
+                    Id = movie.Id,
                     Name = movie.Name,
                     Description = movie.Description,
                     ReleaseDate = movie.ReleaseDate,

@@ -84,7 +84,7 @@ namespace ASPNETCinema.DAL
             command.Parameters.AddWithValue("@MovieType", movie.MovieType);
             command.Parameters.AddWithValue("@MovieLenght", movie.MovieLenght);
             command.Parameters.AddWithValue("@ImageString", movie.ImageString);
-            MovieModel newMovie = new MovieModel(((int)command.ExecuteScalar()), movie.Name, movie.Description, movie.ReleaseDate, movie.LastScreeningDate, movie.MovieType, movie.MovieLenght, movie.ImageString);
+            command.ExecuteNonQuery();
 
             connection.Close();
         }
