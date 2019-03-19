@@ -38,10 +38,9 @@ namespace ASPNETCinema.DAL
                 command = new SqlCommand("SELECT * FROM Movie GROUP BY Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString HAVING ReleaseDate = @Today", connection);
                 command.Parameters.AddWithValue("@Today", DateTime.Today);
             }
-            else if (orderBy != null)
+            else if (orderBy == "Name" || orderBy == "ReleaseDate" || orderBy == "MovieType")
             {
-                command = new SqlCommand("SELECT * FROM Movie ORDER BY @orderBy", connection);
-                command.Parameters.AddWithValue("@OrderBy", orderBy);
+                command = new SqlCommand("SELECT * FROM Movie ORDER BY " + orderBy, connection);
             }
             else
             {

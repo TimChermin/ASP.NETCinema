@@ -30,11 +30,11 @@ namespace ASPNETCinema.Controllers
         //Edit
         //Delete
 
-        public ActionResult ListMovies(string OrderBy)
+        public ActionResult ListMovies(string orderBy)
         {
             var movieLogic = new MovieLogic(_movie);
             List<MovieViewModel> movies = new List<MovieViewModel>();
-            foreach (var movie in movieLogic.GetMovies(OrderBy))
+            foreach (var movie in movieLogic.GetMovies(orderBy))
             {
                 movies.Add(new MovieViewModel
                 {
