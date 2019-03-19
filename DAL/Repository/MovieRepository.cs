@@ -31,19 +31,19 @@ namespace DAL.Repository
             return _context.GetMovies(orderBy);
         }
 
-        public void Add(IMovie movie)
+        public void AddMovie(IMovie movie)
         {
-            _context.Add(movie);
+            _context.AddMovie(movie);
         }
 
-        public void Delete(IMovie movie)
+        public void DeleteMovie(IMovie movie)
         {
-            _context.Add(movie);
+            _context.AddMovie(movie);
         }
 
-        public IMovie GetById(int id)
+        public IMovie GetMovieById(int id)
         {
-            return _context.GetById(id);
+            return _context.GetMovieById(id);
         }
 
 

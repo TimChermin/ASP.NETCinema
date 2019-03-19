@@ -67,7 +67,7 @@ namespace ASPNETCinema.Controllers
             var movieLogic = new MovieLogic(_movie);
             if (ModelState.IsValid)
             {
-                _movie.Add(movie);
+                _movie.AddMovie(movie);
                 return RedirectToAction("ListMovies");
             }
             return View();
@@ -79,7 +79,7 @@ namespace ASPNETCinema.Controllers
             var movieLogic = new MovieLogic(_movie);
             if (ModelState.IsValid)
             {
-                IMovie movie = _movie.GetById(id);
+                IMovie movie = _movie.GetMovieById(id);
                 MovieViewModel ViewMovie = new MovieViewModel
                 {
                     Name = movie.Name,
@@ -102,7 +102,7 @@ namespace ASPNETCinema.Controllers
         public ActionResult EditMovie(int id)
         {
             var movieLogic = new MovieLogic(_movie);
-            return View(movieLogic.GetById(id));
+            return View(movieLogic.GetMovieById(id));
         }
         
 
@@ -120,7 +120,7 @@ namespace ASPNETCinema.Controllers
         public ActionResult DeleteMovie(int id)
         {
             var movieLogic = new MovieLogic(_movie);
-            return View(movieLogic.GetById(id));
+            return View(movieLogic.GetMovieById(id));
         }
 
         // POST: Movies/Delete/5

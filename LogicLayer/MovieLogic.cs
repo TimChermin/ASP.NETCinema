@@ -29,9 +29,9 @@ namespace ASPNETCinema.Logic
         //Edit
         //Delete
 
-        public IMovie GetById(int id)
+        public IMovie GetMovieById(int id)
         {
-            return Repository.GetById(id);
+            return Repository.GetMovieById(id);
         }
 
         public IEnumerable<IMovie> GetMovies(string orderBy)
@@ -41,7 +41,7 @@ namespace ASPNETCinema.Logic
 
         public void AddMovie(MovieModel movie)
         {
-            Repository.Add(movie);
+            Repository.AddMovie(movie);
         }
 
         
@@ -54,7 +54,7 @@ namespace ASPNETCinema.Logic
 
         public void DeleteMovie(MovieModel movie)
         {
-            Repository.Delete(movie);
+            Repository.DeleteMovie(movie);
         }
 
 

@@ -72,7 +72,7 @@ namespace ASPNETCinema.DAL
             return (movies);
         }
 
-        public void Add(IMovie movie)
+        public void AddMovie(IMovie movie)
         {
             connection.Open();
 
@@ -89,7 +89,7 @@ namespace ASPNETCinema.DAL
             connection.Close();
         }
 
-        public IMovie GetById(int id)
+        public IMovie GetMovieById(int id)
         {
             Movies = new List<MovieModel>();
             connection.Open();
@@ -136,7 +136,7 @@ namespace ASPNETCinema.DAL
             connection.Close();
         }
 
-        public void Delete(IMovie movie)
+        public void DeleteMovie(IMovie movie)
         {
             connection.Open();
             SqlCommand command = new SqlCommand("DELETE FROM Movie WHERE Id = @Id", connection);
