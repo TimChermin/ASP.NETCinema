@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ASPNETCinema.Models;
 using System.Data.SqlClient;
 using DAL;
 using Interfaces;
+using DAL.Dtos;
 
 namespace ASPNETCinema.DAL
 {
@@ -14,8 +14,7 @@ namespace ASPNETCinema.DAL
         private static string connectionString = "Server =tcp:cintim.database.windows.net,1433;Initial Catalog=Cinema;Persist Security Info=False;User ID=GamerIsTheNamer;Password=Ikbencool20042000!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
         private SqlConnection connection = new SqlConnection(connectionString);
         private string orderBy = null;
-
-        public List<MovieModel> Movies { get; set; }
+        
         public string OrderBy { get => orderBy; set => orderBy = value; }
 
 
@@ -30,8 +29,8 @@ namespace ASPNETCinema.DAL
         IEnumerable<IMovie> IMovieContext.GetMovies(string orderBy)
         {
             //using ASPNETCinema.Models; added
-            Movies = new List<MovieModel>();
             connection.Open();
+            var movies = new List<IMovie>();
             SqlCommand command;
             if (orderBy == "MoviesToday")
             {
@@ -47,12 +46,12 @@ namespace ASPNETCinema.DAL
                 command = new SqlCommand("SELECT * FROM Movie", connection);
             }
 
-            var movies = new List<IMovie>();
+            
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    var movie = new MovieModel
+                    var movie = new MovieDto
                     {
                         Id = (int)reader["Id"],
                         Name = reader["Name"]?.ToString(),
@@ -91,7 +90,6 @@ namespace ASPNETCinema.DAL
 
         public IMovie GetMovieById(int id)
         {
-            Movies = new List<MovieModel>();
             connection.Open();
             SqlCommand command = new SqlCommand("SELECT * FROM Movie WHERE Id = @Id", connection);
             command.Parameters.AddWithValue("@Id", id);
@@ -99,7 +97,7 @@ namespace ASPNETCinema.DAL
             {
                 while (reader.Read())
                 {
-                    IMovie movie = new MovieModel
+                    IMovie movie = new MovieDto
                     {
                         Id = (int)reader["Id"],
                         Name = reader["Name"]?.ToString(),
