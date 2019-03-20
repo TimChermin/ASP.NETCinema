@@ -13,8 +13,6 @@ namespace ASPNETCinema.Logic
 {
     public class MovieLogic
     {
-        DatabaseMovie database = new DatabaseMovie();
-
         private MovieRepository Repository { get; }
 
         public MovieLogic(IMovieContext context)

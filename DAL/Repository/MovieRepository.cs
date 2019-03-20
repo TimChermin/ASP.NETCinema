@@ -45,9 +45,5 @@ namespace DAL.Repository
         {
             _context.DeleteMovie(id);
         }
-
-        
-
-
     }
 }

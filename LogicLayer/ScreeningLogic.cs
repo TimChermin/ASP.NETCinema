@@ -9,8 +9,7 @@ namespace ASPNETCinema.Logic
 {
     public class ScreeningLogic
     {
-        DatabaseScreening database = new DatabaseScreening();
-        DatabaseMovie databaseMovie = new DatabaseMovie();
+        DatabaseScreening database = new DatabaseScreening(null);
         List<ScreeningModel> screeningsWithMovies;
 
         //other things

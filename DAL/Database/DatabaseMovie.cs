@@ -11,39 +11,39 @@ namespace ASPNETCinema.DAL
 {
     public class DatabaseMovie : IMovieContext
     {
-        private static string connectionString = "Server =tcp:cintim.database.windows.net,1433;Initial Catalog=Cinema;Persist Security Info=False;User ID=GamerIsTheNamer;Password=Ikbencool20042000!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-        private SqlConnection connection = new SqlConnection(connectionString);
-        private string orderBy = null;
+        public List<MovieModel> Movies { get; set; }
+        private readonly DatabaseConnection _connection;
         
-        public string OrderBy { get => orderBy; set => orderBy = value; }
-
-
+        public DatabaseMovie(DatabaseConnection connection)
+        {
+            _connection = connection;
+        }
         //other things
         //List
         //Add
         //details
         //Edit
         //Delete
-        
+
 
         IEnumerable<IMovie> IMovieContext.GetMovies(string orderBy)
         {
-            //using ASPNETCinema.Models; added
-            connection.Open();
+            _connection.SqlConnection.Open();
+
             var movies = new List<IMovie>();
             SqlCommand command;
             if (orderBy == "MoviesToday")
             {
-                command = new SqlCommand("SELECT * FROM Movie GROUP BY Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString HAVING ReleaseDate = @Today", connection);
+                command = new SqlCommand("SELECT * FROM Movie GROUP BY Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString HAVING ReleaseDate = @Today", _connection.SqlConnection);
                 command.Parameters.AddWithValue("@Today", DateTime.Today);
             }
             else if (orderBy == "Name" || orderBy == "ReleaseDate" || orderBy == "MovieType")
             {
-                command = new SqlCommand("SELECT * FROM Movie ORDER BY " + orderBy, connection);
+                command = new SqlCommand("SELECT * FROM Movie ORDER BY " + orderBy, _connection.SqlConnection);
             }
             else
             {
-                command = new SqlCommand("SELECT * FROM Movie", connection);
+                command = new SqlCommand("SELECT * FROM Movie", _connection.SqlConnection);
             }
 
             
@@ -66,16 +66,15 @@ namespace ASPNETCinema.DAL
                     movies.Add(movie);
                 }
             }
-
-            connection.Close();
+            
             return (movies);
         }
 
         public void AddMovie(IMovie movie)
         {
-            connection.Open();
+            _connection.SqlConnection.Open();
 
-            SqlCommand command = new SqlCommand("INSERT INTO Movie OUTPUT Inserted.Id VALUES (@Name, @Description, @ReleaseDate, @LastScreeningDate, @MovieType, @MovieLenght, @ImageString)", connection);
+            SqlCommand command = new SqlCommand("INSERT INTO Movie OUTPUT Inserted.Id VALUES (@Name, @Description, @ReleaseDate, @LastScreeningDate, @MovieType, @MovieLenght, @ImageString)", _connection.SqlConnection);
             command.Parameters.AddWithValue("@Name", movie.Name);
             command.Parameters.AddWithValue("@Description", movie.Description);
             command.Parameters.AddWithValue("@ReleaseDate", movie.ReleaseDate);
@@ -84,14 +83,13 @@ namespace ASPNETCinema.DAL
             command.Parameters.AddWithValue("@MovieLenght", movie.MovieLenght);
             command.Parameters.AddWithValue("@ImageString", movie.ImageString);
             command.ExecuteNonQuery();
-
-            connection.Close();
         }
 
         public IMovie GetMovieById(int id)
         {
-            connection.Open();
-            SqlCommand command = new SqlCommand("SELECT * FROM Movie WHERE Id = @Id", connection);
+            _connection.SqlConnection.Open();
+
+            SqlCommand command = new SqlCommand("SELECT * FROM Movie WHERE Id = @Id", _connection.SqlConnection);
             command.Parameters.AddWithValue("@Id", id);
             using (SqlDataReader reader = command.ExecuteReader())
             {
@@ -117,9 +115,10 @@ namespace ASPNETCinema.DAL
 
         public void EditMovie(IMovie movie)
         {
-            connection.Open();
+            _connection.SqlConnection.Open();
+
             SqlCommand command = new SqlCommand("UPDATE Movie SET Name = @Name, Description = @Description, ReleaseDate = @ReleaseDate, " +
-                "LastScreeningDate = @LastScreeningDate, MovieType = @MovieType, MovieLenght = @MovieLenght, ImageString = @ImageString WHERE Id = @Id", connection);
+                "LastScreeningDate = @LastScreeningDate, MovieType = @MovieType, MovieLenght = @MovieLenght, ImageString = @ImageString WHERE Id = @Id", _connection.SqlConnection);
             command.Parameters.AddWithValue("@Name", movie.Name);
             command.Parameters.AddWithValue("@Description", movie.Description);
             command.Parameters.AddWithValue("@ReleaseDate", movie.ReleaseDate);
@@ -130,18 +129,15 @@ namespace ASPNETCinema.DAL
             command.Parameters.AddWithValue("@Id", movie.Id);
 
             command.ExecuteNonQuery();
-
-            connection.Close();
         }
 
         public void DeleteMovie(int id)
         {
-            connection.Open();
-            SqlCommand command = new SqlCommand("DELETE FROM Movie WHERE Id = @Id", connection);
+            _connection.SqlConnection.Open();
+
+            SqlCommand command = new SqlCommand("DELETE FROM Movie WHERE Id = @Id", _connection.SqlConnection);
             command.Parameters.AddWithValue("@Id", id);
             command.ExecuteNonQuery();
-
-            connection.Close();
         }
     }
 }
