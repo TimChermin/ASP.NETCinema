@@ -23,14 +23,10 @@ namespace ASPNETCinema.Models
 
 
         public int Id { get; set; }
-
-
         public int MovieId { get; set; }
         public MovieModel Movie{ get; set; }
         public int HallId { get; set; }
         public HallModel Hall { get; set; }
-        
-        
         public DateTime DateOfScreening { get; set; }
         public TimeSpan TimeOfScreening { get; set; }
         public TaskModel Task { get; set; }

@@ -1,5 +1,4 @@
-﻿using ASPNETCinema.Models;
-using DAL;
+﻿using DAL;
 using DAL.Dtos;
 using Interfaces;
 using System;

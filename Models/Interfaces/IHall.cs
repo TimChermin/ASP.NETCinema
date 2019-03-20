@@ -1,4 +1,5 @@
 ﻿using ASPNETCinema.Models;
+using Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,6 +13,6 @@ namespace Interfaces
         int SeatsTaken { get; set; }
         string ScreenType { get; set; }
         decimal Price { get; set; }
-        List<ScreeningModel> Screenings { get; set; }
+        List<IScreening> Screenings { get; set; }
     }
 }
