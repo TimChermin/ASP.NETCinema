@@ -1,4 +1,6 @@
 ﻿using ASPNETCinema.Models;
+using DAL;
+using Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ASPNETCinema.DAL
 {
-    public class DatabaseHall
+    public class DatabaseHall : IHallContext
     {
         private List<HallModel> halls;
         private readonly DatabaseConnection _connection;
@@ -16,6 +18,7 @@ namespace ASPNETCinema.DAL
         {
             _connection = connection;
         }
+
         //other things
         //List
         //Add
@@ -23,7 +26,7 @@ namespace ASPNETCinema.DAL
         //Edit
         //Delete
 
-        public List<HallModel> GetHalls()
+        IEnumerable<IHall> IHallContext.GetHalls()
         {
             _connection.SqlConnection.Open();
             
@@ -42,7 +45,7 @@ namespace ASPNETCinema.DAL
             return (halls);
         }
 
-        public void AddHall(HallModel hall)
+        public void AddHall(IHall hall)
         {
             _connection.SqlConnection.Open();
 
@@ -54,7 +57,7 @@ namespace ASPNETCinema.DAL
             HallModel newHall = new HallModel(((int)command.ExecuteScalar()), hall.Price, hall.ScreenType, hall.Seats, hall.SeatsTaken);
         }
 
-        public void EditHall(HallModel hall)
+        public void EditHall(IHall hall)
         {
             _connection.SqlConnection.Open();
 
@@ -78,6 +81,30 @@ namespace ASPNETCinema.DAL
             command.ExecuteNonQuery();
         }
 
-        
+        public IHall GetHallById(int id)
+        {
+            _connection.SqlConnection.Open();
+
+            halls = new List<HallModel>();
+            SqlCommand command = new SqlCommand("SELECT * FROM Hall WHERE Id = @Id", _connection.SqlConnection);
+            command.Parameters.AddWithValue("@Id", id);
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    IHall hall = new HallModel
+                    {
+                        Id = (int)reader["Id"],
+                        Price = (decimal)reader["Name"],
+                        ScreenType = reader["Description"]?.ToString(),
+                        Seats = (int)reader["ReleaseDate"],
+                        SeatsTaken = (int)reader["LastScreeningDate"]
+                    };
+
+                    return hall;
+                }
+            }
+            return null;
+        }
     }
 }

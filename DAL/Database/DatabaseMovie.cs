@@ -11,7 +11,6 @@ namespace ASPNETCinema.DAL
 {
     public class DatabaseMovie : IMovieContext
     {
-        private string orderBy;
         public List<MovieModel> Movies { get; set; }
         private readonly DatabaseConnection _connection;
         

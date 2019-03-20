@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ASPNETCinema.Models
 {
-    public class HallModel
+    public class HallModel : IHall
     {
         public HallModel(decimal price, string screenType, int seats, int seatsTaken)
         {
