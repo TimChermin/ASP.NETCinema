@@ -93,6 +93,17 @@ namespace MovieTests
         }
 
         [Fact]
+        public void Should_ReturnAMovie_WhenGettingAMovieById()
+        {
+            var movieLogic = new MovieLogic(new MovieContextMock());
+            movieLogic.AddMovie(10, "Getting", "Mooie film", DateTime.Today, new DateTime(2220, 10, 3), "3D Imax", "100", "TestString");
+            IMovie movie = movieLogic.GetMovieById(10);
+            
+
+            Assert.Equal(10, movie.Id);
+        }
+
+        [Fact]
         public void Should_ReturnAMovieListWithAnDeleteMovie_WhenDeleteingAMovie()
         {
             var movieLogic = new MovieLogic(new MovieContextMock());
@@ -115,11 +126,10 @@ namespace MovieTests
                     Assert.True(true);
                 }
             }
+
         }
 
-
-
-        public bool AreTheyInTheSameOrder(IEnumerable<IMovie> movies, IEnumerable<IMovie> movies2)
+            public bool AreTheyInTheSameOrder(IEnumerable<IMovie> movies, IEnumerable<IMovie> movies2)
         {
             bool found;
             int movieNr = 0;

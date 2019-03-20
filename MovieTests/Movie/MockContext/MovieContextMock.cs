@@ -153,7 +153,14 @@ namespace UnitTests.Movie.MockContext
 
         public IMovie GetMovieById(int id)
         {
-            throw new NotImplementedException();
+            foreach (var movie in GetMovies(null))
+            {
+                if (movie.Id == id)
+                {
+                    return movie;
+                }
+            }
+            return null;
         }
 
         
