@@ -21,10 +21,13 @@ namespace UnitTests.Movie.MockContext
         //Delete
         public IEnumerable<IMovie> GetMovies(string orderBy)
         {
-            movies = AddMoviesInOrderBy(movies, orderBy);
-            moviesTemp = movies;
             movies.Clear();
-            return moviesTemp;
+            foreach (var movie in moviesTemp)
+            {
+                movies.Add(movie);
+            }
+            movies = AddMoviesInOrderBy(movies, orderBy);
+            return movies;
         }
 
         public List<IMovie> AddMoviesInOrderBy(List<IMovie> movies, string orderBy)
@@ -105,7 +108,7 @@ namespace UnitTests.Movie.MockContext
 
         public void AddMovie(IMovie movie)
         {
-            movies.Add(new MovieDto
+            moviesTemp.Add(new MovieDto
             {
                 Id = movie.Id,
                 Name = movie.Name,

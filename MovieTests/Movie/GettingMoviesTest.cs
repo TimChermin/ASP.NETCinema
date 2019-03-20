@@ -15,6 +15,8 @@ namespace MovieTests
         MovieLogic _movieLogic;
         ThingEqualityComparer comparer = new ThingEqualityComparer();
         string orderBy = "";
+        List<IMovie> movies = new List<IMovie>();
+        List<IMovie> movies2 = new List<IMovie>();
 
         public GettingMoviesTest()
         {
@@ -27,8 +29,8 @@ namespace MovieTests
             var movieLogic = new MovieLogic(new MovieContextMock());
             
             //var result =  movieLogic.GetAllCustomers();
-            var movies = movieLogic.GetMovies(orderBy);
-            var movies2 = movieLogic.GetMovies(orderBy);
+            movies = movieLogic.GetMovies(orderBy).ToList();
+            movies2 = movieLogic.GetMovies(orderBy).ToList();
             
             Assert.True(AreTheyInTheSameOrder(movies, movies2));
         }
@@ -38,26 +40,30 @@ namespace MovieTests
         {
             var movieLogic = new MovieLogic(new MovieContextMock());
             //var result =  movieLogic.GetAllCustomers();
-            var movies = movieLogic.GetMovies(orderBy);
+            movies = movieLogic.GetMovies(orderBy).ToList();
             orderBy = "Name";
-            var movies2 = movieLogic.GetMovies(orderBy);
+            movies2 = movieLogic.GetMovies(orderBy).ToList();
 
             Assert.False(AreTheyInTheSameOrder(movies, movies2));
         }
 
 
         [Fact]
-        public void Should_ReturnAddAMovieToTheList_WhenAddingAMovie()
+        public void Should_ReturnAMovieListWithAnAddedMovie_WhenAddingAMovie()
         {
             var movieLogic = new MovieLogic(new MovieContextMock());
             //var result =  movieLogic.GetAllCustomers();
-            var movies = movieLogic.GetMovies(orderBy);
+            movies = movieLogic.GetMovies(orderBy).ToList();
             movieLogic.AddMovie(3, "DFilm", "Mooie film", DateTime.Today, new DateTime(2220, 10, 3), "3D Imax", "100", "TestString");
-            var movies2 = movieLogic.GetMovies(orderBy);
+            movies2 = movieLogic.GetMovies(orderBy).ToList();
 
             if (movies.Count() != movies2.Count())
             {
                 Assert.True(true);
+            }
+            else
+            {
+                Assert.True(false);
             }
         }
 
