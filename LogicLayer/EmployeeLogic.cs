@@ -1,30 +1,30 @@
-﻿using ASPNETCinema.DataLayer;
-using ASPNETCinema.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
+using ASPNETCinema.DAL;
+using Interfaces;
+using ASPNETCinema.Models;
+using DAL.Repository;
 
 namespace ASPNETCinema.Logic
 {
     public class EmployeeLogic
     {
-        DatabaseEmployee database = new DatabaseEmployee();
-        DatabaseMovie databaseMovie = new DatabaseMovie();
-        List<EmployeeModel> EmployeeWithMovies;
+        private EmployeeRepository Repository { get; }
 
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
-
-
-        public List<EmployeeModel> GetEmployees()
+        public EmployeeLogic(IEmployeeContext context)
         {
-            return database.GetEmployees();
+            Repository = new EmployeeRepository(context);
         }
 
+        public string GetName(int id)
+        {
+            return "test " + id;
+        }
+
+        public IEnumerable<IEmployee> GetEmployees()
+        {
+            return Repository.GetEmployees();
+        }
     }
 }

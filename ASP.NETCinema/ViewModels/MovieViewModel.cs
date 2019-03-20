@@ -8,31 +8,10 @@ namespace ASPNETCinema.ViewModels
 {
     public class MovieViewModel
     {
-        public MovieViewModel(string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)
-        {
-            Name = name;
-            Description = description;
-            ReleaseDate = releaseDate;
-            LastScreeningDate = lastScreeningDate;
-            MovieType = movieType;
-            MovieLenght = movieLenght;
-            ImageString = imageString;
-        }
-
-        public MovieViewModel(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)
-        {
-            Id = id;
-            Name = name;
-            Description = description;
-            ReleaseDate = releaseDate;
-            LastScreeningDate = lastScreeningDate;
-            MovieType = movieType;
-            MovieLenght = movieLenght;
-            ImageString = imageString;
-        }
-
         public MovieViewModel()
         {
+
+
         }
 
         

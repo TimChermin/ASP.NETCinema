@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ASPNETCinema.Logic;
-using ASPNETCinema.Models;
+using ASPNETCinema.ViewModels;
+using DAL;
+using Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,7 +13,13 @@ namespace ASPNETCinema.Controllers
 {
     public class ScreeningController : Controller
     {
-        ScreeningLogic screeningLogic = new ScreeningLogic();
+        private readonly IScreeningContext _screening;
+
+        //added scoped stuff in startup 
+        public ScreeningController(IScreeningContext screening)
+        {
+            _screening = screening;
+        }
 
         //other things
         //List
@@ -22,7 +30,20 @@ namespace ASPNETCinema.Controllers
 
         public ActionResult ListScreenings()
         {
-            return View(screeningLogic.GetScreenings());
+            var screeningLogic = new ScreeningLogic(_screening);
+            List<ScreeningViewModel> screenings = new List<ScreeningViewModel>();
+            foreach (var screening in screeningLogic.GetScreenings())
+            {
+                screenings.Add(new ScreeningViewModel
+                {
+                    Id = screening.Id,
+                    MovieId = screening.MovieId,
+                    HallId = screening.HallId,
+                    DateOfScreening = screening.DateOfScreening,
+                    TimeOfScreening = screening.TimeOfScreening
+                });
+            }
+            return View(screenings);
         }
 
         [Authorize(Roles = "Administrator")]
@@ -34,42 +55,66 @@ namespace ASPNETCinema.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
-        public ActionResult AddScreening(ScreeningModel screening)
+        public ActionResult AddScreening(ScreeningViewModel screening)
         {
-            if (ModelState.IsValid && screeningLogic.IsThisDateAndTimeAvailable(screening))
+            var screeningLogic = new ScreeningLogic(_screening);
+            if (ModelState.IsValid)
             {
-                screeningLogic.AddScreening(screening);
+                screeningLogic.AddScreening(screening.Id, screening.MovieId, screening.HallId, screening.DateOfScreening, screening.TimeOfScreening);
                 return RedirectToAction("ListScreenings");
             }
-            else
-            {
-                ViewBag.HasError = true;
-                ViewBag.ErrorMessage = "This Hall already has a screening on this day and time!";
-            }
-            
             return View();
         }
 
         [Authorize(Roles = "Administrator, Employee")]
-        public ActionResult DetailsScreening(int? id)
+        public ActionResult DetailsScreening(int id)
         {
-            return View(screeningLogic.GetScreening(id));
+            var screeningLogic = new ScreeningLogic(_screening);
+            if (ModelState.IsValid)
+            {
+                IScreening screening = screeningLogic.GetScreeningById(id);
+                ScreeningViewModel viewScreening = new ScreeningViewModel
+                {
+                    Id = screening.Id,
+                    MovieId = screening.MovieId,
+                    HallId = screening.HallId,
+                    DateOfScreening = screening.DateOfScreening,
+                    TimeOfScreening = screening.TimeOfScreening
+                };
+                return View(viewScreening);
+            }
+            return RedirectToAction("ListScreenings");
         }
 
         [Authorize(Roles = "Administrator")]
-        public ActionResult EditScreening(int? id)
+        public ActionResult EditScreening(int id)
         {
-            return View(screeningLogic.GetScreening(id));
+            var screeningLogic = new ScreeningLogic(_screening);
+            if (ModelState.IsValid)
+            {
+                IScreening screening = screeningLogic.GetScreeningById(id);
+                ScreeningViewModel viewScreening = new ScreeningViewModel
+                {
+                    Id = screening.Id,
+                    MovieId = screening.MovieId,
+                    HallId = screening.HallId,
+                    DateOfScreening = screening.DateOfScreening,
+                    TimeOfScreening = screening.TimeOfScreening
+                };
+                return View(viewScreening);
+            }
+            return RedirectToAction("ListScreenings");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
-        public ActionResult EditScreening(ScreeningModel screening)
+        public ActionResult EditScreening(ScreeningViewModel screening)
         {
-            if (ModelState.IsValid && screeningLogic.IsThisDateAndTimeAvailable(screening))
+            var screeningLogic = new ScreeningLogic(_screening);
+            if (ModelState.IsValid && screeningLogic.IsThisDateAndTimeAvailable(screening.HallId, screening.DateOfScreening, screening.TimeOfScreening))
             {
-                screeningLogic.EditScreening(screening);
+                screeningLogic.EditScreening(screening.Id, screening.MovieId, screening.HallId, screening.DateOfScreening, screening.TimeOfScreening);
                 return RedirectToAction("ListScreenings");
             }
             else
@@ -81,17 +126,32 @@ namespace ASPNETCinema.Controllers
             return View();
         }
 
-        public ActionResult DeleteScreening(int? id)
+        public ActionResult DeleteScreening(int id)
         {
-            return View(screeningLogic.GetScreening(id));
+            var screeningLogic = new ScreeningLogic(_screening);
+            if (ModelState.IsValid)
+            {
+                IScreening screening = screeningLogic.GetScreeningById(id);
+                ScreeningViewModel viewScreening = new ScreeningViewModel
+                {
+                    Id = screening.Id,
+                    MovieId = screening.MovieId,
+                    HallId = screening.HallId,
+                    DateOfScreening = screening.DateOfScreening,
+                    TimeOfScreening = screening.TimeOfScreening
+                };
+                return View(viewScreening);
+            }
+            return RedirectToAction("ListScreenings");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
-        public ActionResult DeleteScreening(ScreeningModel screening)
+        public ActionResult DeleteScreening(ScreeningViewModel screening)
         {
-            screeningLogic.DeleteScreening(screening);
+            var screeningLogic = new ScreeningLogic(_screening);
+            screeningLogic.DeleteScreening(screening.Id);
             return RedirectToAction("ListScreenings");
         }
 

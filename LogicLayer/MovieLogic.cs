@@ -4,13 +4,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using ASPNETCinema.Models;
 using System.Data.SqlClient;
-using ASPNETCinema.DataLayer;
+using ASPNETCinema.DAL;
+using DAL.Repository;
+using DAL;
+using Interfaces;
 
 namespace ASPNETCinema.Logic
 {
     public class MovieLogic
     {
-        DatabaseMovie database = new DatabaseMovie();
+        private MovieRepository Repository { get; }
+
+        public MovieLogic(IMovieContext context)
+        {
+            Repository = new MovieRepository(context);
+        }
 
         //other things
         //List
@@ -19,50 +27,39 @@ namespace ASPNETCinema.Logic
         //Edit
         //Delete
 
-        public MovieModel GetMovie(int? id)
+        public IMovie GetMovieById(int id)
         {
-            foreach (MovieModel movie in database.GetMovies())
-            {
-                if (id == movie.Id && id != null)
-                {
-                    return movie;
-                }
-            }
-            return null;
+            return Repository.GetMovieById(id);
         }
 
-        public List<MovieModel> GetMoviesAndOrderBy(string orderBy)
+        public IEnumerable<IMovie> GetMovies(string orderBy)
         {
-            List<MovieModel> movies = null;
-            if (orderBy != "MoviesToday")
-            {
-                database.OrderBy = orderBy;
-                movies = database.GetMovies();
-            }
-            else if (orderBy != null)
-            {
-                movies = database.GetMoviesToday();
-            }
-            
-            return movies;
+            return Repository.GetMovies(orderBy);
         }
 
-        public void AddMovie(MovieModel movie)
+        public void AddMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)
         {
-            database.AddMovie(movie);
+            var movie = new MovieModel
+            { Id = id,Name = name,Description = description,ReleaseDate = releaseDate,
+              LastScreeningDate = lastScreeningDate,MovieType = movieType,
+              MovieLenght = movieLenght, ImageString = imageString
+            };
+            Repository.AddMovie(movie);
         }
 
-        
-
-        public void EditMovie(MovieModel movie)
+        public void EditMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)
         {
-            database.EditMovie(movie);
+            var movie = new MovieModel
+            { Id = id,Name = name,Description = description,ReleaseDate = releaseDate,
+              LastScreeningDate = lastScreeningDate,MovieType = movieType,
+              MovieLenght = movieLenght, ImageString = imageString
+            };
+            Repository.EditMovie(movie);
         }
-        
 
-        public void DeleteMovie(MovieModel movie)
+        public void DeleteMovie(int id)
         {
-            database.DeleteMovie(movie.Id);
+            Repository.DeleteMovie(id);
         }
 
 

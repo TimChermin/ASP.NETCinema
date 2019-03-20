@@ -1,4 +1,4 @@
-﻿using ASPNETCinema.DataLayer;
+﻿using ASPNETCinema.DAL;
 using ASPNETCinema.Models;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,6 @@ namespace ASPNETCinema.Logic
     public class TaskLogic
     {
         DatabaseTask database = new DatabaseTask();
-        DatabaseMovie databaseMovie = new DatabaseMovie();
         //List<TaskModel> TasksWithMovies;
 
         //other things
