@@ -12,9 +12,9 @@ namespace ASPNETCinema.DAL
     public class DatabaseMovie : IMovieContext
     {
         private string orderBy;
-        private readonly DatabaseConnection _connection;
         public List<MovieModel> Movies { get; set; }
-
+        private readonly DatabaseConnection _connection;
+        
         public DatabaseMovie(DatabaseConnection connection)
         {
             _connection = connection;
@@ -29,9 +29,9 @@ namespace ASPNETCinema.DAL
 
         IEnumerable<IMovie> IMovieContext.GetMovies(string orderBy)
         {
-            //using ASPNETCinema.Models; added
-            Movies = new List<MovieModel>();
             _connection.SqlConnection.Open();
+
+            Movies = new List<MovieModel>();
             SqlCommand command;
             if (orderBy == "MoviesToday")
             {
@@ -88,8 +88,9 @@ namespace ASPNETCinema.DAL
 
         public IMovie GetMovieById(int id)
         {
-            Movies = new List<MovieModel>();
             _connection.SqlConnection.Open();
+
+            Movies = new List<MovieModel>();
             SqlCommand command = new SqlCommand("SELECT * FROM Movie WHERE Id = @Id", _connection.SqlConnection);
             command.Parameters.AddWithValue("@Id", id);
             using (SqlDataReader reader = command.ExecuteReader())
@@ -117,6 +118,7 @@ namespace ASPNETCinema.DAL
         public void EditMovie(IMovie movie)
         {
             _connection.SqlConnection.Open();
+
             SqlCommand command = new SqlCommand("UPDATE Movie SET Name = @Name, Description = @Description, ReleaseDate = @ReleaseDate, " +
                 "LastScreeningDate = @LastScreeningDate, MovieType = @MovieType, MovieLenght = @MovieLenght, ImageString = @ImageString WHERE Id = @Id", _connection.SqlConnection);
             command.Parameters.AddWithValue("@Name", movie.Name);
@@ -134,6 +136,7 @@ namespace ASPNETCinema.DAL
         public void DeleteMovie(int id)
         {
             _connection.SqlConnection.Open();
+
             SqlCommand command = new SqlCommand("DELETE FROM Movie WHERE Id = @Id", _connection.SqlConnection);
             command.Parameters.AddWithValue("@Id", id);
             command.ExecuteNonQuery();

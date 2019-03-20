@@ -10,10 +10,13 @@ namespace ASPNETCinema.DAL
 {
     public class DatabaseEmployee : IEmployeeContext
     {
-        private static string connectionString = "Server =tcp:cintim.database.windows.net,1433;Initial Catalog=Cinema;Persist Security Info=False;User ID=GamerIsTheNamer;Password=Ikbencool20042000!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-        private SqlConnection connection = new SqlConnection(connectionString);
-
         public List<EmployeeModel> Employees { get; set; }
+        private readonly DatabaseConnection _connection;
+
+        public DatabaseEmployee(DatabaseConnection connection)
+        {
+            _connection = connection;
+        }
 
         //other things
         //List
@@ -24,10 +27,10 @@ namespace ASPNETCinema.DAL
 
         public List<EmployeeModel> GetEmployees()
         {
-            //using ASPNETCinema.Models; added
+            _connection.SqlConnection.Open();
+
             Employees = new List<EmployeeModel>();
-            connection.Open();
-            SqlCommand command = new SqlCommand("SELECT * FROM Employee", connection);
+            SqlCommand command = new SqlCommand("SELECT * FROM Employee", _connection.SqlConnection);
 
             using (SqlDataReader reader = command.ExecuteReader())
             {
@@ -37,8 +40,6 @@ namespace ASPNETCinema.DAL
                     Employees.Add(employee);
                 }
             }
-
-            connection.Close();
             return (Employees);
         }
 
@@ -49,10 +50,10 @@ namespace ASPNETCinema.DAL
 
         IEnumerable<IEmployee> IEmployeeContext.GetEmployees()
         {
-            //using ASPNETCinema.Models; added
+            _connection.SqlConnection.Open();
+
             Employees = new List<EmployeeModel>();
-            connection.Open();
-            SqlCommand command = new SqlCommand("SELECT * FROM Employee", connection);
+            SqlCommand command = new SqlCommand("SELECT * FROM Employee", _connection.SqlConnection);
 
             var employees = new List<IEmployee>();
 
@@ -69,8 +70,6 @@ namespace ASPNETCinema.DAL
                     employees.Add(employee);
                 }
             }
-
-            connection.Close();
             return (employees);
         }
     }
