@@ -49,7 +49,7 @@ namespace ASPNETCinema
             services.AddScoped<IMovieContext, DatabaseMovie>();
             // Add the whole configuration object here.
             services.AddSingleton<IConfiguration>(Configuration);
-            services.AddTransient(_ => new DatabaseConnection(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddTransient(_ => new DatabaseConnection(Configuration.GetConnectionString("ASPNETCinemaContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,7 +76,5 @@ namespace ASPNETCinema
                     template: "{controller=Movie}/{action=ListMovies}/{id?}");
             });
         }
-        
-
     }
 }

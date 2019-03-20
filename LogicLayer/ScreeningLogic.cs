@@ -10,7 +10,6 @@ namespace ASPNETCinema.Logic
     public class ScreeningLogic
     {
         DatabaseScreening database = new DatabaseScreening();
-        DatabaseMovie databaseMovie = new DatabaseMovie();
         List<ScreeningModel> screeningsWithMovies;
 
         //other things
