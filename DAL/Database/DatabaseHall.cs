@@ -1,5 +1,6 @@
 ﻿using ASPNETCinema.Models;
 using DAL;
+using DAL.Dtos;
 using Interfaces;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,6 @@ namespace ASPNETCinema.DAL
 {
     public class DatabaseHall : IHallContext
     {
-        private List<HallModel> halls;
         private readonly DatabaseConnection _connection;
 
         public DatabaseHall(DatabaseConnection connection)
@@ -30,18 +30,24 @@ namespace ASPNETCinema.DAL
         {
             _connection.SqlConnection.Open();
             
-            halls = new List<HallModel>();
+            var halls = new List<IHall>();
             SqlCommand command = new SqlCommand("SELECT * FROM Hall", _connection.SqlConnection);
 
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    HallModel hall = new HallModel(reader.GetInt32(0), reader.GetDecimal(1), reader.GetString(2), reader.GetInt32(3), reader.GetInt32(4));
+                    var hall = new HallDto
+                    {
+                        Id = (int)reader["Id"],
+                        Price = (decimal)reader["Price"],
+                        ScreenType = reader["ScreenType"].ToString(),
+                        Seats = (int)reader["Seats"],
+                        SeatsTaken = (int)reader["SeatsTaken"]
+                    };
                     halls.Add(hall);
                 }
             }
-
             return (halls);
         }
 
@@ -54,7 +60,6 @@ namespace ASPNETCinema.DAL
             command.Parameters.AddWithValue("@ScreenType", hall.ScreenType);
             command.Parameters.AddWithValue("@Seats", hall.Seats);
             command.Parameters.AddWithValue("@SeatsTaken", hall.SeatsTaken);
-            HallModel newHall = new HallModel(((int)command.ExecuteScalar()), hall.Price, hall.ScreenType, hall.Seats, hall.SeatsTaken);
         }
 
         public void EditHall(IHall hall)
@@ -85,14 +90,13 @@ namespace ASPNETCinema.DAL
         {
             _connection.SqlConnection.Open();
 
-            halls = new List<HallModel>();
             SqlCommand command = new SqlCommand("SELECT * FROM Hall WHERE Id = @Id", _connection.SqlConnection);
             command.Parameters.AddWithValue("@Id", id);
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    IHall hall = new HallModel
+                    IHall hall = new HallDto
                     {
                         Id = (int)reader["Id"],
                         Price = (decimal)reader["Name"],
