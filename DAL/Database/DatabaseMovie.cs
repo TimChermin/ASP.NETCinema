@@ -11,27 +11,21 @@ namespace ASPNETCinema.DAL
 {
     public class DatabaseMovie : IMovieContext
     {
-        private static string connectionString = "Server =tcp:cintim.database.windows.net,1433;Initial Catalog=Cinema;Persist Security Info=False;User ID=GamerIsTheNamer;Password=Ikbencool20042000!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-        private SqlConnection connection = new SqlConnection(connectionString);
-        private string orderBy = null;
-
+        private string orderBy;
         private readonly DatabaseConnection _connection;
+        public List<MovieModel> Movies { get; set; }
+
         public DatabaseMovie(DatabaseConnection connection)
         {
             _connection = connection;
         }
-
-        public List<MovieModel> Movies { get; set; }
-        public string OrderBy { get => orderBy; set => orderBy = value; }
-
-
         //other things
         //List
         //Add
         //details
         //Edit
         //Delete
-        
+
 
         IEnumerable<IMovie> IMovieContext.GetMovies(string orderBy)
         {
