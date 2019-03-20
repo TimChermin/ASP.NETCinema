@@ -48,6 +48,7 @@ namespace ASPNETCinema
             services.AddScoped<IEmployeeContext, DatabaseEmployee>();
             services.AddScoped<IMovieContext, DatabaseMovie>();
             services.AddScoped<IHallContext, DatabaseHall>();
+            services.AddScoped<IScreeningContext, DatabaseScreening>();
             // Add the whole configuration object here.
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddTransient(_ => new DatabaseConnection(Configuration.GetConnectionString("ASPNETCinemaContext")));

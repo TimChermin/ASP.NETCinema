@@ -62,7 +62,7 @@ namespace ASPNETCinema.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
-        public ActionResult AddMovie(MovieModel movie)
+        public ActionResult AddMovie(MovieViewModel movie)
         {
             var movieLogic = new MovieLogic(_movie);
             if (ModelState.IsValid)
@@ -81,7 +81,7 @@ namespace ASPNETCinema.Controllers
             if (ModelState.IsValid)
             {
                 IMovie movie = movieLogic.GetMovieById(id);
-                MovieViewModel ViewMovie = new MovieViewModel
+                MovieViewModel viewMovie = new MovieViewModel
                 {
                     Id = movie.Id,
                     Name = movie.Name,
@@ -92,7 +92,7 @@ namespace ASPNETCinema.Controllers
                     MovieLenght = movie.MovieLenght,
                     ImageString = movie.ImageString
                 };
-                return View(ViewMovie);
+                return View(viewMovie);
             }
             return RedirectToAction("ListMovies");
         }

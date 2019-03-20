@@ -65,7 +65,7 @@ namespace ASPNETCinema.DAL
                     movies.Add(movie);
                 }
             }
-            
+            _connection.SqlConnection.Close();
             return (movies);
         }
 
@@ -82,6 +82,7 @@ namespace ASPNETCinema.DAL
             command.Parameters.AddWithValue("@MovieLenght", movie.MovieLenght);
             command.Parameters.AddWithValue("@ImageString", movie.ImageString);
             command.ExecuteNonQuery();
+            _connection.SqlConnection.Close();
         }
 
         public IMovie GetMovieById(int id)
@@ -94,7 +95,7 @@ namespace ASPNETCinema.DAL
             {
                 while (reader.Read())
                 {
-                    IMovie movie = new MovieDto
+                    var movie = new MovieDto
                     {
                         Id = (int)reader["Id"],
                         Name = reader["Name"]?.ToString(),
@@ -109,6 +110,7 @@ namespace ASPNETCinema.DAL
                     return movie;
                 }
             }
+            _connection.SqlConnection.Close();
             return null;
         }
 
@@ -128,6 +130,7 @@ namespace ASPNETCinema.DAL
             command.Parameters.AddWithValue("@Id", movie.Id);
 
             command.ExecuteNonQuery();
+            _connection.SqlConnection.Close();
         }
 
         public void DeleteMovie(int id)
@@ -137,6 +140,7 @@ namespace ASPNETCinema.DAL
             SqlCommand command = new SqlCommand("DELETE FROM Movie WHERE Id = @Id", _connection.SqlConnection);
             command.Parameters.AddWithValue("@Id", id);
             command.ExecuteNonQuery();
+            _connection.SqlConnection.Close();
         }
     }
 }

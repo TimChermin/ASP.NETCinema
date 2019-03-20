@@ -47,6 +47,7 @@ namespace ASPNETCinema.DAL
                     halls.Add(hall);
                 }
             }
+            _connection.SqlConnection.Close();
             return (halls);
         }
 
@@ -59,6 +60,7 @@ namespace ASPNETCinema.DAL
             command.Parameters.AddWithValue("@ScreenType", hall.ScreenType);
             command.Parameters.AddWithValue("@Seats", hall.Seats);
             command.Parameters.AddWithValue("@SeatsTaken", hall.SeatsTaken);
+            _connection.SqlConnection.Close();
         }
 
         public void EditHall(IHall hall)
@@ -74,6 +76,7 @@ namespace ASPNETCinema.DAL
             command.Parameters.AddWithValue("@SeatsTaken", hall.SeatsTaken);
 
             command.ExecuteNonQuery();
+            _connection.SqlConnection.Close();
         }
 
         public void DeleteHall(int id)
@@ -83,6 +86,7 @@ namespace ASPNETCinema.DAL
             SqlCommand command = new SqlCommand("DELETE FROM Hall WHERE Id = @Id", _connection.SqlConnection);
             command.Parameters.AddWithValue("@Id", id);
             command.ExecuteNonQuery();
+            _connection.SqlConnection.Close();
         }
 
         public IHall GetHallById(int id)
@@ -95,18 +99,19 @@ namespace ASPNETCinema.DAL
             {
                 while (reader.Read())
                 {
-                    IHall hall = new HallDto
+                    var hall = new HallDto
                     {
                         Id = (int)reader["Id"],
-                        Price = (decimal)reader["Name"],
-                        ScreenType = reader["Description"]?.ToString(),
-                        Seats = (int)reader["ReleaseDate"],
-                        SeatsTaken = (int)reader["LastScreeningDate"]
+                        Price = (decimal)reader["Price"],
+                        ScreenType = reader["ScreenType"]?.ToString(),
+                        Seats = (int)reader["Seats"],
+                        SeatsTaken = (int)reader["SeatsTaken"]
                     };
 
                     return hall;
                 }
             }
+            _connection.SqlConnection.Close();
             return null;
         }
     }

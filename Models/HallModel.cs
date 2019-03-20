@@ -36,11 +36,6 @@ namespace ASPNETCinema.Models
         public int SeatsTaken { get; set; }
         public string ScreenType { get; set; }
         public decimal Price { get; set; }
-        public List<ScreeningModel> Screenings { get; set; }
-
-
-
-
-        
+        public List<IScreening> Screenings { get; set; }
     }
 }

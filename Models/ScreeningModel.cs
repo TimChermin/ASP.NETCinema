@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ASPNETCinema.Models
 {
-    public class ScreeningModel
+    public class ScreeningModel : IScreening
     {
         public ScreeningModel(int id, int movieId, int hallId, DateTime dateOfScreening, TimeSpan timeOfScreening)
         {
@@ -24,14 +25,11 @@ namespace ASPNETCinema.Models
 
         public int Id { get; set; }
         public int MovieId { get; set; }
-        public MovieModel Movie{ get; set; }
         public int HallId { get; set; }
-        public HallModel Hall { get; set; }
         public DateTime DateOfScreening { get; set; }
         public TimeSpan TimeOfScreening { get; set; }
-        public TaskModel Task { get; set; }
-
-
-
+        IMovie IScreening.Movie { get; set; }
+        IHall IScreening.Hall { get; set; }
+        ITask IScreening.Task { get; set; }
     }
 }

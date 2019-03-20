@@ -1,5 +1,8 @@
 ﻿using ASPNETCinema.DAL;
 using ASPNETCinema.Models;
+using DAL;
+using DAL.Repository;
+using Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +12,13 @@ namespace ASPNETCinema.Logic
 {
     public class ScreeningLogic
     {
-        DatabaseScreening database = new DatabaseScreening(null);
-        List<ScreeningModel> screeningsWithMovies;
+        //List<IScreening> screeningsWithMovies;
+        private ScreeningRepository Repository { get; }
 
+        public ScreeningLogic(IScreeningContext context)
+        {
+            Repository = new ScreeningRepository(context);
+        }
         //other things
         //List
         //Add
@@ -19,27 +26,23 @@ namespace ASPNETCinema.Logic
         //Edit
         //Delete
 
-        public ScreeningModel GetScreening(int? id)
+        public IScreening GetScreeningById(int id)
         {
-            foreach (ScreeningModel screening in database.GetScreenings())
-            {
-                if (id == screening.Id && id != null)
-                {
-                    return screening;
-                }
-            }
-            return null;
+            return Repository.GetScreeningById(id);
         }
 
-        public List<ScreeningModel> AddTheMovieToTheScreenings(List<ScreeningModel> screenings)
+        public List<ScreeningModel> AddTheMovieToTheScreenings(List<IScreening> screenings)
         {
-            screeningsWithMovies = new List<ScreeningModel>();
-            foreach (ScreeningModel screening in screenings)
+            /*screeningsWithMovies = new List<IScreening>();
+            foreach (var screening in screenings)
             {
                 screeningsWithMovies.Add(AddTheMovieToTheScreening(screening));
             }
             return screeningsWithMovies;
+            */
+            return null;
         }
+        
 
         public ScreeningModel AddTheMovieToTheScreening(ScreeningModel screening)
         {
@@ -55,36 +58,50 @@ namespace ASPNETCinema.Logic
             return null;
         }
 
-        public List<ScreeningModel> GetScreenings()
+        public IEnumerable<IScreening> GetScreenings()
         {
-            List<ScreeningModel> screenings = null;
-            screenings = database.GetScreenings();
-            return AddTheMovieToTheScreenings(screenings);
+            return Repository.GetScreenings();
         }
 
-        public void AddScreening(ScreeningModel screening)
+        public void AddScreening(int id, int movieId, int hallId, DateTime dateOfScreening, TimeSpan timeOfScreening)
         {
-            database.AddScreening(screening);
-        }
-
-        public void EditScreening(ScreeningModel screening)
-        {
-            database.EditScreening(screening);
-        }
-
-        public void DeleteScreening(ScreeningModel screening)
-        {
-            database.DeleteScreening(screening);
-        }
-
-
-        public bool IsThisDateAndTimeAvailable(ScreeningModel screening)
-        {
-            foreach (ScreeningModel screeningDatabase in database.GetScreenings())
+            var screening = new ScreeningModel
             {
-                if (screeningDatabase.HallId == screening.HallId && screeningDatabase.DateOfScreening == screening.DateOfScreening)
+                Id = id,
+                MovieId = movieId,
+                HallId = hallId,
+                DateOfScreening = dateOfScreening,
+                TimeOfScreening = timeOfScreening
+            };
+            Repository.AddScreening(screening);
+        }
+
+        public void EditScreening(int id, int movieId, int hallId, DateTime dateOfScreening, TimeSpan timeOfScreening)
+        {
+            var screening = new ScreeningModel
+            {
+                Id = id,
+                MovieId = movieId,
+                HallId = hallId,
+                DateOfScreening = dateOfScreening,
+                TimeOfScreening = timeOfScreening
+            };
+            Repository.EditScreening(screening);
+        }
+
+        public void DeleteScreening(int id)
+        {
+            Repository.DeleteScreening(id);
+        }
+
+
+        public bool IsThisDateAndTimeAvailable(int hallId, DateTime dateOfScreening, TimeSpan timeOfScreening)
+        {
+            foreach (var screeningDatabase in GetScreenings())
+            {
+                if (screeningDatabase.HallId == hallId && screeningDatabase.DateOfScreening == dateOfScreening)
                 {
-                    if (screeningDatabase.TimeOfScreening == screening.TimeOfScreening)
+                    if (screeningDatabase.TimeOfScreening == timeOfScreening)
                     {
                         return false;
                     }

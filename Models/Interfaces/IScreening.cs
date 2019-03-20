@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Models.Interfaces
+namespace Interfaces
 {
     public interface IScreening
     {

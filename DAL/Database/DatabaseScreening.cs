@@ -1,4 +1,6 @@
-﻿using ASPNETCinema.Models;
+﻿using DAL;
+using DAL.Dtos;
+using Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -7,15 +9,13 @@ using System.Threading.Tasks;
 
 namespace ASPNETCinema.DAL
 {
-    public class DatabaseScreening
+    public class DatabaseScreening : IScreeningContext
     {
-        public List<ScreeningModel> Screenings { get; set; }
         private readonly DatabaseConnection _connection;
 
         public DatabaseScreening(DatabaseConnection connection)
         {
             _connection = connection;
-            //gave null in a spot for now
         }
 
         //other things
@@ -25,26 +25,35 @@ namespace ASPNETCinema.DAL
         //Edit
         //Delete
 
-        public List<ScreeningModel> GetScreenings()
+        IEnumerable<IScreening> IScreeningContext.GetScreenings()
         {
             _connection.SqlConnection.Open();
 
-            Screenings = new List<ScreeningModel>();
+            var screenings = new List<IScreening>();
             SqlCommand command = new SqlCommand("SELECT * FROM Screening", _connection.SqlConnection);
             
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    ScreeningModel screening = new ScreeningModel(reader.GetInt32(0), reader.GetInt32(1), reader.GetInt32(2), reader.GetDateTime(3), reader.GetTimeSpan(4));
-                    Screenings.Add(screening);
+                    var screening = new ScreeningDto
+                    {
+                        Id = (int)reader["Id"],
+                        MovieId = (int)reader["IdMovie"],
+                        HallId = (int)reader["IdHall"],
+                        DateOfScreening = (DateTime)reader["DateOfScreening"],
+                        TimeOfScreening = (TimeSpan)reader["TimeOfScreening"]
+                    };
+
+                    screenings.Add(screening);
                 }
             }
-            return (Screenings);
+            _connection.SqlConnection.Close();
+            return (screenings);
         }
 
 
-        public void AddScreening(ScreeningModel screening)
+        public void AddScreening(IScreening screening)
         {
             _connection.SqlConnection.Open();
 
@@ -53,11 +62,11 @@ namespace ASPNETCinema.DAL
             command.Parameters.AddWithValue("@IdHall", screening.HallId);
             command.Parameters.AddWithValue("@DateOfScreening", screening.DateOfScreening);
             command.Parameters.AddWithValue("@TimeOfScreening", screening.TimeOfScreening);
-            //MovieModel newMovie = new MovieModel(((int)command.ExecuteScalar()), screening.Id, screening.MovieId);
             command.ExecuteScalar();
+            _connection.SqlConnection.Close();
         }
 
-        public void EditScreening(ScreeningModel screening)
+        public void EditScreening(IScreening screening)
         {
             _connection.SqlConnection.Open();
             SqlCommand command = new SqlCommand("UPDATE Screening SET IdMovie = @IdMovie, IdHall = @IdHall, DateOfScreening = @DateOfScreening, " +
@@ -69,14 +78,42 @@ namespace ASPNETCinema.DAL
             command.Parameters.AddWithValue("@TimeOfScreening", screening.TimeOfScreening);
 
             command.ExecuteNonQuery();
+            _connection.SqlConnection.Close();
         }
 
-        public void DeleteScreening(ScreeningModel screening)
+        public void DeleteScreening(int id)
         {
             _connection.SqlConnection.Open();
             SqlCommand command = new SqlCommand("DELETE FROM Screening WHERE Id = @Id", _connection.SqlConnection);
-            command.Parameters.AddWithValue("@Id", screening.Id);
+            command.Parameters.AddWithValue("@Id", id);
             command.ExecuteNonQuery();
+            _connection.SqlConnection.Close();
+        }
+
+        public IScreening GetScreeningById(int id)
+        {
+            _connection.SqlConnection.Open();
+
+            SqlCommand command = new SqlCommand("SELECT * FROM Screening WHERE Id = @Id", _connection.SqlConnection);
+            command.Parameters.AddWithValue("@Id", id);
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    var screening = new ScreeningDto
+                    {
+                        Id = (int)reader["Id"],
+                        MovieId = (int)reader["IdMovie"],
+                        HallId = (int)reader["IdHall"],
+                        DateOfScreening = (DateTime)reader["DateOfScreening"],
+                        TimeOfScreening = (TimeSpan)reader["TimeOfScreening"]
+                    };
+
+                    return screening;
+                }
+            }
+            _connection.SqlConnection.Close();
+            return null;
         }
     }
 }
