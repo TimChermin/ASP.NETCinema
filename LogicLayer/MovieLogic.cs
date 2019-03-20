@@ -49,14 +49,19 @@ namespace ASPNETCinema.Logic
             Repository.AddMovie(movie);
         }
 
-        public void EditMovie(MovieModel movie)
+        public void EditMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)
         {
+            var movie = new MovieModel
+            { Id = id,Name = name,Description = description,ReleaseDate = releaseDate,
+              LastScreeningDate = lastScreeningDate,MovieType = movieType,
+              MovieLenght = movieLenght, ImageString = imageString
+            };
             Repository.EditMovie(movie);
         }
 
-        public void DeleteMovie(MovieModel movie)
+        public void DeleteMovie(int id)
         {
-            Repository.DeleteMovie(movie);
+            Repository.DeleteMovie(id);
         }
 
 

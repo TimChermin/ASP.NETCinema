@@ -41,9 +41,9 @@ namespace DAL.Repository
             _context.EditMovie(movie);
         }
 
-        public void DeleteMovie(IMovie movie)
+        public void DeleteMovie(int id)
         {
-            _context.DeleteMovie(movie);
+            _context.DeleteMovie(id);
         }
 
         

@@ -17,7 +17,7 @@ namespace DAL
         void AddMovie(IMovie movie);
         IMovie GetMovieById(int id);
         void EditMovie(IMovie movie);
-        void DeleteMovie(IMovie movie);
+        void DeleteMovie(int id);
         
     }
 }

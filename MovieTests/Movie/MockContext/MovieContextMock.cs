@@ -123,12 +123,32 @@ namespace UnitTests.Movie.MockContext
 
         public void EditMovie(IMovie movie)
         {
-            throw new NotImplementedException();
+            foreach (var mov in GetMovies(null))
+            {
+                if (mov.Id == movie.Id)
+                {
+                    mov.Name = movie.Name;
+                    mov.Description = movie.Description;
+                    mov.ReleaseDate = movie.ReleaseDate;
+                    mov.LastScreeningDate = movie.LastScreeningDate;
+                    mov.MovieType = movie.MovieType;
+                    mov.MovieLenght = movie.MovieLenght;
+                    mov.ImageString = movie.ImageString;
+                    moviesTemp.Add(mov);
+                }
+            }
         }
 
-        public void DeleteMovie(IMovie movie)
+        public void DeleteMovie(int id)
         {
-            throw new NotImplementedException();
+            foreach (var movie in GetMovies(null))
+            {
+                if (movie.Id == id)
+                {
+                    movie.Name = "Deleted";
+                    moviesTemp.Add(movie);
+                }
+            }
         }
 
         public IMovie GetMovieById(int id)

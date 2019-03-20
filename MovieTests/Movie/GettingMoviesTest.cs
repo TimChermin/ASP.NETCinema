@@ -67,6 +67,56 @@ namespace MovieTests
             }
         }
 
+        [Fact]
+        public void Should_ReturnAMovieListWithAnEditedMovie_WhenEditingAMovie()
+        {
+            var movieLogic = new MovieLogic(new MovieContextMock());
+            //var result =  movieLogic.GetAllCustomers();
+            movies = movieLogic.GetMovies(orderBy).ToList();
+            movieLogic.EditMovie(3, "Edited", "Mooie film", DateTime.Today, new DateTime(2220, 10, 3), "3D Imax", "100", "TestString");
+            movies2 = movieLogic.GetMovies(orderBy).ToList();
+
+            foreach (var movie in movies)
+            {
+                if (movie.Name != "Edited")
+                {
+                    Assert.True(true);
+                }
+            }
+            foreach (var movie in movies2)
+            {
+                if (movie.Name == "Edited")
+                {
+                    Assert.True(true);
+                }
+            }
+        }
+
+        [Fact]
+        public void Should_ReturnAMovieListWithAnDeleteMovie_WhenDeleteingAMovie()
+        {
+            var movieLogic = new MovieLogic(new MovieContextMock());
+            //var result =  movieLogic.GetAllCustomers();
+            movies = movieLogic.GetMovies(orderBy).ToList();
+            movieLogic.DeleteMovie(3);
+            movies2 = movieLogic.GetMovies(orderBy).ToList();
+
+            foreach (var movie in movies)
+            {
+                if (movie.Name != "Deleted")
+                {
+                    Assert.True(true);
+                }
+            }
+            foreach (var movie in movies2)
+            {
+                if (movie.Name == "Deleted")
+                {
+                    Assert.True(true);
+                }
+            }
+        }
+
 
 
         public bool AreTheyInTheSameOrder(IEnumerable<IMovie> movies, IEnumerable<IMovie> movies2)

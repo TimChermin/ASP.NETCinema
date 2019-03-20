@@ -129,7 +129,8 @@ namespace ASPNETCinema.Controllers
         public ActionResult EditMovie(MovieModel movie)
         {
             var movieLogic = new MovieLogic(_movie);
-            movieLogic.EditMovie(movie);
+            movieLogic.EditMovie(movie.Id, movie.Name, movie.Description, movie.ReleaseDate, movie.LastScreeningDate,
+                    movie.MovieType, movie.MovieLenght, movie.ImageString);
             return RedirectToAction("ListMovies");
         }
 
@@ -165,7 +166,7 @@ namespace ASPNETCinema.Controllers
         public ActionResult DeleteMovie(MovieModel movie)
         {
             var movieLogic = new MovieLogic(_movie);
-            movieLogic.DeleteMovie(movie);
+            movieLogic.DeleteMovie(movie.Id);
             return RedirectToAction("ListMovies");
         }
     }

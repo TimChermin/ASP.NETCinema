@@ -136,11 +136,11 @@ namespace ASPNETCinema.DAL
             connection.Close();
         }
 
-        public void DeleteMovie(IMovie movie)
+        public void DeleteMovie(int id)
         {
             connection.Open();
             SqlCommand command = new SqlCommand("DELETE FROM Movie WHERE Id = @Id", connection);
-            command.Parameters.AddWithValue("@Id", movie.Id);
+            command.Parameters.AddWithValue("@Id", id);
             command.ExecuteNonQuery();
 
             connection.Close();
