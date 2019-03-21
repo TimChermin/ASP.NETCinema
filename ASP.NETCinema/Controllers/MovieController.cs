@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ASPNETCinema.Models;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using System.Data.SqlClient;
 using ASPNETCinema.Logic;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.Configuration;
 using ASPNETCinema.ViewModels;
 using DAL;
 using Interfaces;
@@ -126,7 +120,7 @@ namespace ASPNETCinema.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Administrator")]
-        public ActionResult EditMovie(MovieModel movie)
+        public ActionResult EditMovie(MovieViewModel movie)
         {
             var movieLogic = new MovieLogic(_movie);
             movieLogic.EditMovie(movie.Id, movie.Name, movie.Description, movie.ReleaseDate, movie.LastScreeningDate,
@@ -163,7 +157,7 @@ namespace ASPNETCinema.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
-        public ActionResult DeleteMovie(MovieModel movie)
+        public ActionResult DeleteMovie(MovieViewModel movie)
         {
             var movieLogic = new MovieLogic(_movie);
             movieLogic.DeleteMovie(movie.Id);
