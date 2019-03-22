@@ -20,12 +20,13 @@ namespace ASPNETCinema.Logic
             Repository = new MovieRepository(context);
         }
 
-        //other things
+
         //List
         //Add
         //details
         //Edit
         //Delete
+        //other things
 
         public IMovie GetMovieById(int id)
         {

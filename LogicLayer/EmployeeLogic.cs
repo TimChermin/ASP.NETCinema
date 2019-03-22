@@ -17,14 +17,48 @@ namespace ASPNETCinema.Logic
             Repository = new EmployeeRepository(context);
         }
 
-        public string GetName(int id)
+        //other things
+        //details
+        //List
+        //Add
+        //Edit
+        //Delete
+
+        public IEmployee GetEmployeeById(int id)
         {
-            return "test " + id;
+            return Repository.GetEmployeeById(id);
         }
 
         public IEnumerable<IEmployee> GetEmployees()
         {
             return Repository.GetEmployees();
         }
+
+        public void AddEmployee(int id, string name)
+        {
+            var employee = new EmployeeModel
+            {
+                Id = id,
+                Name = name
+            };
+            Repository.AddEmployee(employee);
+        }
+
+        public void EditEmployee(int id, string name)
+        {
+            var employee = new EmployeeModel
+            {
+                Id = id,
+                Name = name
+            };
+            Repository.EditEmployee(employee);
+        }
+
+        public void DeleteEmployee(int id)
+        {
+            Repository.DeleteEmployee(id);
+        }
+
+
     }
 }

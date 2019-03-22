@@ -14,15 +14,37 @@ namespace DAL.Repository
         {
             _context = context;
         }
-
-        public void GetName(IEmployeeContext person)
-        {
-            //_context.GetName();
-        }
+        
+        //List
+        //Add
+        //details
+        //Edit
+        //Delete
+        //other things
 
         public IEnumerable<IEmployee> GetEmployees()
         {
             return _context.GetEmployees();
+        }
+
+        public void AddEmployee(IEmployee employee)
+        {
+            _context.AddEmployee(employee);
+        }
+
+        public IEmployee GetEmployeeById(int id)
+        {
+            return _context.GetEmployeeById(id);
+        }
+
+        public void EditEmployee(IEmployee employee)
+        {
+            _context.EditEmployee(employee);
+        }
+
+        public void DeleteEmployee(int id)
+        {
+            _context.DeleteEmployee(id);
         }
 
     }

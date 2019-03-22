@@ -79,8 +79,8 @@ namespace ASPNETCinema.Controllers
             var movieLogic = new MovieLogic(_movie);
             if (ModelState.IsValid)
             {
-                IMovie movie = movieLogic.GetMovieById(id);
-                MovieViewModel viewMovie = new MovieViewModel
+                var movie = movieLogic.GetMovieById(id);
+                var viewMovie = new MovieViewModel
                 {
                     Id = movie.Id,
                     Name = movie.Name,
@@ -105,8 +105,8 @@ namespace ASPNETCinema.Controllers
             var movieLogic = new MovieLogic(_movie);
             if (ModelState.IsValid)
             {
-                IMovie movie = movieLogic.GetMovieById(id);
-                MovieViewModel ViewMovie = new MovieViewModel
+                var movie = movieLogic.GetMovieById(id);
+                var viewMovie = new MovieViewModel
                 {
                     Id = movie.Id,
                     Name = movie.Name,
@@ -117,7 +117,7 @@ namespace ASPNETCinema.Controllers
                     MovieLenght = movie.MovieLenght,
                     ImageString = movie.ImageString
                 };
-                return View(ViewMovie);
+                return View(viewMovie);
             }
             return RedirectToAction("ListMovies");
         }
@@ -140,8 +140,8 @@ namespace ASPNETCinema.Controllers
             var movieLogic = new MovieLogic(_movie);
             if (ModelState.IsValid)
             {
-                IMovie movie = movieLogic.GetMovieById(id);
-                MovieViewModel ViewMovie = new MovieViewModel
+                var movie = movieLogic.GetMovieById(id);
+                var viewMovie = new MovieViewModel
                 {
                     Id = movie.Id,
                     Name = movie.Name,
@@ -152,7 +152,7 @@ namespace ASPNETCinema.Controllers
                     MovieLenght = movie.MovieLenght,
                     ImageString = movie.ImageString
                 };
-                return View(ViewMovie);
+                return View(viewMovie);
             }
             return RedirectToAction("ListMovies");
         }

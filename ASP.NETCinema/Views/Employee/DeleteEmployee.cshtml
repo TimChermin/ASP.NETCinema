@@ -1,13 +1,14 @@
 ﻿@model ASPNETCinema.ViewModels.EmployeeViewModel
 
 @{
-    ViewData["Title"] = "DetailsEmployee";
+    ViewData["Title"] = "DeleteEmployee";
 }
 
-<h2>DetailsEmployee</h2>
+<h2>DeleteEmployee</h2>
 
+<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>EmployeeModel</h4>
+    <h4>EmployeeViewModel</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -23,8 +24,9 @@
             @Html.DisplayFor(model => model.Name)
         </dd>
     </dl>
-</div>
-<div>
-    @Html.ActionLink("Edit", "EditEmployee", new { id = Model.Id }) |
-    <a asp-action="ListEmployees">Back to List</a>
+    
+    <form asp-action="DeleteEmployee">
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="ListEmployees">Back to List</a>
+    </form>
 </div>
