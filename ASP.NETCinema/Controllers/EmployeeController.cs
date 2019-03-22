@@ -22,7 +22,13 @@ namespace ASPNETCinema.Controllers
         {
             _employee = employee;
         }
-        
+
+        //List
+        //Add
+        //details
+        //Edit
+        //Delete
+
 
         public ActionResult ListEmployees()
         {
@@ -37,6 +43,26 @@ namespace ASPNETCinema.Controllers
                 });
             }
             return View(employees);
+        }
+
+        [Authorize(Roles = "Administrator")]
+        public ActionResult AddEmployee()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
+        public ActionResult AddMEmployee(EmployeeViewModel employee)
+        {
+            var employeeLogic = new EmployeeLogic(_employee);
+            if (ModelState.IsValid)
+            {
+                employeeLogic.AddEmployee(employee.Name);
+                return RedirectToAction("ListMovies");
+            }
+            return View();
         }
 
         public ActionResult DetailsEmployee(int id)

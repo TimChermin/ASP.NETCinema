@@ -34,11 +34,10 @@ namespace ASPNETCinema.Logic
             return Repository.GetEmployees();
         }
 
-        public void AddEmployee(int id, string name)
+        public void AddEmployee(string name)
         {
             var employee = new EmployeeModel
             {
-                Id = id,
                 Name = name
             };
             Repository.AddEmployee(employee);
@@ -58,7 +57,5 @@ namespace ASPNETCinema.Logic
         {
             Repository.DeleteEmployee(id);
         }
-
-
     }
 }
