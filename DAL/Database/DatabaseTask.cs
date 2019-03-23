@@ -26,7 +26,7 @@ namespace ASPNETCinema.DAL
             //using ASPNETCinema.Models; added
             Tasks = new List<TaskModel>();
             connection.Open();
-            SqlCommand command = new SqlCommand("SELECT * FROM Task", connection);
+            SqlCommand command = new SqlCommand("SELECT Id, IdScreening, TaskType FROM Task", connection);
 
             using (SqlDataReader reader = command.ExecuteReader())
             {

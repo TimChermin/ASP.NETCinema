@@ -8,6 +8,8 @@ using ASPNETCinema.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using ASPNETCinema.DAL;
 using Interfaces;
+using System.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ASPNETCinema.Controllers
 {
@@ -20,32 +22,117 @@ namespace ASPNETCinema.Controllers
         {
             _employee = employee;
         }
-        
+
+        //List
+        //Add
+        //details
+        //Edit
+        //Delete
+
 
         public ActionResult ListEmployees()
         {
             var employeeLogic = new EmployeeLogic(_employee);
             List<EmployeeViewModel> employees = new List<EmployeeViewModel>();
-            foreach (var emp in employeeLogic.GetEmployees())
+            foreach (var employee in employeeLogic.GetEmployees())
             {
                 employees.Add(new EmployeeViewModel
                 {
-                    Id = emp.Id,
-                    Name = emp.Name
+                    Id = employee.Id,
+                    Name = employee.Name
                 });
             }
-            //List<EmployeeModel> employees = employee.GetEmployees();
             return View(employees);
-            //test
-
-
-            //return View(employeeLogic.GetEmployees());
         }
 
-        public ActionResult DetailsEmployee()
+        [Authorize(Roles = "Administrator")]
+        public ActionResult AddEmployee()
         {
-            ViewBag.employeeName = _employee.GetName(1);
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
+        public ActionResult AddMEmployee(EmployeeViewModel employee)
+        {
+            var employeeLogic = new EmployeeLogic(_employee);
+            if (ModelState.IsValid)
+            {
+                employeeLogic.AddEmployee(employee.Name);
+                return RedirectToAction("ListMovies");
+            }
+            return View();
+        }
+
+        public ActionResult DetailsEmployee(int id)
+        {
+            var employeeLogic = new EmployeeLogic(_employee);
+            if (ModelState.IsValid)
+            {
+                var employee = employeeLogic.GetEmployeeById(id);
+                var viewEmployee = new EmployeeViewModel
+                {
+                    Id = employee.Id,
+                    Name = employee.Name,
+                };
+                return View(viewEmployee);
+            }
+            return RedirectToAction("ListEmployees");
+        }
+
+
+        [Authorize(Roles = "Administrator")]
+        public ActionResult EditEmployee(int id)
+        {
+            var employeeLogic = new EmployeeLogic(_employee);
+            if (ModelState.IsValid)
+            {
+                var employee = employeeLogic.GetEmployeeById(id);
+                var viewEmployee = new EmployeeViewModel
+                {
+                    Id = employee.Id,
+                    Name = employee.Name,
+                };
+                return View(viewEmployee);
+            }
+            return RedirectToAction("ListEmployees");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Administrator")]
+        public ActionResult EditEmployee(EmployeeViewModel employee)
+        {
+            var employeeLogic = new EmployeeLogic(_employee);
+            employeeLogic.EditEmployee(employee.Id, employee.Name);
+            return RedirectToAction("ListEmployees");
+        }
+
+        [Authorize(Roles = "Administrator")]
+        public ActionResult DeleteEmployee(int id)
+        {
+            var employeeLogic = new EmployeeLogic(_employee);
+            if (ModelState.IsValid)
+            {
+                var employee = employeeLogic.GetEmployeeById(id);
+                var viewEmployee = new EmployeeViewModel
+                {
+                    Id = employee.Id,
+                    Name = employee.Name,
+                };
+                return View(viewEmployee);
+            }
+            return RedirectToAction("ListEmployees");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
+        public ActionResult DeleteEmployee(EmployeeViewModel employee)
+        {
+            var employeeLogic = new EmployeeLogic(_employee);
+            employeeLogic.DeleteEmployee(employee.Id);
+            return RedirectToAction("ListEmployees");
         }
 
     }

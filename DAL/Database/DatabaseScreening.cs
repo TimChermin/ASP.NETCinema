@@ -30,7 +30,7 @@ namespace ASPNETCinema.DAL
             _connection.SqlConnection.Open();
 
             var screenings = new List<IScreening>();
-            SqlCommand command = new SqlCommand("SELECT * FROM Screening", _connection.SqlConnection);
+            SqlCommand command = new SqlCommand("SELECT Id, IdMovie, IdHall, DateOfScreening, TimeOfScreening FROM Screening", _connection.SqlConnection);
             
             using (SqlDataReader reader = command.ExecuteReader())
             {
@@ -94,7 +94,7 @@ namespace ASPNETCinema.DAL
         {
             _connection.SqlConnection.Open();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM Screening WHERE Id = @Id", _connection.SqlConnection);
+            SqlCommand command = new SqlCommand("SELECT Id, IdMovie, IdHall, DateOfScreening, TimeOfScreening FROM Screening WHERE Id = @Id", _connection.SqlConnection);
             command.Parameters.AddWithValue("@Id", id);
             using (SqlDataReader reader = command.ExecuteReader())
             {
@@ -108,7 +108,7 @@ namespace ASPNETCinema.DAL
                         DateOfScreening = (DateTime)reader["DateOfScreening"],
                         TimeOfScreening = (TimeSpan)reader["TimeOfScreening"]
                     };
-
+                    _connection.SqlConnection.Close();
                     return screening;
                 }
             }

@@ -8,7 +8,11 @@ namespace ASPNETCinema.DAL
 {
     public interface IEmployeeContext
     {
-        string GetName(int id);
+        IEmployee GetEmployeeById(int id);
         IEnumerable<IEmployee> GetEmployees();
+        void AddEmployee(IEmployee employee);
+        void EditEmployee(IEmployee employee);
+        void DeleteEmployee(int id);
+
     }
 }

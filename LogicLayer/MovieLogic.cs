@@ -20,12 +20,13 @@ namespace ASPNETCinema.Logic
             Repository = new MovieRepository(context);
         }
 
-        //other things
+
         //List
         //Add
         //details
         //Edit
         //Delete
+        //other things
 
         public IMovie GetMovieById(int id)
         {
@@ -40,8 +41,8 @@ namespace ASPNETCinema.Logic
         public void AddMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)
         {
             var movie = new MovieModel
-            { Id = id,Name = name,Description = description,ReleaseDate = releaseDate,
-              LastScreeningDate = lastScreeningDate,MovieType = movieType,
+            { Id = id, Name = name, Description = description, ReleaseDate = releaseDate,
+              LastScreeningDate = lastScreeningDate, MovieType = movieType,
               MovieLenght = movieLenght, ImageString = imageString
             };
             Repository.AddMovie(movie);

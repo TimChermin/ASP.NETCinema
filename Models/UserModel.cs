@@ -3,26 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Interfaces;
 
 namespace ASPNETCinema.Models
 {
-    public class UserModel
+    public class UserModel : IUser
     {
-        public UserModel(int id, string name, string password, int administrator)
-        {
-            Id = id;
-            Name = name;
-            Password = password;
-            Administrator = administrator;
-        }
-
-        public UserModel(int id, string name, string password)
-        {
-            Id = id;
-            Name = name;
-            Password = password;
-        }
-
         public UserModel()
         {
         }
@@ -35,9 +21,6 @@ namespace ASPNETCinema.Models
         public string ConfirmPassword { get; set; }
         public int Administrator { get; set; }
         public List<ScreeningModel> Tickets { get; set; }
-
-
-
-
+        public int IdScreening { get; set; }
     }
 }

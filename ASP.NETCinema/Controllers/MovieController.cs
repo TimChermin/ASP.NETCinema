@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ASPNETCinema.Logic;
 using Microsoft.AspNetCore.Authorization;
@@ -11,8 +14,7 @@ namespace ASPNETCinema.Controllers
     public class MovieController : Controller
     {
         private readonly IMovieContext _movie;
-
-        //added scoped stuff in startup 
+        
         public MovieController(IMovieContext movie)
         {
             _movie = movie;
@@ -74,8 +76,8 @@ namespace ASPNETCinema.Controllers
             var movieLogic = new MovieLogic(_movie);
             if (ModelState.IsValid)
             {
-                IMovie movie = movieLogic.GetMovieById(id);
-                MovieViewModel viewMovie = new MovieViewModel
+                var movie = movieLogic.GetMovieById(id);
+                var viewMovie = new MovieViewModel
                 {
                     Id = movie.Id,
                     Name = movie.Name,
@@ -100,8 +102,8 @@ namespace ASPNETCinema.Controllers
             var movieLogic = new MovieLogic(_movie);
             if (ModelState.IsValid)
             {
-                IMovie movie = movieLogic.GetMovieById(id);
-                MovieViewModel ViewMovie = new MovieViewModel
+                var movie = movieLogic.GetMovieById(id);
+                var viewMovie = new MovieViewModel
                 {
                     Id = movie.Id,
                     Name = movie.Name,
@@ -112,7 +114,7 @@ namespace ASPNETCinema.Controllers
                     MovieLenght = movie.MovieLenght,
                     ImageString = movie.ImageString
                 };
-                return View(ViewMovie);
+                return View(viewMovie);
             }
             return RedirectToAction("ListMovies");
         }
@@ -135,8 +137,8 @@ namespace ASPNETCinema.Controllers
             var movieLogic = new MovieLogic(_movie);
             if (ModelState.IsValid)
             {
-                IMovie movie = movieLogic.GetMovieById(id);
-                MovieViewModel ViewMovie = new MovieViewModel
+                var movie = movieLogic.GetMovieById(id);
+                var viewMovie = new MovieViewModel
                 {
                     Id = movie.Id,
                     Name = movie.Name,
@@ -147,7 +149,7 @@ namespace ASPNETCinema.Controllers
                     MovieLenght = movie.MovieLenght,
                     ImageString = movie.ImageString
                 };
-                return View(ViewMovie);
+                return View(viewMovie);
             }
             return RedirectToAction("ListMovies");
         }

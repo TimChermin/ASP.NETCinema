@@ -5,35 +5,70 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
+using DAL.Repository;
+using DAL;
+using Interfaces;
 
 namespace ASPNETCinema.Logic
 {
     public class UserLogic
     {
-        DatabaseUser databaseUser = new DatabaseUser();
-        UserModel user = new UserModel();
+        private UserRepository Repository { get; }
+
+        public UserLogic(IUserContext context)
+        {
+            Repository = new UserRepository(context);
+        }
+
+        //other things
+        //List
+        //Add
+        //details
+        //Edit
+        //Delete
+
+        public IUser GetUser(string name, string password)
+        {
+            return Repository.GetUser(name, password);
+        }
+
+        public bool AddUser(int id, string name, string password, string confirmPassword, int administrator)
+        {
+            if (password == confirmPassword && password != null)
+            {
+                var user = new UserModel
+                {
+                    Id = id,
+                    Name = name,
+                    Password = password,
+                    Administrator = administrator
+                };
+                Repository.AddUser(user);
+                return true;
+            }
+            return false;
+        }
 
         public bool CheckIfThisLoginIsCorrect(string name, string password)
         {
-            List<UserModel> users = databaseUser.GetUsers();
-            foreach (UserModel user in users)
+            var users = Repository.GetUsers();
+            foreach (var user in users)
             {
                 if (name == user.Name && password == user.Password)
                 {
-                    
                     return true;
                 }
             }
             return false;
         }
 
-        public string GetRoleUser(UserModel user)
+        public string GetRoleUser(int id)
         {
-            if (databaseUser.GetUserRole(user) == 1)
+            if (Repository.GetUserRole(id) == 1)
             {
                 return "Administrator";
             }
-            else if (databaseUser.GetUserRole(user) == 2)
+            else if (Repository.GetUserRole(id) == 2)
             {
                 return "Employee";
             }

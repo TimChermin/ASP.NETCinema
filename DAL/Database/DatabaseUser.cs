@@ -4,60 +4,132 @@ using System.Linq;
 using System.Threading.Tasks;
 using ASPNETCinema.Models;
 using System.Data.SqlClient;
+using DAL;
+using Interfaces;
+using DAL.Dtos;
 
 namespace ASPNETCinema.DAL
 {
-    public class DatabaseUser
+    public class DatabaseUser : IUserContext
     {
-        private static string connectionString = "Server =tcp:cintim.database.windows.net,1433;Initial Catalog=Cinema;Persist Security Info=False;User ID=GamerIsTheNamer;Password=Ikbencool20042000!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-        private SqlConnection connection = new SqlConnection(connectionString);
-        List<UserModel> users;
+        private readonly DatabaseConnection _connection;
 
-        public void AddUser(UserModel user)
+        public DatabaseUser(DatabaseConnection connection)
         {
-            connection.Open();
-
-            SqlCommand command = new SqlCommand("INSERT INTO Users (Username, Password, Administrator) OUTPUT Inserted.Id VALUES (@Name, @Password, @Administrator)", connection);
-            command.Parameters.AddWithValue("@Name", user.Name);
-            command.Parameters.AddWithValue("@Password", user.Password);
-            command.Parameters.AddWithValue("@Administrator", user.Administrator);
-            command.ExecuteScalar();
-            connection.Close();
+            _connection = connection;
         }
 
+        //other things
+        //List
+        //Add
+        //details
+        //Edit
+        //Delete
 
-        public List<UserModel> GetUsers()
+
+        IEnumerable<IUser> IUserContext.GetUsers()
         {
-            connection.Open();
-            users = new List<UserModel>();
-            SqlCommand command = new SqlCommand("SELECT * FROM Users", connection);
+            _connection.SqlConnection.Open();
+            var users = new List<UserDto>();
+            SqlCommand command = new SqlCommand("SELECT Id, Username, Password, Administrator FROM Users", _connection.SqlConnection);
             //command.Parameters.AddWithValue("@ReleaseDate", user.ReleaseDate);
 
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    UserModel user = new UserModel(reader.GetInt32(0), reader.GetString(2), reader.GetString(3));
+                    var user = new UserDto
+                    {
+                        Id = (int)reader["Id"],
+                        Name = reader["Username"]?.ToString(),
+                        Password = reader["Password"]?.ToString(),
+                        Administrator = (int)reader["Administrator"]
+                    };
                     users.Add(user);
                 }
             }
-            connection.Close();
-
+            _connection.SqlConnection.Close();
             return users;
         }
 
-        public int GetUserRole(UserModel user)
+        public void AddUser(IUser user)
         {
-            connection.Open();
-            users = new List<UserModel>();
-            SqlCommand command = new SqlCommand("SELECT Administrator FROM Users WHERE (Username = @Name AND Password = @Password)", connection);
-            //command.Parameters.AddWithValue("@ReleaseDate", user.ReleaseDate);
-            command.Parameters.AddWithValue("@Name", user.Name);
-            command.Parameters.AddWithValue("@Password", user.Password);
-            int AdminOrNot = (int)command.ExecuteScalar();
-            connection.Close();
+            _connection.SqlConnection.Open();
 
-            return AdminOrNot;
+            SqlCommand command = new SqlCommand("INSERT INTO Users (Username, Password, Administrator) OUTPUT Inserted.Id VALUES (@Username, @Password, @Administrator)", _connection.SqlConnection);
+            command.Parameters.AddWithValue("@Username", user.Name);
+            command.Parameters.AddWithValue("@Password", user.Password);
+            command.Parameters.AddWithValue("@Administrator", user.Administrator);
+            command.ExecuteNonQuery();
+            _connection.SqlConnection.Close();
         }
+
+        public IUser GetUser(string name, string password)
+        {
+            _connection.SqlConnection.Open();
+            var users = new List<UserModel>();
+            SqlCommand command = new SqlCommand("SELECT Id, Username, Password, Administrator FROM Users WHERE (Username = @Username AND Password = @Password)", _connection.SqlConnection);
+            //command.Parameters.AddWithValue("@ReleaseDate", user.ReleaseDate);
+            command.Parameters.AddWithValue("@Username", name);
+            command.Parameters.AddWithValue("@Password", password);
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    var user = new UserDto
+                    {
+                        Id = (int)reader["Id"],
+                        Name = reader["Username"]?.ToString(),
+                        Password = reader["Password"]?.ToString(),
+                        Administrator = (int)reader["Administrator"]
+                    };
+                    _connection.SqlConnection.Close();
+                    return user;
+                }
+            }
+            _connection.SqlConnection.Close();
+            return null;
+        }
+
+        public void EditUser(IUser user)
+        {
+            _connection.SqlConnection.Open();
+
+            SqlCommand command = new SqlCommand("UPDATE User SET IdScreening = @IdScreening, Username = @Username, Password = @Password, Administrator = @Administrator " +
+                "WHERE Id = @Id", _connection.SqlConnection);
+            command.Parameters.AddWithValue("@IdScreening", user.IdScreening);
+            command.Parameters.AddWithValue("@Username", user.Name);
+            command.Parameters.AddWithValue("@Password", user.Password);
+            command.Parameters.AddWithValue("@Administrator", user.Administrator);
+            command.Parameters.AddWithValue("@Id", user.Id);
+
+            command.ExecuteNonQuery();
+            _connection.SqlConnection.Close();
+        }
+
+        public void DeleteUser(int id)
+        {
+            _connection.SqlConnection.Open();
+
+            SqlCommand command = new SqlCommand("DELETE FROM User WHERE Id = @Id", _connection.SqlConnection);
+            command.Parameters.AddWithValue("@Id", id);
+            command.ExecuteNonQuery();
+            _connection.SqlConnection.Close();
+        }
+
+        public int GetUserRole(int id)
+        {
+            _connection.SqlConnection.Open();
+            SqlCommand command = new SqlCommand("SELECT Administrator FROM Users WHERE Id = @Id", _connection.SqlConnection);
+            //command.Parameters.AddWithValue("@ReleaseDate", user.ReleaseDate);
+            command.Parameters.AddWithValue("@Id", id);
+            int role = (int)command.ExecuteScalar();
+
+            _connection.SqlConnection.Close();
+            return role;
+        }
+        
+
+       
     }
 }
