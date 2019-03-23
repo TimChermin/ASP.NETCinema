@@ -33,7 +33,8 @@ namespace ASPNETCinema.DAL
             SqlCommand command;
             if (orderBy == "MoviesToday")
             {
-                command = new SqlCommand("SELECT * FROM Movie GROUP BY Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString HAVING ReleaseDate = @Today", _connection.SqlConnection);
+                command = new SqlCommand("SELECT Id, Username, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString FROM Movie " +
+                    "GROUP BY Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString HAVING ReleaseDate = @Today", _connection.SqlConnection);
                 command.Parameters.AddWithValue("@Today", DateTime.Today);
             }
             else if (orderBy == "Name" || orderBy == "ReleaseDate" || orderBy == "MovieType")
@@ -73,7 +74,8 @@ namespace ASPNETCinema.DAL
         {
             _connection.SqlConnection.Open();
 
-            SqlCommand command = new SqlCommand("INSERT INTO Movie OUTPUT Inserted.Id VALUES (@Name, @Description, @ReleaseDate, @LastScreeningDate, @MovieType, @MovieLenght, @ImageString)", _connection.SqlConnection);
+            SqlCommand command = new SqlCommand("INSERT INTO Movie OUTPUT Inserted.Id VALUES (@Name, @Description, @ReleaseDate, @LastScreeningDate, " +
+                "@MovieType, @MovieLenght, @ImageString)", _connection.SqlConnection);
             command.Parameters.AddWithValue("@Name", movie.Name);
             command.Parameters.AddWithValue("@Description", movie.Description);
             command.Parameters.AddWithValue("@ReleaseDate", movie.ReleaseDate);
@@ -89,7 +91,8 @@ namespace ASPNETCinema.DAL
         {
             _connection.SqlConnection.Open();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM Movie WHERE Id = @Id", _connection.SqlConnection);
+            SqlCommand command = new SqlCommand("SELECT Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString FROM Movie " +
+                "WHERE Id = @Id", _connection.SqlConnection);
             command.Parameters.AddWithValue("@Id", id);
             using (SqlDataReader reader = command.ExecuteReader())
             {
@@ -106,7 +109,7 @@ namespace ASPNETCinema.DAL
                         MovieLenght = reader["MovieLenght"]?.ToString(),
                         ImageString = reader["ImageString"]?.ToString()
                     };
-
+                    _connection.SqlConnection.Close();
                     return movie;
                 }
             }

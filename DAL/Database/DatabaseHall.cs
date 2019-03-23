@@ -108,7 +108,7 @@ namespace ASPNETCinema.DAL
                         Seats = (int)reader["Seats"],
                         SeatsTaken = (int)reader["SeatsTaken"]
                     };
-
+                    _connection.SqlConnection.Close();
                     return hall;
                 }
             }

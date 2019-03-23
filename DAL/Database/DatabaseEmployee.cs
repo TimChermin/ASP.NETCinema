@@ -27,7 +27,7 @@ namespace ASPNETCinema.DAL
         {
             _connection.SqlConnection.Open();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM Employee WHERE Id = @Id", _connection.SqlConnection);
+            SqlCommand command = new SqlCommand("SELECT Id, Name FROM Employee WHERE Id = @Id", _connection.SqlConnection);
             command.Parameters.AddWithValue("@Id", id);
             using (SqlDataReader reader = command.ExecuteReader())
             {
@@ -38,7 +38,7 @@ namespace ASPNETCinema.DAL
                         Id = (int)reader["Id"],
                         Name = reader["Name"]?.ToString(),
                     };
-
+                    _connection.SqlConnection.Close();
                     return employee;
                 }
             }

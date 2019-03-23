@@ -16,8 +16,7 @@ namespace ASPNETCinema.Controllers
     public class MovieController : Controller
     {
         private readonly IMovieContext _movie;
-
-        //added scoped stuff in startup 
+        
         public MovieController(IMovieContext movie)
         {
             _movie = movie;

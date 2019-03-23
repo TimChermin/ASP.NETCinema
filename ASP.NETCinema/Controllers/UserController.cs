@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ASPNETCinema.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
-using ASPNETCinema.DAL;
 using ASPNETCinema.Logic;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
+using DAL;
+using ASPNETCinema.ViewModels;
 
 namespace ASPNETCinema.Controllers
 {
     public class UserController : Controller
     {
-        DatabaseUser database = new DatabaseUser();
-        UserLogic userLogic = new UserLogic();
+        private readonly IUserContext _user;
+        
+        public UserController(IUserContext user)
+        {
+            _user = user;
+        }
 
         [HttpGet]
         public IActionResult LoginUser()
@@ -26,6 +30,33 @@ namespace ASPNETCinema.Controllers
                 return Redirect("/");
             }
             
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> LoginUser(UserViewModel user)
+        {
+            var userLogic = new UserLogic(_user);
+            if (userLogic.CheckIfThisLoginIsCorrect(user.Name, user.Password))
+            {
+                int userId = userLogic.GetUser(user.Name, user.Password).Id;
+                string userRole = userLogic.GetRoleUser(userId);
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.Name),
+                    new Claim(ClaimTypes.Role, userRole)
+                };
+
+                var userIdentity = new ClaimsIdentity(claims, "login");
+
+                ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
+                await HttpContext.SignInAsync(principal);
+
+                //Just redirect to our index after logging in. 
+                return Redirect("/");
+            }
+
             return View();
         }
 
@@ -40,40 +71,15 @@ namespace ASPNETCinema.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddUser(UserModel user)
+        public async Task<ActionResult> AddUser(UserViewModel user)
         {
+            var userLogic = new UserLogic(_user);
             if (ModelState.IsValid)
             {
-                database.AddUser(user);
+                userLogic.AddUser(user.Id, user.Name, user.Password, user.ConfirmPassword, user.Administrator);
                 await LoginUser(user);
-                return Redirect("/");
+                return RedirectToAction("ListMovies");
             }
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LoginUser(UserModel userModel)
-        {
-            
-            if (userLogic.CheckIfThisLoginIsCorrect(userModel.Name, userModel.Password))
-            {
-                string userRole = userLogic.GetRoleUser(userModel);
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, userModel.Name),
-                    new Claim(ClaimTypes.Role, userRole)
-                };
-
-                var userIdentity = new ClaimsIdentity(claims, "login");
-
-                ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
-                await HttpContext.SignInAsync(principal);
-
-                //Just redirect to our index after logging in. 
-                return Redirect("/");
-            }
-            
             return View();
         }
 
