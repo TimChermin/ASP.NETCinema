@@ -40,6 +40,7 @@ namespace ASPNETCinema
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
         .AddCookie(options => {
             options.LoginPath = "/User/LoginUser/";
+            options.AccessDeniedPath = "/Home/AccessDenied/";
         });
             
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

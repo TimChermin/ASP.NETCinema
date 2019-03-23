@@ -37,25 +37,23 @@
                     <li><a asp-area="" asp-controller="Screening" asp-action="ListScreenings"><i class="fas fa-ticket-alt fa-2x"> Screenings</i></a></li>
                     @if (User.Identity.IsAuthenticated == false)
                     {
-                        <li><a asp-area="" asp-controller="User" asp-action="LoginUser">><i class="fas fa-2x">Login</i></a></li>
-                        <li><a asp-area="" asp-controller="User" asp-action="AddUser">><i class="fas fa-2x">Register</i></a></li>
-                    }
-                    else
-                    {
+                        <li class="dropdown">
+                            <a href="#" class="fas fa-2x" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"> My CinTim </i> <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-area="" asp-controller="User" asp-action="LoginUser"><i class="fas fa-1x">Login</i></a></li>
+                                <li><a asp-area="" asp-controller="User" asp-action="AddUser"><i class="fas fa-1x">Register</i></a></li>
+                            </ul>
+                        </li>
+                        
                     }
 
                     @if (User.IsInRole("Normal"))
                     {
                         <li class="dropdown">
-                            <a href="#" class="fas fa-2x" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
+                            <a href="#" class="fas fa-2x" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"> Account </i> <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">One more separated link</a></li>
+                                <li><a asp-area="" asp-controller="" asp-action="">Username: @User.Identity.Name</a></li>
+                                <li><a asp-area="" asp-controller="User" asp-action="LogoutUser">Logout</a></li>
                             </ul>
                         </li>
                     }
@@ -71,6 +69,7 @@
                                 <li><a asp-area="" asp-controller="Task" asp-action="ListTasks">Tasks</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a asp-area="" asp-controller="" asp-action="">Username: @User.Identity.Name</a></li>
+                                <li><a>Role: Admin</a></li>
                                 <li><a asp-area="" asp-controller="User" asp-action="LogoutUser">Logout</a></li>
                             </ul>
                         </li>
@@ -79,20 +78,17 @@
                     @if (User.IsInRole("Employee"))
                     {
                         <li class="dropdown">
-                            <a href="#" class="fas fa-2x" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Employee <span class="caret"></span></a>
+                            <a href="#" class="fas fa-2x" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"> Employee </i> <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
+                                <li><a asp-area="" asp-controller="Task" asp-action="ListTasks">Tasks</a></li>
+                                <li><a asp-area="" asp-controller="Employee" asp-action="ListEmployees">Employees</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">One more separated link</a></li>
+                                <li><a asp-area="" asp-controller="" asp-action="">Username: @User.Identity.Name</a></li>
+                                <li><a>Role: Employee</a></li>
+                                <li><a asp-area="" asp-controller="User" asp-action="LogoutUser">Logout</a></li>
                             </ul>
                         </li>
-                        <li><a>Role: Employee</a></li>
-                        <li><a asp-area="" asp-controller="Task" asp-action="ListTasks">Tasks</a></li>
-                        <li><a asp-area="" asp-controller="Employee" asp-action="ListEmployees">Employees</a></li>
+                        
                     }
 
 
