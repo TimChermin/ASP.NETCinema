@@ -76,8 +76,8 @@ namespace ASPNETCinema.Controllers
             var hallLogic = new HallLogic(_hall);
             if (ModelState.IsValid)
             {
-                IHall hall = hallLogic.GetHallById(id);
-                HallViewModel viewHall = new HallViewModel
+                var hall = hallLogic.GetHallById(id);
+                var viewHall = new HallViewModel
                 {
                     Id = hall.Id,
                     Price = hall.Price,
@@ -103,12 +103,25 @@ namespace ASPNETCinema.Controllers
         public ActionResult DeleteHall(int id)
         {
             var hallLogic = new HallLogic(_hall);
-            return View(hallLogic.GetHallById(id));
+            if (ModelState.IsValid)
+            {
+                var hall = hallLogic.GetHallById(id);
+                var viewHall = new HallViewModel
+                {
+                    Id = hall.Id,
+                    Price = hall.Price,
+                    ScreenType = hall.ScreenType,
+                    Seats = hall.Seats,
+                    SeatsTaken = hall.SeatsTaken
+                };
+                return View(viewHall);
+            }
+            return RedirectToAction("ListMovies");
         }
 
         [HttpPost]
         [Authorize(Roles = "Administrator")]
-        public ActionResult DeleteHall(HallModel hall)
+        public ActionResult DeleteHall(HallViewModel hall)
         {
             var hallLogic = new HallLogic(_hall);
             hallLogic.DeleteHall(hall.Id);

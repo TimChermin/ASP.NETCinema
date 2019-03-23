@@ -30,7 +30,7 @@ namespace ASPNETCinema.DAL
             _connection.SqlConnection.Open();
             
             var halls = new List<IHall>();
-            SqlCommand command = new SqlCommand("SELECT * FROM Hall", _connection.SqlConnection);
+            SqlCommand command = new SqlCommand("SELECT Id, Price, ScreenType, Seats, SeatsTaken FROM Hall", _connection.SqlConnection);
 
             using (SqlDataReader reader = command.ExecuteReader())
             {
@@ -60,6 +60,7 @@ namespace ASPNETCinema.DAL
             command.Parameters.AddWithValue("@ScreenType", hall.ScreenType);
             command.Parameters.AddWithValue("@Seats", hall.Seats);
             command.Parameters.AddWithValue("@SeatsTaken", hall.SeatsTaken);
+            command.ExecuteNonQuery();
             _connection.SqlConnection.Close();
         }
 
@@ -93,7 +94,7 @@ namespace ASPNETCinema.DAL
         {
             _connection.SqlConnection.Open();
 
-            SqlCommand command = new SqlCommand("SELECT * FROM Hall WHERE Id = @Id", _connection.SqlConnection);
+            SqlCommand command = new SqlCommand("SELECT Id, Price, ScreenType, Seats, SeatsTaken FROM Hall WHERE Id = @Id", _connection.SqlConnection);
             command.Parameters.AddWithValue("@Id", id);
             using (SqlDataReader reader = command.ExecuteReader())
             {
