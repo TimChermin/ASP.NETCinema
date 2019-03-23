@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using ASPNETCinema.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using ASPNETCinema.DAL;
+using Microsoft.VisualStudio.Web.BrowserLink;
 using DAL;
 
 namespace ASPNETCinema
@@ -61,6 +62,7 @@ namespace ASPNETCinema
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseBrowserLink();
             }
             else
             {
@@ -71,6 +73,10 @@ namespace ASPNETCinema
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            app.UseBrowserLink();
+
+
 
             app.UseMvc(routes =>
             {
