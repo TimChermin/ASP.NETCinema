@@ -52,8 +52,8 @@
                         <li class="dropdown">
                             <a href="#" class="fas fa-2x" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"> Account </i> <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a asp-area="" asp-controller="" asp-action="">Username: @User.Identity.Name</a></li>
-                                <li><a asp-area="" asp-controller="User" asp-action="LogoutUser">Logout</a></li>
+                                <li><a asp-area="" asp-controller="" asp-action=""><i class="fas fa-1x">Username: @User.Identity.Name</i></a></li>
+                                <li><a asp-area="" asp-controller="User" asp-action="LogoutUser"><i class="fas fa-1x">Logout</i></a></li>
                             </ul>
                         </li>
                     }
@@ -63,14 +63,14 @@
                         <li class="dropdown">
                             <a href="#" class="fas fa-2x" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"> Admin </i> <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a asp-area="" asp-controller="Hall" asp-action="ListHalls">Halls</a></li>
+                                <li><a asp-area="" asp-controller="Hall" asp-action="ListHalls"><i class="fas fa-1x">Halls</i></a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a asp-area="" asp-controller="Employee" asp-action="ListEmployees">Employees</a></li>
-                                <li><a asp-area="" asp-controller="Task" asp-action="ListTasks">Tasks</a></li>
+                                <li><a asp-area="" asp-controller="Employee" asp-action="ListEmployees"><i class="fas fa-1x">Employees</i></a></li>
+                                <li><a asp-area="" asp-controller="Task" asp-action="ListTasks"><i class="fas fa-1x">Tasks</i></a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a asp-area="" asp-controller="" asp-action="">Username: @User.Identity.Name</a></li>
-                                <li><a>Role: Admin</a></li>
-                                <li><a asp-area="" asp-controller="User" asp-action="LogoutUser">Logout</a></li>
+                                <li><a asp-area="" asp-controller="" asp-action=""><i class="fas fa-1x">Username: @User.Identity.Name</i></a></li>
+                                <li><a asp-area="" asp-controller="" asp-action=""><i class="fas fa-1x">Role: Admin</i></a></li>
+                                <li><a asp-area="" asp-controller="User" asp-action="LogoutUser"><i class="fas fa-1x">Logout</i></a></li>
                             </ul>
                         </li>
                     }
@@ -80,12 +80,12 @@
                         <li class="dropdown">
                             <a href="#" class="fas fa-2x" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"> Employee </i> <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a asp-area="" asp-controller="Task" asp-action="ListTasks">Tasks</a></li>
-                                <li><a asp-area="" asp-controller="Employee" asp-action="ListEmployees">Employees</a></li>
+                                <li><a asp-area="" asp-controller="Task" asp-action="ListTasks"><i class="fas fa-1x">Tasks</i></a></li>
+                                <li><a asp-area="" asp-controller="Employee" asp-action="ListEmployees"><i class="fas fa-1x">Employees</i></a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a asp-area="" asp-controller="" asp-action="">Username: @User.Identity.Name</a></li>
-                                <li><a>Role: Employee</a></li>
-                                <li><a asp-area="" asp-controller="User" asp-action="LogoutUser">Logout</a></li>
+                                <li><a asp-area="" asp-controller="" asp-action=""><i class="fas fa-1x">Username: @User.Identity.Name</i></a></li>
+                                <li><a asp-area="" asp-controller="" asp-action=""><i class="fas fa-1x">Role: Employee</i></a></li>
+                                <li><a asp-area="" asp-controller="User" asp-action="LogoutUser"><i class="fas fa-1x">Logout</i></a></li>
                             </ul>
                         </li>
                         

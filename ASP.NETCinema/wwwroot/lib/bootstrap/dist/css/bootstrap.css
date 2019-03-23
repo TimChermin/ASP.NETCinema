@@ -1417,7 +1417,7 @@ textarea {
 }
 
 a {
-    color: #df691a;
+    color: #fff;
     text-decoration: none;
 }
 
@@ -1627,6 +1627,7 @@ h5,
 h6,
 .h6 {
     font-size: 13px;
+    
 }
 
 p {
@@ -2909,6 +2910,10 @@ th {
     max-width: 100%;
     margin-bottom: 21px;
 }
+
+    .table > tbody > tr > td > a:hover {
+        color: #df691a;
+    }
 
     .table > thead > tr > th,
     .table > tbody > tr > th,

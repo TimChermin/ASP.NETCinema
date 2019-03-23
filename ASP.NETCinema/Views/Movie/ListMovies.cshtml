@@ -20,78 +20,39 @@
 
     </form>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Id)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ReleaseDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LastScreeningDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MovieType)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MovieLenght)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
+    <table class="table table-dark">
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
+            <tr>
+                <td width="17%">
 
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-                    <td>
+                    <a href="/Movie/DetailsMovie/@Html.DisplayFor(modelItem => item.Id)">
+                        <img src="@Html.DisplayFor(modelItem => item.ImageString)" alt="Image: @Html.DisplayFor(modelItem => item.Name)" width="160" height="220">
+                    </a>
+                    <hr class="style1" width="580%">
+                    <!--<img src="https://www.w3schools.com/images/w3schools_green.jpg" alt="W3Schools.com">-->
 
-                        <a href="/Movie/DetailsMovie/@Html.DisplayFor(modelItem => item.Id)">
-                            <img src="@Html.DisplayFor(modelItem => item.ImageString)" alt="Image: @Html.DisplayFor(modelItem => item.Name)" width="120" height="160">
-                        </a>
-                        <p>@Html.ActionLink(item.Name, "DetailsMovie", new { id = item.Id })</p>
-                        <!--<img src="https://www.w3schools.com/images/w3schools_green.jpg" alt="W3Schools.com">-->
+                </td>
+                <td>
+                    <a class="small" href="/Movie/DetailsMovie/@Html.DisplayFor(modelItem => item.Id)">
+                        <i class="fas fa-3x">@Html.DisplayFor(modelItem => item.Name)</i></a>
 
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ReleaseDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LastScreeningDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MovieType)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MovieLenght)
-                    </td>
-                    <td>
-                        @if (User.IsInRole("Administrator"))
-                        {
-                            @Html.ActionLink("Edit", "EditMovie", new { id = item.Id });
-                            <a> | </a>
-                            @Html.ActionLink("Delete", "DeleteMovie", new { id = item.Id });
-                            <a> | </a>
-                        }
-                        @Html.ActionLink("Details", "DetailsMovie", new { id = item.Id })
+                </td>
+                <td>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        @Html.ActionLink("Edit", "EditMovie", new { id = item.Id });
+                        <a> | </a>
+                        @Html.ActionLink("Delete", "DeleteMovie", new { id = item.Id });
+                        <a> | </a>
+                    }
+                    @Html.ActionLink("Details", "DetailsMovie", new { id = item.Id })
 
 
-                    </td>
-                </tr>
+                </td>
+            </tr>
+
             }
         </tbody>
     </table>
