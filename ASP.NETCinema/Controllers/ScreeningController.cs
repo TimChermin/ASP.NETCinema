@@ -14,8 +14,7 @@ namespace ASPNETCinema.Controllers
     public class ScreeningController : Controller
     {
         private readonly IScreeningContext _screening;
-
-        //added scoped stuff in startup 
+        
         public ScreeningController(IScreeningContext screening)
         {
             _screening = screening;
@@ -65,8 +64,7 @@ namespace ASPNETCinema.Controllers
             }
             return View();
         }
-
-        [Authorize(Roles = "Administrator, Employee")]
+        
         public ActionResult DetailsScreening(int id)
         {
             var screeningLogic = new ScreeningLogic(_screening);
@@ -126,6 +124,7 @@ namespace ASPNETCinema.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Administrator")]
         public ActionResult DeleteScreening(int id)
         {
             var screeningLogic = new ScreeningLogic(_screening);

@@ -32,9 +32,14 @@
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "EditEmployee", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "DetailsEmployee", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "DeleteEmployee", new { id = item.Id })
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            @Html.ActionLink("Edit", "EditEmployee", new { id = item.Id });
+                            <a> | </a>
+                            @Html.ActionLink("Delete", "DeleteEmployee", new { id = item.Id });
+                            <a> | </a>
+                        }
+                        @Html.ActionLink("Details", "DetailsEmployee", new { id = item.Id })
                     </td>
                 </tr>
             }

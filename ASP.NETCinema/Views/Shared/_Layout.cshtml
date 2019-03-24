@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ASPNETCinema</title>
 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -26,48 +28,72 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Movie" asp-action="ListMovies" class="navbar-brand">CinTim</a>
+                <a asp-area="" asp-controller="Movie" asp-action="ListMovies" class="navbar-brand"><i class="fas fa-1x"> CinTim</i></a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Movie" asp-action="ListMovies">Home</a></li>
-                    <li><a asp-area="" asp-controller="Movie" asp-action="ListMovies">Movies</a></li>
+                    <li><a asp-area="" asp-controller="Movie" asp-action="ListMovies"><i class="fas fa-home fa-2x"> Home</i></a></li>
+                    <li><a asp-area="" asp-controller="Movie" asp-action="ListMovies"><i class="fas fa-film fa-2x"> Movies</i></a></li>
+                    <li><a asp-area="" asp-controller="Screening" asp-action="ListScreenings"><i class="fas fa-ticket-alt fa-2x"> Screenings</i></a></li>
                     @if (User.Identity.IsAuthenticated == false)
                     {
-                        <li><a asp-area="" asp-controller="User" asp-action="LoginUser">Login</a></li>
-                        <li><a asp-area="" asp-controller="User" asp-action="AddUser">Register</a></li>
-                    }
-                    else
-                    {
-                        <li><a asp-area="" asp-controller="User" asp-action="LogoutUser">Logout</a></li>
-                        <li><a asp-area="" asp-controller="" asp-action="">Username: @User.Identity.Name</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="fas fa-2x" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"> My CinTim </i> <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-area="" asp-controller="User" asp-action="LoginUser"><i class="fas fa-1x">Login</i></a></li>
+                                <li><a asp-area="" asp-controller="User" asp-action="AddUser"><i class="fas fa-1x">Register</i></a></li>
+                            </ul>
+                        </li>
+                        
                     }
 
                     @if (User.IsInRole("Normal"))
                     {
-                        <li><a>Role: Normal</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="fas fa-2x" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"> Account </i> <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-area="" asp-controller="" asp-action=""><i class="fas fa-1x">Username: @User.Identity.Name</i></a></li>
+                                <li><a asp-area="" asp-controller="User" asp-action="LogoutUser"><i class="fas fa-1x">Logout</i></a></li>
+                            </ul>
+                        </li>
                     }
 
                     @if (User.IsInRole("Administrator"))
                     {
-                        <li><a>Role: Administrator</a></li>
-                        <li><a asp-area="" asp-controller="Hall" asp-action="ListHalls">Halls</a></li>
-                        <li><a asp-area="" asp-controller="Screening" asp-action="ListScreenings">Screenings</a></li>
-                        <li><a asp-area="" asp-controller="Task" asp-action="ListTasks">Tasks</a></li>
-                        <li><a asp-area="" asp-controller="Employee" asp-action="ListEmployees">Employees</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="fas fa-2x" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"> Admin </i> <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-area="" asp-controller="Hall" asp-action="ListHalls"><i class="fas fa-1x">Halls</i></a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a asp-area="" asp-controller="Employee" asp-action="ListEmployees"><i class="fas fa-1x">Employees</i></a></li>
+                                <li><a asp-area="" asp-controller="Task" asp-action="ListTasks"><i class="fas fa-1x">Tasks</i></a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a asp-area="" asp-controller="" asp-action=""><i class="fas fa-1x">Username: @User.Identity.Name</i></a></li>
+                                <li><a asp-area="" asp-controller="" asp-action=""><i class="fas fa-1x">Role: Admin</i></a></li>
+                                <li><a asp-area="" asp-controller="User" asp-action="LogoutUser"><i class="fas fa-1x">Logout</i></a></li>
+                            </ul>
+                        </li>
                     }
 
                     @if (User.IsInRole("Employee"))
                     {
-                        <li><a>Role: Employee</a></li>
-                        <li><a asp-area="" asp-controller="Screening" asp-action="ListScreenings">Screenings</a></li>
-                        <li><a asp-area="" asp-controller="Task" asp-action="ListTasks">Tasks</a></li>
-                        <li><a asp-area="" asp-controller="Employee" asp-action="ListEmployees">Employees</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="fas fa-2x" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"> Employee </i> <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-area="" asp-controller="Task" asp-action="ListTasks"><i class="fas fa-1x">Tasks</i></a></li>
+                                <li><a asp-area="" asp-controller="Employee" asp-action="ListEmployees"><i class="fas fa-1x">Employees</i></a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a asp-area="" asp-controller="" asp-action=""><i class="fas fa-1x">Username: @User.Identity.Name</i></a></li>
+                                <li><a asp-area="" asp-controller="" asp-action=""><i class="fas fa-1x">Role: Employee</i></a></li>
+                                <li><a asp-area="" asp-controller="User" asp-action="LogoutUser"><i class="fas fa-1x">Logout</i></a></li>
+                            </ul>
+                        </li>
+                        
                     }
 
 
-
                 </ul>
+                
             </div>
         </div>
     </nav>

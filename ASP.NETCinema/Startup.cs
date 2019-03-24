@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using ASPNETCinema.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using ASPNETCinema.DAL;
+using Microsoft.VisualStudio.Web.BrowserLink;
 using DAL;
 
 namespace ASPNETCinema
@@ -39,6 +40,7 @@ namespace ASPNETCinema
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
         .AddCookie(options => {
             options.LoginPath = "/User/LoginUser/";
+            options.AccessDeniedPath = "/Home/AccessDenied/";
         });
             
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -50,6 +52,7 @@ namespace ASPNETCinema
             services.AddScoped<IHallContext, DatabaseHall>();
             services.AddScoped<IScreeningContext, DatabaseScreening>();
             services.AddScoped<IUserContext, DatabaseUser>();
+            services.AddScoped<ITaskContext, DatabaseTask>();
             // Add the whole configuration object here.
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddTransient(_ => new DatabaseConnection(Configuration.GetConnectionString("ASPNETCinemaContext")));
@@ -61,6 +64,7 @@ namespace ASPNETCinema
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseBrowserLink();
             }
             else
             {
@@ -71,6 +75,10 @@ namespace ASPNETCinema
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            app.UseBrowserLink();
+
+
 
             app.UseMvc(routes =>
             {

@@ -29,7 +29,7 @@ namespace ASPNETCinema.Controllers
         //Delete
 
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator, Employee")]
         public ActionResult ListHalls()
         {
             var hallLogic = new HallLogic(_hall);
