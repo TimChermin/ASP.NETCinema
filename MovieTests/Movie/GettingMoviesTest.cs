@@ -129,7 +129,7 @@ namespace MovieTests
 
         }
 
-            public bool AreTheyInTheSameOrder(IEnumerable<IMovie> movies, IEnumerable<IMovie> movies2)
+        public bool AreTheyInTheSameOrder(IEnumerable<IMovie> movies, IEnumerable<IMovie> movies2)
         {
             bool found;
             int movieNr = 0;
