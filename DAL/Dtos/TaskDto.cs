@@ -1,27 +1,18 @@
-﻿using ASPNETCinema.Models;
-using Interfaces;
+﻿using Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace ASPNETCinema.ViewModels
+namespace DAL.Dtos
 {
-    public class TaskViewModel
+    internal class TaskDto : ITask
     {
-        public TaskViewModel()
-        {
-        }
-
-
         public int Id { get; set; }
         public int IdScreening { get; set; }
         public int TaskType { get; set; }
         public TimeSpan TaskLenght { get; set; }
         public IScreening Screening { get; set; }
         public List<IEmployee> Employees { get; set; }
-
-
-
+        
     }
 }

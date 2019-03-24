@@ -29,7 +29,7 @@ namespace ASPNETCinema.Controllers
         //Edit
         //Delete
 
-
+        [Authorize(Roles = "Administrator, Employee")]
         public ActionResult ListEmployees()
         {
             var employeeLogic = new EmployeeLogic(_employee);
@@ -65,6 +65,7 @@ namespace ASPNETCinema.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Administrator, Employee")]
         public ActionResult DetailsEmployee(int id)
         {
             var employeeLogic = new EmployeeLogic(_employee);

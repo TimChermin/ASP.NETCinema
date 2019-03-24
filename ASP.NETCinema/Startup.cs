@@ -52,6 +52,7 @@ namespace ASPNETCinema
             services.AddScoped<IHallContext, DatabaseHall>();
             services.AddScoped<IScreeningContext, DatabaseScreening>();
             services.AddScoped<IUserContext, DatabaseUser>();
+            services.AddScoped<ITaskContext, DatabaseTask>();
             // Add the whole configuration object here.
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddTransient(_ => new DatabaseConnection(Configuration.GetConnectionString("ASPNETCinemaContext")));

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ASPNETCinema.Models.TaskModel>
+﻿@model IEnumerable<ASPNETCinema.ViewModels.TaskViewModel>
 
 @{
     ViewData["Title"] = "ListTasks";
@@ -7,7 +7,7 @@
 <h2>ListTasks</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="AddTask">Create New</a>
 </p>
 <table class="table">
     <thead>

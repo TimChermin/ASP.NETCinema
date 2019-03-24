@@ -1,0 +1,44 @@
+﻿@model ASPNETCinema.ViewModels.TaskViewModel
+
+@{
+    ViewData["Title"] = "DeleteTask";
+}
+
+<h2>DeleteTask</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>TaskViewModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdScreening)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdScreening)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TaskType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TaskType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TaskLenght)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TaskLenght)
+        </dd>
+    </dl>
+    
+    <form asp-action="DeleteTask">
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="ListTasks">Back to List</a>
+    </form>
+</div>

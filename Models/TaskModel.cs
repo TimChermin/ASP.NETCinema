@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ASPNETCinema.Models
 {
-    public class TaskModel
+    public class TaskModel : ITask
     {
         public TaskModel(int id, int idScreening, int taskType)
         {
@@ -23,8 +24,9 @@ namespace ASPNETCinema.Models
         public int Id { get; set; }
         public int IdScreening { get; set; }
         public int TaskType { get; set; }
-        public ScreeningModel Screening { get; set; }
-        public List<EmployeeModel> Employees { get; set; }
+        public TimeSpan TaskLenght { get; set; }
+        public IScreening Screening { get; set; }
+        public List<IEmployee> Employees { get; set; }
 
 
 
