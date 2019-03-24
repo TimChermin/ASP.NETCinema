@@ -9,26 +9,10 @@ namespace ASPNETCinema.ViewModels
 {
     public class UserViewModel
     {
-        public UserViewModel(int id, string name, string password, int administrator)
-        {
-            Id = id;
-            Name = name;
-            Password = password;
-            Administrator = administrator;
-        }
-
-        public UserViewModel(int id, string name, string password)
-        {
-            Id = id;
-            Name = name;
-            Password = password;
-        }
-
         public UserViewModel()
         {
         }
-
-
+        
 
         public int Id { get; set; }
 

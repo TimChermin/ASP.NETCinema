@@ -16,8 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Hall\" />
-    <Folder Include="User\" />
+    <Folder Include="User\MockContext\" />
   </ItemGroup>
 
   <ItemGroup>
