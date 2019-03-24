@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "ListMovies";
-
+    int count = 0;
 
 }
 <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
@@ -76,6 +76,7 @@
     <tbody>
         @foreach (var item in Model)
         {
+            count++;
             <tr>
                 <td width="17%">
 
@@ -104,7 +105,11 @@
 
                 </td>
             </tr>
-            <tr><td><hr class="style1" width="580%"></td></tr>
+            @if (count != Model.Count())
+            {
+                <tr><td><hr class="style1" width="580%"></td></tr>
+            }
+
 
         }
     </tbody>
