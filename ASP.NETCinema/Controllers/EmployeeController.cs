@@ -59,7 +59,7 @@ namespace ASPNETCinema.Controllers
             var employeeLogic = new EmployeeLogic(_employee);
             if (ModelState.IsValid)
             {
-                employeeLogic.AddEmployee(employee.Name);
+                employeeLogic.AddEmployee(employee.Id, employee.Name);
                 return RedirectToAction("ListMovies");
             }
             return View();
