@@ -14,6 +14,7 @@ namespace ASPNETCinema.Logic
     {
         //List<IScreening> screeningsWithMovies;
         private ScreeningRepository Repository { get; }
+        List<IScreening> Screenings = new List<IScreening>();
 
         public ScreeningLogic(IScreeningContext context)
         {
@@ -28,39 +29,47 @@ namespace ASPNETCinema.Logic
 
         public IScreening GetScreeningById(int id)
         {
-            return Repository.GetScreeningById(id);
+            var screenings = new List<IScreening>();
+            if (Repository.GetScreeningById(id) == null)
+            {
+                return null;
+            }
+            screenings.Add(Repository.GetScreeningById(id));
+            screenings = GetAndAddMovieToScreenings(screenings);
+            screenings = GetAndAddHallToScreenings(screenings);
+            return screenings[0];
         }
 
-        public List<ScreeningModel> AddTheMovieToTheScreenings(List<IScreening> screenings)
+
+        public List<IScreening> GetAndAddMovieToScreenings(List<IScreening> screenings)
         {
-            /*screeningsWithMovies = new List<IScreening>();
+            var screeningsWithMovies = new List<IScreening>();
             foreach (var screening in screenings)
             {
-                screeningsWithMovies.Add(AddTheMovieToTheScreening(screening));
+                screening.Movie = Repository.GetMovie(screening.MovieId);
+                screeningsWithMovies.Add(screening);
             }
             return screeningsWithMovies;
-            */
-            return null;
         }
-        
 
-        public ScreeningModel AddTheMovieToTheScreening(ScreeningModel screening)
+        public List<IScreening> GetAndAddHallToScreenings(List<IScreening> screenings)
         {
-            /*foreach (MovieModel movie in databaseMovie.GetMovies())
+            var screeningsWithHalls = new List<IScreening>();
+            foreach (var screening in screenings)
             {
-                if (screening.MovieId == movie.Id)
-                {
-                    screening.Movie = movie;
-                }
+                screening.Hall = Repository.GetHall(screening.HallId);
+                screeningsWithHalls.Add(screening);
             }
-            */
-            //return screening;
-            return null;
+            return screeningsWithHalls;
         }
 
         public IEnumerable<IScreening> GetScreenings()
         {
-            return Repository.GetScreenings();
+            var screenings = new List<IScreening>();
+            screenings = Repository.GetScreenings().ToList();
+            screenings = GetAndAddMovieToScreenings(screenings);
+            screenings = GetAndAddHallToScreenings(screenings);
+            return screenings;
         }
 
         public void AddScreening(int id, int movieId, int hallId, DateTime dateOfScreening, TimeSpan timeOfScreening)

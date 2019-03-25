@@ -36,8 +36,8 @@ namespace ASPNETCinema.Controllers
                 screenings.Add(new ScreeningViewModel
                 {
                     Id = screening.Id,
-                    MovieId = screening.MovieId,
-                    HallId = screening.HallId,
+                    Movie = screening.Movie,
+                    Hall = screening.Hall,
                     DateOfScreening = screening.DateOfScreening,
                     TimeOfScreening = screening.TimeOfScreening
                 });
@@ -62,15 +62,15 @@ namespace ASPNETCinema.Controllers
                 screeningLogic.AddScreening(screening.Id, screening.MovieId, screening.HallId, screening.DateOfScreening, screening.TimeOfScreening);
                 return RedirectToAction("ListScreenings");
             }
-            return View();
+            return RedirectToAction("Error", "Home");
         }
         
         public ActionResult DetailsScreening(int id)
         {
             var screeningLogic = new ScreeningLogic(_screening);
-            if (ModelState.IsValid)
+            if (screeningLogic.GetScreeningById(id) != null)
             {
-                IScreening screening = screeningLogic.GetScreeningById(id);
+                var screening = screeningLogic.GetScreeningById(id);
                 ScreeningViewModel viewScreening = new ScreeningViewModel
                 {
                     Id = screening.Id,
@@ -81,16 +81,16 @@ namespace ASPNETCinema.Controllers
                 };
                 return View(viewScreening);
             }
-            return RedirectToAction("ListScreenings");
+            return RedirectToAction("Error", "Home");
         }
 
         [Authorize(Roles = "Administrator")]
         public ActionResult EditScreening(int id)
         {
             var screeningLogic = new ScreeningLogic(_screening);
-            if (ModelState.IsValid)
+            if (screeningLogic.GetScreeningById(id) != null)
             {
-                IScreening screening = screeningLogic.GetScreeningById(id);
+                var screening = screeningLogic.GetScreeningById(id);
                 ScreeningViewModel viewScreening = new ScreeningViewModel
                 {
                     Id = screening.Id,
@@ -101,7 +101,7 @@ namespace ASPNETCinema.Controllers
                 };
                 return View(viewScreening);
             }
-            return RedirectToAction("ListScreenings");
+            return RedirectToAction("Error", "Home");
         }
 
         [HttpPost]
@@ -128,9 +128,9 @@ namespace ASPNETCinema.Controllers
         public ActionResult DeleteScreening(int id)
         {
             var screeningLogic = new ScreeningLogic(_screening);
-            if (ModelState.IsValid)
+            if (screeningLogic.GetScreeningById(id) != null)
             {
-                IScreening screening = screeningLogic.GetScreeningById(id);
+                var screening = screeningLogic.GetScreeningById(id);
                 ScreeningViewModel viewScreening = new ScreeningViewModel
                 {
                     Id = screening.Id,
@@ -141,7 +141,7 @@ namespace ASPNETCinema.Controllers
                 };
                 return View(viewScreening);
             }
-            return RedirectToAction("ListScreenings");
+            return RedirectToAction("Error", "Home");
         }
 
         [HttpPost]
@@ -150,8 +150,12 @@ namespace ASPNETCinema.Controllers
         public ActionResult DeleteScreening(ScreeningViewModel screening)
         {
             var screeningLogic = new ScreeningLogic(_screening);
-            screeningLogic.DeleteScreening(screening.Id);
-            return RedirectToAction("ListScreenings");
+            if (ModelState.IsValid)
+            {
+                screeningLogic.DeleteScreening(screening.Id);
+                return RedirectToAction("ListScreenings");
+            }
+            return RedirectToAction("Error", "Home");
         }
 
 

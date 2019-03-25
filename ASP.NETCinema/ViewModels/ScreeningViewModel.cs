@@ -1,4 +1,4 @@
-﻿using ASPNETCinema.Models;
+﻿using Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,19 +12,17 @@ namespace ASPNETCinema.ViewModels
         public ScreeningViewModel()
         {
         }
-
-
         public int Id { get; set; }
+
 
         [Required(ErrorMessage = "The Movie Id field is required.")]
         public int MovieId { get; set; }
+        public IMovie Movie{ get; set; }
 
-        public MovieModel Movie{ get; set; }
 
         [Required(ErrorMessage = "The Hall Id field is required.")]
         public int HallId { get; set; }
-
-        public HallModel Hall { get; set; }
+        public IHall Hall { get; set; }
         
 
         [Display(Name = "Screening date and Time: dd/mm/yyyy")]
@@ -33,12 +31,14 @@ namespace ASPNETCinema.ViewModels
         [DataType(DataType.Date)]
         public DateTime DateOfScreening { get; set; }
 
+
         [Display(Name = "Screening Time")]
         [Required(ErrorMessage = "The Time field is required.")]
         [DataType(DataType.Time)]
         public TimeSpan TimeOfScreening { get; set; }
 
-        public TaskModel Task { get; set; }
+
+        public ITask Task { get; set; }
 
 
 

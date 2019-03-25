@@ -115,5 +115,17 @@ namespace ASPNETCinema.DAL
             _connection.SqlConnection.Close();
             return null;
         }
+
+        public IHall GetHall(int idHall)
+        {
+            DatabaseHall databaseHall = new DatabaseHall(_connection);
+            return databaseHall.GetHallById(idHall);
+        }
+
+        public IMovie GetMovie(int idMovie)
+        {
+            DatabaseMovie databaseMovie = new DatabaseMovie(_connection);
+            return databaseMovie.GetMovieById(idMovie);
+        }
     }
 }

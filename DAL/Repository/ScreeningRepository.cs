@@ -45,5 +45,15 @@ namespace DAL.Repository
         {
             _context.DeleteScreening(id);
         }
+
+        public IMovie GetMovie(int idMovie)
+        {
+            return _context.GetMovie(idMovie);
+        }
+
+        public IHall GetHall(int idHall)
+        {
+            return _context.GetHall(idHall);
+        }
     }
 }

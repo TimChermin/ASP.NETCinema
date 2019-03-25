@@ -29,7 +29,6 @@ namespace ASPNETCinema.Controllers
             {
                 return RedirectToAction("ListMovies", "Movie");
             }
-            
             return View();
         }
 

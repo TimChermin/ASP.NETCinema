@@ -63,7 +63,7 @@ namespace ASPNETCinema.Controllers
         public ActionResult DetailsTask(int id)
         {
             var taskLogic = new TaskLogic(_task);
-            if (ModelState.IsValid)
+            if (taskLogic.GetTaskById(id) != null)
             {
                 var task = taskLogic.GetTaskById(id);
                 var viewTask = new TaskViewModel
@@ -77,7 +77,7 @@ namespace ASPNETCinema.Controllers
                 };
                 return View(viewTask);
             }
-            return RedirectToAction("ListTasks");
+            return RedirectToAction("Error", "Home");
         }
 
 
@@ -85,7 +85,7 @@ namespace ASPNETCinema.Controllers
         public ActionResult EditTask(int id)
         {
             var taskLogic = new TaskLogic(_task);
-            if (ModelState.IsValid)
+            if (taskLogic.GetTaskById(id) != null)
             {
                 var task = taskLogic.GetTaskById(id);
                 var viewTask = new TaskViewModel
@@ -99,7 +99,7 @@ namespace ASPNETCinema.Controllers
                 };
                 return View(viewTask);
             }
-            return RedirectToAction("ListTasks");
+            return RedirectToAction("Error", "Home");
         }
 
         [HttpPost]
@@ -107,15 +107,19 @@ namespace ASPNETCinema.Controllers
         public ActionResult EditTask(TaskViewModel task)
         {
             var taskLogic = new TaskLogic(_task);
-            taskLogic.EditTask(task.Id, task.IdScreening, task.TaskType, task.TaskLenght, task.Screening, task.Employees);
-            return RedirectToAction("ListTasks");
+            if (ModelState.IsValid)
+            {
+                taskLogic.EditTask(task.Id, task.IdScreening, task.TaskType, task.TaskLenght, task.Screening, task.Employees);
+                return RedirectToAction("ListTasks");
+            }
+            return RedirectToAction("Error", "Home");
         }
 
         [Authorize(Roles = "Administrator")]
         public ActionResult DeleteTask(int id)
         {
             var taskLogic = new TaskLogic(_task);
-            if (ModelState.IsValid)
+            if (taskLogic.GetTaskById(id) != null)
             {
                 var task = taskLogic.GetTaskById(id);
                 var viewTask = new TaskViewModel
@@ -129,7 +133,7 @@ namespace ASPNETCinema.Controllers
                 };
                 return View(viewTask);
             }
-            return RedirectToAction("ListTasks");
+            return RedirectToAction("Error", "Home");
         }
 
         [HttpPost]
@@ -138,8 +142,12 @@ namespace ASPNETCinema.Controllers
         public ActionResult DeleteTask(TaskViewModel task)
         {
             var taskLogic = new TaskLogic(_task);
-            taskLogic.DeleteTask(task.Id);
-            return RedirectToAction("ListTasks");
+            if (ModelState.IsValid)
+            {
+                taskLogic.DeleteTask(task.Id);
+                return RedirectToAction("ListTasks");
+            }
+            return RedirectToAction("Error", "Home");
         }
     }
 }

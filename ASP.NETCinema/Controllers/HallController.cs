@@ -67,14 +67,14 @@ namespace ASPNETCinema.Controllers
                 hallLogic.AddHall(hall.Id, hall.Price, hall.ScreenType, hall.Seats, hall.SeatsTaken);
                 return RedirectToAction("ListHalls");
             }
-            return View();
+            return RedirectToAction("Error", "Home");
         }
 
         [Authorize(Roles = "Administrator")]
         public ActionResult EditHall(int id)
         {
             var hallLogic = new HallLogic(_hall);
-            if (ModelState.IsValid)
+            if (hallLogic.GetHallById(id) != null)
             {
                 var hall = hallLogic.GetHallById(id);
                 var viewHall = new HallViewModel
@@ -87,7 +87,7 @@ namespace ASPNETCinema.Controllers
                 };
                 return View(viewHall);
             }
-            return RedirectToAction("ListMovies");
+            return RedirectToAction("Error", "Home");
         }
 
         [HttpPost]
@@ -95,15 +95,19 @@ namespace ASPNETCinema.Controllers
         public ActionResult EditHall(HallModel hall)
         {
             var hallLogic = new HallLogic(_hall);
-            hallLogic.EditHall(hall.Id, hall.Price, hall.ScreenType, hall.Seats, hall.SeatsTaken);
-            return RedirectToAction("ListHalls");
+            if (ModelState.IsValid)
+            {
+                hallLogic.EditHall(hall.Id, hall.Price, hall.ScreenType, hall.Seats, hall.SeatsTaken);
+                return RedirectToAction("ListHalls");
+            }
+            return RedirectToAction("Error", "Home");
         }
 
         [Authorize(Roles = "Administrator")]
         public ActionResult DeleteHall(int id)
         {
             var hallLogic = new HallLogic(_hall);
-            if (ModelState.IsValid)
+            if (hallLogic.GetHallById(id) != null)
             {
                 var hall = hallLogic.GetHallById(id);
                 var viewHall = new HallViewModel
@@ -116,7 +120,7 @@ namespace ASPNETCinema.Controllers
                 };
                 return View(viewHall);
             }
-            return RedirectToAction("ListMovies");
+            return RedirectToAction("Error", "Home");
         }
 
         [HttpPost]
@@ -124,8 +128,12 @@ namespace ASPNETCinema.Controllers
         public ActionResult DeleteHall(HallViewModel hall)
         {
             var hallLogic = new HallLogic(_hall);
-            hallLogic.DeleteHall(hall.Id);
-            return RedirectToAction("ListHalls");
+            if (ModelState.IsValid)
+            {
+                hallLogic.DeleteHall(hall.Id);
+                return RedirectToAction("ListHalls");
+            }
+            return RedirectToAction("Error", "Home");
         }
 
         

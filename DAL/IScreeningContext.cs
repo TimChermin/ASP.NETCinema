@@ -18,5 +18,8 @@ namespace DAL
         IScreening GetScreeningById(int id);
         void EditScreening(IScreening screening);
         void DeleteScreening(int id);
+
+        IHall GetHall(int idHall);
+        IMovie GetMovie(int idMovie);
     }
 }

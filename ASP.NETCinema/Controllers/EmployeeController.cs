@@ -62,14 +62,14 @@ namespace ASPNETCinema.Controllers
                 employeeLogic.AddEmployee(employee.Id, employee.Name);
                 return RedirectToAction("ListMovies");
             }
-            return View();
+            return RedirectToAction("Error", "Home");
         }
 
         [Authorize(Roles = "Administrator, Employee")]
         public ActionResult DetailsEmployee(int id)
         {
             var employeeLogic = new EmployeeLogic(_employee);
-            if (ModelState.IsValid)
+            if (employeeLogic.GetEmployeeById(id) != null)
             {
                 var employee = employeeLogic.GetEmployeeById(id);
                 var viewEmployee = new EmployeeViewModel
@@ -79,7 +79,7 @@ namespace ASPNETCinema.Controllers
                 };
                 return View(viewEmployee);
             }
-            return RedirectToAction("ListEmployees");
+            return RedirectToAction("Error", "Home");
         }
 
 
@@ -87,7 +87,7 @@ namespace ASPNETCinema.Controllers
         public ActionResult EditEmployee(int id)
         {
             var employeeLogic = new EmployeeLogic(_employee);
-            if (ModelState.IsValid)
+            if (employeeLogic.GetEmployeeById(id) != null)
             {
                 var employee = employeeLogic.GetEmployeeById(id);
                 var viewEmployee = new EmployeeViewModel
@@ -97,7 +97,7 @@ namespace ASPNETCinema.Controllers
                 };
                 return View(viewEmployee);
             }
-            return RedirectToAction("ListEmployees");
+            return RedirectToAction("Error", "Home");
         }
 
         [HttpPost]
@@ -105,15 +105,19 @@ namespace ASPNETCinema.Controllers
         public ActionResult EditEmployee(EmployeeViewModel employee)
         {
             var employeeLogic = new EmployeeLogic(_employee);
-            employeeLogic.EditEmployee(employee.Id, employee.Name);
-            return RedirectToAction("ListEmployees");
+            if (ModelState.IsValid)
+            {
+                employeeLogic.EditEmployee(employee.Id, employee.Name);
+                return RedirectToAction("ListEmployees");
+            }
+            return RedirectToAction("Error", "Home");
         }
 
         [Authorize(Roles = "Administrator")]
         public ActionResult DeleteEmployee(int id)
         {
             var employeeLogic = new EmployeeLogic(_employee);
-            if (ModelState.IsValid)
+            if (employeeLogic.GetEmployeeById(id) != null)
             {
                 var employee = employeeLogic.GetEmployeeById(id);
                 var viewEmployee = new EmployeeViewModel
@@ -123,7 +127,7 @@ namespace ASPNETCinema.Controllers
                 };
                 return View(viewEmployee);
             }
-            return RedirectToAction("ListEmployees");
+            return RedirectToAction("Error", "Home");
         }
 
         [HttpPost]
@@ -132,8 +136,12 @@ namespace ASPNETCinema.Controllers
         public ActionResult DeleteEmployee(EmployeeViewModel employee)
         {
             var employeeLogic = new EmployeeLogic(_employee);
-            employeeLogic.DeleteEmployee(employee.Id);
-            return RedirectToAction("ListEmployees");
+            if (ModelState.IsValid)
+            {
+                employeeLogic.DeleteEmployee(employee.Id);
+                return RedirectToAction("ListEmployees");
+            }
+            return RedirectToAction("Error", "Home");
         }
 
     }

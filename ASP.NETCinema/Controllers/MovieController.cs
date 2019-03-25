@@ -45,7 +45,6 @@ namespace ASPNETCinema.Controllers
                 });
             }
             return View(movies);
-            //return View(movieLogic.GetMoviesAndOrderBy(OrderBy));
         }
 
 
@@ -67,14 +66,14 @@ namespace ASPNETCinema.Controllers
                     movie.MovieType, movie.MovieLenght, movie.ImageString);
                 return RedirectToAction("ListMovies");
             }
-            return View();
+            return RedirectToAction("Error", "Home");
         }
 
 
         public ActionResult DetailsMovie(int id)
         {
             var movieLogic = new MovieLogic(_movie);
-            if (ModelState.IsValid)
+            if (movieLogic.GetMovieById(id) != null)
             {
                 var movie = movieLogic.GetMovieById(id);
                 var viewMovie = new MovieViewModel
@@ -90,7 +89,7 @@ namespace ASPNETCinema.Controllers
                 };
                 return View(viewMovie);
             }
-            return RedirectToAction("ListMovies");
+            return RedirectToAction("Error", "Home");
         }
 
         
@@ -100,7 +99,7 @@ namespace ASPNETCinema.Controllers
         public ActionResult EditMovie(int id)
         {
             var movieLogic = new MovieLogic(_movie);
-            if (ModelState.IsValid)
+            if (movieLogic.GetMovieById(id) != null)
             {
                 var movie = movieLogic.GetMovieById(id);
                 var viewMovie = new MovieViewModel
@@ -116,7 +115,7 @@ namespace ASPNETCinema.Controllers
                 };
                 return View(viewMovie);
             }
-            return RedirectToAction("ListMovies");
+            return RedirectToAction("Error", "Home");
         }
         
 
@@ -125,9 +124,13 @@ namespace ASPNETCinema.Controllers
         public ActionResult EditMovie(MovieViewModel movie)
         {
             var movieLogic = new MovieLogic(_movie);
-            movieLogic.EditMovie(movie.Id, movie.Name, movie.Description, movie.ReleaseDate, movie.LastScreeningDate,
+            if (ModelState.IsValid)
+            {
+                movieLogic.EditMovie(movie.Id, movie.Name, movie.Description, movie.ReleaseDate, movie.LastScreeningDate,
                     movie.MovieType, movie.MovieLenght, movie.ImageString);
-            return RedirectToAction("ListMovies");
+                return RedirectToAction("ListMovies");
+            }
+            return RedirectToAction("Error", "Home");
         }
 
         
@@ -135,7 +138,7 @@ namespace ASPNETCinema.Controllers
         public ActionResult DeleteMovie(int id)
         {
             var movieLogic = new MovieLogic(_movie);
-            if (ModelState.IsValid)
+            if (movieLogic.GetMovieById(id) != null)
             {
                 var movie = movieLogic.GetMovieById(id);
                 var viewMovie = new MovieViewModel
@@ -151,7 +154,7 @@ namespace ASPNETCinema.Controllers
                 };
                 return View(viewMovie);
             }
-            return RedirectToAction("ListMovies");
+            return RedirectToAction("Error", "Home");
         }
 
         // POST: Movies/Delete/5
@@ -162,8 +165,12 @@ namespace ASPNETCinema.Controllers
         public ActionResult DeleteMovie(MovieViewModel movie)
         {
             var movieLogic = new MovieLogic(_movie);
-            movieLogic.DeleteMovie(movie.Id);
-            return RedirectToAction("ListMovies");
+            if (ModelState.IsValid)
+            {
+                movieLogic.DeleteMovie(movie.Id);
+                return RedirectToAction("ListMovies");
+            }
+            return RedirectToAction("Error", "Home");
         }
     }
 }

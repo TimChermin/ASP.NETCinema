@@ -45,10 +45,10 @@
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MovieId)
+                @Html.DisplayFor(modelItem => item.Movie.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.HallId)
+                @Html.DisplayFor(modelItem => item.Hall.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Movie.Name)
@@ -63,8 +63,8 @@
                 @if (User.IsInRole("Administrator"))
                 {
 
-                @Html.ActionLink("Edit", "EditScreening", new { item.Id }) 
-                @Html.ActionLink("Delete", "DeleteScreening", new { item.Id })
+                    @Html.ActionLink("Edit", "EditScreening", new { item.Id })
+                    @Html.ActionLink("Delete", "DeleteScreening", new { item.Id })
 
                 }
                 @Html.ActionLink("Details", "DetailsScreening", new { item.Id })
