@@ -49,7 +49,7 @@ namespace MovieTests
 
 
         [Fact]
-        public void Should_ReturnAMovieListWithAnAddedMovie_WhenAddingAMovie()
+        public void Should_AddAMovieToTheList_WhenAddingAMovie()
         {
             var movieLogic = new MovieLogic(new MovieContextMock());
             //var result =  movieLogic.GetAllCustomers();
@@ -60,10 +60,6 @@ namespace MovieTests
             if (movies.Count() != movies2.Count())
             {
                 Assert.True(true);
-            }
-            else
-            {
-                Assert.True(false);
             }
         }
 
