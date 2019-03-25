@@ -8,12 +8,14 @@ using System.Security.Claims;
 using DAL.Repository;
 using DAL;
 using Interfaces;
+using LogicLayer;
 
 namespace ASPNETCinema.Logic
 {
     public class UserLogic
     {
         private UserRepository Repository { get; }
+        
 
         public UserLogic(IUserContext context)
         {
@@ -26,21 +28,39 @@ namespace ASPNETCinema.Logic
         //details
         //Edit
         //Delete
+        public void random()
+        {
+            // Hash
+            var hash = SecurePasswordHasher.Hash("mypassword");
+
+            // Verify
+            var result = SecurePasswordHasher.Verify("mypassword", hash);
+        }
+
 
         public IUser GetUser(string name, string password)
         {
-            return Repository.GetUser(name, password);
+            var users = Repository.GetUsers();
+            foreach (var user in users)
+            {
+                if (name == user.Name && SecurePasswordHasher.Verify(password, user.Password) == true)
+                {
+                    return user;
+                }
+            }
+            return null;
         }
 
         public bool AddUser(int id, string name, string password, string confirmPassword, int administrator)
         {
             if (password == confirmPassword && password != null)
             {
+                var hash = SecurePasswordHasher.Hash(password);
                 var user = new UserModel
                 {
                     Id = id,
                     Name = name,
-                    Password = password,
+                    Password = hash,
                     Administrator = administrator
                 };
                 Repository.AddUser(user);
@@ -54,7 +74,7 @@ namespace ASPNETCinema.Logic
             var users = Repository.GetUsers();
             foreach (var user in users)
             {
-                if (name == user.Name && password == user.Password)
+                if (name == user.Name && SecurePasswordHasher.Verify(password, user.Password) == true)
                 {
                     return true;
                 }

@@ -27,7 +27,7 @@ namespace ASPNETCinema.Controllers
         {
             if (User.Identity.IsAuthenticated == true)
             {
-                return Redirect("/");
+                return RedirectToAction("ListMovies", "Movie");
             }
             
             return View();
@@ -54,7 +54,7 @@ namespace ASPNETCinema.Controllers
                 await HttpContext.SignInAsync(principal);
 
                 //Just redirect to our index after logging in. 
-                return Redirect("/");
+                return RedirectToAction("ListMovies", "Movie");
             }
 
             return View();
@@ -64,7 +64,7 @@ namespace ASPNETCinema.Controllers
         {
             if (User.Identity.IsAuthenticated == true)
             {
-                return Redirect("/");
+                return RedirectToAction("ListMovies", "Movie");
             }
             return View();
         }
@@ -77,8 +77,9 @@ namespace ASPNETCinema.Controllers
             if (ModelState.IsValid)
             {
                 userLogic.AddUser(user.Id, user.Name, user.Password, user.ConfirmPassword, user.Administrator);
+                
                 await LoginUser(user);
-                return RedirectToAction("ListMovies");
+                return RedirectToAction("ListMovies", "Movie");
             }
             return View();
         }
@@ -88,9 +89,9 @@ namespace ASPNETCinema.Controllers
             if (User.Identity.IsAuthenticated == true)
             {
                 await HttpContext.SignOutAsync();
-                return Redirect("/");
+                return RedirectToAction("ListMovies", "Movie");
             }
-            return View("/");
+            return RedirectToAction("ListMovies", "Movie");
         }
     }
 }

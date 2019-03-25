@@ -13,6 +13,8 @@ namespace UnitTests.Employee.MockContext
         List<IEmployee> employeesTemp = new List<IEmployee>();
         List<IEmployee> employeesTempDeleted = new List<IEmployee>();
         int delete = 0;
+        int edit = 0;
+        string editName = "";
 
         //other things
         //List
@@ -66,6 +68,18 @@ namespace UnitTests.Employee.MockContext
                 }
             }
 
+            if (edit != 0)
+            {
+                foreach (var employee in employees)
+                {
+                    if (employee.Id == edit && editName != "")
+                    {
+                        employees[0].Name = editName;
+                        break;
+                    }
+                }
+            }
+
         }
 
         public void AddEmployee(IEmployee employee)
@@ -92,12 +106,20 @@ namespace UnitTests.Employee.MockContext
 
         public void EditEmployee(IEmployee employee)
         {
-            throw new NotImplementedException();
+            edit = employee.Id;
+            editName = employee.Name;
         }
 
         public IEmployee GetEmployeeById(int id)
         {
-            throw new NotImplementedException();
+            foreach (var employee in employees)
+            {
+                if (employee.Id == id)
+                {
+                    return employee;
+                }
+            }
+            return null;
         }
 
         

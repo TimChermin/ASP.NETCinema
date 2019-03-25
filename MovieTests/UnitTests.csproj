@@ -16,10 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="User\MockContext\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ASP.NETCinema\aMVCLayer.csproj" />
   </ItemGroup>
 
