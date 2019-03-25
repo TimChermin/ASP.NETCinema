@@ -145,5 +145,33 @@ namespace ASPNETCinema.DAL
             command.ExecuteNonQuery();
             _connection.SqlConnection.Close();
         }
+
+        public IEnumerable<IScreening> GetScreeningsForMovie(int idMovie)
+        {
+            _connection.SqlConnection.Open();
+
+            var screenings = new List<IScreening>();
+            SqlCommand command = new SqlCommand("SELECT Id, IdMovie, IdHall, DateOfScreening, TimeOfScreening FROM Screening WHERE IdMovie = @IdMovie", _connection.SqlConnection);
+            command.Parameters.AddWithValue("@IdMovie", idMovie);
+
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    var screening = new ScreeningDto
+                    {
+                        Id = (int)reader["Id"],
+                        MovieId = (int)reader["IdMovie"],
+                        HallId = (int)reader["IdHall"],
+                        DateOfScreening = (DateTime)reader["DateOfScreening"],
+                        TimeOfScreening = (TimeSpan)reader["TimeOfScreening"]
+                    };
+
+                    screenings.Add(screening);
+                }
+            }
+            _connection.SqlConnection.Close();
+            return screenings;
+        }
     }
 }

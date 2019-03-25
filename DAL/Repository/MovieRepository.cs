@@ -21,6 +21,11 @@ namespace DAL.Repository
         //Edit
         //Delete
 
+        public IEnumerable<IScreening> GetScreeningsForMovie(int idMovie)
+        {
+            return _context.GetScreeningsForMovie(idMovie);
+        }
+
         public IEnumerable<IMovie> GetMovies(string orderBy)
         {
             return _context.GetMovies(orderBy);

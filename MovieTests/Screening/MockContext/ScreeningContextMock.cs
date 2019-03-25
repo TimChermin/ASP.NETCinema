@@ -23,6 +23,16 @@ namespace UnitTests.Screening.MockContext
             throw new NotImplementedException();
         }
 
+        public IHall GetHall(int idHall)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IMovie GetMovie(int idMovie)
+        {
+            throw new NotImplementedException();
+        }
+
         public IScreening GetScreeningById(int id)
         {
             throw new NotImplementedException();

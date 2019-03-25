@@ -28,14 +28,37 @@ namespace ASPNETCinema.Logic
         //Delete
         //other things
 
+        public List<IMovie> GetAndAddScreeningsToMovie(List<IMovie> movies)
+        {
+            var moviesWithScreenings = new List<IMovie>();
+            foreach (var movie in movies)
+            {
+                movie.Screenings = Repository.GetScreeningsForMovie(movie.Id);
+                moviesWithScreenings.Add(movie);
+            }
+            return moviesWithScreenings;
+        }
+
+
         public IMovie GetMovieById(int id)
         {
-            return Repository.GetMovieById(id);
+            var movies = new List<IMovie>();
+            if (Repository.GetMovieById(id) == null)
+            {
+                return null;
+            }
+            movies.Add(Repository.GetMovieById(id));
+            movies = GetAndAddScreeningsToMovie(movies);
+            return movies[0];
         }
 
         public IEnumerable<IMovie> GetMovies(string orderBy)
         {
-            return Repository.GetMovies(orderBy);
+            var movies = new List<IMovie>();
+            movies = Repository.GetMovies(orderBy).ToList();
+            movies = GetAndAddScreeningsToMovie(movies);
+            movies = GetAndAddScreeningsToMovie(movies);
+            return movies;
         }
 
         public void AddMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)

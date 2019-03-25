@@ -18,6 +18,8 @@ namespace DAL
         IMovie GetMovieById(int id);
         void EditMovie(IMovie movie);
         void DeleteMovie(int id);
-        
+
+        IEnumerable<IScreening> GetScreeningsForMovie(int idMovie);
+
     }
 }

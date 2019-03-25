@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using Interfaces;
 
 namespace ASPNETCinema.ViewModels
 {
@@ -46,6 +47,9 @@ namespace ASPNETCinema.ViewModels
         [Display(Name = "Link To Movie Image")]
         [Required(ErrorMessage = "You need to add an image")]
         public string ImageString { get; set; }
+
+
+        public IEnumerable<IScreening> Screenings { get; set; }
 
     }
 }

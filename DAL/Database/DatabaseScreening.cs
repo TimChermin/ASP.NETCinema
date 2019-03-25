@@ -25,7 +25,7 @@ namespace ASPNETCinema.DAL
         //Edit
         //Delete
 
-        IEnumerable<IScreening> IScreeningContext.GetScreenings()
+        public IEnumerable<IScreening> GetScreenings()
         {
             _connection.SqlConnection.Open();
 

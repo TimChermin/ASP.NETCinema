@@ -2915,6 +2915,10 @@ th {
         color: #df691a;
     }
 
+    .table > tbody > tr > td > p > a:hover {
+        color: #df691a;
+    }
+
     .table > thead > tr > th,
     .table > tbody > tr > th,
     .table > tfoot > tr > th,

@@ -41,7 +41,9 @@ namespace ASPNETCinema.Controllers
                     LastScreeningDate = movie.LastScreeningDate,
                     MovieType = movie.MovieType,
                     MovieLenght = movie.MovieLenght,
-                    ImageString = movie.ImageString
+                    ImageString = movie.ImageString,
+                    Screenings = movie.Screenings
+
                 });
             }
             return View(movies);

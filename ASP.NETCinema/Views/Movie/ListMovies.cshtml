@@ -93,9 +93,19 @@
 
                 </td>
                 <td>
-                    <a class="small" href="/Movie/DetailsMovie/@Html.DisplayFor(modelItem => item.Id)">
-                        <i class="fas fa-3x">@Html.DisplayFor(modelItem => item.Name)</i>
-                    </a>
+                    <p>
+                        <a class="small" href="/Movie/DetailsMovie/@Html.DisplayFor(modelItem => item.Id)">
+                            <i class="fas fa-3x">@Html.DisplayFor(modelItem => item.Name)</i>
+                        </a>
+                    </p>
+                    <p>
+                        @foreach (var screening in item.Screenings)
+                        {
+                        <a class="small" href="/Screening/DetailsScreening/@Html.DisplayFor(modelItem => screening.Id)">
+                            <i class="fas fa-2x">@Html.DisplayFor(modelItem => screening.TimeOfScreening)</i>
+                        </a>
+                        }
+                    </p>
 
                 </td>
                 <td class="fas fa-2x" align="right" width="80%">
