@@ -26,6 +26,7 @@ namespace ASPNETCinema.Controllers
         //Edit
         //Delete
 
+        
         public ActionResult ListMovies(string orderBy)
         {
             var movieLogic = new MovieLogic(_movie);
