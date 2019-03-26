@@ -163,6 +163,9 @@ namespace UnitTests.Movie.MockContext
             return null;
         }
 
-        
+        public IEnumerable<IScreening> GetScreeningsForMovie(int idMovie)
+        {
+            return null;
+        }
     }
 }
