@@ -93,13 +93,14 @@
 </li>
 
 
-
-<div id="navbar" style="background-color: #2b3e50;">
-    <button href="javascript:void(0)" class="tablink" onclick="openPage('Today', this, 'red')">Today @today.Day @today.ToString("MMM")</button>
-    <button href="javascript:void(0)" class="tablink" onclick="openPage('Tomorrow', this, 'green')" id="defaultOpen">@today.AddDays(1).DayOfWeek @today.AddDays(1).Day @today.AddDays(1).ToString("MMM")</button>
-    <button href="javascript:void(0)" class="tablink" onclick="openPage('Day3', this, 'blue')">@today.AddDays(2).DayOfWeek @today.AddDays(2).Day @today.AddDays(2).ToString("MMM")</button>
-    <button href="javascript:void(0)" class="tablink" onclick="openPage('Day4', this, 'orange')">@today.AddDays(3).DayOfWeek @today.AddDays(3).Day @today.AddDays(3).ToString("MMM")</button>
-    <button href="javascript:void(0)" class="tablink" onclick="openPage('Day5', this, 'orange')">@today.AddDays(4).DayOfWeek @today.AddDays(4).Day @today.AddDays(4).ToString("MMM")</button>
+<div id="container" style="background-color: #2b3e50; margin-left: -380px; " >
+    <div id="navbar" style="padding-left: 380px; width: 100%; height: 45px; padding-top: 8px;" >
+        <button href="javascript:void(0)" class="tablink" onclick="openPage('Today', this, 'red')">Today @today.Day @today.ToString("MMM")</button>
+        <button href="javascript:void(0)" class="tablink" onclick="openPage('Tomorrow', this, 'green')" id="defaultOpen">@today.AddDays(1).DayOfWeek @today.AddDays(1).Day @today.AddDays(1).ToString("MMM")</button>
+        <button href="javascript:void(0)" class="tablink" onclick="openPage('Day3', this, 'blue')">@today.AddDays(2).DayOfWeek @today.AddDays(2).Day @today.AddDays(2).ToString("MMM")</button>
+        <button href="javascript:void(0)" class="tablink" onclick="openPage('Day4', this, 'orange')">@today.AddDays(3).DayOfWeek @today.AddDays(3).Day @today.AddDays(3).ToString("MMM")</button>
+        <button href="javascript:void(0)" class="tablink" onclick="openPage('Day5', this, 'orange')">@today.AddDays(4).DayOfWeek @today.AddDays(4).Day @today.AddDays(4).ToString("MMM")</button>
+    </div>
 </div>
 
 <div id="Today" class="tabcontent">
@@ -410,13 +411,18 @@
     window.onscroll = function () { myFunction() };
 
     var navbar = document.getElementById("navbar");
+    var container = document.getElementById("container");
     var sticky = navbar.offsetTop;
 
     function myFunction() {
         if (window.pageYOffset >= sticky) {
             navbar.classList.add("sticky")
+            navbar.style.backgroundColor = "#df691a";
+            navbar.style.borderTop = "5px solid black";
         } else {
             navbar.classList.remove("sticky");
+            navbar.style.backgroundColor = "#2b3e50";
+            navbar.style.borderTop = "0px";
         }
     }
 </script>

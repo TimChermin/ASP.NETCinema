@@ -31,6 +31,13 @@
   padding-top: 60px;
 }
 
+.buttonsdays{
+    border-width: 5px;
+    border-style: solid;
+    border-color: red;
+    position: center;
+}
+
 
 html {
     font-family: sans-serif;
