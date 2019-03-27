@@ -152,7 +152,7 @@ namespace ASPNETCinema.DAL
             SqlCommand command;
             var screenings = new List<IScreening>();
             DateTime ScreeningDateCheck = new DateTime(1800, 2, 3);
-            command = new SqlCommand("SELECT Id, IdMovie, IdHall, DateOfScreening, TimeOfScreening FROM Screening WHERE IdMovie = @IdMovie", _connection.SqlConnection);
+            command = new SqlCommand("SELECT Id, IdMovie, IdHall, DateOfScreening, TimeOfScreening FROM Screening WHERE IdMovie = @IdMovie ORDER BY TimeOfScreening", _connection.SqlConnection);
             command.Parameters.AddWithValue("@IdMovie", idMovie);
             
 

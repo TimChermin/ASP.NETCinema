@@ -29,8 +29,8 @@ namespace MovieTests
             var movieLogic = new MovieLogic(new MovieContextMock());
             
             //var result =  movieLogic.GetAllCustomers();
-            movies = movieLogic.GetMovies(orderBy, null).ToList();
-            movies2 = movieLogic.GetMovies(orderBy, null).ToList();
+            movies = movieLogic.GetMovies(orderBy).ToList();
+            movies2 = movieLogic.GetMovies(orderBy).ToList();
             
             Assert.True(AreTheyInTheSameOrder(movies, movies2));
         }
@@ -40,9 +40,9 @@ namespace MovieTests
         {
             var movieLogic = new MovieLogic(new MovieContextMock());
             //var result =  movieLogic.GetAllCustomers();
-            movies = movieLogic.GetMovies(orderBy, null).ToList();
+            movies = movieLogic.GetMovies(orderBy).ToList();
             orderBy = "Name";
-            movies2 = movieLogic.GetMovies(orderBy, null).ToList();
+            movies2 = movieLogic.GetMovies(orderBy).ToList();
 
             Assert.False(AreTheyInTheSameOrder(movies, movies2));
         }
@@ -53,9 +53,9 @@ namespace MovieTests
         {
             var movieLogic = new MovieLogic(new MovieContextMock());
             //var result =  movieLogic.GetAllCustomers();
-            movies = movieLogic.GetMovies(orderBy, null).ToList();
+            movies = movieLogic.GetMovies(orderBy).ToList();
             movieLogic.AddMovie(3, "DFilm", "Mooie film", DateTime.Today, new DateTime(2220, 10, 3), "3D Imax", "100", "TestString");
-            movies2 = movieLogic.GetMovies(orderBy, null).ToList();
+            movies2 = movieLogic.GetMovies(orderBy).ToList();
 
             if (movies.Count() != movies2.Count())
             {
@@ -68,9 +68,9 @@ namespace MovieTests
         {
             var movieLogic = new MovieLogic(new MovieContextMock());
             //var result =  movieLogic.GetAllCustomers();
-            movies = movieLogic.GetMovies(orderBy, null).ToList();
+            movies = movieLogic.GetMovies(orderBy).ToList();
             movieLogic.EditMovie(3, "Edited", "Mooie film", DateTime.Today, new DateTime(2220, 10, 3), "3D Imax", "100", "TestString");
-            movies2 = movieLogic.GetMovies(orderBy, null).ToList();
+            movies2 = movieLogic.GetMovies(orderBy).ToList();
 
             foreach (var movie in movies)
             {
@@ -93,7 +93,7 @@ namespace MovieTests
         {
             var movieLogic = new MovieLogic(new MovieContextMock());
             movieLogic.AddMovie(10, "Getting", "Mooie film", DateTime.Today, new DateTime(2220, 10, 3), "3D Imax", "100", "TestString");
-            IMovie movie = movieLogic.GetMovieById(10, DateTime.Today);
+            IMovie movie = movieLogic.GetMovieById(10);
             
 
             Assert.Equal(10, movie.Id);
@@ -104,9 +104,9 @@ namespace MovieTests
         {
             var movieLogic = new MovieLogic(new MovieContextMock());
             //var result =  movieLogic.GetAllCustomers();
-            movies = movieLogic.GetMovies(orderBy, null).ToList();
+            movies = movieLogic.GetMovies(orderBy).ToList();
             movieLogic.DeleteMovie(3);
-            movies2 = movieLogic.GetMovies(orderBy, null).ToList();
+            movies2 = movieLogic.GetMovies(orderBy).ToList();
 
             foreach (var movie in movies)
             {
