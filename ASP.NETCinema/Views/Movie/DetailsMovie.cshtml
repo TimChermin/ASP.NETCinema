@@ -2,70 +2,166 @@
 
 @{
     ViewData["Title"] = "DetailsMovie";
+    int count = 0;
+    DateTime today = DateTime.Today;
 }
 
 <h2>DetailsMovie</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-ms-7 col-sm-6 col-md-5 col-lg-3">
+            <img src="@Html.DisplayFor(model=> model.ImageString)" alt="Image: @Html.DisplayFor(model=> model.ImageString)" width="260" height="382">
+        </div>
+        <div class="col-sm-6 col-md-7 col-lg-9">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1 class="mobile-adjust"> @Html.DisplayFor(model => model.Name) </h1>
 
-<tr>
-    <td>
-        <img src="@Html.DisplayFor(model=> model.ImageString)" alt="Image: @Html.DisplayFor(model=> model.ImageString)" width="200" height="260">
-    </td>
-    
-</tr>
-
-<div>
-    <h4>MovieModel</h4>
-    <hr />
-    
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Id)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Id)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Name)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Description)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Description)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.ReleaseDate)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.ReleaseDate)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.LastScreeningDate)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.LastScreeningDate)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.MovieType)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.MovieType)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.MovieLenght)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.MovieLenght)
-            </dd>
-        </dl>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-md-12">@Html.DisplayFor(model => model.Description)</div>
+                <div class="col-lg-4 col-md-5 col-md-12">
+                    <div>
+                        <h4>MovieModel</h4>
+                        <dl class="dl-horizontal" style="text-align: left">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Id)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Id)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Name)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.ReleaseDate)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.ReleaseDate)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.LastScreeningDate)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.LastScreeningDate)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.MovieType)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.MovieType)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.MovieLenght)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.MovieLenght)
+                            </dd>
+                        </dl>
+                    </div>
+                    <div>
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            @Html.ActionLink("Edit", "EditMovie", new { id = Model.Id })
+                        }
+                        <a asp-action="ListMovies">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 <div>
-    @if (User.IsInRole("Administrator"))
-    {
-        @Html.ActionLink("Edit", "EditMovie", new { id = Model.Id })
+    <div id="container" style="background-color: #2b3e50; margin-left: -380px; ">
+        <div id="navbar" style="padding-left: 380px; width: 100%; height: 45px; padding-top: 8px;">
+            <button href="javascript:void(0)" class="tablink" onclick="openPage('Today', this, 'red')">Today @today.Day @today.ToString("MMM")</button>
+            <button href="javascript:void(0)" class="tablink" onclick="openPage('Tomorrow', this, 'green')" id="defaultOpen">@today.AddDays(1).DayOfWeek @today.AddDays(1).Day @today.AddDays(1).ToString("MMM")</button>
+            <button href="javascript:void(0)" class="tablink" onclick="openPage('Day3', this, 'blue')">@today.AddDays(2).DayOfWeek @today.AddDays(2).Day @today.AddDays(2).ToString("MMM")</button>
+            <button href="javascript:void(0)" class="tablink" onclick="openPage('Day4', this, 'orange')">@today.AddDays(3).DayOfWeek @today.AddDays(3).Day @today.AddDays(3).ToString("MMM")</button>
+            <button href="javascript:void(0)" class="tablink" onclick="openPage('Day5', this, 'orange')">@today.AddDays(4).DayOfWeek @today.AddDays(4).Day @today.AddDays(4).ToString("MMM")</button>
+        </div>
+    </div>
+
+</div>
+<div id="Today" class="tabcontent">
+    <table class="table table-dark">
+        geawegwaffef
+    </table>
+
+</div>
+
+<div id="Tomorrow" class="tabcontent">
+    <table class="table table-dark">
+      feawfagewag
+    </table>
+</div>
+
+<div id="Day3" class="tabcontent">
+    <table class="table table-dark">
+      fewafewageawg
+    </table>
+</div>
+
+<div id="Day4" class="tabcontent">
+    <table class="table table-dark">
+       fewafewf
+    </table>
+</div>
+
+<div id="Day5" class="tabcontent">
+    <table class="table table-dark">
+       fewf
+    </table>
+</div>
+
+<!--ScreeningDayButtons-->
+<script>
+    function openPage(pageName, elmnt, color) {
+        // Hide all elements with class="tabcontent" by default */
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Remove the background color of all tablinks/buttons
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].style.backgroundColor = "#4e5d6c";
+        }
+
+        // Show the specific tab content
+        document.getElementById(pageName).style.display = "block";
+
+        // Add the specific color to the button used to open the tab content
+        elmnt.style.backgroundColor = color;
     }
-    <a asp-action="ListMovies">Back to List</a>
-</div>
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();</script>
+
+<!--onscroll navbar-->
+<script>
+    window.onscroll = function () { myFunction() };
+
+    var navbar = document.getElementById("navbar");
+    var container = document.getElementById("container");
+    var sticky = navbar.offsetTop;
+
+    function myFunction() {
+        if (window.pageYOffset >= sticky) {
+            navbar.classList.add("sticky")
+            navbar.style.backgroundColor = "#df691a";
+            navbar.style.borderTop = "5px solid black";
+        } else {
+            navbar.classList.remove("sticky");
+            navbar.style.backgroundColor = "#2b3e50";
+            navbar.style.borderTop = "0px";
+        }
+    }
+</script>
