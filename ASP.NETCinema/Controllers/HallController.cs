@@ -128,12 +128,8 @@ namespace ASPNETCinema.Controllers
         public ActionResult DeleteHall(HallViewModel hall)
         {
             var hallLogic = new HallLogic(_hall);
-            if (ModelState.IsValid)
-            {
-                hallLogic.DeleteHall(hall.Id);
-                return RedirectToAction("ListHalls");
-            }
-            return RedirectToAction("Error", "Home");
+            hallLogic.DeleteHall(hall.Id);
+            return RedirectToAction("ListHalls");
         }
 
         

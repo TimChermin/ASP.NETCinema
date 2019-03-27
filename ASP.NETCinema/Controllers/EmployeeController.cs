@@ -136,12 +136,8 @@ namespace ASPNETCinema.Controllers
         public ActionResult DeleteEmployee(EmployeeViewModel employee)
         {
             var employeeLogic = new EmployeeLogic(_employee);
-            if (ModelState.IsValid)
-            {
-                employeeLogic.DeleteEmployee(employee.Id);
-                return RedirectToAction("ListEmployees");
-            }
-            return RedirectToAction("Error", "Home");
+            employeeLogic.DeleteEmployee(employee.Id);
+            return RedirectToAction("ListEmployees");
         }
 
     }

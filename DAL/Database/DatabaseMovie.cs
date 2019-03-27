@@ -149,10 +149,12 @@ namespace ASPNETCinema.DAL
         public IEnumerable<IScreening> GetScreeningsForMovie(int idMovie)
         {
             _connection.SqlConnection.Open();
-
+            SqlCommand command;
             var screenings = new List<IScreening>();
-            SqlCommand command = new SqlCommand("SELECT Id, IdMovie, IdHall, DateOfScreening, TimeOfScreening FROM Screening WHERE IdMovie = @IdMovie", _connection.SqlConnection);
+            DateTime ScreeningDateCheck = new DateTime(1800, 2, 3);
+            command = new SqlCommand("SELECT Id, IdMovie, IdHall, DateOfScreening, TimeOfScreening FROM Screening WHERE IdMovie = @IdMovie", _connection.SqlConnection);
             command.Parameters.AddWithValue("@IdMovie", idMovie);
+            
 
             using (SqlDataReader reader = command.ExecuteReader())
             {

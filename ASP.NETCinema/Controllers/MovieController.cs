@@ -27,10 +27,18 @@ namespace ASPNETCinema.Controllers
         //Delete
 
         
-        public ActionResult ListMovies(string orderBy)
+        public ActionResult ListMovies(string orderBy, string screeningFilter)
         {
             var movieLogic = new MovieLogic(_movie);
             List<MovieViewModel> movies = new List<MovieViewModel>();
+            if (screeningFilter == null)
+            {
+                movieLogic.ScreeningFilter = DateTime.Today.ToShortDateString();
+            }
+            else
+            {
+                movieLogic.ScreeningFilter = screeningFilter;
+            }
             foreach (var movie in movieLogic.GetMovies(orderBy))
             {
                 movies.Add(new MovieViewModel
@@ -65,9 +73,14 @@ namespace ASPNETCinema.Controllers
             var movieLogic = new MovieLogic(_movie);
             if (ModelState.IsValid)
             {
-                movieLogic.AddMovie(movie.Id, movie.Name, movie.Description, movie.ReleaseDate, movie.LastScreeningDate,
+                if (movieLogic.DoesThisMovieExist(movie.Name) == false)
+                {
+                    movieLogic.AddMovie(movie.Id, movie.Name, movie.Description, movie.ReleaseDate, movie.LastScreeningDate,
                     movie.MovieType, movie.MovieLenght, movie.ImageString);
-                return RedirectToAction("ListMovies");
+                    return RedirectToAction("ListMovies");
+                }
+                return View();
+
             }
             return RedirectToAction("Error", "Home");
         }
@@ -168,12 +181,8 @@ namespace ASPNETCinema.Controllers
         public ActionResult DeleteMovie(MovieViewModel movie)
         {
             var movieLogic = new MovieLogic(_movie);
-            if (ModelState.IsValid)
-            {
-                movieLogic.DeleteMovie(movie.Id);
-                return RedirectToAction("ListMovies");
-            }
-            return RedirectToAction("Error", "Home");
+            movieLogic.DeleteMovie(movie.Id);
+            return RedirectToAction("ListMovies");
         }
     }
 }

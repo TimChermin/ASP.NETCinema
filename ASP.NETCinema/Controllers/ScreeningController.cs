@@ -150,12 +150,8 @@ namespace ASPNETCinema.Controllers
         public ActionResult DeleteScreening(ScreeningViewModel screening)
         {
             var screeningLogic = new ScreeningLogic(_screening);
-            if (ModelState.IsValid)
-            {
-                screeningLogic.DeleteScreening(screening.Id);
-                return RedirectToAction("ListScreenings");
-            }
-            return RedirectToAction("Error", "Home");
+            screeningLogic.DeleteScreening(screening.Id);
+            return RedirectToAction("ListScreenings");
         }
 
 
