@@ -26,6 +26,10 @@ namespace ASPNETCinema.Controllers
         //details
         //Edit
         //Delete
+        public ActionResult SeatSelector()
+        {
+            return View();
+        }
 
         public ActionResult ListScreenings()
         {
