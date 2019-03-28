@@ -148,7 +148,7 @@ namespace ASPNETCinema.Controllers
             {
                 movieLogic.EditMovie(movie.Id, movie.Name, movie.Description, movie.ReleaseDate, movie.LastScreeningDate,
                     movie.MovieType, movie.MovieLenght, movie.ImageString, movie.BannerImageString);
-                return RedirectToAction("ListMovies");
+                return RedirectToAction("DetailsMovie", new { id = movie.Id });
             }
             return RedirectToAction("Error", "Home");
         }
