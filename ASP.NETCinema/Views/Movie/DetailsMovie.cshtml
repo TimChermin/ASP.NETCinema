@@ -90,32 +90,72 @@
 </div>
 <div id="Today" class="tabcontent">
     <table class="table table-dark">
-        geawegwaffef
+        @foreach (var screening in Model.Screenings)
+        {
+            if (screening.DateOfScreening == today)
+            {
+                <a class="small" style="display:inline-block; width:100px; height:50px; font-family: Lato; border:2px solid #000000;" href="/Screening/DetailsScreening/@Html.DisplayFor(modelItem => screening.Id)">
+                    <i class="fas fa-2x" style="padding-top: 10px; padding-left: 8px;">@Html.DisplayFor(modelItem => screening.TimeOfScreening)</i>
+                </a>
+            }
+        }
     </table>
 
 </div>
 
 <div id="Tomorrow" class="tabcontent">
     <table class="table table-dark">
-      feawfagewag
+        @foreach (var screening in Model.Screenings)
+        {
+            if (screening.DateOfScreening == today.AddDays(1))
+            {
+                <a class="small" style="display:inline-block; width:100px; height:50px; font-family: Lato; border:2px solid #000000;" href="/Screening/DetailsScreening/@Html.DisplayFor(modelItem => screening.Id)">
+                    <i class="fas fa-2x" style="padding-top: 10px; padding-left: 8px;">@Html.DisplayFor(modelItem => screening.TimeOfScreening)</i>
+                </a>
+            }
+        }
     </table>
 </div>
 
 <div id="Day3" class="tabcontent">
     <table class="table table-dark">
-      fewafewageawg
+        @foreach (var screening in Model.Screenings)
+        {
+            if (screening.DateOfScreening == today.AddDays(2))
+            {
+                <a class="small" style="display:inline-block; width:100px; height:50px; font-family: Lato; border:2px solid #000000;" href="/Screening/DetailsScreening/@Html.DisplayFor(modelItem => screening.Id)">
+                    <i class="fas fa-2x" style="padding-top: 10px; padding-left: 8px;">@Html.DisplayFor(modelItem => screening.TimeOfScreening)</i>
+                </a>
+            }
+        }
     </table>
 </div>
 
 <div id="Day4" class="tabcontent">
     <table class="table table-dark">
-       fewafewf
+        @foreach (var screening in Model.Screenings)
+        {
+            if (screening.DateOfScreening == today.AddDays(3))
+            {
+                <a class="small" style="display:inline-block; width:100px; height:50px; font-family: Lato; border:2px solid #000000;" href="/Screening/DetailsScreening/@Html.DisplayFor(modelItem => screening.Id)">
+                    <i class="fas fa-2x" style="padding-top: 10px; padding-left: 8px;">@Html.DisplayFor(modelItem => screening.TimeOfScreening)</i>
+                </a>
+            }
+        }
     </table>
 </div>
 
 <div id="Day5" class="tabcontent">
     <table class="table table-dark">
-       fewf
+        @foreach (var screening in Model.Screenings)
+        {
+            if (screening.DateOfScreening == today.AddDays(4))
+            {
+                <a class="small" style="display:inline-block; width:100px; height:50px; font-family: Lato; border:2px solid #000000;" href="/Screening/DetailsScreening/@Html.DisplayFor(modelItem => screening.Id)">
+                    <i class="fas fa-2x" style="padding-top: 10px; padding-left: 8px;">@Html.DisplayFor(modelItem => screening.TimeOfScreening)</i>
+                </a>
+            }
+        }
     </table>
 </div>
 
