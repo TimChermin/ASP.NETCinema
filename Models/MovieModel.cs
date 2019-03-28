@@ -24,6 +24,7 @@ namespace ASPNETCinema.Models
         public string MovieType { get; set; }
         public string MovieLenght { get; set; }
         public string ImageString { get; set; }
+        public string BannerImageString { get; set; }
         public IEnumerable<IScreening> Screenings { get; set; }
     }
 }

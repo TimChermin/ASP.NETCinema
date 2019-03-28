@@ -12,6 +12,33 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+@import url('https://fonts.googleapis.com/css?family=Lato:300i');
+
+* {
+    font-family: 'Lato', sans-serif;
+}
+.content {
+  padding: 16px;
+}
+
+.sticky {
+  position: fixed;
+  top: 45px;
+  width: 100%;
+}
+
+.sticky + .content {
+  padding-top: 60px;
+}
+
+.buttonsdays{
+    border-width: 5px;
+    border-style: solid;
+    border-color: red;
+    position: center;
+}
+
+
 html {
     font-family: sans-serif;
     -ms-text-size-adjust: 100%;

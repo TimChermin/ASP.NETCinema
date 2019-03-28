@@ -33,8 +33,8 @@ namespace ASPNETCinema.DAL
             SqlCommand command;
             if (orderBy == "MoviesToday")
             {
-                command = new SqlCommand("SELECT Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString FROM Movie " +
-                    "GROUP BY Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString HAVING ReleaseDate = @Today", _connection.SqlConnection);
+                command = new SqlCommand("SELECT Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString, BannerImageString FROM Movie " +
+                    "GROUP BY Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString, BannerImageString HAVING ReleaseDate = @Today", _connection.SqlConnection);
                 command.Parameters.AddWithValue("@Today", DateTime.Today);
             }
             else if (orderBy == "Name" || orderBy == "ReleaseDate" || orderBy == "MovieType")
@@ -60,7 +60,8 @@ namespace ASPNETCinema.DAL
                         LastScreeningDate = (DateTime)reader["LastScreeningDate"],
                         MovieType = reader["MovieType"]?.ToString(),
                         MovieLenght = reader["MovieLenght"]?.ToString(),
-                        ImageString = reader["ImageString"]?.ToString()
+                        ImageString = reader["ImageString"]?.ToString(),
+                        BannerImageString = reader["BannerImageString"]?.ToString()
                     };
 
                     movies.Add(movie);
@@ -75,7 +76,7 @@ namespace ASPNETCinema.DAL
             _connection.SqlConnection.Open();
 
             SqlCommand command = new SqlCommand("INSERT INTO Movie OUTPUT Inserted.Id VALUES (@Name, @Description, @ReleaseDate, @LastScreeningDate, " +
-                "@MovieType, @MovieLenght, @ImageString)", _connection.SqlConnection);
+                "@MovieType, @MovieLenght, @ImageString, @BannerImageString)", _connection.SqlConnection);
             command.Parameters.AddWithValue("@Name", movie.Name);
             command.Parameters.AddWithValue("@Description", movie.Description);
             command.Parameters.AddWithValue("@ReleaseDate", movie.ReleaseDate);
@@ -83,6 +84,7 @@ namespace ASPNETCinema.DAL
             command.Parameters.AddWithValue("@MovieType", movie.MovieType);
             command.Parameters.AddWithValue("@MovieLenght", movie.MovieLenght);
             command.Parameters.AddWithValue("@ImageString", movie.ImageString);
+            command.Parameters.AddWithValue("@BannerImageString", movie.BannerImageString);
             command.ExecuteNonQuery();
             _connection.SqlConnection.Close();
         }
@@ -91,7 +93,7 @@ namespace ASPNETCinema.DAL
         {
             _connection.SqlConnection.Open();
 
-            SqlCommand command = new SqlCommand("SELECT Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString FROM Movie " +
+            SqlCommand command = new SqlCommand("SELECT Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString, BannerImageString FROM Movie " +
                 "WHERE Id = @Id", _connection.SqlConnection);
             command.Parameters.AddWithValue("@Id", id);
             using (SqlDataReader reader = command.ExecuteReader())
@@ -107,7 +109,8 @@ namespace ASPNETCinema.DAL
                         LastScreeningDate = (DateTime)reader["LastScreeningDate"],
                         MovieType = reader["MovieType"]?.ToString(),
                         MovieLenght = reader["MovieLenght"]?.ToString(),
-                        ImageString = reader["ImageString"]?.ToString()
+                        ImageString = reader["ImageString"]?.ToString(),
+                        BannerImageString = reader["BannerImageString"]?.ToString()
                     };
                     _connection.SqlConnection.Close();
                     return movie;
@@ -122,7 +125,7 @@ namespace ASPNETCinema.DAL
             _connection.SqlConnection.Open();
 
             SqlCommand command = new SqlCommand("UPDATE Movie SET Name = @Name, Description = @Description, ReleaseDate = @ReleaseDate, " +
-                "LastScreeningDate = @LastScreeningDate, MovieType = @MovieType, MovieLenght = @MovieLenght, ImageString = @ImageString WHERE Id = @Id", _connection.SqlConnection);
+                "LastScreeningDate = @LastScreeningDate, MovieType = @MovieType, MovieLenght = @MovieLenght, ImageString = @ImageString, BannerImageString = @BannerImageString WHERE Id = @Id", _connection.SqlConnection);
             command.Parameters.AddWithValue("@Name", movie.Name);
             command.Parameters.AddWithValue("@Description", movie.Description);
             command.Parameters.AddWithValue("@ReleaseDate", movie.ReleaseDate);
@@ -131,6 +134,7 @@ namespace ASPNETCinema.DAL
             command.Parameters.AddWithValue("@MovieLenght", movie.MovieLenght);
             command.Parameters.AddWithValue("@ImageString", movie.ImageString);
             command.Parameters.AddWithValue("@Id", movie.Id);
+            command.Parameters.AddWithValue("@BannerImageString", movie.BannerImageString);
 
             command.ExecuteNonQuery();
             _connection.SqlConnection.Close();
@@ -149,10 +153,12 @@ namespace ASPNETCinema.DAL
         public IEnumerable<IScreening> GetScreeningsForMovie(int idMovie)
         {
             _connection.SqlConnection.Open();
-
+            SqlCommand command;
             var screenings = new List<IScreening>();
-            SqlCommand command = new SqlCommand("SELECT Id, IdMovie, IdHall, DateOfScreening, TimeOfScreening FROM Screening WHERE IdMovie = @IdMovie", _connection.SqlConnection);
+            DateTime ScreeningDateCheck = new DateTime(1800, 2, 3);
+            command = new SqlCommand("SELECT Id, IdMovie, IdHall, DateOfScreening, TimeOfScreening FROM Screening WHERE IdMovie = @IdMovie ORDER BY TimeOfScreening", _connection.SqlConnection);
             command.Parameters.AddWithValue("@IdMovie", idMovie);
+            
 
             using (SqlDataReader reader = command.ExecuteReader())
             {

@@ -48,6 +48,10 @@ namespace ASPNETCinema.ViewModels
         [Required(ErrorMessage = "You need to add an image")]
         public string ImageString { get; set; }
 
+        [Display(Name = "Link To Movie Banner Image")]
+        [Required(ErrorMessage = "You need to add an image")]
+        public string BannerImageString { get; set; }
+
 
         public IEnumerable<IScreening> Screenings { get; set; }
 
