@@ -54,13 +54,10 @@ namespace MovieTests
             var movieLogic = new MovieLogic(new MovieContextMock());
             //var result =  movieLogic.GetAllCustomers();
             movies = movieLogic.GetMovies(orderBy).ToList();
-            movieLogic.AddMovie(3, "DFilm", "Mooie film", DateTime.Today, new DateTime(2220, 10, 3), "3D Imax", "100", "TestString");
+            movieLogic.AddMovie(3, "DFilm", "Mooie film", DateTime.Today, new DateTime(2220, 10, 3), "3D Imax", "100", "TestString", "TestString");
             movies2 = movieLogic.GetMovies(orderBy).ToList();
-
-            if (movies.Count() != movies2.Count())
-            {
-                Assert.True(true);
-            }
+            
+            Assert.True(movies.Count() != movies2.Count());
         }
 
         [Fact]
@@ -69,7 +66,7 @@ namespace MovieTests
             var movieLogic = new MovieLogic(new MovieContextMock());
             //var result =  movieLogic.GetAllCustomers();
             movies = movieLogic.GetMovies(orderBy).ToList();
-            movieLogic.EditMovie(3, "Edited", "Mooie film", DateTime.Today, new DateTime(2220, 10, 3), "3D Imax", "100", "TestString");
+            movieLogic.EditMovie(3, "Edited", "Mooie film", DateTime.Today, new DateTime(2220, 10, 3), "3D Imax", "100", "TestString", "TestString");
             movies2 = movieLogic.GetMovies(orderBy).ToList();
 
             foreach (var movie in movies)
@@ -92,7 +89,7 @@ namespace MovieTests
         public void Should_ReturnAMovie_WhenGettingAMovieById()
         {
             var movieLogic = new MovieLogic(new MovieContextMock());
-            movieLogic.AddMovie(10, "Getting", "Mooie film", DateTime.Today, new DateTime(2220, 10, 3), "3D Imax", "100", "TestString");
+            movieLogic.AddMovie(10, "Getting", "Mooie film", DateTime.Today, new DateTime(2220, 10, 3), "3D Imax", "100", "TestString", "TestString");
             IMovie movie = movieLogic.GetMovieById(10);
             
 
@@ -138,7 +135,6 @@ namespace MovieTests
                 {
                     if (comparer.Equals(movie, movie2) && movieNr == movie2Nr)
                     {
-                        Assert.True(true);
                         found = true;
                     }
                     movie2Nr++;

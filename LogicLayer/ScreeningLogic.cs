@@ -102,18 +102,12 @@ namespace ASPNETCinema.Logic
         {
             Repository.DeleteScreening(id);
         }
-
-        //check in die zaal of er op die dag, in de tussentijd een film draait.
-        //
-
-        //12 > 13 and 12 < 13 
         
-        //12:00 en duurt 120min dan gaat t door tot 14:00
-        public bool IsThisDateAndTimeAvailable(int hallId, DateTime dateOfScreening, TimeSpan timeOfScreening, int movieId)
+        public bool IsThisDateAndTimeAvailable(int hallId, DateTime dateOfScreening, TimeSpan timeOfScreening, int movieId, int screeningId)
         {
             foreach (var screeningDatabase in GetScreenings())
             {
-                if (screeningDatabase.HallId == hallId && screeningDatabase.DateOfScreening == dateOfScreening && screeningDatabase.MovieId != movieId)
+                if (screeningDatabase.HallId == hallId && screeningDatabase.DateOfScreening == dateOfScreening && screeningDatabase.Id != screeningId)
                 {
                     if (IsItAfterOrBeforeTheScreening(hallId, dateOfScreening, timeOfScreening, movieId, screeningDatabase) == false)
                     {
@@ -125,11 +119,6 @@ namespace ASPNETCinema.Logic
         }
 
 
-
-        /*
-           als (begin1 > begin2 && begin1 > einde2) 
-           of  (begin1 < begin2 && einde1 < begin2)
-        */
         public bool IsItAfterOrBeforeTheScreening(int hallId, DateTime dateOfScreening, TimeSpan timeOfScreening, int movieId, IScreening screeningDatabase)
         {
             foreach (var movieAlreadyScreening in Repository.GetMovies())

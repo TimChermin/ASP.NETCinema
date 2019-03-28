@@ -63,7 +63,7 @@ namespace ASPNETCinema.Controllers
             var screeningLogic = new ScreeningLogic(_screening);
             if (ModelState.IsValid)
             {
-                if (screeningLogic.IsThisDateAndTimeAvailable(screening.HallId, screening.DateOfScreening, screening.TimeOfScreening, screening.MovieId) == false)
+                if (screeningLogic.IsThisDateAndTimeAvailable(screening.HallId, screening.DateOfScreening, screening.TimeOfScreening, screening.MovieId, screening.Id))
                 {
                     screeningLogic.AddScreening(screening.Id, screening.MovieId, screening.HallId, screening.DateOfScreening, screening.TimeOfScreening);
                     return RedirectToAction("ListScreenings");
@@ -119,7 +119,7 @@ namespace ASPNETCinema.Controllers
         public ActionResult EditScreening(ScreeningViewModel screening)
         {
             var screeningLogic = new ScreeningLogic(_screening);
-            if (ModelState.IsValid && screeningLogic.IsThisDateAndTimeAvailable(screening.HallId, screening.DateOfScreening, screening.TimeOfScreening, screening.MovieId))
+            if (ModelState.IsValid && screeningLogic.IsThisDateAndTimeAvailable(screening.HallId, screening.DateOfScreening, screening.TimeOfScreening, screening.MovieId, screening.Id))
             {
                 screeningLogic.EditScreening(screening.Id, screening.MovieId, screening.HallId, screening.DateOfScreening, screening.TimeOfScreening);
                 return RedirectToAction("ListScreenings");
