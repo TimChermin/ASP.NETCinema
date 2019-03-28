@@ -84,22 +84,23 @@ namespace ASPNETCinema.Logic
             return movies;
         }
 
-        public void AddMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)
+        public void AddMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString, string bannerImageString)
         {
             var _movie = new MovieModel
             { Id = id, Name = name, Description = description, ReleaseDate = releaseDate,
               LastScreeningDate = lastScreeningDate, MovieType = movieType,
-              MovieLenght = movieLenght, ImageString = imageString
+              MovieLenght = movieLenght, ImageString = imageString,
+                BannerImageString = bannerImageString
             };
             Repository.AddMovie(_movie);
         }
 
-        public void EditMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString)
+        public void EditMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString, string bannerImageString)
         {
             var movie = new MovieModel
             { Id = id,Name = name,Description = description,ReleaseDate = releaseDate,
               LastScreeningDate = lastScreeningDate,MovieType = movieType,
-              MovieLenght = movieLenght, ImageString = imageString
+              MovieLenght = movieLenght, ImageString = imageString, BannerImageString = bannerImageString
             };
             Repository.EditMovie(movie);
         }

@@ -5,18 +5,24 @@
     int count = 0;
     DateTime today = DateTime.Today;
 }
+<img src="@Html.DisplayFor(model=> model.BannerImageString)" alt="BANNER" class="img-responsive" style="width: 137%; height:100%;  margin-bottom: 1%; margin-top: -0.4%; margin-left: -19%; max-height: 458px; max-width: 137%"  />
 
 <h2>DetailsMovie</h2>
 <div class="container">
     <div class="row">
         <div class="col-ms-7 col-sm-6 col-md-5 col-lg-3">
             <img src="@Html.DisplayFor(model=> model.ImageString)" alt="Image: @Html.DisplayFor(model=> model.ImageString)" width="260" height="382">
+            <br />
+            @if (User.IsInRole("Administrator"))
+            {
+                @Html.ActionLink("Edit", "EditMovie", new { id = Model.Id })
+            }
+            <a asp-action="ListMovies">Back to List</a>
         </div>
         <div class="col-sm-6 col-md-7 col-lg-9">
             <div class="row">
                 <div class="col-xs-12">
                     <h1 class="mobile-adjust"> @Html.DisplayFor(model => model.Name) </h1>
-
                 </div>
             </div>
             <div class="row">
@@ -64,11 +70,7 @@
                         </dl>
                     </div>
                     <div>
-                        @if (User.IsInRole("Administrator"))
-                        {
-                            @Html.ActionLink("Edit", "EditMovie", new { id = Model.Id })
-                        }
-                        <a asp-action="ListMovies">Back to List</a>
+                        
                     </div>
                 </div>
             </div>

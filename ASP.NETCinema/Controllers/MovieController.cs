@@ -51,7 +51,8 @@ namespace ASPNETCinema.Controllers
                     MovieType = movie.MovieType,
                     MovieLenght = movie.MovieLenght,
                     ImageString = movie.ImageString,
-                    Screenings = movie.Screenings
+                    Screenings = movie.Screenings,
+                    BannerImageString = movie.BannerImageString
 
                 });
             }
@@ -76,7 +77,7 @@ namespace ASPNETCinema.Controllers
                 if (movieLogic.DoesThisMovieExist(movie.Name) == false)
                 {
                     movieLogic.AddMovie(movie.Id, movie.Name, movie.Description, movie.ReleaseDate, movie.LastScreeningDate,
-                    movie.MovieType, movie.MovieLenght, movie.ImageString);
+                    movie.MovieType, movie.MovieLenght, movie.ImageString, movie.BannerImageString);
                     return RedirectToAction("ListMovies");
                 }
                 return View();
@@ -102,7 +103,8 @@ namespace ASPNETCinema.Controllers
                     MovieType = movie.MovieType,
                     MovieLenght = movie.MovieLenght,
                     ImageString = movie.ImageString,
-                    Screenings = movie.Screenings
+                    Screenings = movie.Screenings,
+                    BannerImageString = movie.BannerImageString
                 };
                 return View(viewMovie);
             }
@@ -128,7 +130,8 @@ namespace ASPNETCinema.Controllers
                     LastScreeningDate = movie.LastScreeningDate,
                     MovieType = movie.MovieType,
                     MovieLenght = movie.MovieLenght,
-                    ImageString = movie.ImageString
+                    ImageString = movie.ImageString,
+                    BannerImageString = movie.BannerImageString
                 };
                 return View(viewMovie);
             }
@@ -144,7 +147,7 @@ namespace ASPNETCinema.Controllers
             if (ModelState.IsValid)
             {
                 movieLogic.EditMovie(movie.Id, movie.Name, movie.Description, movie.ReleaseDate, movie.LastScreeningDate,
-                    movie.MovieType, movie.MovieLenght, movie.ImageString);
+                    movie.MovieType, movie.MovieLenght, movie.ImageString, movie.BannerImageString);
                 return RedirectToAction("ListMovies");
             }
             return RedirectToAction("Error", "Home");
@@ -167,7 +170,8 @@ namespace ASPNETCinema.Controllers
                     LastScreeningDate = movie.LastScreeningDate,
                     MovieType = movie.MovieType,
                     MovieLenght = movie.MovieLenght,
-                    ImageString = movie.ImageString
+                    ImageString = movie.ImageString,
+                    BannerImageString = movie.BannerImageString
                 };
                 return View(viewMovie);
             }
