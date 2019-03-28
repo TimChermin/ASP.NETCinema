@@ -127,5 +127,11 @@ namespace ASPNETCinema.DAL
             DatabaseMovie databaseMovie = new DatabaseMovie(_connection);
             return databaseMovie.GetMovieById(idMovie);
         }
+
+        public IEnumerable<IMovie> GetMovies()
+        {
+            DatabaseMovie databaseMovie = new DatabaseMovie(_connection);
+            return databaseMovie.GetMovies(null);
+        }
     }
 }

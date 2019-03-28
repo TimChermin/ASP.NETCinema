@@ -65,7 +65,7 @@ namespace ASPNETCinema.Controllers
         {
             return View();
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
@@ -74,11 +74,24 @@ namespace ASPNETCinema.Controllers
             var movieLogic = new MovieLogic(_movie);
             if (ModelState.IsValid)
             {
-                if (movieLogic.DoesThisMovieExist(movie.Name) == false)
+                if (movieLogic.DoesThisMovieExist(movie.Name) == false && movie.ReleaseDate <= movie.LastScreeningDate)
                 {
                     movieLogic.AddMovie(movie.Id, movie.Name, movie.Description, movie.ReleaseDate, movie.LastScreeningDate,
                     movie.MovieType, movie.MovieLenght, movie.ImageString, movie.BannerImageString);
                     return RedirectToAction("ListMovies");
+                }
+                else if (movie.ReleaseDate >= movie.LastScreeningDate && movieLogic.DoesThisMovieExist(movie.Name) == true)
+                {
+                    ModelState.AddModelError("ReleaseDate", movie.ReleaseDate.ToShortDateString() + " Is after the Last Screening Date");
+                    ModelState.AddModelError("Name", movie.Name + " already exists");
+                }
+                else if (movieLogic.DoesThisMovieExist(movie.Name) == true)
+                {
+                    ModelState.AddModelError("Name", movie.Name + " already exists");
+                }
+                else
+                {
+                    ModelState.AddModelError("ReleaseDate", movie.ReleaseDate.ToShortDateString() + " Is after the LastScreeningDate");
                 }
                 return View();
 

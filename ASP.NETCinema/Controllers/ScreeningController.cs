@@ -63,8 +63,13 @@ namespace ASPNETCinema.Controllers
             var screeningLogic = new ScreeningLogic(_screening);
             if (ModelState.IsValid)
             {
-                screeningLogic.AddScreening(screening.Id, screening.MovieId, screening.HallId, screening.DateOfScreening, screening.TimeOfScreening);
-                return RedirectToAction("ListScreenings");
+                if (screeningLogic.IsThisDateAndTimeAvailable(screening.HallId, screening.DateOfScreening, screening.TimeOfScreening, screening.MovieId) == false)
+                {
+                    screeningLogic.AddScreening(screening.Id, screening.MovieId, screening.HallId, screening.DateOfScreening, screening.TimeOfScreening);
+                    return RedirectToAction("ListScreenings");
+                }
+                ModelState.AddModelError("TimeOfScreening", "Another movie is already showing in this hall at this time");
+                return View();
             }
             return RedirectToAction("Error", "Home");
         }
@@ -114,15 +119,14 @@ namespace ASPNETCinema.Controllers
         public ActionResult EditScreening(ScreeningViewModel screening)
         {
             var screeningLogic = new ScreeningLogic(_screening);
-            if (ModelState.IsValid && screeningLogic.IsThisDateAndTimeAvailable(screening.HallId, screening.DateOfScreening, screening.TimeOfScreening))
+            if (ModelState.IsValid && screeningLogic.IsThisDateAndTimeAvailable(screening.HallId, screening.DateOfScreening, screening.TimeOfScreening, screening.MovieId))
             {
                 screeningLogic.EditScreening(screening.Id, screening.MovieId, screening.HallId, screening.DateOfScreening, screening.TimeOfScreening);
                 return RedirectToAction("ListScreenings");
             }
             else
             {
-                ViewBag.HasError = true;
-                ViewBag.ErrorMessage = "This Hall already has a screening on this day and time!";
+                ModelState.AddModelError("TimeOfScreening", "Another movie is already showing in this hall at this time");
             }
 
             return View();

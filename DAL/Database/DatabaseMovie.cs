@@ -25,7 +25,7 @@ namespace ASPNETCinema.DAL
         //Delete
 
 
-        IEnumerable<IMovie> IMovieContext.GetMovies(string orderBy)
+        public IEnumerable<IMovie> GetMovies(string orderBy)
         {
             _connection.SqlConnection.Open();
 

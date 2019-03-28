@@ -9,8 +9,11 @@ namespace ASPNETCinema.ViewModels
 {
     public class ScreeningViewModel
     {
+        string todayString;
         public ScreeningViewModel()
         {
+            DateTime today = new DateTime();
+           todayString  = today.ToShortDateString();
         }
         public int Id { get; set; }
 
@@ -25,7 +28,7 @@ namespace ASPNETCinema.ViewModels
         public IHall Hall { get; set; }
         
 
-        [Display(Name = "Screening date and Time: dd/mm/yyyy")]
+        [Display(Name = "Screening date")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         [Required(ErrorMessage = "The Date field is required.")]
         [DataType(DataType.Date)]

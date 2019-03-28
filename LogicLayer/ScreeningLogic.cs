@@ -103,17 +103,48 @@ namespace ASPNETCinema.Logic
             Repository.DeleteScreening(id);
         }
 
+        //check in die zaal of er op die dag, in de tussentijd een film draait.
+        //
 
-        public bool IsThisDateAndTimeAvailable(int hallId, DateTime dateOfScreening, TimeSpan timeOfScreening)
+        //12 > 13 and 12 < 13 
+        
+        //12:00 en duurt 120min dan gaat t door tot 14:00
+        public bool IsThisDateAndTimeAvailable(int hallId, DateTime dateOfScreening, TimeSpan timeOfScreening, int movieId)
         {
             foreach (var screeningDatabase in GetScreenings())
             {
-                if (screeningDatabase.HallId == hallId && screeningDatabase.DateOfScreening == dateOfScreening)
+                if (screeningDatabase.HallId == hallId && screeningDatabase.DateOfScreening == dateOfScreening && screeningDatabase.MovieId != movieId)
                 {
-                    if (screeningDatabase.TimeOfScreening == timeOfScreening)
+                    if (IsItAfterOrBeforeTheScreening(hallId, dateOfScreening, timeOfScreening, movieId, screeningDatabase) == false)
                     {
                         return false;
                     }
+                }
+            }
+            return true;
+        }
+
+
+
+        /*
+           als (begin1 > begin2 && begin1 > einde2) 
+           of  (begin1 < begin2 && einde1 < begin2)
+        */
+        public bool IsItAfterOrBeforeTheScreening(int hallId, DateTime dateOfScreening, TimeSpan timeOfScreening, int movieId, IScreening screeningDatabase)
+        {
+            foreach (var movieAlreadyScreening in Repository.GetMovies())
+            {
+                if (movieAlreadyScreening.Id == screeningDatabase.MovieId)
+                {
+                    TimeSpan lenghtScreening = new TimeSpan(0, Int32.Parse(movieAlreadyScreening.MovieLenght), 0);
+                    TimeSpan lenghtMovie = new TimeSpan(0, Int32.Parse(Repository.GetMovie(movieId).MovieLenght), 0);
+
+                    if ((timeOfScreening > screeningDatabase.TimeOfScreening && timeOfScreening > screeningDatabase.TimeOfScreening.Add(lenghtScreening)) 
+                        || (timeOfScreening < screeningDatabase.TimeOfScreening && timeOfScreening.Add(lenghtMovie) < screeningDatabase.TimeOfScreening))
+                    {
+                        return true;
+                    }
+                    return false;
                 }
             }
             return true;

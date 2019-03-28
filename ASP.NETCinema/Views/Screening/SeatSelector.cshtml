@@ -268,7 +268,7 @@
             $(".seatStructure *").prop("disabled", true);
             document.getElementById("notification").innerHTML = "<b style='margin-bottom:0px;background:yellow;'></b>";
 
-            //(not yet) uncheck all checked seats
+            //uncheck all checked seats
             $('#seatsBlock :checked').each(function () {
                 $(":checkbox").prop('disabled', true);
                 $(":checkbox").prop('checked', false);
