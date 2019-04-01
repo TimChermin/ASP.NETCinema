@@ -25,7 +25,7 @@ namespace ASPNETCinema.DAL
         //Edit
         //Delete
 
-        IEnumerable<IHall> IHallContext.GetHalls()
+        public IEnumerable<IHall> GetHalls()
         {
             _connection.SqlConnection.Open();
             

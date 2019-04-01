@@ -16,5 +16,6 @@ namespace Interfaces
         TimeSpan TimeOfScreening { get; set; }
         ITask Task { get; set; }
         IEnumerable<IMovie> Movies { get; set; }
+        IEnumerable<IHall> Halls { get; set; }
     }
 }

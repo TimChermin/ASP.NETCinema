@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Interfaces;
+using static aMVCLayer.Enums.MovieType;
 
 namespace ASPNETCinema.ViewModels
 {
@@ -39,6 +40,10 @@ namespace ASPNETCinema.ViewModels
         [Display(Name = "Movie Type")]
         [Required(ErrorMessage = "The Movie Type field is required.")]
         public string MovieType { get; set; }
+
+        [Display(Name = "Movie Type")]
+        [Required(ErrorMessage = "The Movie Type field is required.")]
+        public List<MovieTypes> MovieTypes { get; set; }
 
         [Display(Name = "Movie Lenght")]
         [Required(ErrorMessage = "You need to fill in the movie lenght")]

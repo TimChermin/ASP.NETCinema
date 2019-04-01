@@ -44,7 +44,8 @@ namespace ASPNETCinema.Controllers
                     Hall = screening.Hall,
                     DateOfScreening = screening.DateOfScreening,
                     TimeOfScreening = screening.TimeOfScreening,
-                    Movies = screening.Movies
+                    Movies = screening.Movies,
+                    Halls = screening.Halls
                 });
             }
             return View(screenings);
@@ -64,7 +65,8 @@ namespace ASPNETCinema.Controllers
                     Hall = screening.Hall,
                     DateOfScreening = screening.DateOfScreening,
                     TimeOfScreening = screening.TimeOfScreening,
-                    Movies = screening.Movies
+                    Movies = screening.Movies,
+                    Halls = screening.Halls
                 });
             }
             return View(screenings[0]);
@@ -102,7 +104,8 @@ namespace ASPNETCinema.Controllers
                     HallId = screening.HallId,
                     DateOfScreening = screening.DateOfScreening,
                     TimeOfScreening = screening.TimeOfScreening,
-                    Movies = screening.Movies
+                    Movies = screening.Movies,
+                    Halls = screening.Halls
                 };
                 return View(viewScreening);
             }
@@ -123,7 +126,8 @@ namespace ASPNETCinema.Controllers
                     HallId = screening.HallId,
                     DateOfScreening = screening.DateOfScreening,
                     TimeOfScreening = screening.TimeOfScreening,
-                    Movies = screening.Movies
+                    Movies = screening.Movies,
+                    Halls = screening.Halls
                 };
                 return View(viewScreening);
             }
@@ -163,7 +167,8 @@ namespace ASPNETCinema.Controllers
                     HallId = screening.HallId,
                     DateOfScreening = screening.DateOfScreening,
                     TimeOfScreening = screening.TimeOfScreening,
-                    Movies = screening.Movies
+                    Movies = screening.Movies,
+                    Halls = screening.Halls
                 };
                 return View(viewScreening);
             }

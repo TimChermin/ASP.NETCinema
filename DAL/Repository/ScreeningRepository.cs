@@ -60,5 +60,9 @@ namespace DAL.Repository
         {
             return _context.GetMovies();
         }
+        public IEnumerable<IHall> GetHalls()
+        {
+            return _context.GetHalls();
+        }
     }
 }

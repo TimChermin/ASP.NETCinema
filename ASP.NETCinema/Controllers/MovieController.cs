@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using ASPNETCinema.ViewModels;
 using DAL;
 using Interfaces;
+using static aMVCLayer.Enums.MovieType;
 
 namespace ASPNETCinema.Controllers
 {
@@ -63,7 +64,11 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult AddMovie()
         {
-            return View();
+            var viewMovie = new MovieViewModel
+            {
+                MovieTypes = Enum.GetValues(typeof(MovieTypes)).Cast<MovieTypes>().ToList(),
+            };
+            return View(viewMovie);
         }
 
         [HttpPost]
@@ -72,31 +77,26 @@ namespace ASPNETCinema.Controllers
         public ActionResult AddMovie(MovieViewModel movie)
         {
             var movieLogic = new MovieLogic(_movie);
-            if (ModelState.IsValid)
+            if (movieLogic.DoesThisMovieExist(movie.Name) == false && movie.ReleaseDate <= movie.LastScreeningDate)
             {
-                if (movieLogic.DoesThisMovieExist(movie.Name) == false && movie.ReleaseDate <= movie.LastScreeningDate)
-                {
-                    movieLogic.AddMovie(movie.Id, movie.Name, movie.Description, movie.ReleaseDate, movie.LastScreeningDate,
-                    movie.MovieType, movie.MovieLenght, movie.ImageString, movie.BannerImageString);
-                    return RedirectToAction("ListMovies");
-                }
-                else if (movie.ReleaseDate >= movie.LastScreeningDate && movieLogic.DoesThisMovieExist(movie.Name) == true)
-                {
-                    ModelState.AddModelError("ReleaseDate", movie.ReleaseDate.ToShortDateString() + " Is after the Last Screening Date");
-                    ModelState.AddModelError("Name", movie.Name + " already exists");
-                }
-                else if (movieLogic.DoesThisMovieExist(movie.Name) == true)
-                {
-                    ModelState.AddModelError("Name", movie.Name + " already exists");
-                }
-                else
-                {
-                    ModelState.AddModelError("ReleaseDate", movie.ReleaseDate.ToShortDateString() + " Is after the LastScreeningDate");
-                }
-                return View();
-
+                movieLogic.AddMovie(movie.Id, movie.Name, movie.Description, movie.ReleaseDate, movie.LastScreeningDate,
+                movie.MovieType, movie.MovieLenght, movie.ImageString, movie.BannerImageString);
+                return RedirectToAction("ListMovies");
             }
-            return RedirectToAction("Error", "Home");
+            else if (movie.ReleaseDate >= movie.LastScreeningDate && movieLogic.DoesThisMovieExist(movie.Name) == true)
+            {
+                ModelState.AddModelError("ReleaseDate", movie.ReleaseDate.ToShortDateString() + " Is after the Last Screening Date");
+                ModelState.AddModelError("Name", movie.Name + " already exists");
+            }
+            else if (movieLogic.DoesThisMovieExist(movie.Name) == true)
+            {
+                ModelState.AddModelError("Name", movie.Name + " already exists");
+            }
+            else
+            {
+                ModelState.AddModelError("ReleaseDate", movie.ReleaseDate.ToShortDateString() + " Is after the LastScreeningDate");
+            }
+            return View();
         }
 
 
@@ -141,7 +141,7 @@ namespace ASPNETCinema.Controllers
                     Description = movie.Description,
                     ReleaseDate = movie.ReleaseDate,
                     LastScreeningDate = movie.LastScreeningDate,
-                    MovieType = movie.MovieType,
+                    MovieTypes = Enum.GetValues(typeof(MovieTypes)).Cast<MovieTypes>().ToList(),
                     MovieLenght = movie.MovieLenght,
                     ImageString = movie.ImageString,
                     BannerImageString = movie.BannerImageString
@@ -157,13 +157,9 @@ namespace ASPNETCinema.Controllers
         public ActionResult EditMovie(MovieViewModel movie)
         {
             var movieLogic = new MovieLogic(_movie);
-            if (ModelState.IsValid)
-            {
-                movieLogic.EditMovie(movie.Id, movie.Name, movie.Description, movie.ReleaseDate, movie.LastScreeningDate,
-                    movie.MovieType, movie.MovieLenght, movie.ImageString, movie.BannerImageString);
-                return RedirectToAction("DetailsMovie", new { id = movie.Id });
-            }
-            return RedirectToAction("Error", "Home");
+            movieLogic.EditMovie(movie.Id, movie.Name, movie.Description, movie.ReleaseDate, movie.LastScreeningDate,
+                movie.MovieType, movie.MovieLenght, movie.ImageString, movie.BannerImageString);
+            return RedirectToAction("DetailsMovie", new { id = movie.Id });
         }
 
         

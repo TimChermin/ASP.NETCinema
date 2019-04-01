@@ -22,5 +22,6 @@ namespace DAL
         IHall GetHall(int idHall);
         IMovie GetMovie(int idMovie);
         IEnumerable<IMovie> GetMovies();
+        IEnumerable<IHall> GetHalls();
     }
 }
