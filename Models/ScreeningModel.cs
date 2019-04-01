@@ -22,5 +22,7 @@ namespace ASPNETCinema.Models
         public IMovie Movie { get; set; }
         public IHall Hall { get; set; }
         public ITask Task { get; set; }
+
+        public IEnumerable<IMovie> Movies { get; set; }
     }
 }

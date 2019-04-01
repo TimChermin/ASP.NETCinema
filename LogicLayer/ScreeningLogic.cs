@@ -37,6 +37,7 @@ namespace ASPNETCinema.Logic
             screenings.Add(Repository.GetScreeningById(id));
             screenings = GetAndAddMovieToScreenings(screenings);
             screenings = GetAndAddHallToScreenings(screenings);
+            screenings = GetMoviesToScreenings(screenings);
             return screenings[0];
         }
 
@@ -69,6 +70,16 @@ namespace ASPNETCinema.Logic
             screenings = Repository.GetScreenings().ToList();
             screenings = GetAndAddMovieToScreenings(screenings);
             screenings = GetAndAddHallToScreenings(screenings);
+            screenings = GetMoviesToScreenings(screenings);
+            return screenings;
+        }
+
+        public List<IScreening> GetMoviesToScreenings(List<IScreening> screenings)
+        {
+            foreach (var screening in screenings)
+            {
+                screening.Movies = Repository.GetMovies();
+            }
             return screenings;
         }
 

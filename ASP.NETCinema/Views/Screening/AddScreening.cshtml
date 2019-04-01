@@ -16,9 +16,12 @@
         <form asp-action="AddScreening">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="MovieId" class="control-label"></label>
-                <input asp-for="MovieId" class="form-control" />
-                <span asp-validation-for="MovieId" class="text-danger"></span>
+                <select name="MovieId" class="form-control">
+                    @foreach (var movie in Model.Movies)
+                    {
+                        <option value="@movie.Id" selected>@movie.Name</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="HallId" class="control-label"></label>

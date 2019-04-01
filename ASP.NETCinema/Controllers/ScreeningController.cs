@@ -43,7 +43,8 @@ namespace ASPNETCinema.Controllers
                     Movie = screening.Movie,
                     Hall = screening.Hall,
                     DateOfScreening = screening.DateOfScreening,
-                    TimeOfScreening = screening.TimeOfScreening
+                    TimeOfScreening = screening.TimeOfScreening,
+                    Movies = screening.Movies
                 });
             }
             return View(screenings);
@@ -52,7 +53,21 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult AddScreening()
         {
-            return View();
+            var screeningLogic = new ScreeningLogic(_screening);
+            List<ScreeningViewModel> screenings = new List<ScreeningViewModel>();
+            foreach (var screening in screeningLogic.GetScreenings())
+            {
+                screenings.Add(new ScreeningViewModel
+                {
+                    Id = screening.Id,
+                    Movie = screening.Movie,
+                    Hall = screening.Hall,
+                    DateOfScreening = screening.DateOfScreening,
+                    TimeOfScreening = screening.TimeOfScreening,
+                    Movies = screening.Movies
+                });
+            }
+            return View(screenings[0]);
         }
 
         [HttpPost]
@@ -86,7 +101,8 @@ namespace ASPNETCinema.Controllers
                     MovieId = screening.MovieId,
                     HallId = screening.HallId,
                     DateOfScreening = screening.DateOfScreening,
-                    TimeOfScreening = screening.TimeOfScreening
+                    TimeOfScreening = screening.TimeOfScreening,
+                    Movies = screening.Movies
                 };
                 return View(viewScreening);
             }
@@ -106,7 +122,8 @@ namespace ASPNETCinema.Controllers
                     MovieId = screening.MovieId,
                     HallId = screening.HallId,
                     DateOfScreening = screening.DateOfScreening,
-                    TimeOfScreening = screening.TimeOfScreening
+                    TimeOfScreening = screening.TimeOfScreening,
+                    Movies = screening.Movies
                 };
                 return View(viewScreening);
             }
@@ -145,7 +162,8 @@ namespace ASPNETCinema.Controllers
                     MovieId = screening.MovieId,
                     HallId = screening.HallId,
                     DateOfScreening = screening.DateOfScreening,
-                    TimeOfScreening = screening.TimeOfScreening
+                    TimeOfScreening = screening.TimeOfScreening,
+                    Movies = screening.Movies
                 };
                 return View(viewScreening);
             }

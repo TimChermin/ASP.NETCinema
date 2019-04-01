@@ -40,6 +40,7 @@ namespace ASPNETCinema.ViewModels
         [DataType(DataType.Time)]
         public TimeSpan TimeOfScreening { get; set; }
 
+        public IEnumerable<IMovie> Movies { get; set; }
 
         public ITask Task { get; set; }
 
