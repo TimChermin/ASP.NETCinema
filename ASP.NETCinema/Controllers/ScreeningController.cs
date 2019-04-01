@@ -26,10 +26,7 @@ namespace ASPNETCinema.Controllers
         //details
         //Edit
         //Delete
-        public ActionResult SeatSelector()
-        {
-            return View();
-        }
+        
 
         public ActionResult ListScreenings()
         {
@@ -185,6 +182,19 @@ namespace ASPNETCinema.Controllers
             return RedirectToAction("ListScreenings");
         }
 
-
+        public ActionResult SeatSelector(ScreeningViewModel screening)
+        {
+            var screeningLogic = new ScreeningLogic(_screening);
+            ScreeningViewModel viewScreening = new ScreeningViewModel
+            {
+                Id = screening.Id,
+                MovieId = screening.MovieId,
+                HallId = screening.HallId,
+                Hall = screening.Hall,
+                DateOfScreening = screening.DateOfScreening,
+                TimeOfScreening = screening.TimeOfScreening,
+            };
+            return View(viewScreening);
+        }
     }
 }

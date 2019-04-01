@@ -49,5 +49,7 @@
     }
     @Html.ActionLink("Movie Details", "DetailsMovie", "Movie", new { id = Model.MovieId })
     @Html.ActionLink("Movie List", "ListMovies", "Movie")
+
+    @Html.ActionLink("Order Seats", "SeatSelector", "Screening", new { Screening = Model })
     <a asp-action="ListScreenings">Back to List</a>
 </div>
