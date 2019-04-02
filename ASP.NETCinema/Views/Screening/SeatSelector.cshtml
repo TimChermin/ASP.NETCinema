@@ -303,6 +303,35 @@
                 $('#seatsDisplay').val(allSeatsVals);
 
                 $(".restart-div *").prop("disabled", false);
+
+
+                // use a normal array
+                var operationCollection = [];
+
+                var test1 = { name: "Bill", age: "55", address: "testing" };
+                //operationCollection.push(test1);
+
+                operationCollection.push($('#seatsDisplay').val(allSeatsVals))
+
+                // create a json object that has your collection as a property
+                // then stringify the whole object
+                dataToPost = JSON.stringify({ methodParam: operationCollection });
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Screening/TicketConfirm",
+                    contentType: "application/json; charset=utf-8", // specify the content type
+                    dataType: 'JSON', // make sure you use the correct case for dataType
+                    data: dataToPost,
+                    traditional: true
+                });
+
+
+
+
+
+
+
             }
             else {
                 alert("Please select " + ($("#Numseats").val()) + " seats")

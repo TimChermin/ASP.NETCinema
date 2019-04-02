@@ -196,5 +196,10 @@ namespace ASPNETCinema.Controllers
             };
             return View(viewScreening);
         }
+
+        public ActionResult TicketConfirm(string[] methodParam)
+        {
+            return View();
+        }
     }
 }

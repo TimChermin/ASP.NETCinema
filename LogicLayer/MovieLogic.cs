@@ -21,8 +21,7 @@ namespace ASPNETCinema.Logic
         {
             Repository = new MovieRepository(context);
         }
-
-
+        
         //List
         //Add
         //details
