@@ -31,24 +31,45 @@ namespace UserTests
         public void Should_RegisterAnUser_WhenRegisteringAnUser()
         {
             //Arrange
-            bool found = false;
             var userLogic = new UserLogic(new UserContextMock());
             if (userLogic.GetUser("AddName", "AddPassword") != null)
             {
                 Assert.True(false);
             }
             
-
             //Act
             userLogic.AddUser(1, "AddName", "AddPassword", "AddPassword", 0);
             var user = userLogic.GetUser("AddName", "AddPassword");
-            if (user.Id == 1 && user.Name == "AddName" && user.Administrator == 0)
-            {
-                found = true;
-            }
+            var user2 = userLogic.GetUser("AddName", "AddPassword");
 
             //Assert
-            Assert.True(found);
+            Assert.True(user.Id == 1 && user.Name == "AddName" && user.Administrator == 0);
+            Assert.False(userLogic.AddUser(1, "AddName", "AddPassword", "NotTheSamePassword", 0));
+            Assert.True(user.Equals(user2));
+        }
+
+        [Fact]
+        public void Should_ReturnTrue_WhenTheLoginIsCorrect()
+        {
+            var userLogic = new UserLogic(new UserContextMock());
+            userLogic.AddUser(1, "AddName", "AddPassword", "AddPassword", 0);
+
+            Assert.True(userLogic.CheckIfThisLoginIsCorrect("AddName", "AddPassword") == true);
+            Assert.False(userLogic.CheckIfThisLoginIsCorrect("AddName", "WRONGPASSWORD") == true);
+        }
+
+        [Fact]
+        public void Should_GetRoleUser_WhenGettingRoleUser()
+        {
+            var userLogic = new UserLogic(new UserContextMock());
+            userLogic.AddUser(1, "RoleName", "RolePassword", "RolePassword", 1);
+            userLogic.AddUser(2, "RoleName", "RolePassword", "RolePassword", 0);
+            userLogic.AddUser(3, "RoleName", "RolePassword", "RolePassword", 2);
+            var user = userLogic.GetUser("RoleName", "RolePassword");
+            
+            Assert.True(userLogic.GetRoleUser(user.Id) == "Administrator");
+            Assert.True(userLogic.GetRoleUser(2) == "Normal");
+            Assert.True(userLogic.GetRoleUser(3) == "Employee");
         }
 
         [Fact]

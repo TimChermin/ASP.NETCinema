@@ -173,5 +173,10 @@ namespace UnitTests.Screening.MockContext
                 TimeOfScreening = screening.TimeOfScreening
             });
         }
+
+        public IEnumerable<IHall> GetHalls()
+        {
+            return null;
+        }
     }
 }

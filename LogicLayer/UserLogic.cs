@@ -28,15 +28,7 @@ namespace ASPNETCinema.Logic
         //details
         //Edit
         //Delete
-        public void random()
-        {
-            // Hash
-            var hash = SecurePasswordHasher.Hash("mypassword");
-
-            // Verify
-            var result = SecurePasswordHasher.Verify("mypassword", hash);
-        }
-
+        
 
         public IUser GetUser(string name, string password)
         {
