@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using ASPNETCinema.Logic;
-using ASPNETCinema.Models;
 using ASPNETCinema.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using ASPNETCinema.DAL;
-using Interfaces;
-using System.Data;
 using Microsoft.AspNetCore.Authorization;
+using ASPNETCinema.DAL;
 
 namespace ASPNETCinema.Controllers
 {
     public class EmployeeController : Controller
     {
         private readonly IEmployeeContext _employee;
-
         //added scoped stuff in startup 
         public EmployeeController(IEmployeeContext employee)
         {
