@@ -25,7 +25,7 @@ namespace ASPNETCinema.DAL
         //Edit
         //Delete
 
-        IEnumerable<ITask> ITaskContext.GetTasks()
+        public IEnumerable<ITask> GetTasks()
         {
             var tasks = new List<ITask>();
             _connection.SqlConnection.Open();

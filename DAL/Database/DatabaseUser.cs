@@ -27,7 +27,7 @@ namespace ASPNETCinema.DAL
         //Delete
 
 
-        IEnumerable<IUser> IUserContext.GetUsers()
+        public IEnumerable<IUser> GetUsers()
         {
             _connection.SqlConnection.Open();
             var users = new List<UserDto>();
