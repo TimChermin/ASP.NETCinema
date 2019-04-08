@@ -9,6 +9,16 @@
 <p>
     <a asp-action="AddTask">Create New</a>
 </p>
+
+<div id="container" style="background-color: #2b3e50; margin-left: -1000px; ">
+    <div id="navbar" style=" width: 400%; height: 45px; padding-top: 8px; padding-left: 1000px;">
+        <button href="javascript:void(0)" class="tablink" onclick="openPage('Today', this, 'red')" id="defaultOpen">da</button>
+        <button href="javascript:void(0)" class="tablink" onclick="openPage('Tomorrow', this, 'green')">te</button>
+        <button href="javascript:void(0)" class="tablink" onclick="openPage('Day3', this, 'blue')">text</button>
+        <button href="javascript:void(0)" class="tablink" onclick="openPage('Day4', this, 'orange')">text</button>
+        <button href="javascript:void(0)" class="tablink" onclick="openPage('Day5', this, 'orange')">text</button>
+    </div>
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -30,42 +40,131 @@
             <th>
                 @Html.DisplayNameFor(model => model.TimeOfScreening)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HallId)
+            </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmployeeId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmployeeName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TaskType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateOfScreening)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TimeOfScreening)
-            </td>
-            <td>
-                @if (User.IsInRole("Administrator"))
-                {
-                    @Html.ActionLink("Edit", "EditTask", new { id = item.Id });
-                    <a> | </a>
-                    @Html.ActionLink("Delete", "DeleteTask", new { id = item.Id });
-                    <a> | </a>
-                }
-                @Html.ActionLink("Details", "DetailsTask", new { id = item.Id })
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfScreening)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeOfScreening)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HallId)
+                </td>
+                <td>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        @Html.ActionLink("Edit", "EditTask", new { id = item.Id });
+                        <a> | </a>
+                        @Html.ActionLink("Delete", "DeleteTask", new { id = item.Id });
+                        <a> | </a>
+                    }
+                    @Html.ActionLink("Details", "DetailsTask", new { id = item.Id })
 
-            </td>
-        </tr>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
+
+<div id="Today" class="tabcontent">
+    <table class="table table-dark">
+        <tbody>te
+        </tbody>
+    </table>
+
+</div>
+
+<div id="Tomorrow" class="tabcontent">
+    <table class="table table-dark">
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<div id="Day3" class="tabcontent">
+    <table class="table table-dark">
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<div id="Day4" class="tabcontent">
+    <table class="table table-dark">
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<div id="Day5" class="tabcontent">
+    <table class="table table-dark">
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+
+<script>
+    function openPage(pageName, elmnt, color) {
+        // Hide all elements with class="tabcontent" by default */
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Remove the background color of all tablinks/buttons
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].style.backgroundColor = "#4e5d6c";
+        }
+
+        // Show the specific tab content
+        document.getElementById(pageName).style.display = "block";
+
+        // Add the specific color to the button used to open the tab content
+        elmnt.style.backgroundColor = color;
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();</script>
+
+<!--onscroll navbar-->
+<script>
+    window.onscroll = function () { myFunction() };
+
+    var navbar = document.getElementById("navbar");
+    var container = document.getElementById("container");
+    var sticky = navbar.offsetTop;
+
+    function myFunction() {
+        if (window.pageYOffset >= sticky) {
+            navbar.classList.add("sticky")
+            navbar.style.backgroundColor = "#df691a";
+            navbar.style.borderTop = "5px solid black";
+        } else {
+            navbar.classList.remove("sticky");
+            navbar.style.backgroundColor = "#2b3e50";
+            navbar.style.borderTop = "0px";
+        }
+    }
+</script>

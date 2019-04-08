@@ -7,6 +7,8 @@ namespace DAL
 {
     public interface ITaskContext
     {
+        IEnumerable<ITask> GetTasksAssigned();
+        IEnumerable<ITask> GetTasksNotAssigned();
         IEnumerable<ITask> GetTasks();
         void AddTask(ITask task);
         ITask GetTaskById(int id);

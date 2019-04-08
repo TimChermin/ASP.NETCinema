@@ -33,6 +33,7 @@ namespace ASPNETCinema.Controllers
                     EmployeeName = task.EmployeeName,
                     DateOfScreening = task.DateOfScreening,
                     TimeOfScreening = task.TimeOfScreening,
+                    HallId = task.HallId,
                     TaskType = task.TaskType,
                     TaskLenght = task.TaskLenght,
                     Screening = task.Screening,
