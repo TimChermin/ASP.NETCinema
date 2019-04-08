@@ -16,25 +16,43 @@
                 @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdScreening)
+                @Html.DisplayNameFor(model => model.EmployeeId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TaskType)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfScreening)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TimeOfScreening)
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdScreening)
+                @Html.DisplayFor(modelItem => item.EmployeeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmployeeName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TaskType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfScreening)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeOfScreening)
             </td>
             <td>
                 @if (User.IsInRole("Administrator"))
@@ -48,6 +66,6 @@
 
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>

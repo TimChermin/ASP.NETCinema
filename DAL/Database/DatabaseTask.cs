@@ -25,85 +25,92 @@ namespace ASPNETCinema.DAL
         //Edit
         //Delete
 
-        public IEnumerable<ITask> GetTasks()
+public IEnumerable<ITask> GetTasks()
+{
+var tasks = new List<ITask>();
+_connection.SqlConnection.Open();
+SqlCommand command = new SqlCommand("SELECT Task.Id, Employee.Id, Employee.Name, Task.TaskType, Screening.DateOfScreening, Screening.TimeOfScreening " +
+    "FROM Employee " +
+    "INNER JOIN Employee_Task ON Employee.Id=Employee_Task.IdEmployee " +
+    "INNER JOIN Task ON Employee_Task.Id=Task.TaskType " +
+    "INNER JOIN Screening ON Screening.Id=Task.IdScreening", _connection.SqlConnection);
+using (SqlDataReader reader = command.ExecuteReader())
+{
+    while (reader.Read())
+    {
+        var task = new TaskDto
         {
-            var tasks = new List<ITask>();
-            _connection.SqlConnection.Open();
-            SqlCommand command = new SqlCommand("SELECT Id, IdScreening, TaskType FROM Task", _connection.SqlConnection);
-            using (SqlDataReader reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    var task = new TaskDto
-                    {
-                        Id = (int)reader["Id"],
-                        IdScreening = (int)reader["IdScreening"],
-                        TaskType = (int)reader["TaskType"]
-                    };
-                    tasks.Add(task);
-                }
-            }
-            _connection.SqlConnection.Close();
-            return (tasks);
-        }
-
-        public void AddTask(ITask task)
-        {
-            _connection.SqlConnection.Open();
-            SqlCommand command = new SqlCommand("INSERT INTO Task OUTPUT Inserted.Id VALUES (@IdScreening, @TaskType)", _connection.SqlConnection);
-            command.Parameters.AddWithValue("@IdScreening", task.IdScreening);
-            command.Parameters.AddWithValue("@TaskType", task.TaskType);
-            command.ExecuteNonQuery();
-            _connection.SqlConnection.Close();
-        }
-
-        public ITask GetTaskById(int id)
-        {
-            _connection.SqlConnection.Open();
-
-            SqlCommand command = new SqlCommand("SELECT Id, IdScreening, TaskType FROM Task WHERE Id = @Id", _connection.SqlConnection);
-            command.Parameters.AddWithValue("@Id", id);
-            using (SqlDataReader reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    var task = new TaskDto
-                    {
-                        Id = (int)reader["Id"],
-                        IdScreening = (int)reader["IdScreening"],
-                        TaskType = (int)reader["TaskType"]
-                    };
-                    _connection.SqlConnection.Close();
-                    return task;
-                }
-            }
-            _connection.SqlConnection.Close();
-            return null;
-        }
-
-        public void EditTask(ITask task)
-        {
-            _connection.SqlConnection.Open();
-
-            SqlCommand command = new SqlCommand("UPDATE Task SET IdScreening = @IdScreening, TaskType = @TaskType WHERE Id = @Id", _connection.SqlConnection);
-            command.Parameters.AddWithValue("@IdScreening", task.IdScreening);
-            command.Parameters.AddWithValue("@TaskType", task.TaskType);
-            command.Parameters.AddWithValue("@Id", task.Id);
-
-            command.ExecuteNonQuery();
-            _connection.SqlConnection.Close();
-        }
-
-        public void DeleteTask(int id)
-        {
-            _connection.SqlConnection.Open();
-
-            SqlCommand command = new SqlCommand("DELETE FROM Task WHERE Id = @Id", _connection.SqlConnection);
-            command.Parameters.AddWithValue("@Id", id);
-            command.ExecuteNonQuery();
-            _connection.SqlConnection.Close();
-        }
-
-
+            Id = (int)reader["Id"],
+            EmployeeId = (int)reader["Id"],
+            EmployeeName = reader["Name"].ToString(),
+            TaskType = (int)reader["TaskType"],
+            DateOfScreening = (DateTime)reader["DateOfScreening"],
+            TimeOfScreening = (TimeSpan)reader["TimeOfScreening"]
+        };
+        tasks.Add(task);
     }
+}
+_connection.SqlConnection.Close();
+return (tasks);
+}
+
+public void AddTask(ITask task)
+{
+_connection.SqlConnection.Open();
+SqlCommand command = new SqlCommand("INSERT INTO Task OUTPUT Inserted.Id VALUES (@IdScreening, @TaskType)", _connection.SqlConnection);
+command.Parameters.AddWithValue("@IdScreening", task.IdScreening);
+command.Parameters.AddWithValue("@TaskType", task.TaskType);
+command.ExecuteNonQuery();
+_connection.SqlConnection.Close();
+}
+
+public ITask GetTaskById(int id)
+{
+_connection.SqlConnection.Open();
+
+SqlCommand command = new SqlCommand("SELECT Id, IdScreening, TaskType FROM Task WHERE Id = @Id", _connection.SqlConnection);
+command.Parameters.AddWithValue("@Id", id);
+using (SqlDataReader reader = command.ExecuteReader())
+{
+    while (reader.Read())
+    {
+        var task = new TaskDto
+        {
+            Id = (int)reader["Id"],
+            IdScreening = (int)reader["IdScreening"],
+            TaskType = (int)reader["TaskType"]
+        };
+        _connection.SqlConnection.Close();
+        return task;
+    }
+}
+_connection.SqlConnection.Close();
+return null;
+}
+
+public void EditTask(ITask task)
+{
+_connection.SqlConnection.Open();
+
+SqlCommand command = new SqlCommand("UPDATE Task SET IdScreening = @IdScreening, TaskType = @TaskType WHERE Id = @Id", _connection.SqlConnection);
+command.Parameters.AddWithValue("@IdScreening", task.IdScreening);
+command.Parameters.AddWithValue("@TaskType", task.TaskType);
+command.Parameters.AddWithValue("@Id", task.Id);
+
+command.ExecuteNonQuery();
+_connection.SqlConnection.Close();
+}
+
+public void DeleteTask(int id)
+{
+_connection.SqlConnection.Open();
+
+SqlCommand command = new SqlCommand("DELETE FROM Task WHERE Id = @Id", _connection.SqlConnection);
+command.Parameters.AddWithValue("@Id", id);
+command.ExecuteNonQuery();
+_connection.SqlConnection.Close();
+}
+
+
+}
 }

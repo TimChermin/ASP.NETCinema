@@ -29,7 +29,10 @@ namespace ASPNETCinema.Controllers
                 tasks.Add(new TaskViewModel
                 {
                     Id = task.Id,
-                    IdScreening = task.IdScreening,
+                    EmployeeId = task.EmployeeId,
+                    EmployeeName = task.EmployeeName,
+                    DateOfScreening = task.DateOfScreening,
+                    TimeOfScreening = task.TimeOfScreening,
                     TaskType = task.TaskType,
                     TaskLenght = task.TaskLenght,
                     Screening = task.Screening,
