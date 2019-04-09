@@ -91,23 +91,24 @@ namespace ASPNETCinema.DAL
             _connection.SqlConnection.Open();
             SqlCommand command = new SqlCommand("SELECT Task.Id, Employee.Id, Employee.Name, Task.TaskType, Screening.DateOfScreening, Screening.TimeOfScreening, Screening.IdHall " +
             "FROM Employee " +
-            "INNER JOIN Employee_Task ON Employee.Id = Employee_Task.IdEmployee " +
-            "INNER JOIN Task ON Employee_Task.IdTask = Task.Id " +
-            "INNER JOIN Screening ON Screening.Id = Task.IdScreening", _connection.SqlConnection);
+            "FULL OUTER JOIN Employee_Task ON Employee.Id = Employee_Task.IdEmployee " +
+            "FULL OUTER JOIN Task ON Employee_Task.IdTask = Task.Id " + 
+            "FULL OUTER JOIN Screening ON Screening.Id = Task.IdScreening", _connection.SqlConnection);
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
                 {
                     var task = new TaskDto
                     {
-                        Id = (int)reader["Id"],
-                        EmployeeId = (int)reader["Id"],
+                        Id = (reader["Id"] as int?) ?? 0,
+                        EmployeeId = (reader["Id"] as int?) ?? 0,
                         EmployeeName = reader["Name"].ToString(),
                         TaskType = reader["TaskType"].ToString(),
                         DateOfScreening = (DateTime)reader["DateOfScreening"],
                         TimeOfScreening = (TimeSpan)reader["TimeOfScreening"],
                         HallId = (int)reader["IdHall"]
                     };
+
                     tasks.Add(task);
                 }
             }
