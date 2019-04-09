@@ -10,27 +10,37 @@ namespace UnitTests.Task.MockContext
     {
         public void AddTask(ITask task)
         {
-            throw new NotImplementedException();
+
         }
 
         public void DeleteTask(int id)
         {
-            throw new NotImplementedException();
+
         }
 
         public void EditTask(ITask task)
         {
-            throw new NotImplementedException();
+
         }
 
         public ITask GetTaskById(int id)
         {
-            throw new NotImplementedException();
+            return null;
         }
 
         public IEnumerable<ITask> GetTasks()
         {
-            throw new NotImplementedException();
+            return null;
+        }
+
+        public IEnumerable<ITask> GetTasksAssigned()
+        {
+            return null;
+        }
+
+        public IEnumerable<ITask> GetTasksNotAssigned()
+        {
+            return null;
         }
     }
 }

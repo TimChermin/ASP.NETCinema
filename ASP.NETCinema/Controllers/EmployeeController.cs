@@ -47,7 +47,7 @@ namespace ASPNETCinema.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
-        public ActionResult AddMEmployee(EmployeeViewModel employee)
+        public ActionResult AddEmployee(EmployeeViewModel employee)
         {
             var employeeLogic = new EmployeeLogic(_employee);
             if (ModelState.IsValid)

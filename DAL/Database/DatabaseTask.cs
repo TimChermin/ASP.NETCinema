@@ -89,7 +89,7 @@ namespace ASPNETCinema.DAL
         {
             var tasks = new List<ITask>();
             _connection.SqlConnection.Open();
-            SqlCommand command = new SqlCommand("SELECT Task.Id, Employee.Id, Employee.Name, Task.TaskType, Screening.DateOfScreening, Screening.TimeOfScreening, Screening.IdHall " +
+            SqlCommand command = new SqlCommand("SELECT Task.Id AS IdTask, Employee.Id AS IdEmployee, Employee.Name, Task.TaskType, Screening.DateOfScreening, Screening.TimeOfScreening, Screening.IdHall " +
             "FROM Employee " +
             "FULL OUTER JOIN Employee_Task ON Employee.Id = Employee_Task.IdEmployee " +
             "FULL OUTER JOIN Task ON Employee_Task.IdTask = Task.Id " + 
@@ -100,13 +100,13 @@ namespace ASPNETCinema.DAL
                 {
                     var task = new TaskDto
                     {
-                        Id = (reader["Id"] as int?) ?? 0,
-                        EmployeeId = (reader["Id"] as int?) ?? 0,
+                        Id = (reader["IdTask"] as int?) ?? 0,
+                        EmployeeId = (reader["IdEmployee"] as int?) ?? 0,
                         EmployeeName = reader["Name"].ToString(),
                         TaskType = reader["TaskType"].ToString(),
-                        DateOfScreening = (DateTime)reader["DateOfScreening"],
-                        TimeOfScreening = (TimeSpan)reader["TimeOfScreening"],
-                        HallId = (int)reader["IdHall"]
+                        DateOfScreening = (reader["DateOfScreening"] as DateTime?) ?? DateTime.Now.AddYears(-500),
+                        TimeOfScreening = (reader["TimeOfScreening"] as TimeSpan?) ?? DateTime.Now.TimeOfDay,
+                        HallId = (reader["IdHall"] as int?) ?? 0
                     };
 
                     tasks.Add(task);

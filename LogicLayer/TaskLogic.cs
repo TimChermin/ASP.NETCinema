@@ -32,7 +32,20 @@ namespace ASPNETCinema.Logic
 
         public IEnumerable<ITask> GetTasks()
         {
-            return Repository.GetTasks();
+            var tasks = new List<ITask>();
+            foreach (var task in Repository.GetTasks())
+            {
+                if (task.EmployeeName == "")
+                {
+                    task.EmployeeName = "Unassigned";
+                }
+                if (task.TaskType == "")
+                {
+                    task.TaskType = "No TaskType Assigned";
+                }
+                tasks.Add(task);
+            }
+            return tasks;
         }
 
         public void AddTask(int id, int idScreening, string taskType, TimeSpan taskLenght, IScreening screening, List<IEmployee> employees)
