@@ -20,9 +20,10 @@
     </div>
 </div>
 
+
 <div id="FullList" class="tabcontent">
-    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
-    <table class="table">
+    <input type="text" id="search" name="FullListSearch" class="form-control" onkeyup="searchFunction()" placeholder="Search for names..">
+    <table id="FullListTable" class="table">
         <thead>
             <tr>
                 <th>
@@ -48,12 +49,12 @@
                 </th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="FullListSearch">
             @foreach (var item in Model)
             {
                 @if (item.DateOfScreening >= DateTime.Now.AddYears(-100))
                 {
-                    <tr>
+                    <tr class="searchElement">
                         <td>
                             @Html.DisplayFor(modelItem => item.Id)
                         </td>
@@ -105,15 +106,18 @@
                             @Html.ActionLink("Details", "DetailsTask", new { id = item.Id })
 
                         </td>
+                        <td style="padding-right: -200px; font-size: xx-small;">
+                            <sval class="d-none">@item.EmployeeId@item.EmployeeName</sval>
+                        </td>
                     </tr>
                 }
             }
         </tbody>
     </table>
-
 </div>
 
 <div id="AssignedTasks" class="tabcontent">
+    <input type="text" id="search" name="ListSearch" class="form-control" onkeyup="searchFunction()" placeholder="Search for names..">
     <table class="table">
         <thead>
             <tr>
@@ -140,13 +144,13 @@
                 </th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="ListSearch">
             @foreach (var item in Model)
             {
                 @if (item.EmployeeName != "Unassigned" && item.DateOfScreening >= DateTime.Now.AddYears(-100))
                 {
 
-                    <tr>
+                    <tr class="searchElement">
                         <td>
                             @Html.DisplayFor(modelItem => item.Id)
                         </td>
@@ -178,6 +182,9 @@
                             }
                             @Html.ActionLink("Details", "DetailsTask", new { id = item.Id })
 
+                        </td>
+                        <td style="padding-right: -200px; font-size: xx-small;">
+                            <sval class="d-none">@item.EmployeeId@item.EmployeeName</sval>
                         </td>
                     </tr>
                 }
@@ -187,6 +194,7 @@
 </div>
 
 <div id="UnassignedTasks" class="tabcontent">
+    <input type="text" id="search" name="ListSearch" class="form-control" onkeyup="searchFunction()" placeholder="Search for names..">
     <table class="table">
         <thead>
             <tr>
@@ -213,12 +221,12 @@
                 </th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="ListSearch">
             @foreach (var item in Model)
             {
                 @if (item.EmployeeName == "Unassigned" && item.DateOfScreening >= DateTime.Now.AddYears(-100))
                 {
-                    <tr>
+                    <tr class="searchElement">
                         <td>
                             @Html.DisplayFor(modelItem => item.Id)
                         </td>
@@ -269,6 +277,9 @@
                             }
                             @Html.ActionLink("Details", "DetailsTask", new { id = item.Id })
 
+                        </td>
+                        <td style="padding-right: -200px; font-size: xx-small;">
+                            <sval class="d-none">@item.EmployeeId@item.EmployeeName</sval>
                         </td>
                     </tr>
                 }
@@ -278,6 +289,7 @@
 </div>
 
 <div id="TaskTypeNotSelected" class="tabcontent">
+    <input type="text" id="search" name="ListSearch" class="form-control" onkeyup="searchFunction()" placeholder="Search for names..">
     <table class="table">
         <thead>
             <tr>
@@ -304,64 +316,67 @@
                 </th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="ListSearch">
             @foreach (var item in Model)
             {
                 @if (item.TaskType == "No TaskType Assigned" && item.DateOfScreening >= DateTime.Now.AddYears(-100))
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Id)
-                        </td>
-                        @if (item.EmployeeId == 0)
-                        {
-                            <td>
-                                NA
-                            </td>
-                        }
-                        else
-                        {
-                            <td>
-                                @Html.DisplayFor(modelItem => item.EmployeeId)
-                            </td>
-                        }
+            <tr class="searchElement">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                @if (item.EmployeeId == 0)
+                {
+                    <td>
+                        NA
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmployeeId)
+                    </td>
+                }
 
-                        @if (item.EmployeeId == 0)
-                        {
-                            <td>
-                                NA
-                            </td>
-                        }
-                        else
-                        {
-                            <td>
-                                @Html.DisplayFor(modelItem => item.EmployeeName)
-                            </td>
-                        }
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TaskType)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DateOfScreening)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TimeOfScreening)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.HallId)
-                        </td>
-                        <td>
-                            @if (User.IsInRole("Administrator"))
-                            {
-                                @Html.ActionLink("Edit", "EditTask", new { id = item.Id });
-                                <a> | </a>
-                                @Html.ActionLink("Delete", "DeleteTask", new { id = item.Id });
-                                <a> | </a>
-                            }
-                            @Html.ActionLink("Details", "DetailsTask", new { id = item.Id })
+                @if (item.EmployeeId == 0)
+                {
+                    <td>
+                        NA
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmployeeName)
+                    </td>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfScreening)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeOfScreening)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HallId)
+                </td>
+                <td>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        @Html.ActionLink("Edit", "EditTask", new { id = item.Id });
+                        <a> | </a>
+                        @Html.ActionLink("Delete", "DeleteTask", new { id = item.Id });
+                        <a> | </a>
+                    }
+                    @Html.ActionLink("Details", "DetailsTask", new { id = item.Id })
 
-                        </td>
-                    </tr>
+                </td>
+                <td style="padding-right: -200px; font-size: xx-small;">
+                    <sval class="d-none">@item.EmployeeId@item.EmployeeName</sval>
+                </td>
+            </tr>
                 }
             }
         </tbody>
@@ -369,6 +384,7 @@
 </div>
 
 <div id="UnassignedEmployees" class="tabcontent">
+    <input type="text" id="search" name="ListSearch" class="form-control" onkeyup="searchFunction()" placeholder="Search for names..">
     <table class="table">
         <thead>
             <tr>
@@ -395,12 +411,12 @@
                 </th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="ListSearch">
             @foreach (var item in Model)
             {
                 @if (item.DateOfScreening <= DateTime.Now.AddYears(-100))
                 {
-                    <tr>
+                    <tr class="searchElement">
                         <td>
                             @Html.DisplayFor(modelItem => item.Id)
                         </td>
@@ -432,6 +448,9 @@
                             }
                             @Html.ActionLink("Details", "DetailsTask", new { id = item.Id })
 
+                        </td>
+                        <td style="padding-right: -200px; font-size: xx-small;">
+                            <sval class="d-none">@item.EmployeeId@item.EmployeeName</sval>
                         </td>
                     </tr>
                 }
@@ -468,86 +487,45 @@
 
 <!--Search Filter-->
 <script>
-    function myFunction() {
-        // Declare variables
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("table");
-        tr = table.getElementsByTagName("tr");
+    function searchFunction() {
 
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[0];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
+        var searchText, searchElementContainer, searchElement, elementValue, i, txtValue;
+        searchText = document.activeElement.value.toUpperCase();
+        var name = document.activeElement.getAttribute("name");
+        searchElementContainer = document.getElementById(name);
+
+        searchElement = searchElementContainer.getElementsByClassName('searchElement');
+
+
+        for (i = 0; i < searchElement.length; i++) {
+            elementValue = searchElement[i].getElementsByTagName("sval")[0];
+            txtValue = elementValue.textContent || elementValue.innerText;
+            if (txtValue.toUpperCase().indexOf(searchText) > -1) {
+                searchElement[i].style.display = "";
+            } else {
+                searchElement[i].style.display = "none";
             }
+        }
+    }</script>
+
+
+<!--onscroll navbar-->
+<script>
+    window.onscroll = function () { myFunction() };
+
+    var navbar = document.getElementById("navbar");
+    var container = document.getElementById("container");
+    var sticky = navbar.offsetTop;
+
+    function myFunction() {
+        if (window.pageYOffset >= sticky) {
+            navbar.classList.add("sticky")
+            navbar.style.backgroundColor = "#df691a";
+            navbar.style.borderTop = "5px solid black";
+        } else {
+            navbar.classList.remove("sticky");
+            navbar.style.backgroundColor = "#2b3e50";
+            navbar.style.borderTop = "0px";
         }
     }
 </script>
-
-    <style>
-
-        .filter-table .quick {
-            margin-left: 0.5em;
-            font-size: 0.8em;
-            text-decoration: none;
-        }
-
-
-
-        .fitler-table .quick:hover {
-            text-decoration: underline;
-        }
-
-
-
-        td.alt {
-            background-color: #ffc;
-            background-color: rgba(255, 255, 0, 0.2);
-        }
-    </style>
-
-
-
-
-
-
-
-    <script src="@Url.Content("~/Scripts/filtertable/jquery.filtertable.min.js")" type="text/javascript"></script>
-
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-
-            $('#FullList').filterTable();
-
-        });
-
-    </script>
-
-    <!--onscroll navbar-->
-    <script>
-        window.onscroll = function () { myFunction() };
-
-        var navbar = document.getElementById("navbar");
-        var container = document.getElementById("container");
-        var sticky = navbar.offsetTop;
-
-        function myFunction() {
-            if (window.pageYOffset >= sticky) {
-                navbar.classList.add("sticky")
-                navbar.style.backgroundColor = "#df691a";
-                navbar.style.borderTop = "5px solid black";
-            } else {
-                navbar.classList.remove("sticky");
-                navbar.style.backgroundColor = "#2b3e50";
-                navbar.style.borderTop = "0px";
-            }
-        }
-    </script>
