@@ -9,7 +9,6 @@ namespace ASPNETCinema.Models
 {
     public class MovieModel : IMovie
     {
-
         public MovieModel()
         {
 
