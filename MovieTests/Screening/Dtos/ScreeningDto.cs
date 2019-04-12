@@ -15,5 +15,7 @@ namespace UnitTests.Screening.Dtos
         public DateTime DateOfScreening { get; set; }
         public TimeSpan TimeOfScreening { get; set; }
         public ITask Task { get; set; }
+        public IEnumerable<IMovie> Movies { get; set; }
+        public IEnumerable<IHall> Halls { get; set; }
     }
 }

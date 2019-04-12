@@ -55,7 +55,8 @@ namespace ASPNETCinema
             services.AddScoped<ITaskContext, DatabaseTask>();
             // Add the whole configuration object here.
             services.AddSingleton<IConfiguration>(Configuration);
-            services.AddTransient(_ => new DatabaseConnection(Configuration.GetConnectionString("ASPNETCinemaContext")));
+            services.AddTransient(_ => new DatabaseConnection(Configuration.GetConnectionString("ASPNETCinemaContextAZUREServer")));
+            //services.AddTransient(_ => new DatabaseConnection(Configuration.GetConnectionString("ASPNETCinemaContextFONTYSServer")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -85,6 +86,8 @@ namespace ASPNETCinema
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Movie}/{action=ListMovies}/{id?}");
+                
+                
             });
         }
     }

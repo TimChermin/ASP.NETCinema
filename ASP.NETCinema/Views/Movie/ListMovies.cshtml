@@ -3,20 +3,21 @@
 @{
     ViewData["Title"] = "ListMovies";
     int count = 0;
+    DateTime today = DateTime.Today;
 
 }
 <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
 
-<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000" style="width: 138%; height:100%;  margin-bottom: 1%; margin-top: -0.4%; margin-left: -19%;">
+<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000" style="width: 138%; height:100%;  margin-bottom: 1%; margin-top: -0.3%; margin-left: -19%;">
     <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
         <li data-target="#myCarousel" data-slide-to="1"></li>
         <li data-target="#myCarousel" data-slide-to="2"></li>
     </ol>
-    <div class="carousel-inner" role="listbox" >
+    <div class="carousel-inner" role="listbox">
         <div class="item active">
             <a href="/Movie/DetailsMovie/19">
-                <img src="https://shyfyy.files.wordpress.com/2019/01/johnwick3-3.jpg" alt="John Wick 3" class="img-responsive" style="max-height: 458px;" width="100%";/>
+                <img src="https://shyfyy.files.wordpress.com/2019/01/johnwick3-3.jpg" alt="John Wick 3" class="img-responsive" style="max-height: 458px;" width="100%;" />
             </a>
             <div class="carousel-caption" role="option">
                 <p>
@@ -26,9 +27,9 @@
                 </p>
             </div>
         </div>
-        <div class="item" >
+        <div class="item">
             <a href="/Movie/DetailsMovie/6">
-                <img src="https://i.imgur.com/pTmvVqg.jpg"  alt="Star Wars The Last Jedit" class="img-responsive" style="max-height: 458px;" width="100%"; />
+                <img src="https://i.imgur.com/pTmvVqg.jpg" alt="Star Wars The Last Jedit" class="img-responsive" style="max-height: 458px;" width="100%" ; />
             </a>
             <div class="carousel-caption" role="option">
                 <p>
@@ -42,7 +43,7 @@
         </div>
         <div class="item">
             <a href="/Movie/DetailsMovie/20">
-                <img src="https://shyfyy.files.wordpress.com/2018/05/avengers3-44.jpg" alt="Avengers Infinity War" class="img-responsive" style="max-height: 458px;" width="100%";/>
+                <img src="https://shyfyy.files.wordpress.com/2018/05/avengers3-44.jpg" alt="Avengers Infinity War" class="img-responsive" style="max-height: 458px;" width="100%" ; />
             </a>
             <div class="carousel-caption" role="option">
                 <p>
@@ -70,63 +71,360 @@
     <a asp-action="AddMovie">Add New Movie</a>
 }
 
-<form asp-action="ListMovies">
-    <input name="OrderBy" type="submit" id="submit" value="Name" />
-    <input name="OrderBy" type="submit" id="process" value="MovieType" />
-    <input name="OrderBy" type="submit" id="process" value="ReleaseDate" />
-    <input name="OrderBy" type="submit" id="process" value="MoviesToday" />
-
-</form>
-
-<table class="table table-dark">
-    <tbody>
-        @foreach (var item in Model)
-        {
-            count++;
-            <tr>
-                <td width="17%">
-
-                    <a href="/Movie/DetailsMovie/@Html.DisplayFor(modelItem => item.Id)">
-                        <img src="@Html.DisplayFor(modelItem => item.ImageString)" alt="Image: @Html.DisplayFor(modelItem => item.Name)" width="160" height="220">
-                    </a>
-                    <!--<img src="https://www.w3schools.com/images/w3schools_green.jpg" alt="W3Schools.com">-->
-
-                </td>
-                <td>
-                    <p>
-                        <a class="small" href="/Movie/DetailsMovie/@Html.DisplayFor(modelItem => item.Id)">
-                            <i class="fas fa-3x">@Html.DisplayFor(modelItem => item.Name)</i>
-                        </a>
-                    </p>
-                    <p>
-                        @foreach (var screening in item.Screenings)
-                        {
-                        <a class="small" href="/Screening/DetailsScreening/@Html.DisplayFor(modelItem => screening.Id)">
-                            <i class="fas fa-2x">@Html.DisplayFor(modelItem => screening.TimeOfScreening)</i>
-                        </a>
-                        }
-                    </p>
-
-                </td>
-                <td class="fas fa-2x" align="right" width="80%">
-                    @if (User.IsInRole("Administrator"))
-                    {
-                        @Html.ActionLink("Edit", "EditMovie", new { id = item.Id });
-                        <a> | </a>
-                        @Html.ActionLink("Delete", "DeleteMovie", new { id = item.Id });
-                        <a> | </a>
-                    }
-                    @Html.ActionLink("Details", "DetailsMovie", new { id = item.Id })
+<li class="dropdown" style="list-style-type: none;">
+    <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-2x">OrderBy </i> <span class="caret"></span></a>
+    <ul class="dropdown-menu">
+        <li>
+            <a href="/Movie/ListMovies/?orderBy=Name">Name</a>
+        </li>
+        <li>
+            <a href="/Movie/ListMovies/?orderBy=MovieType">Movie Type</a>
+        </li>
+        <li>
+            <a href="/Movie/ListMovies/?orderBy=ReleaseDate">Release Date</a>
+        </li>
+        <li>
+            <a href="/Movie/ListMovies/?orderBy=MovieLenght">Movie Lenght</a>
+        </li>
+        <li>
+            <a href="/Movie/ListMovies/?orderBy=LastScreeningDate"> Last Screening Date</a>
+        </li>
+    </ul>
+</li>
 
 
-                </td>
-            </tr>
-            @if (count != Model.Count())
+<div id="container" style="background-color: #2b3e50; margin-left: -1000px; " >
+    <div id="navbar" style=" width: 400%; height: 45px; padding-top: 8px; padding-left: 1000px;" >
+        <button href="javascript:void(0)" class="tablink" onclick="openPage('Today', this, 'red')" id="defaultOpen">Today @today.Day @today.ToString("MMM")</button>
+        <button href="javascript:void(0)" class="tablink" onclick="openPage('Tomorrow', this, 'green')" >@today.AddDays(1).DayOfWeek @today.AddDays(1).Day @today.AddDays(1).ToString("MMM")</button>
+        <button href="javascript:void(0)" class="tablink" onclick="openPage('Day3', this, 'blue')">@today.AddDays(2).DayOfWeek @today.AddDays(2).Day @today.AddDays(2).ToString("MMM")</button>
+        <button href="javascript:void(0)" class="tablink" onclick="openPage('Day4', this, 'orange')">@today.AddDays(3).DayOfWeek @today.AddDays(3).Day @today.AddDays(3).ToString("MMM")</button>
+        <button href="javascript:void(0)" class="tablink" onclick="openPage('Day5', this, 'orange')">@today.AddDays(4).DayOfWeek @today.AddDays(4).Day @today.AddDays(4).ToString("MMM")</button>
+    </div>
+</div>
+
+<div id="Today" class="tabcontent">
+    <table class="table table-dark">
+        <tbody>
+            @foreach (var item in Model)
             {
-                <tr><td><hr class="style1" width="580%"></td></tr>
+                count++;
+                <tr>
+                    <td width="17%">
+                        <a href="/Movie/DetailsMovie/@Html.DisplayFor(modelItem => item.Id)">
+                            <img src="@Html.DisplayFor(modelItem => item.ImageString)" alt="Image: @Html.DisplayFor(modelItem => item.Name)" width="160" height="220">
+                        </a>
+                    </td>
+                    <td>
+                        <p>
+                            <a class="small" href="/Movie/DetailsMovie/@Html.DisplayFor(modelItem => item.Id)">
+                                <i class="fas fa-3x">@Html.DisplayFor(modelItem => item.Name)</i>
+                            </a>
+                        </p>
+                        <p>
+                            @foreach (var screening in item.Screenings)
+                            {
+                                if (screening.DateOfScreening == @today)
+                                {
+                                    <a class="small" style="display:inline-block; width:100px; height:50px; font-family: Lato; border:2px solid #000000;" href="/Screening/DetailsScreening/@Html.DisplayFor(modelItem => screening.Id)">
+                                        <i class="fas fa-2x" style="padding-top: 10px; padding-left: 8px;">@Html.DisplayFor(modelItem => screening.TimeOfScreening)</i>
+                                    </a>
+                                }
+                            }
+                        </p>
+
+                    </td>
+                    <td class="fas fa-1x" align="right" width="80%">
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            @Html.ActionLink("Edit", "EditMovie", new { id = item.Id });
+                            <a> | </a>
+                            @Html.ActionLink("Delete", "DeleteMovie", new { id = item.Id });
+                            <a> | </a>
+                        }
+                        @Html.ActionLink("Details", "DetailsMovie", new { id = item.Id })
+
+
+                    </td>
+                </tr>
+                @if (count != Model.Count())
+                {
+                    <tr><td><hr class="style1" width="580%"></td></tr>
+                }
+
+
             }
+        </tbody>
+    </table>
+
+</div>
+
+<div id="Tomorrow" class="tabcontent">
+    <table class="table table-dark">
+        <tbody>
+            @foreach (var item in Model)
+            {
+                count++;
+                <tr>
+                    <td width="17%">
+                        <a href="/Movie/DetailsMovie/@Html.DisplayFor(modelItem => item.Id)">
+                            <img src="@Html.DisplayFor(modelItem => item.ImageString)" alt="Image: @Html.DisplayFor(modelItem => item.Name)" width="160" height="220">
+                        </a>
+                    </td>
+                    <td>
+                        <p>
+                            <a class="small" href="/Movie/DetailsMovie/@Html.DisplayFor(modelItem => item.Id)">
+                                <i class="fas fa-3x">@Html.DisplayFor(modelItem => item.Name)</i>
+                            </a>
+                        </p>
+                        <p>
+                            @foreach (var screening in item.Screenings)
+                            {
+                                if (screening.DateOfScreening == @today.AddDays(1))
+                                {
+                                    <a class="small" style="display:inline-block; width:100px; height:50px; font-family: Lato; border:2px solid #000000;" href="/Screening/DetailsScreening/@Html.DisplayFor(modelItem => screening.Id)">
+                                        <i class="fas fa-2x" style="padding-top: 10px; padding-left: 8px;">@Html.DisplayFor(modelItem => screening.TimeOfScreening)</i>
+                                    </a>
+                                }
+                            }
+                        </p>
+
+                    </td>
+                    <td class="fas fa-1x" align="right" width="80%">
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            @Html.ActionLink("Edit", "EditMovie", new { id = item.Id });
+                            <a> | </a>
+                            @Html.ActionLink("Delete", "DeleteMovie", new { id = item.Id });
+                            <a> | </a>
+                        }
+                        @Html.ActionLink("Details", "DetailsMovie", new { id = item.Id })
 
 
+                    </td>
+                </tr>
+                @if (count != Model.Count())
+                {
+                    <tr><td><hr class="style1" width="580%"></td></tr>
+                }
+
+
+            }
+        </tbody>
+    </table>
+</div>
+
+<div id="Day3" class="tabcontent">
+    <table class="table table-dark">
+        <tbody>
+            @foreach (var item in Model)
+            {
+                count++;
+                <tr>
+                    <td width="17%">
+                        <a href="/Movie/DetailsMovie/@Html.DisplayFor(modelItem => item.Id)">
+                            <img src="@Html.DisplayFor(modelItem => item.ImageString)" alt="Image: @Html.DisplayFor(modelItem => item.Name)" width="160" height="220">
+                        </a>
+                    </td>
+                    <td>
+                        <p>
+                            <a class="small" href="/Movie/DetailsMovie/@Html.DisplayFor(modelItem => item.Id)">
+                                <i class="fas fa-3x">@Html.DisplayFor(modelItem => item.Name)</i>
+                            </a>
+                        </p>
+                        <p>
+                            @foreach (var screening in item.Screenings)
+                            {
+                                if (screening.DateOfScreening == @today.AddDays(2))
+                                {
+                                    <a class="small" style="display:inline-block; width:100px; height:50px; font-family: Lato; border:2px solid #000000;" href="/Screening/DetailsScreening/@Html.DisplayFor(modelItem => screening.Id)">
+                                        <i class="fas fa-2x" style="padding-top: 10px; padding-left: 8px;">@Html.DisplayFor(modelItem => screening.TimeOfScreening)</i>
+                                    </a>
+                                }
+                            }
+                        </p>
+
+                    </td>
+                    <td class="fas fa-1x" align="right" width="80%">
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            @Html.ActionLink("Edit", "EditMovie", new { id = item.Id });
+                            <a> | </a>
+                            @Html.ActionLink("Delete", "DeleteMovie", new { id = item.Id });
+                            <a> | </a>
+                        }
+                        @Html.ActionLink("Details", "DetailsMovie", new { id = item.Id })
+
+
+                    </td>
+                </tr>
+                @if (count != Model.Count())
+                {
+                    <tr><td><hr class="style1" width="580%"></td></tr>
+                }
+
+
+            }
+        </tbody>
+    </table>
+</div>
+
+<div id="Day4" class="tabcontent">
+    <table class="table table-dark">
+        <tbody>
+            @foreach (var item in Model)
+            {
+                count++;
+                <tr>
+                    <td width="17%">
+                        <a href="/Movie/DetailsMovie/@Html.DisplayFor(modelItem => item.Id)">
+                            <img src="@Html.DisplayFor(modelItem => item.ImageString)" alt="Image: @Html.DisplayFor(modelItem => item.Name)" width="160" height="220">
+                        </a>
+                    </td>
+                    <td>
+                        <p>
+                            <a class="small" href="/Movie/DetailsMovie/@Html.DisplayFor(modelItem => item.Id)">
+                                <i class="fas fa-3x">@Html.DisplayFor(modelItem => item.Name)</i>
+                            </a>
+                        </p>
+                        <p>
+                            @foreach (var screening in item.Screenings)
+                            {
+                                if (screening.DateOfScreening == @today.AddDays(3))
+                                {
+                                    <a class="small" style="display:inline-block; width:100px; height:50px; font-family: Lato; border:2px solid #000000;" href="/Screening/DetailsScreening/@Html.DisplayFor(modelItem => screening.Id)">
+                                        <i class="fas fa-2x" style="padding-top: 10px; padding-left: 8px;">@Html.DisplayFor(modelItem => screening.TimeOfScreening)</i>
+                                    </a>
+                                }
+                            }
+                        </p>
+
+                    </td>
+                    <td class="fas fa-1x" align="right" width="80%">
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            @Html.ActionLink("Edit", "EditMovie", new { id = item.Id });
+                            <a> | </a>
+                            @Html.ActionLink("Delete", "DeleteMovie", new { id = item.Id });
+                            <a> | </a>
+                        }
+                        @Html.ActionLink("Details", "DetailsMovie", new { id = item.Id })
+
+
+                    </td>
+                </tr>
+                @if (count != Model.Count())
+                {
+                    <tr><td><hr class="style1" width="580%"></td></tr>
+                }
+
+
+            }
+        </tbody>
+    </table>
+</div>
+
+<div id="Day5" class="tabcontent">
+    <table class="table table-dark">
+        <tbody>
+            @foreach (var item in Model)
+            {
+                count++;
+                <tr>
+                    <td width="17%">
+                        <a href="/Movie/DetailsMovie/@Html.DisplayFor(modelItem => item.Id)">
+                            <img src="@Html.DisplayFor(modelItem => item.ImageString)" alt="Image: @Html.DisplayFor(modelItem => item.Name)" width="160" height="220">
+                        </a>
+                    </td>
+                    <td>
+                        <p>
+                            <a class="small" href="/Movie/DetailsMovie/@Html.DisplayFor(modelItem => item.Id)">
+                                <i class="fas fa-3x">@Html.DisplayFor(modelItem => item.Name)</i>
+                            </a>
+                        </p>
+                        <p>
+                            @foreach (var screening in item.Screenings)
+                            {
+                                if (screening.DateOfScreening == @today.AddDays(4))
+                                {
+                                    <a class="small" style="display:inline-block; width:100px; height:50px; font-family: Lato; border:2px solid #000000;" href="/Screening/DetailsScreening/@Html.DisplayFor(modelItem => screening.Id)">
+                                        <i class="fas fa-2x" style="padding-top: 10px; padding-left: 8px;">@Html.DisplayFor(modelItem => screening.TimeOfScreening)</i>
+                                    </a>
+                                }
+                            }
+                        </p>
+
+                    </td>
+                    <td class="fas fa-1x" align="right" width="80%">
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            @Html.ActionLink("Edit", "EditMovie", new { id = item.Id });
+                            <a> | </a>
+                            @Html.ActionLink("Delete", "DeleteMovie", new { id = item.Id });
+                            <a> | </a>
+                        }
+                        @Html.ActionLink("Details", "DetailsMovie", new { id = item.Id })
+
+
+                    </td>
+                </tr>
+                @if (count != Model.Count())
+                {
+                    <tr><td><hr class="style1" width="580%"></td></tr>
+                }
+
+
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<!--ScreeningDayButtons-->
+<script>
+    function openPage(pageName, elmnt, color) {
+        // Hide all elements with class="tabcontent" by default */
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
         }
-    </tbody>
-</table>
+
+        // Remove the background color of all tablinks/buttons
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].style.backgroundColor = "#4e5d6c";
+        }
+
+        // Show the specific tab content
+        document.getElementById(pageName).style.display = "block";
+
+        // Add the specific color to the button used to open the tab content
+        elmnt.style.backgroundColor = color;
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();</script>
+
+<!--onscroll navbar-->
+<script>
+    window.onscroll = function () { myFunction() };
+
+    var navbar = document.getElementById("navbar");
+    var container = document.getElementById("container");
+    var sticky = navbar.offsetTop;
+
+    function myFunction() {
+        if (window.pageYOffset >= sticky) {
+            navbar.classList.add("sticky")
+            navbar.style.backgroundColor = "#df691a";
+            navbar.style.borderTop = "5px solid black";
+        } else {
+            navbar.classList.remove("sticky");
+            navbar.style.backgroundColor = "#2b3e50";
+            navbar.style.borderTop = "0px";
+        }
+    }
+</script>
+
+

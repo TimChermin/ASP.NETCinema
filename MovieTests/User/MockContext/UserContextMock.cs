@@ -127,7 +127,14 @@ namespace UnitTests.User.MockContext
 
         public int GetUserRole(int id)
         {
-            throw new NotImplementedException();
+            foreach (var user in usersAdded)
+            {
+                if (user.Id == id)
+                {
+                    return user.Administrator;
+                }
+            }
+            return -1;
         }
 
         

@@ -8,23 +8,6 @@ namespace ASPNETCinema.Models
 {
     public class HallModel : IHall
     {
-        public HallModel(decimal price, string screenType, int seats, int seatsTaken)
-        {
-            Price = price;
-            ScreenType = screenType;
-            Seats = seats;
-            SeatsTaken = seatsTaken;
-        }
-
-        public HallModel(int id, decimal price, string screenType, int seats, int seatsTaken)
-        {
-            Id = id;
-            Price = price;
-            ScreenType = screenType;
-            Seats = seats;
-            SeatsTaken = seatsTaken;
-        }
-
         public HallModel()
         {
 

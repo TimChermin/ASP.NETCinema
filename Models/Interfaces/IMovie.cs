@@ -14,6 +14,7 @@ namespace Interfaces
         string MovieType { get; set; }
         string MovieLenght { get; set; }
         string ImageString { get; set; }
+        string BannerImageString { get; set; }
         IEnumerable<IScreening> Screenings { get; set; }
 
     }

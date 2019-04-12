@@ -1,4 +1,4 @@
-View uses Css html and javascript but not C#
+View uses Css html and javascript and C#
 View is just a part of your page
 
 controllers link the view with the data

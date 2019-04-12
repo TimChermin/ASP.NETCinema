@@ -35,8 +35,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="MovieType" class="control-label"></label>
-                <input asp-for="MovieType" class="form-control" />
-                <span asp-validation-for="MovieType" class="text-danger"></span>
+                <select name="MovieType" class="form-control">
+                    @foreach (var movieType in Model.MovieTypes)
+                    {
+                        <option value="@movieType.ToString()" selected>@movieType</option>
+                    }
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="MovieLenght" class="control-label"></label>
@@ -47,6 +51,11 @@
                 <label asp-for="ImageString" class="control-label"></label>
                 <input asp-for="ImageString" class="form-control" />
                 <span asp-validation-for="ImageString" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BannerImageString" class="control-label"></label>
+                <input asp-for="BannerImageString" class="form-control" />
+                <span asp-validation-for="BannerImageString" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <a asp-area="" asp-controller="Movie" asp-action="ListMovies"><input type="submit" value="Create" class="btn btn-default" /></a>

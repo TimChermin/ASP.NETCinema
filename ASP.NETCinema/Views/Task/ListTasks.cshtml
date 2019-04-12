@@ -9,45 +9,523 @@
 <p>
     <a asp-action="AddTask">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdScreening)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TaskType)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdScreening)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TaskType)
-            </td>
-            <td>
-                @if (User.IsInRole("Administrator"))
-                {
-                    @Html.ActionLink("Edit", "EditTask", new { id = item.Id });
-                    <a> | </a>
-                    @Html.ActionLink("Delete", "DeleteTask", new { id = item.Id });
-                    <a> | </a>
-                }
-                @Html.ActionLink("Details", "DetailsTask", new { id = item.Id })
 
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div id="container" style="background-color: #2b3e50; margin-left: -1000px; ">
+    <div id="navbar" style=" width: 400%; height: 45px; padding-top: 8px; padding-left: 1000px;">
+        <button href="javascript:void(0)" class="tablink" onclick="openPage('FullList', this, 'red')" id="defaultOpen">Full List</button>
+        <button href="javascript:void(0)" class="tablink" onclick="openPage('AssignedTasks', this, 'green')">Assigned Tasks</button>
+        <button href="javascript:void(0)" class="tablink" onclick="openPage('UnassignedTasks', this, 'blue')">Unassigned Tasks</button>
+        <button href="javascript:void(0)" class="tablink" onclick="openPage('TaskTypeNotSelected', this, 'orange')">TaskTypes Not Selected</button>
+        <button href="javascript:void(0)" class="tablink" onclick="openPage('UnassignedEmployees', this, 'orange')">Unassigned Employees</button>
+    </div>
+</div>
+
+
+<div id="FullList" class="tabcontent">
+    <input type="text" id="search" name="FullListSearch" class="form-control" onkeyup="searchFunction()" placeholder="Search for names..">
+    <table id="FullListTable" class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmployeeId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmployeeName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TaskType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateOfScreening)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TimeOfScreening)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HallId)
+                </th>
+            </tr>
+        </thead>
+        <tbody id="FullListSearch">
+            @foreach (var item in Model)
+            {
+                @if (item.DateOfScreening >= DateTime.Now.AddYears(-100))
+                {
+                    <tr class="searchElement">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        @if (item.EmployeeId == 0)
+                        {
+                            <td>
+                                NA
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmployeeId)
+                            </td>
+                        }
+
+                        @if (item.EmployeeId == 0)
+                        {
+                            <td>
+                                NA
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmployeeName)
+                            </td>
+                        }
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TaskType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateOfScreening)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TimeOfScreening)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HallId)
+                        </td>
+                        <td>
+                            @if (User.IsInRole("Administrator"))
+                            {
+                                @Html.ActionLink("Edit", "EditTask", new { id = item.Id });
+                                <a> | </a>
+                                @Html.ActionLink("Delete", "DeleteTask", new { id = item.Id });
+                                <a> | </a>
+                            }
+                            @Html.ActionLink("Details", "DetailsTask", new { id = item.Id })
+
+                        </td>
+                        <td style="padding-right: -200px; font-size: xx-small;">
+                            <sval class="d-none">@item.EmployeeId@item.EmployeeName@item.TaskType@item.TimeOfScreening@item.DateOfScreening@item.HallId</sval>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<div id="AssignedTasks" class="tabcontent">
+    <input type="text" id="search" name="AssignedListSearch" class="form-control" onkeyup="searchFunction()" placeholder="Search for names..">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmployeeId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmployeeName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TaskType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateOfScreening)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TimeOfScreening)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HallId)
+                </th>
+            </tr>
+        </thead>
+        <tbody id="AssignedListSearch">
+            @foreach (var item in Model)
+            {
+                @if (item.EmployeeName != "Unassigned" && item.DateOfScreening >= DateTime.Now.AddYears(-100))
+                {
+
+                    <tr class="searchElement">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmployeeId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmployeeName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TaskType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateOfScreening)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TimeOfScreening)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HallId)
+                        </td>
+                        <td>
+                            @if (User.IsInRole("Administrator"))
+                            {
+                                @Html.ActionLink("Edit", "EditTask", new { id = item.Id });
+                                <a> | </a>
+                                @Html.ActionLink("Delete", "DeleteTask", new { id = item.Id });
+                                <a> | </a>
+                            }
+                            @Html.ActionLink("Details", "DetailsTask", new { id = item.Id })
+
+                        </td>
+                        <td style="padding-right: -200px; font-size: xx-small;">
+                            <sval class="d-none">@item.EmployeeId@item.EmployeeName@item.TaskType@item.TimeOfScreening@item.DateOfScreening@item.HallId</sval>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<div id="UnassignedTasks" class="tabcontent">
+    <input type="text" id="search" name="UnassignedListSearch" class="form-control" onkeyup="searchFunction()" placeholder="Search for names..">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmployeeId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmployeeName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TaskType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateOfScreening)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TimeOfScreening)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HallId)
+                </th>
+            </tr>
+        </thead>
+        <tbody id="UnassignedListSearch">
+            @foreach (var item in Model)
+            {
+                @if (item.EmployeeName == "Unassigned" && item.DateOfScreening >= DateTime.Now.AddYears(-100))
+                {
+                    <tr class="searchElement">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        @if (item.EmployeeId == 0)
+                        {
+                            <td>
+                                NA
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmployeeId)
+                            </td>
+                        }
+
+                        @if (item.EmployeeId == 0)
+                        {
+                            <td>
+                                NA
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmployeeName)
+                            </td>
+                        }
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TaskType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateOfScreening)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TimeOfScreening)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HallId)
+                        </td>
+                        <td>
+                            @if (User.IsInRole("Administrator"))
+                            {
+                                @Html.ActionLink("Edit", "EditTask", new { id = item.Id });
+                                <a> | </a>
+                                @Html.ActionLink("Delete", "DeleteTask", new { id = item.Id });
+                                <a> | </a>
+                            }
+                            @Html.ActionLink("Details", "DetailsTask", new { id = item.Id })
+
+                        </td>
+                        <td style="padding-right: -200px; font-size: xx-small;">
+                            <sval class="d-none">@item.TaskType@item.TimeOfScreening</sval>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<div id="TaskTypeNotSelected" class="tabcontent">
+    <input type="text" id="search" name="TaskTypeNotSelectedListSearch" class="form-control" onkeyup="searchFunction()" placeholder="Search for Dates and Times..">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmployeeId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmployeeName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TaskType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateOfScreening)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TimeOfScreening)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HallId)
+                </th>
+            </tr>
+        </thead>
+        <tbody id="TaskTypeNotSelectedListSearch">
+            @foreach (var item in Model)
+            {
+                @if (item.TaskType == "No TaskType Assigned" && item.DateOfScreening >= DateTime.Now.AddYears(-100))
+                {
+                    <tr class="searchElement">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        @if (item.EmployeeId == 0)
+                        {
+                            <td>
+                                NA
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmployeeId)
+                            </td>
+                        }
+
+                        @if (item.EmployeeId == 0)
+                        {
+                            <td>
+                                NA
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmployeeName)
+                            </td>
+                        }
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TaskType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateOfScreening)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TimeOfScreening)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HallId)
+                        </td>
+                        <td>
+                            @if (User.IsInRole("Administrator"))
+                            {
+                                @Html.ActionLink("Edit", "EditTask", new { id = item.Id });
+                                <a> | </a>
+                                @Html.ActionLink("Delete", "DeleteTask", new { id = item.Id });
+                                <a> | </a>
+                            }
+                            @Html.ActionLink("Details", "DetailsTask", new { id = item.Id })
+
+                        </td>
+                        <td style="padding-right: -200px; font-size: xx-small;">
+                            <sval class="d-none">@item.TimeOfScreening@item.DateOfScreening@item.HallId</sval>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<div id="UnassignedEmployees" class="tabcontent">
+    <input type="text" id="search" name="ListSearch" class="form-control" onkeyup="searchFunction()" placeholder="Search for names..">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmployeeId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EmployeeName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TaskType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateOfScreening)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TimeOfScreening)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.HallId)
+                </th>
+            </tr>
+        </thead>
+        <tbody id="ListSearch">
+            @foreach (var item in Model)
+            {
+                @if (item.DateOfScreening <= DateTime.Now.AddYears(-100))
+                {
+                    <tr class="searchElement">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmployeeId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmployeeName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TaskType)
+                        </td>
+                        <td>
+                            NA
+                        </td>
+                        <td>
+                            NA
+                        </td>
+                        <td>
+                            NA
+                        </td>
+                        <td>
+                            @if (User.IsInRole("Administrator"))
+                            {
+                                @Html.ActionLink("Edit", "EditTask", new { id = item.Id });
+                                <a> | </a>
+                                @Html.ActionLink("Delete", "DeleteTask", new { id = item.Id });
+                                <a> | </a>
+                            }
+                            @Html.ActionLink("Details", "DetailsTask", new { id = item.Id })
+
+                        </td>
+                        <td style="padding-right: -200px; font-size: xx-small;">
+                            <sval class="d-none">@item.EmployeeId@item.EmployeeName</sval>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<script>
+    function openPage(pageName, elmnt, color) {
+        // Hide all elements with class="tabcontent" by default */
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Remove the background color of all tablinks/buttons
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].style.backgroundColor = "#4e5d6c";
+        }
+
+        // Show the specific tab content
+        document.getElementById(pageName).style.display = "block";
+
+        // Add the specific color to the button used to open the tab content
+        elmnt.style.backgroundColor = color;
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();</script>
+
+<!--Search Filter-->
+<script>
+    function searchFunction() {
+
+        var searchText, searchElementContainer, searchElement, elementValue, i, txtValue;
+        searchText = document.activeElement.value.toUpperCase();
+        var name = document.activeElement.getAttribute("name");
+        searchElementContainer = document.getElementById(name);
+
+        searchElement = searchElementContainer.getElementsByClassName('searchElement');
+
+
+        for (i = 0; i < searchElement.length; i++) {
+            elementValue = searchElement[i].getElementsByTagName("sval")[0];
+            txtValue = elementValue.textContent || elementValue.innerText;
+            if (txtValue.toUpperCase().indexOf(searchText) > -1) {
+                searchElement[i].style.display = "";
+            } else {
+                searchElement[i].style.display = "none";
+            }
+        }
+    }</script>
+
+
+<!--onscroll navbar-->
+<script>
+    window.onscroll = function () { myFunction() };
+
+    var navbar = document.getElementById("navbar");
+    var container = document.getElementById("container");
+    var sticky = navbar.offsetTop;
+
+    function myFunction() {
+        if (window.pageYOffset >= sticky) {
+            navbar.classList.add("sticky")
+            navbar.style.backgroundColor = "#df691a";
+            navbar.style.borderTop = "5px solid black";
+        } else {
+            navbar.classList.remove("sticky");
+            navbar.style.backgroundColor = "#2b3e50";
+            navbar.style.borderTop = "0px";
+        }
+    }
+</script>

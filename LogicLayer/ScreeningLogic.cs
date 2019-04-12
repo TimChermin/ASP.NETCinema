@@ -35,29 +35,31 @@ namespace ASPNETCinema.Logic
                 return null;
             }
             screenings.Add(Repository.GetScreeningById(id));
-            screenings = GetAndAddMovieToScreenings(screenings);
-            screenings = GetAndAddHallToScreenings(screenings);
+            screenings = GetAndAddMoviesToScreenings(screenings);
+            screenings = GetAndAddHallsToScreenings(screenings);
             return screenings[0];
         }
 
 
-        public List<IScreening> GetAndAddMovieToScreenings(List<IScreening> screenings)
+        public List<IScreening> GetAndAddMoviesToScreenings(List<IScreening> screenings)
         {
             var screeningsWithMovies = new List<IScreening>();
             foreach (var screening in screenings)
             {
                 screening.Movie = Repository.GetMovie(screening.MovieId);
+                screening.Movies = Repository.GetMovies();
                 screeningsWithMovies.Add(screening);
             }
             return screeningsWithMovies;
         }
 
-        public List<IScreening> GetAndAddHallToScreenings(List<IScreening> screenings)
+        public List<IScreening> GetAndAddHallsToScreenings(List<IScreening> screenings)
         {
             var screeningsWithHalls = new List<IScreening>();
             foreach (var screening in screenings)
             {
                 screening.Hall = Repository.GetHall(screening.HallId);
+                screening.Halls = Repository.GetHalls();
                 screeningsWithHalls.Add(screening);
             }
             return screeningsWithHalls;
@@ -67,10 +69,11 @@ namespace ASPNETCinema.Logic
         {
             var screenings = new List<IScreening>();
             screenings = Repository.GetScreenings().ToList();
-            screenings = GetAndAddMovieToScreenings(screenings);
-            screenings = GetAndAddHallToScreenings(screenings);
+            screenings = GetAndAddMoviesToScreenings(screenings);
+            screenings = GetAndAddHallsToScreenings(screenings);
             return screenings;
         }
+        
 
         public void AddScreening(int id, int movieId, int hallId, DateTime dateOfScreening, TimeSpan timeOfScreening)
         {
@@ -102,18 +105,38 @@ namespace ASPNETCinema.Logic
         {
             Repository.DeleteScreening(id);
         }
-
-
-        public bool IsThisDateAndTimeAvailable(int hallId, DateTime dateOfScreening, TimeSpan timeOfScreening)
+        
+        public bool IsThisDateAndTimeAvailable(int hallId, DateTime dateOfScreening, TimeSpan timeOfScreening, int movieId, int screeningId)
         {
             foreach (var screeningDatabase in GetScreenings())
             {
-                if (screeningDatabase.HallId == hallId && screeningDatabase.DateOfScreening == dateOfScreening)
+                if (screeningDatabase.HallId == hallId && screeningDatabase.DateOfScreening == dateOfScreening && screeningDatabase.Id != screeningId)
                 {
-                    if (screeningDatabase.TimeOfScreening == timeOfScreening)
+                    if (IsItAfterOrBeforeTheScreening(hallId, dateOfScreening, timeOfScreening, movieId, screeningDatabase) == false)
                     {
                         return false;
                     }
+                }
+            }
+            return true;
+        }
+
+
+        public bool IsItAfterOrBeforeTheScreening(int hallId, DateTime dateOfScreening, TimeSpan timeOfScreening, int movieId, IScreening screeningDatabase)
+        {
+            foreach (var movieAlreadyScreening in Repository.GetMovies())
+            {
+                if (movieAlreadyScreening.Id == screeningDatabase.MovieId)
+                {
+                    TimeSpan lenghtScreening = new TimeSpan(0, Int32.Parse(movieAlreadyScreening.MovieLenght), 0);
+                    TimeSpan lenghtMovie = new TimeSpan(0, Int32.Parse(Repository.GetMovie(movieId).MovieLenght), 0);
+
+                    if ((timeOfScreening > screeningDatabase.TimeOfScreening && timeOfScreening > screeningDatabase.TimeOfScreening.Add(lenghtScreening)) 
+                        || (timeOfScreening < screeningDatabase.TimeOfScreening && timeOfScreening.Add(lenghtMovie) < screeningDatabase.TimeOfScreening))
+                    {
+                        return true;
+                    }
+                    return false;
                 }
             }
             return true;

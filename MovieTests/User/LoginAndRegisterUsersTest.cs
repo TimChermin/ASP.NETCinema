@@ -31,24 +31,48 @@ namespace UserTests
         public void Should_RegisterAnUser_WhenRegisteringAnUser()
         {
             //Arrange
-            bool found = false;
             var userLogic = new UserLogic(new UserContextMock());
             if (userLogic.GetUser("AddName", "AddPassword") != null)
             {
                 Assert.True(false);
             }
             
-
             //Act
             userLogic.AddUser(1, "AddName", "AddPassword", "AddPassword", 0);
             var user = userLogic.GetUser("AddName", "AddPassword");
-            if (user.Id == 1 && user.Name == "AddName" && user.Administrator == 0)
-            {
-                found = true;
-            }
+            var user2 = userLogic.GetUser("AddName", "AddPassword");
 
             //Assert
-            Assert.True(found);
+            Assert.True(user.Id == 1 && user.Name == "AddName" && user.Administrator == 0);
+            Assert.False(userLogic.AddUser(1, "AddName", "AddPassword", "NotTheSamePassword", 0));
+            Assert.False(userLogic.AddUser(1, "AddName", "NotTheSamePassword", "AddPassword", 0));
+            Assert.True(user.Equals(user2));
+        }
+
+        [Fact]
+        public void Should_ReturnTrue_WhenTheLoginIsCorrect()
+        {
+            var userLogic = new UserLogic(new UserContextMock());
+            userLogic.AddUser(1, "AddName", "AddPassword", "AddPassword", 0);
+
+            Assert.True(userLogic.CheckIfThisLoginIsCorrect("AddName", "AddPassword"));
+            Assert.False(userLogic.CheckIfThisLoginIsCorrect("AddName", "WRONGPASSWORD"));
+            Assert.False(userLogic.CheckIfThisLoginIsCorrect("NotAName", "AddPassword"));
+        }
+
+        [Fact]
+        public void Should_GetRoleUser_WhenGettingRoleUser()
+        {
+            var userLogic = new UserLogic(new UserContextMock());
+            userLogic.AddUser(1, "RoleName", "RolePassword", "RolePassword", 1);
+            userLogic.AddUser(2, "RoleName", "RolePassword", "RolePassword", 0);
+            userLogic.AddUser(3, "RoleName", "RolePassword", "RolePassword", 2);
+            var user = userLogic.GetUser("RoleName", "RolePassword");
+            
+            Assert.True(userLogic.GetRoleUser(user.Id) == "Administrator");
+            Assert.True(userLogic.GetRoleUser(2) == "Normal");
+            Assert.True(userLogic.GetRoleUser(3) == "Employee");
+            Assert.False(userLogic.GetRoleUser(1) == "Normal" || userLogic.GetRoleUser(1) == "Employee");
         }
 
         [Fact]
@@ -74,76 +98,8 @@ namespace UserTests
             Assert.False(LogicLayer.SecurePasswordHasher.Verify("mypassword", hash3));
             Assert.False(LogicLayer.SecurePasswordHasher.Verify(hash3, hash3));
         }
-
-        /*
-        [Fact]
-        public void Should_EditAnUserFromTheList_WhenEditingAnUser()
-        {
-            //Arrange
-            var userLogic = new UserLogic(new UserContextMock());
-            users = userLogic.GetUsers().ToList();
-            int id = users[0].Id;
-            string name = users[0].Name;
-            bool found = false;
-            bool count = false;
-
-            //Act
-            userLogic.EditUser(users[0].Id, "Edited");
-            users2 = userLogic.GetUsers().ToList();
-
-            if (users.Count() == users2.Count())
-            {
-                count = true;
-            }
-
-            foreach (var user in users2)
-            {
-                if (user.Id == id && user.Name == "Edited")
-                {
-                    found = true;
-                }
-            }
-
-            //Assert
-            Assert.True(count);
-            Assert.True(found);
-        }
-        */
-
-        /*[Fact]
-        public void Should_DeleteAnUserFromTheList_WhenDeleteingAnUser()
-        {
-            //Arrange
-            var userLogic = new UserLogic(new UserContextMock());
-            users = userLogic.GetUsers().ToList();
-            int id = users[0].Id;
-            string name = users[0].Name;
-            bool found = false;
-            bool count = false;
-
-            //Act
-            userLogic.DeleteUser(users[0].Id);
-            users2 = userLogic.GetUsers().ToList();
-
-            if (users.Count() != users2.Count())
-            {
-                count = true;
-            }
-
-            foreach (var user in users2)
-            {
-                if (user.Id == id && user.Name == name)
-                {
-                    found = true;
-                }
-            }
-
-            Assert.False(found);
-            Assert.True(count);
-        }
-        */
-
-
+       
+        
 
         class ThingEqualityComparer : IEqualityComparer<IUser>
         {

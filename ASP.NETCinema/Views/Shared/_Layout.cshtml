@@ -34,7 +34,6 @@
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Movie" asp-action="ListMovies"><i class="fas fa-home fa-2x"> Home</i></a></li>
                     <li><a asp-area="" asp-controller="Movie" asp-action="ListMovies"><i class="fas fa-film fa-2x"> Movies</i></a></li>
-                    <li><a asp-area="" asp-controller="Screening" asp-action="ListScreenings"><i class="fas fa-ticket-alt fa-2x"> Screenings</i></a></li>
                     @if (User.Identity.IsAuthenticated == false)
                     {
                         <li class="dropdown">
@@ -44,7 +43,7 @@
                                 <li><a asp-area="" asp-controller="User" asp-action="AddUser"><i class="fas fa-1x">Register</i></a></li>
                             </ul>
                         </li>
-                        
+
                     }
 
                     @if (User.IsInRole("Normal"))
@@ -60,6 +59,7 @@
 
                     @if (User.IsInRole("Administrator"))
                     {
+                        <li><a asp-area="" asp-controller="Screening" asp-action="ListScreenings"><i class="fas fa-ticket-alt fa-2x"> Screenings</i></a></li>
                         <li class="dropdown">
                             <a href="#" class="fas fa-2x" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"> Admin </i> <span class="caret"></span></a>
                             <ul class="dropdown-menu">
@@ -77,6 +77,7 @@
 
                     @if (User.IsInRole("Employee"))
                     {
+                        <li><a asp-area="" asp-controller="Screening" asp-action="ListScreenings"><i class="fas fa-ticket-alt fa-2x"> Screenings</i></a></li>
                         <li class="dropdown">
                             <a href="#" class="fas fa-2x" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"> Employee </i> <span class="caret"></span></a>
                             <ul class="dropdown-menu">
@@ -88,7 +89,7 @@
                                 <li><a asp-area="" asp-controller="User" asp-action="LogoutUser"><i class="fas fa-1x">Logout</i></a></li>
                             </ul>
                         </li>
-                        
+
                     }
 
 

@@ -26,6 +26,7 @@ namespace ASPNETCinema.Controllers
         //details
         //Edit
         //Delete
+        
 
         public ActionResult ListScreenings()
         {
@@ -39,7 +40,9 @@ namespace ASPNETCinema.Controllers
                     Movie = screening.Movie,
                     Hall = screening.Hall,
                     DateOfScreening = screening.DateOfScreening,
-                    TimeOfScreening = screening.TimeOfScreening
+                    TimeOfScreening = screening.TimeOfScreening,
+                    Movies = screening.Movies,
+                    Halls = screening.Halls
                 });
             }
             return View(screenings);
@@ -48,7 +51,22 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult AddScreening()
         {
-            return View();
+            var screeningLogic = new ScreeningLogic(_screening);
+            List<ScreeningViewModel> screenings = new List<ScreeningViewModel>();
+            foreach (var screening in screeningLogic.GetScreenings())
+            {
+                screenings.Add(new ScreeningViewModel
+                {
+                    Id = screening.Id,
+                    Movie = screening.Movie,
+                    Hall = screening.Hall,
+                    DateOfScreening = screening.DateOfScreening,
+                    TimeOfScreening = screening.TimeOfScreening,
+                    Movies = screening.Movies,
+                    Halls = screening.Halls
+                });
+            }
+            return View(screenings[0]);
         }
 
         [HttpPost]
@@ -59,8 +77,13 @@ namespace ASPNETCinema.Controllers
             var screeningLogic = new ScreeningLogic(_screening);
             if (ModelState.IsValid)
             {
-                screeningLogic.AddScreening(screening.Id, screening.MovieId, screening.HallId, screening.DateOfScreening, screening.TimeOfScreening);
-                return RedirectToAction("ListScreenings");
+                if (screeningLogic.IsThisDateAndTimeAvailable(screening.HallId, screening.DateOfScreening, screening.TimeOfScreening, screening.MovieId, screening.Id))
+                {
+                    screeningLogic.AddScreening(screening.Id, screening.MovieId, screening.HallId, screening.DateOfScreening, screening.TimeOfScreening);
+                    return RedirectToAction("ListScreenings");
+                }
+                ModelState.AddModelError("TimeOfScreening", "Another movie is already showing in this hall at this time");
+                return View();
             }
             return RedirectToAction("Error", "Home");
         }
@@ -77,7 +100,9 @@ namespace ASPNETCinema.Controllers
                     MovieId = screening.MovieId,
                     HallId = screening.HallId,
                     DateOfScreening = screening.DateOfScreening,
-                    TimeOfScreening = screening.TimeOfScreening
+                    TimeOfScreening = screening.TimeOfScreening,
+                    Movies = screening.Movies,
+                    Halls = screening.Halls
                 };
                 return View(viewScreening);
             }
@@ -97,7 +122,9 @@ namespace ASPNETCinema.Controllers
                     MovieId = screening.MovieId,
                     HallId = screening.HallId,
                     DateOfScreening = screening.DateOfScreening,
-                    TimeOfScreening = screening.TimeOfScreening
+                    TimeOfScreening = screening.TimeOfScreening,
+                    Movies = screening.Movies,
+                    Halls = screening.Halls
                 };
                 return View(viewScreening);
             }
@@ -110,15 +137,14 @@ namespace ASPNETCinema.Controllers
         public ActionResult EditScreening(ScreeningViewModel screening)
         {
             var screeningLogic = new ScreeningLogic(_screening);
-            if (ModelState.IsValid && screeningLogic.IsThisDateAndTimeAvailable(screening.HallId, screening.DateOfScreening, screening.TimeOfScreening))
+            if (ModelState.IsValid && screeningLogic.IsThisDateAndTimeAvailable(screening.HallId, screening.DateOfScreening, screening.TimeOfScreening, screening.MovieId, screening.Id))
             {
                 screeningLogic.EditScreening(screening.Id, screening.MovieId, screening.HallId, screening.DateOfScreening, screening.TimeOfScreening);
                 return RedirectToAction("ListScreenings");
             }
             else
             {
-                ViewBag.HasError = true;
-                ViewBag.ErrorMessage = "This Hall already has a screening on this day and time!";
+                ModelState.AddModelError("TimeOfScreening", "Another movie is already showing in this hall at this time");
             }
 
             return View();
@@ -137,7 +163,9 @@ namespace ASPNETCinema.Controllers
                     MovieId = screening.MovieId,
                     HallId = screening.HallId,
                     DateOfScreening = screening.DateOfScreening,
-                    TimeOfScreening = screening.TimeOfScreening
+                    TimeOfScreening = screening.TimeOfScreening,
+                    Movies = screening.Movies,
+                    Halls = screening.Halls
                 };
                 return View(viewScreening);
             }
@@ -150,14 +178,28 @@ namespace ASPNETCinema.Controllers
         public ActionResult DeleteScreening(ScreeningViewModel screening)
         {
             var screeningLogic = new ScreeningLogic(_screening);
-            if (ModelState.IsValid)
-            {
-                screeningLogic.DeleteScreening(screening.Id);
-                return RedirectToAction("ListScreenings");
-            }
-            return RedirectToAction("Error", "Home");
+            screeningLogic.DeleteScreening(screening.Id);
+            return RedirectToAction("ListScreenings");
         }
 
+        public ActionResult SeatSelector(ScreeningViewModel screening)
+        {
+            var screeningLogic = new ScreeningLogic(_screening);
+            ScreeningViewModel viewScreening = new ScreeningViewModel
+            {
+                Id = screening.Id,
+                MovieId = screening.MovieId,
+                HallId = screening.HallId,
+                Hall = screening.Hall,
+                DateOfScreening = screening.DateOfScreening,
+                TimeOfScreening = screening.TimeOfScreening,
+            };
+            return View(viewScreening);
+        }
 
+        public ActionResult TicketConfirm(string[] methodParam)
+        {
+            return View();
+        }
     }
 }

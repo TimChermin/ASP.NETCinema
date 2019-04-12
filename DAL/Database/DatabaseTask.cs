@@ -25,11 +25,47 @@ namespace ASPNETCinema.DAL
         //Edit
         //Delete
 
-        IEnumerable<ITask> ITaskContext.GetTasks()
+            /// <summary>
+            /// tasks with employees asigned.
+            /// </summary>
+            /// <returns></returns>
+        public IEnumerable<ITask> GetTasksAssigned()
         {
             var tasks = new List<ITask>();
             _connection.SqlConnection.Open();
-            SqlCommand command = new SqlCommand("SELECT Id, IdScreening, TaskType FROM Task", _connection.SqlConnection);
+            SqlCommand command = new SqlCommand("SELECT Task.Id, Employee.Id, Employee.Name, Task.TaskType, Screening.DateOfScreening, Screening.TimeOfScreening, Screening.IdHall " +
+            "FROM Employee " +
+            "INNER JOIN Employee_Task ON Employee.Id = Employee_Task.IdEmployee " +
+            "INNER JOIN Task ON Employee_Task.IdTask = Task.Id " +
+            "INNER JOIN Screening ON Screening.Id = Task.IdScreening", _connection.SqlConnection);
+        using (SqlDataReader reader = command.ExecuteReader())
+        {
+            while (reader.Read())
+            {
+                var task = new TaskDto
+                {
+                    Id = (int)reader["Id"],
+                    EmployeeId = (int)reader["Id"],
+                    EmployeeName = reader["Name"].ToString(),
+                    TaskType = reader["TaskType"].ToString(),
+                    DateOfScreening = (DateTime)reader["DateOfScreening"],
+                    TimeOfScreening = (TimeSpan)reader["TimeOfScreening"],
+                    HallId = (int)reader["IdHall"]
+            };
+                tasks.Add(task);
+            }
+        }
+        _connection.SqlConnection.Close();
+        return (tasks);
+        }
+
+        public IEnumerable<ITask> GetTasksNotAssigned()
+        {
+            var tasks = new List<ITask>();
+            _connection.SqlConnection.Open();
+            SqlCommand command = new SqlCommand("SELECT Task.Id, Task.TaskType, Screening.DateOfScreening, Screening.TimeOfScreening, Screening.IdHall " +
+            "FROM Task " +
+            "INNER JOIN Screening ON Screening.Id = Task.IdScreening", _connection.SqlConnection);
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
@@ -37,8 +73,10 @@ namespace ASPNETCinema.DAL
                     var task = new TaskDto
                     {
                         Id = (int)reader["Id"],
-                        IdScreening = (int)reader["IdScreening"],
-                        TaskType = (int)reader["TaskType"]
+                        TaskType = reader["TaskType"].ToString(),
+                        DateOfScreening = (DateTime)reader["DateOfScreening"],
+                        TimeOfScreening = (TimeSpan)reader["TimeOfScreening"],
+                        HallId = (int)reader["IdHall"]
                     };
                     tasks.Add(task);
                 }
@@ -46,6 +84,38 @@ namespace ASPNETCinema.DAL
             _connection.SqlConnection.Close();
             return (tasks);
         }
+
+        public IEnumerable<ITask> GetTasks()
+        {
+            var tasks = new List<ITask>();
+            _connection.SqlConnection.Open();
+            SqlCommand command = new SqlCommand("SELECT Task.Id AS IdTask, Employee.Id AS IdEmployee, Employee.Name, Task.TaskType, Screening.DateOfScreening, Screening.TimeOfScreening, Screening.IdHall " +
+            "FROM Employee " +
+            "FULL OUTER JOIN Employee_Task ON Employee.Id = Employee_Task.IdEmployee " +
+            "FULL OUTER JOIN Task ON Employee_Task.IdTask = Task.Id " + 
+            "FULL OUTER JOIN Screening ON Screening.Id = Task.IdScreening", _connection.SqlConnection);
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    var task = new TaskDto
+                    {
+                        Id = (reader["IdTask"] as int?) ?? 0,
+                        EmployeeId = (reader["IdEmployee"] as int?) ?? 0,
+                        EmployeeName = reader["Name"].ToString(),
+                        TaskType = reader["TaskType"].ToString(),
+                        DateOfScreening = (reader["DateOfScreening"] as DateTime?) ?? DateTime.Now.AddYears(-500),
+                        TimeOfScreening = (reader["TimeOfScreening"] as TimeSpan?) ?? DateTime.Now.TimeOfDay,
+                        HallId = (reader["IdHall"] as int?) ?? 0
+                    };
+
+                    tasks.Add(task);
+                }
+            }
+            _connection.SqlConnection.Close();
+            return (tasks);
+        }
+
 
         public void AddTask(ITask task)
         {
@@ -63,22 +133,22 @@ namespace ASPNETCinema.DAL
 
             SqlCommand command = new SqlCommand("SELECT Id, IdScreening, TaskType FROM Task WHERE Id = @Id", _connection.SqlConnection);
             command.Parameters.AddWithValue("@Id", id);
-            using (SqlDataReader reader = command.ExecuteReader())
+        using (SqlDataReader reader = command.ExecuteReader())
+        {
+            while (reader.Read())
             {
-                while (reader.Read())
+                var task = new TaskDto
                 {
-                    var task = new TaskDto
-                    {
-                        Id = (int)reader["Id"],
-                        IdScreening = (int)reader["IdScreening"],
-                        TaskType = (int)reader["TaskType"]
-                    };
-                    _connection.SqlConnection.Close();
-                    return task;
-                }
+                    Id = (int)reader["Id"],
+                    IdScreening = (int)reader["IdScreening"],
+                    TaskType = reader["TaskType"].ToString()
+                };
+                _connection.SqlConnection.Close();
+                return task;
             }
-            _connection.SqlConnection.Close();
-            return null;
+        }
+        _connection.SqlConnection.Close();
+        return null;
         }
 
         public void EditTask(ITask task)
@@ -104,6 +174,6 @@ namespace ASPNETCinema.DAL
             _connection.SqlConnection.Close();
         }
 
-
+        
     }
 }

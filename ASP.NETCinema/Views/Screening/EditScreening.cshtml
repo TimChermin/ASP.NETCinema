@@ -14,13 +14,35 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="MovieId" class="control-label"></label>
-                <input asp-for="MovieId" class="form-control" />
-                <span asp-validation-for="MovieId" class="text-danger"></span>
+                <select name="MovieId" style="color: black;" class="form-control">
+                    @foreach (var movie in Model.Movies)
+                    {
+                        if (movie.Id == Model.MovieId)
+                        {
+                            <option value="@movie.Id" selected>@movie.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@movie.Id">@movie.Name</option>
+                        }
+                    }
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="HallId" class="control-label"></label>
-                <input asp-for="HallId" class="form-control" />
-                <span asp-validation-for="HallId" class="text-danger"></span>
+                <select name="HallId" style="color: black;" class="form-control">
+                    @foreach (var hall in Model.Halls)
+                    {
+                        if (hall.Id == Model.HallId)
+                        {
+                            <option value="@hall.Id" selected>@hall.Id</option>
+                        }
+                        else
+                        {
+                            <option value="@hall.Id">@hall.Id</option>
+                        }
+                    }
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="DateOfScreening" class="control-label"></label>

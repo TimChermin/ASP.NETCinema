@@ -23,7 +23,7 @@ namespace ASPNETCinema.DAL
         //Details
         //Edit
         //Delete
-        IEmployee IEmployeeContext.GetEmployeeById(int id)
+        public IEmployee GetEmployeeById(int id)
         {
             _connection.SqlConnection.Open();
 
@@ -46,7 +46,7 @@ namespace ASPNETCinema.DAL
             return null;
         }
 
-        IEnumerable<IEmployee> IEmployeeContext.GetEmployees()
+        public IEnumerable<IEmployee> GetEmployees()
         {
             _connection.SqlConnection.Open();
             
