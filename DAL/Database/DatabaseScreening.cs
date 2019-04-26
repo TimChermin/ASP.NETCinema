@@ -69,8 +69,8 @@ namespace ASPNETCinema.DAL
         public void EditScreening(IScreening screening)
         {
             _connection.SqlConnection.Open();
-            SqlCommand command = new SqlCommand("UPDATE Screening SET IdMovie = @IdMovie, IdHall = @IdHall, DateOfScreening = @DateOfScreening, " +
-                "TimeOfScreening = @TimeOfScreening WHERE Id = @Id", _connection.SqlConnection);
+            SqlCommand command = new SqlCommand(@"UPDATE Screening SET IdMovie = @IdMovie, IdHall = @IdHall, DateOfScreening = @DateOfScreening, 
+            TimeOfScreening = @TimeOfScreening WHERE Id = @Id", _connection.SqlConnection);
             command.Parameters.AddWithValue("@Id", screening.Id);
             command.Parameters.AddWithValue("@IdMovie", screening.MovieId);
             command.Parameters.AddWithValue("@IdHall", screening.HallId);

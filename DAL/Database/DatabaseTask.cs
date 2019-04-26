@@ -33,11 +33,11 @@ namespace ASPNETCinema.DAL
         {
             var tasks = new List<ITask>();
             _connection.SqlConnection.Open();
-            SqlCommand command = new SqlCommand("SELECT Task.Id, Employee.Id, Employee.Name, Task.TaskType, Screening.DateOfScreening, Screening.TimeOfScreening, Screening.IdHall " +
-            "FROM Employee " +
-            "INNER JOIN Employee_Task ON Employee.Id = Employee_Task.IdEmployee " +
-            "INNER JOIN Task ON Employee_Task.IdTask = Task.Id " +
-            "INNER JOIN Screening ON Screening.Id = Task.IdScreening", _connection.SqlConnection);
+            SqlCommand command = new SqlCommand(@"SELECT Task.Id, Employee.Id, Employee.Name, Task.TaskType, Screening.DateOfScreening, Screening.TimeOfScreening, Screening.IdHall 
+            FROM Employee 
+            INNER JOIN Employee_Task ON Employee.Id = Employee_Task.IdEmployee 
+            INNER JOIN Task ON Employee_Task.IdTask = Task.Id 
+            INNER JOIN Screening ON Screening.Id = Task.IdScreening", _connection.SqlConnection);
         using (SqlDataReader reader = command.ExecuteReader())
         {
             while (reader.Read())
@@ -63,9 +63,9 @@ namespace ASPNETCinema.DAL
         {
             var tasks = new List<ITask>();
             _connection.SqlConnection.Open();
-            SqlCommand command = new SqlCommand("SELECT Task.Id, Task.TaskType, Screening.DateOfScreening, Screening.TimeOfScreening, Screening.IdHall " +
-            "FROM Task " +
-            "INNER JOIN Screening ON Screening.Id = Task.IdScreening", _connection.SqlConnection);
+            SqlCommand command = new SqlCommand(@"SELECT Task.Id, Task.TaskType, Screening.DateOfScreening, Screening.TimeOfScreening, Screening.IdHall 
+            FROM Task 
+            INNER JOIN Screening ON Screening.Id = Task.IdScreening", _connection.SqlConnection);
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
@@ -89,11 +89,11 @@ namespace ASPNETCinema.DAL
         {
             var tasks = new List<ITask>();
             _connection.SqlConnection.Open();
-            SqlCommand command = new SqlCommand("SELECT Task.Id AS IdTask, Employee.Id AS IdEmployee, Employee.Name, Task.TaskType, Screening.DateOfScreening, Screening.TimeOfScreening, Screening.IdHall " +
-            "FROM Employee " +
-            "FULL OUTER JOIN Employee_Task ON Employee.Id = Employee_Task.IdEmployee " +
-            "FULL OUTER JOIN Task ON Employee_Task.IdTask = Task.Id " + 
-            "FULL OUTER JOIN Screening ON Screening.Id = Task.IdScreening", _connection.SqlConnection);
+            SqlCommand command = new SqlCommand(@"SELECT Task.Id AS IdTask, Employee.Id AS IdEmployee, Employee.Name, Task.TaskType, Screening.DateOfScreening, Screening.TimeOfScreening, Screening.IdHall 
+            FROM Employee 
+            FULL OUTER JOIN Employee_Task ON Employee.Id = Employee_Task.IdEmployee 
+            FULL OUTER JOIN Task ON Employee_Task.IdTask = Task.Id 
+            FULL OUTER JOIN Screening ON Screening.Id = Task.IdScreening", _connection.SqlConnection);
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())

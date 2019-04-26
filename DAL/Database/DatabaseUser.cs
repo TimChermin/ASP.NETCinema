@@ -95,8 +95,8 @@ namespace ASPNETCinema.DAL
         {
             _connection.SqlConnection.Open();
 
-            SqlCommand command = new SqlCommand("UPDATE User SET IdScreening = @IdScreening, Username = @Username, Password = @Password, Administrator = @Administrator " +
-                "WHERE Id = @Id", _connection.SqlConnection);
+            SqlCommand command = new SqlCommand(@"UPDATE User SET IdScreening = @IdScreening, Username = @Username, Password = @Password, Administrator = @Administrator 
+            WHERE Id = @Id", _connection.SqlConnection);
             command.Parameters.AddWithValue("@IdScreening", user.IdScreening);
             command.Parameters.AddWithValue("@Username", user.Name);
             command.Parameters.AddWithValue("@Password", user.Password);

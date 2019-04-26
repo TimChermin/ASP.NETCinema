@@ -68,8 +68,8 @@ namespace ASPNETCinema.DAL
         {
             _connection.SqlConnection.Open();
 
-            SqlCommand command = new SqlCommand("UPDATE Hall SET Price = @Price, ScreenType = @ScreenType, Seats = @Seats, " +
-                "SeatsTaken = @SeatsTaken WHERE Id = @Id", _connection.SqlConnection);
+            SqlCommand command = new SqlCommand(@"UPDATE Hall SET Price = @Price, ScreenType = @ScreenType, Seats = @Seats, 
+            SeatsTaken = @SeatsTaken WHERE Id = @Id", _connection.SqlConnection);
             command.Parameters.AddWithValue("@Id", hall.Id);
             command.Parameters.AddWithValue("@Price", hall.Price);
             command.Parameters.AddWithValue("@ScreenType", hall.ScreenType);
