@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ASPNETCinema.Logic;
 using ASPNETCinema.ViewModels;
+using AutoMapper;
 using DAL;
 using Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -14,9 +15,11 @@ namespace ASPNETCinema.Controllers
     public class ScreeningController : Controller
     {
         private readonly IScreeningContext _screening;
+        private readonly IMapper _mapper;
         
-        public ScreeningController(IScreeningContext screening)
+        public ScreeningController(IScreeningContext screening, IMapper mapper)
         {
+            _mapper = mapper;
             _screening = screening;
         }
 
@@ -34,16 +37,7 @@ namespace ASPNETCinema.Controllers
             List<ScreeningViewModel> screenings = new List<ScreeningViewModel>();
             foreach (var screening in screeningLogic.GetScreenings())
             {
-                screenings.Add(new ScreeningViewModel
-                {
-                    Id = screening.Id,
-                    Movie = screening.Movie,
-                    Hall = screening.Hall,
-                    DateOfScreening = screening.DateOfScreening,
-                    TimeOfScreening = screening.TimeOfScreening,
-                    Movies = screening.Movies,
-                    Halls = screening.Halls
-                });
+                screenings.Add( _mapper.Map<ScreeningViewModel>(screening));
             }
             return View(screenings);
         }
@@ -94,16 +88,7 @@ namespace ASPNETCinema.Controllers
             if (screeningLogic.GetScreeningById(id) != null)
             {
                 var screening = screeningLogic.GetScreeningById(id);
-                ScreeningViewModel viewScreening = new ScreeningViewModel
-                {
-                    Id = screening.Id,
-                    MovieId = screening.MovieId,
-                    HallId = screening.HallId,
-                    DateOfScreening = screening.DateOfScreening,
-                    TimeOfScreening = screening.TimeOfScreening,
-                    Movies = screening.Movies,
-                    Halls = screening.Halls
-                };
+                var viewScreening = _mapper.Map<ScreeningViewModel>(screening);
                 return View(viewScreening);
             }
             return RedirectToAction("Error", "Home");
@@ -116,16 +101,7 @@ namespace ASPNETCinema.Controllers
             if (screeningLogic.GetScreeningById(id) != null)
             {
                 var screening = screeningLogic.GetScreeningById(id);
-                ScreeningViewModel viewScreening = new ScreeningViewModel
-                {
-                    Id = screening.Id,
-                    MovieId = screening.MovieId,
-                    HallId = screening.HallId,
-                    DateOfScreening = screening.DateOfScreening,
-                    TimeOfScreening = screening.TimeOfScreening,
-                    Movies = screening.Movies,
-                    Halls = screening.Halls
-                };
+                var viewScreening = _mapper.Map<ScreeningViewModel>(screening);
                 return View(viewScreening);
             }
             return RedirectToAction("Error", "Home");
@@ -157,16 +133,7 @@ namespace ASPNETCinema.Controllers
             if (screeningLogic.GetScreeningById(id) != null)
             {
                 var screening = screeningLogic.GetScreeningById(id);
-                ScreeningViewModel viewScreening = new ScreeningViewModel
-                {
-                    Id = screening.Id,
-                    MovieId = screening.MovieId,
-                    HallId = screening.HallId,
-                    DateOfScreening = screening.DateOfScreening,
-                    TimeOfScreening = screening.TimeOfScreening,
-                    Movies = screening.Movies,
-                    Halls = screening.Halls
-                };
+                var viewScreening = _mapper.Map<ScreeningViewModel>(screening);
                 return View(viewScreening);
             }
             return RedirectToAction("Error", "Home");
@@ -185,15 +152,7 @@ namespace ASPNETCinema.Controllers
         public ActionResult SeatSelector(ScreeningViewModel screening)
         {
             var screeningLogic = new ScreeningLogic(_screening);
-            ScreeningViewModel viewScreening = new ScreeningViewModel
-            {
-                Id = screening.Id,
-                MovieId = screening.MovieId,
-                HallId = screening.HallId,
-                Hall = screening.Hall,
-                DateOfScreening = screening.DateOfScreening,
-                TimeOfScreening = screening.TimeOfScreening,
-            };
+            var viewScreening = _mapper.Map<ScreeningViewModel>(screening);
             return View(viewScreening);
         }
 

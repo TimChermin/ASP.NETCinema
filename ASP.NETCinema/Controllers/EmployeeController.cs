@@ -13,6 +13,7 @@ namespace ASPNETCinema.Controllers
     {
         private readonly IEmployeeContext _employee;
         private readonly IMapper _mapper;
+
         //added scoped stuff in startup 
         public EmployeeController(IEmployeeContext employee, IMapper mapper)
         {
@@ -34,16 +35,7 @@ namespace ASPNETCinema.Controllers
             List<EmployeeViewModel> employees = new List<EmployeeViewModel>();
             foreach (var employee in employeeLogic.GetEmployees())
             {
-                // Instantiate the mapped data transfer object
-                // using the mapper you stored in the private field.
-                // The type of the source object is the first type argument
-                // and the type of the destination is the second.
-                // Pass the source object you just instantiated above
-                // as the argument to the _mapper.Map<>() method.
-                var employeeView = _mapper.Map<EmployeeViewModel>(employee);
-
-                // .... Do whatever you want after that!
-                employees.Add(employeeView);
+                employees.Add(_mapper.Map<EmployeeViewModel>(employee));
             }
             return View(employees);
         }
@@ -75,11 +67,7 @@ namespace ASPNETCinema.Controllers
             if (employeeLogic.GetEmployeeById(id) != null)
             {
                 var employee = employeeLogic.GetEmployeeById(id);
-                var viewEmployee = new EmployeeViewModel
-                {
-                    Id = employee.Id,
-                    Name = employee.Name,
-                };
+                var viewEmployee = _mapper.Map<EmployeeViewModel>(employee);
                 return View(viewEmployee);
             }
             return RedirectToAction("Error", "Home");
@@ -93,11 +81,7 @@ namespace ASPNETCinema.Controllers
             if (employeeLogic.GetEmployeeById(id) != null)
             {
                 var employee = employeeLogic.GetEmployeeById(id);
-                var viewEmployee = new EmployeeViewModel
-                {
-                    Id = employee.Id,
-                    Name = employee.Name,
-                };
+                var viewEmployee = _mapper.Map<EmployeeViewModel>(employee);
                 return View(viewEmployee);
             }
             return RedirectToAction("Error", "Home");
@@ -123,11 +107,7 @@ namespace ASPNETCinema.Controllers
             if (employeeLogic.GetEmployeeById(id) != null)
             {
                 var employee = employeeLogic.GetEmployeeById(id);
-                var viewEmployee = new EmployeeViewModel
-                {
-                    Id = employee.Id,
-                    Name = employee.Name,
-                };
+                var viewEmployee = _mapper.Map<EmployeeViewModel>(employee);
                 return View(viewEmployee);
             }
             return RedirectToAction("Error", "Home");

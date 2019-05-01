@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ASPNETCinema.Logic;
 using ASPNETCinema.Models;
 using ASPNETCinema.ViewModels;
+using AutoMapper;
 using DAL;
 using Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -15,11 +16,13 @@ namespace ASPNETCinema.Controllers
     public class HallController : Controller
     {
         private readonly IHallContext _hall;
+        private readonly IMapper _mapper;
 
         //added scoped stuff in startup 
-        public HallController(IHallContext hall)
+        public HallController(IHallContext hall, IMapper mapper)
         {
             _hall = hall;
+            _mapper = mapper;
         }
         //other things
         //List
@@ -36,14 +39,7 @@ namespace ASPNETCinema.Controllers
             List<HallViewModel> halls = new List<HallViewModel>();
             foreach (var hall in hallLogic.GetHalls())
             {
-                halls.Add(new HallViewModel
-                {
-                    Id = hall.Id,
-                    Price = hall.Price,
-                    ScreenType = hall.ScreenType,
-                    Seats = hall.Seats,
-                    SeatsTaken = hall.SeatsTaken
-                });
+                halls.Add(_mapper.Map<HallViewModel>(hall));
             }
             return View(halls);
         }
@@ -77,14 +73,7 @@ namespace ASPNETCinema.Controllers
             if (hallLogic.GetHallById(id) != null)
             {
                 var hall = hallLogic.GetHallById(id);
-                var viewHall = new HallViewModel
-                {
-                    Id = hall.Id,
-                    Price = hall.Price,
-                    ScreenType = hall.ScreenType,
-                    Seats = hall.Seats,
-                    SeatsTaken = hall.SeatsTaken
-                };
+                var viewHall = _mapper.Map<HallViewModel>(hall);
                 return View(viewHall);
             }
             return RedirectToAction("Error", "Home");
@@ -110,14 +99,7 @@ namespace ASPNETCinema.Controllers
             if (hallLogic.GetHallById(id) != null)
             {
                 var hall = hallLogic.GetHallById(id);
-                var viewHall = new HallViewModel
-                {
-                    Id = hall.Id,
-                    Price = hall.Price,
-                    ScreenType = hall.ScreenType,
-                    Seats = hall.Seats,
-                    SeatsTaken = hall.SeatsTaken
-                };
+                var viewHall = _mapper.Map<HallViewModel>(hall);
                 return View(viewHall);
             }
             return RedirectToAction("Error", "Home");

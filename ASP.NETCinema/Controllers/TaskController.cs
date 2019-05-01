@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ASPNETCinema.Logic;
 using ASPNETCinema.ViewModels;
+using AutoMapper;
 using DAL;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,9 +14,11 @@ namespace ASPNETCinema.Controllers
     public class TaskController : Controller
     {
         private readonly ITaskContext _task;
-        
-        public TaskController(ITaskContext task)
+        private readonly IMapper _mapper;
+
+        public TaskController(ITaskContext task, IMapper mapper)
         {
+            _mapper = mapper;
             _task = task;
         }
 
@@ -26,19 +29,7 @@ namespace ASPNETCinema.Controllers
             List<TaskViewModel> tasks = new List<TaskViewModel>();
             foreach (var task in taskLogic.GetTasks())
             {
-                tasks.Add(new TaskViewModel
-                {
-                    Id = task.Id,
-                    EmployeeId = task.EmployeeId,
-                    EmployeeName = task.EmployeeName,
-                    DateOfScreening = task.DateOfScreening,
-                    TimeOfScreening = task.TimeOfScreening,
-                    HallId = task.HallId,
-                    TaskType = task.TaskType,
-                    TaskLenght = task.TaskLenght,
-                    Screening = task.Screening,
-                    Employees = task.Employees
-                });
+                tasks.Add(_mapper.Map<TaskViewModel>(task));
             }
             return View(tasks);
         }
@@ -70,15 +61,7 @@ namespace ASPNETCinema.Controllers
             if (taskLogic.GetTaskById(id) != null)
             {
                 var task = taskLogic.GetTaskById(id);
-                var viewTask = new TaskViewModel
-                {
-                    Id = task.Id,
-                    IdScreening = task.IdScreening,
-                    TaskType = task.TaskType,
-                    TaskLenght = task.TaskLenght,
-                    Screening = task.Screening,
-                    Employees = task.Employees
-                };
+                var viewTask = _mapper.Map<TaskViewModel>(task);
                 return View(viewTask);
             }
             return RedirectToAction("Error", "Home");
@@ -92,15 +75,7 @@ namespace ASPNETCinema.Controllers
             if (taskLogic.GetTaskById(id) != null)
             {
                 var task = taskLogic.GetTaskById(id);
-                var viewTask = new TaskViewModel
-                {
-                    Id = task.Id,
-                    IdScreening = task.IdScreening,
-                    TaskType = task.TaskType,
-                    TaskLenght = task.TaskLenght,
-                    Screening = task.Screening,
-                    Employees = task.Employees
-                };
+                var viewTask = _mapper.Map<TaskViewModel>(task);
                 return View(viewTask);
             }
             return RedirectToAction("Error", "Home");
@@ -126,15 +101,7 @@ namespace ASPNETCinema.Controllers
             if (taskLogic.GetTaskById(id) != null)
             {
                 var task = taskLogic.GetTaskById(id);
-                var viewTask = new TaskViewModel
-                {
-                    Id = task.Id,
-                    IdScreening = task.IdScreening,
-                    TaskType = task.TaskType,
-                    TaskLenght = task.TaskLenght,
-                    Screening = task.Screening,
-                    Employees = task.Employees
-                };
+                var viewTask = _mapper.Map<TaskViewModel>(task);
                 return View(viewTask);
             }
             return RedirectToAction("Error", "Home");

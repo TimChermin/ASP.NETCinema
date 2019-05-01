@@ -10,15 +10,18 @@ using System.ComponentModel.DataAnnotations;
 using System.Net;
 using DAL;
 using ASPNETCinema.ViewModels;
+using AutoMapper;
 
 namespace ASPNETCinema.Controllers
 {
     public class UserController : Controller
     {
         private readonly IUserContext _user;
-        
-        public UserController(IUserContext user)
+        private readonly IMapper _mapper;
+
+        public UserController(IUserContext user, IMapper mapper)
         {
+            _mapper = mapper;
             _user = user;
         }
 

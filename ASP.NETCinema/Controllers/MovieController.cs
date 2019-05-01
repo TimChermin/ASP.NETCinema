@@ -9,16 +9,20 @@ using ASPNETCinema.ViewModels;
 using DAL;
 using Interfaces;
 using static aMVCLayer.Enums.MovieType;
+using AutoMapper;
 
 namespace ASPNETCinema.Controllers
 {
     public class MovieController : Controller
     {
         private readonly IMovieContext _movie;
-        
-        public MovieController(IMovieContext movie)
+        private readonly IMapper _mapper;
+
+        //added scoped stuff in startup 
+        public MovieController(IMovieContext movie, IMapper mapper)
         {
             _movie = movie;
+            _mapper = mapper;
         }
         //other things
         //List
@@ -27,7 +31,7 @@ namespace ASPNETCinema.Controllers
         //Edit
         //Delete
 
-        
+
         public ActionResult ListMovies(string orderBy, string screeningFilter)
         {
             var movieLogic = new MovieLogic(_movie);
@@ -42,20 +46,7 @@ namespace ASPNETCinema.Controllers
             }
             foreach (var movie in movieLogic.GetMovies(orderBy))
             {
-                movies.Add(new MovieViewModel
-                {
-                    Id = movie.Id,
-                    Name = movie.Name,
-                    Description = movie.Description,
-                    ReleaseDate = movie.ReleaseDate,
-                    LastScreeningDate = movie.LastScreeningDate,
-                    MovieType = movie.MovieType,
-                    MovieLenght = movie.MovieLenght,
-                    ImageString = movie.ImageString,
-                    Screenings = movie.Screenings,
-                    BannerImageString = movie.BannerImageString
-
-                });
+                movies.Add(_mapper.Map<MovieViewModel>(movie));
             }
             return View(movies);
         }
@@ -106,19 +97,7 @@ namespace ASPNETCinema.Controllers
             if (movieLogic.GetMovieById(id) != null)
             {
                 var movie = movieLogic.GetMovieById(id);
-                var viewMovie = new MovieViewModel
-                {
-                    Id = movie.Id,
-                    Name = movie.Name,
-                    Description = movie.Description,
-                    ReleaseDate = movie.ReleaseDate,
-                    LastScreeningDate = movie.LastScreeningDate,
-                    MovieType = movie.MovieType,
-                    MovieLenght = movie.MovieLenght,
-                    ImageString = movie.ImageString,
-                    Screenings = movie.Screenings,
-                    BannerImageString = movie.BannerImageString
-                };
+                var viewMovie = _mapper.Map<MovieViewModel>(movie);
                 return View(viewMovie);
             }
             return RedirectToAction("Error", "Home");
@@ -134,18 +113,7 @@ namespace ASPNETCinema.Controllers
             if (movieLogic.GetMovieById(id) != null)
             {
                 var movie = movieLogic.GetMovieById(id);
-                var viewMovie = new MovieViewModel
-                {
-                    Id = movie.Id,
-                    Name = movie.Name,
-                    Description = movie.Description,
-                    ReleaseDate = movie.ReleaseDate,
-                    LastScreeningDate = movie.LastScreeningDate,
-                    MovieTypes = Enum.GetValues(typeof(MovieTypes)).Cast<MovieTypes>().ToList(),
-                    MovieLenght = movie.MovieLenght,
-                    ImageString = movie.ImageString,
-                    BannerImageString = movie.BannerImageString
-                };
+                var viewMovie = _mapper.Map<MovieViewModel>(movie);
                 return View(viewMovie);
             }
             return RedirectToAction("Error", "Home");
@@ -170,18 +138,7 @@ namespace ASPNETCinema.Controllers
             if (movieLogic.GetMovieById(id) != null)
             {
                 var movie = movieLogic.GetMovieById(id);
-                var viewMovie = new MovieViewModel
-                {
-                    Id = movie.Id,
-                    Name = movie.Name,
-                    Description = movie.Description,
-                    ReleaseDate = movie.ReleaseDate,
-                    LastScreeningDate = movie.LastScreeningDate,
-                    MovieType = movie.MovieType,
-                    MovieLenght = movie.MovieLenght,
-                    ImageString = movie.ImageString,
-                    BannerImageString = movie.BannerImageString
-                };
+                var viewMovie = _mapper.Map<MovieViewModel>(movie);
                 return View(viewMovie);
             }
             return RedirectToAction("Error", "Home");
