@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using ASPNETCinema.DAL;
 using Microsoft.VisualStudio.Web.BrowserLink;
 using DAL;
+using AutoMapper;
 
 namespace ASPNETCinema
 {
@@ -42,7 +43,17 @@ namespace ASPNETCinema
             options.LoginPath = "/User/LoginUser/";
             options.AccessDeniedPath = "/Home/AccessDenied/";
         });
-            
+
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            services.AddMvc();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
 
