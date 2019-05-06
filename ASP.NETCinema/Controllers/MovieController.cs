@@ -44,6 +44,7 @@ namespace ASPNETCinema.Controllers
             {
                 movieLogic.ScreeningFilter = screeningFilter;
             }
+
             foreach (var movie in movieLogic.GetMovies(orderBy))
             {
                 movies.Add(_mapper.Map<MovieViewModel>(movie));

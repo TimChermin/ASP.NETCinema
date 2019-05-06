@@ -37,14 +37,17 @@ namespace ASPNETCinema.DAL
                     GROUP BY Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString, BannerImageString HAVING ReleaseDate = @Today", _connection.SqlConnection);
                 command.Parameters.AddWithValue("@Today", DateTime.Today);
             }
-            else if (orderBy == "Name" || orderBy == "ReleaseDate" || orderBy == "MovieType")
+            else if (orderBy == null)
             {
-                command = new SqlCommand("SELECT * FROM Movie ORDER BY @OrderBy", _connection.SqlConnection);
-                command.Parameters.AddWithValue("@OrderBy", orderBy);
+                command = new SqlCommand("SELECT * FROM Movie", _connection.SqlConnection);
             }
             else
             {
-                command = new SqlCommand("SELECT * FROM Movie", _connection.SqlConnection);
+                command = new SqlCommand(@"SELECT * FROM Movie order by 
+                case when @var = 'Name' then Name end desc,
+                case when @var = 'ReleaseDate' then ReleaseDate end desc,
+                case when @var = 'MovieType' then MovieType end desc", _connection.SqlConnection);
+                command.Parameters.AddWithValue("@var", orderBy);
             }
 
             
