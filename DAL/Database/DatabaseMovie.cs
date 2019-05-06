@@ -33,8 +33,7 @@ namespace ASPNETCinema.DAL
             SqlCommand command;
             if (orderBy == "MoviesToday")
             {
-                command = new SqlCommand(@"SELECT Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString, BannerImageString FROM Movie 
-                    GROUP BY Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString, BannerImageString HAVING ReleaseDate = @Today", _connection.SqlConnection);
+                command = new SqlCommand("EXEC dbo.spMovie_GetAllMoviesToday @Today", _connection.SqlConnection);
                 command.Parameters.AddWithValue("@Today", DateTime.Today);
             }
             else if (orderBy == null)
