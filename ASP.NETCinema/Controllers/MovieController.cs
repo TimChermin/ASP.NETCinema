@@ -25,13 +25,6 @@ namespace ASPNETCinema.Controllers
             _movieLogic = movieLogic;
             _mapper = mapper;
         }
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
-
 
         public ActionResult ListMovies(string orderBy, string screeningFilter)
         {

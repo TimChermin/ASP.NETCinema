@@ -77,7 +77,6 @@ namespace ASPNETCinema.DAL
         public void AddMovie(MovieModel movie)
         {
             _connection.SqlConnection.Open();
-
             SqlCommand command = new SqlCommand(@"INSERT INTO Movie OUTPUT Inserted.Id VALUES (@Name, @Description, @ReleaseDate, @LastScreeningDate, 
             @MovieType, @MovieLenght, @ImageString, @BannerImageString)", _connection.SqlConnection);
             command.Parameters.AddWithValue("@Name", movie.Name);
