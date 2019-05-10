@@ -1,4 +1,6 @@
-﻿using Interfaces;
+﻿
+using ASPNETCinema.Models;
+using DAL.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,21 +9,15 @@ namespace DAL
 {
     public interface IScreeningContext
     {
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
-        IEnumerable<IScreening> GetScreenings();
-        void AddScreening(IScreening screening);
-        IScreening GetScreeningById(int id);
-        void EditScreening(IScreening screening);
+        List<ScreeningDto> GetScreenings();
+        void AddScreening(ScreeningModel screening);
+        ScreeningDto GetScreeningById(int id);
+        void EditScreening(ScreeningModel screening);
         void DeleteScreening(int id);
 
-        IHall GetHall(int idHall);
-        IMovie GetMovie(int idMovie);
-        IEnumerable<IMovie> GetMovies();
-        IEnumerable<IHall> GetHalls();
+        HallDto GetHall(int idHall);
+        MovieDto GetMovie(int idMovie);
+        List<MovieDto> GetMovies();
+        List<HallDto> GetHalls();
     }
 }

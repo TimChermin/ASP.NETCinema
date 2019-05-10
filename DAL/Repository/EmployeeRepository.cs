@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using ASPNETCinema.DAL;
-using Interfaces;
+using ASPNETCinema.Models;
+using DAL.Dtos;
 
 namespace DAL.Repository
 {
@@ -14,30 +15,23 @@ namespace DAL.Repository
         {
             _context = context;
         }
-        
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
-        //other things
 
-        public IEnumerable<IEmployee> GetEmployees()
+        public List<EmployeeDto> GetEmployees()
         {
             return _context.GetEmployees();
         }
 
-        public void AddEmployee(IEmployee employee)
+        public void AddEmployee(EmployeeModel employee)
         {
             _context.AddEmployee(employee);
         }
 
-        public IEmployee GetEmployeeById(int id)
+        public EmployeeDto GetEmployeeById(int id)
         {
             return _context.GetEmployeeById(id);
         }
 
-        public void EditEmployee(IEmployee employee)
+        public void EditEmployee(EmployeeModel employee)
         {
             _context.EditEmployee(employee);
         }

@@ -1,4 +1,5 @@
-﻿using Interfaces;
+﻿using ASPNETCinema.Models;
+using DAL.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,30 +14,22 @@ namespace DAL.Repository
         {
             _context = context;
         }
-
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
-
-        public IEnumerable<ITask> GetTasks()
+        public List<TaskDto> GetTasks()
         {
             return _context.GetTasks();
         }
 
-        public void AddTask(ITask task)
+        public void AddTask(TaskModel task)
         {
             _context.AddTask(task);
         }
 
-        public ITask GetTaskById(int id)
+        public TaskDto GetTaskById(int id)
         {
             return _context.GetTaskById(id);
         }
 
-        public void EditTask(ITask task)
+        public void EditTask(TaskModel task)
         {
             _context.EditTask(task);
         }

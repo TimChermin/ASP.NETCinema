@@ -1,4 +1,5 @@
-﻿using Interfaces;
+﻿using ASPNETCinema.Models;
+using DAL.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,22 +22,22 @@ namespace DAL.Repository
         //Edit
         //Delete
 
-        public IEnumerable<IScreening> GetScreenings()
+        public List<ScreeningDto> GetScreenings()
         {
             return _context.GetScreenings();
         }
 
-        public void AddScreening(IScreening screening)
+        public void AddScreening(ScreeningModel screening)
         {
             _context.AddScreening(screening);
         }
 
-        public IScreening GetScreeningById(int id)
+        public ScreeningDto GetScreeningById(int id)
         {
             return _context.GetScreeningById(id);
         }
 
-        public void EditScreening(IScreening screening)
+        public void EditScreening(ScreeningModel screening)
         {
             _context.EditScreening(screening);
         }
@@ -46,21 +47,21 @@ namespace DAL.Repository
             _context.DeleteScreening(id);
         }
 
-        public IMovie GetMovie(int idMovie)
+        public MovieDto GetMovie(int idMovie)
         {
             return _context.GetMovie(idMovie);
         }
 
-        public IHall GetHall(int idHall)
+        public HallDto GetHall(int idHall)
         {
             return _context.GetHall(idHall);
         }
 
-        public IEnumerable<IMovie> GetMovies()
+        public List<MovieDto> GetMovies()
         {
             return _context.GetMovies();
         }
-        public IEnumerable<IHall> GetHalls()
+        public List<HallDto> GetHalls()
         {
             return _context.GetHalls();
         }

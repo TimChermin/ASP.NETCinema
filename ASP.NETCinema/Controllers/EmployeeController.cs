@@ -4,17 +4,24 @@ using ASPNETCinema.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using ASPNETCinema.DAL;
+using AutoMapper;
+using ASPNETCinema.Models;
+using LogicLayer.Interfaces;
 
 namespace ASPNETCinema.Controllers
 {
     public class EmployeeController : Controller
     {
-        private readonly IEmployeeContext _employee;
+        private readonly IEmployeeLogic _employeeLogic;
+        private readonly IMapper _mapper;
+
         //added scoped stuff in startup 
-        public EmployeeController(IEmployeeContext employee)
+        public EmployeeController(IEmployeeLogic employeeLogic, IMapper mapper)
         {
-            _employee = employee;
+            _employeeLogic = employeeLogic;
+            _mapper = mapper;
         }
+        
 
         //List
         //Add
@@ -25,15 +32,10 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator, Employee")]
         public ActionResult ListEmployees()
         {
-            var employeeLogic = new EmployeeLogic(_employee);
             List<EmployeeViewModel> employees = new List<EmployeeViewModel>();
-            foreach (var employee in employeeLogic.GetEmployees())
+            foreach (var employee in _employeeLogic.GetEmployees())
             {
-                employees.Add(new EmployeeViewModel
-                {
-                    Id = employee.Id,
-                    Name = employee.Name
-                });
+                employees.Add(_mapper.Map<EmployeeViewModel>(employee));
             }
             return View(employees);
         }
@@ -49,10 +51,9 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult AddEmployee(EmployeeViewModel employee)
         {
-            var employeeLogic = new EmployeeLogic(_employee);
             if (ModelState.IsValid)
             {
-                employeeLogic.AddEmployee(employee.Id, employee.Name);
+                _employeeLogic.AddEmployee(employee.Id, employee.Name);
                 return RedirectToAction("ListMovies");
             }
             return RedirectToAction("Error", "Home");
@@ -61,15 +62,10 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator, Employee")]
         public ActionResult DetailsEmployee(int id)
         {
-            var employeeLogic = new EmployeeLogic(_employee);
-            if (employeeLogic.GetEmployeeById(id) != null)
+            if (_employeeLogic.GetEmployeeById(id) != null)
             {
-                var employee = employeeLogic.GetEmployeeById(id);
-                var viewEmployee = new EmployeeViewModel
-                {
-                    Id = employee.Id,
-                    Name = employee.Name,
-                };
+                var employee = _employeeLogic.GetEmployeeById(id);
+                var viewEmployee = _mapper.Map<EmployeeViewModel>(employee);
                 return View(viewEmployee);
             }
             return RedirectToAction("Error", "Home");
@@ -79,15 +75,10 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult EditEmployee(int id)
         {
-            var employeeLogic = new EmployeeLogic(_employee);
-            if (employeeLogic.GetEmployeeById(id) != null)
+            if (_employeeLogic.GetEmployeeById(id) != null)
             {
-                var employee = employeeLogic.GetEmployeeById(id);
-                var viewEmployee = new EmployeeViewModel
-                {
-                    Id = employee.Id,
-                    Name = employee.Name,
-                };
+                var employee = _employeeLogic.GetEmployeeById(id);
+                var viewEmployee = _mapper.Map<EmployeeViewModel>(employee);
                 return View(viewEmployee);
             }
             return RedirectToAction("Error", "Home");
@@ -97,10 +88,9 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult EditEmployee(EmployeeViewModel employee)
         {
-            var employeeLogic = new EmployeeLogic(_employee);
             if (ModelState.IsValid)
             {
-                employeeLogic.EditEmployee(employee.Id, employee.Name);
+                _employeeLogic.EditEmployee(employee.Id, employee.Name);
                 return RedirectToAction("ListEmployees");
             }
             return RedirectToAction("Error", "Home");
@@ -109,15 +99,10 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult DeleteEmployee(int id)
         {
-            var employeeLogic = new EmployeeLogic(_employee);
-            if (employeeLogic.GetEmployeeById(id) != null)
+            if (_employeeLogic.GetEmployeeById(id) != null)
             {
-                var employee = employeeLogic.GetEmployeeById(id);
-                var viewEmployee = new EmployeeViewModel
-                {
-                    Id = employee.Id,
-                    Name = employee.Name,
-                };
+                var employee = _employeeLogic.GetEmployeeById(id);
+                var viewEmployee = _mapper.Map<EmployeeViewModel>(employee);
                 return View(viewEmployee);
             }
             return RedirectToAction("Error", "Home");
@@ -128,8 +113,7 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult DeleteEmployee(EmployeeViewModel employee)
         {
-            var employeeLogic = new EmployeeLogic(_employee);
-            employeeLogic.DeleteEmployee(employee.Id);
+            _employeeLogic.DeleteEmployee(employee.Id);
             return RedirectToAction("ListEmployees");
         }
 

@@ -10,16 +10,21 @@ using System.ComponentModel.DataAnnotations;
 using System.Net;
 using DAL;
 using ASPNETCinema.ViewModels;
+using AutoMapper;
+using LogicLayer.Interfaces;
+using ASPNETCinema.Models;
 
 namespace ASPNETCinema.Controllers
 {
     public class UserController : Controller
     {
-        private readonly IUserContext _user;
-        
-        public UserController(IUserContext user)
+        private readonly IUserLogic _userLogic;
+        private readonly IMapper _mapper;
+
+        public UserController(IUserLogic userLogic, IMapper mapper)
         {
-            _user = user;
+            _mapper = mapper;
+            _userLogic = userLogic;
         }
 
         [HttpGet]
@@ -36,11 +41,11 @@ namespace ASPNETCinema.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LoginUser(UserViewModel user)
         {
-            var userLogic = new UserLogic(_user);
-            if (userLogic.CheckIfThisLoginIsCorrect(user.Name, user.Password))
+            
+            if (_userLogic.CheckIfThisLoginIsCorrect(user.Name, user.Password))
             {
-                int userId = userLogic.GetUser(user.Name, user.Password).Id;
-                string userRole = userLogic.GetRoleUser(userId);
+                int userId = _userLogic.GetUser(user.Name, user.Password).Id;
+                string userRole = _userLogic.GetRoleUser(userId);
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, user.Name),
@@ -72,10 +77,11 @@ namespace ASPNETCinema.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddUser(UserViewModel user)
         {
-            var userLogic = new UserLogic(_user);
+            
             if (ModelState.IsValid)
             {
-                userLogic.AddUser(user.Id, user.Name, user.Password, user.ConfirmPassword, user.Administrator);
+
+                _userLogic.AddUser(_mapper.Map<UserModel>(user));
                 
                 await LoginUser(user);
                 return RedirectToAction("ListMovies", "Movie");

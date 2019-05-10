@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Interfaces;
 using static aMVCLayer.Enums.MovieType;
 
 namespace ASPNETCinema.ViewModels
@@ -58,7 +57,7 @@ namespace ASPNETCinema.ViewModels
         public string BannerImageString { get; set; }
 
 
-        public IEnumerable<IScreening> Screenings { get; set; }
+        public List<ScreeningViewModel> Screenings { get; set; }
 
     }
 }

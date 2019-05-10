@@ -15,6 +15,10 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using ASPNETCinema.DAL;
 using Microsoft.VisualStudio.Web.BrowserLink;
 using DAL;
+using AutoMapper;
+using ASPNETCinema.Logic;
+using Models.Interfaces;
+using LogicLayer.Interfaces;
 
 namespace ASPNETCinema
 {
@@ -42,17 +46,34 @@ namespace ASPNETCinema
             options.LoginPath = "/User/LoginUser/";
             options.AccessDeniedPath = "/Home/AccessDenied/";
         });
-            
+
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            services.AddMvc();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
 
             //test
             services.AddScoped<IEmployeeContext, DatabaseEmployee>();
+            services.AddScoped<IEmployeeLogic, EmployeeLogic>();
             services.AddScoped<IMovieContext, DatabaseMovie>();
+            services.AddScoped<IMovieLogic, MovieLogic>();
             services.AddScoped<IHallContext, DatabaseHall>();
+            services.AddScoped<IHallLogic, HallLogic>();
             services.AddScoped<IScreeningContext, DatabaseScreening>();
+            services.AddScoped<IScreeningLogic, ScreeningLogic>();
             services.AddScoped<IUserContext, DatabaseUser>();
+            services.AddScoped<IUserLogic, UserLogic>();
             services.AddScoped<ITaskContext, DatabaseTask>();
+            services.AddScoped<ITaskLogic, TaskLogic>();
+
             // Add the whole configuration object here.
             services.AddSingleton<IConfiguration>(Configuration);
             //services.AddTransient(_ => new DatabaseConnection(Configuration.GetConnectionString("ASPNETCinemaContextAZUREServer")));

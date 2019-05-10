@@ -1,10 +1,11 @@
-﻿using Interfaces;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL.Dtos;
+using ASPNETCinema.Models;
 
 namespace ASPNETCinema.DAL
 {
@@ -23,7 +24,7 @@ namespace ASPNETCinema.DAL
         //Details
         //Edit
         //Delete
-        public IEmployee GetEmployeeById(int id)
+        public EmployeeDto GetEmployeeById(int id)
         {
             _connection.SqlConnection.Open();
 
@@ -46,13 +47,13 @@ namespace ASPNETCinema.DAL
             return null;
         }
 
-        public IEnumerable<IEmployee> GetEmployees()
+        public List<EmployeeDto> GetEmployees()
         {
             _connection.SqlConnection.Open();
             
             SqlCommand command = new SqlCommand("SELECT Id, Name FROM Employee", _connection.SqlConnection);
 
-            var employees = new List<IEmployee>();
+            var employees = new List<EmployeeDto>();
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
@@ -69,7 +70,7 @@ namespace ASPNETCinema.DAL
             return (employees);
         }
 
-        public void AddEmployee(IEmployee employee)
+        public void AddEmployee(EmployeeModel employee)
         {
             _connection.SqlConnection.Open();
 
@@ -79,7 +80,7 @@ namespace ASPNETCinema.DAL
             _connection.SqlConnection.Close();
         }
 
-        public void EditEmployee(IEmployee employee)
+        public void EditEmployee(EmployeeModel employee)
         {
             _connection.SqlConnection.Open();
 

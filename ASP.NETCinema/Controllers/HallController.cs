@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using ASPNETCinema.Logic;
 using ASPNETCinema.Models;
 using ASPNETCinema.ViewModels;
+using AutoMapper;
 using DAL;
-using Interfaces;
+using LogicLayer.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,12 +15,14 @@ namespace ASPNETCinema.Controllers
 {
     public class HallController : Controller
     {
-        private readonly IHallContext _hall;
+        private readonly IHallLogic _hallLogic;
+        private readonly IMapper _mapper;
 
         //added scoped stuff in startup 
-        public HallController(IHallContext hall)
+        public HallController(IHallLogic hallLogic, IMapper mapper)
         {
-            _hall = hall;
+            _hallLogic = hallLogic;
+            _mapper = mapper;
         }
         //other things
         //List
@@ -32,18 +35,11 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator, Employee")]
         public ActionResult ListHalls()
         {
-            var hallLogic = new HallLogic(_hall);
+            
             List<HallViewModel> halls = new List<HallViewModel>();
-            foreach (var hall in hallLogic.GetHalls())
+            foreach (var hall in _hallLogic.GetHalls())
             {
-                halls.Add(new HallViewModel
-                {
-                    Id = hall.Id,
-                    Price = hall.Price,
-                    ScreenType = hall.ScreenType,
-                    Seats = hall.Seats,
-                    SeatsTaken = hall.SeatsTaken
-                });
+                halls.Add(_mapper.Map<HallViewModel>(hall));
             }
             return View(halls);
         }
@@ -61,10 +57,10 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult AddHall(HallModel hall)
         {
-            var hallLogic = new HallLogic(_hall);
+            
             if (ModelState.IsValid)
             {
-                hallLogic.AddHall(hall.Id, hall.Price, hall.ScreenType, hall.Seats, hall.SeatsTaken);
+                _hallLogic.AddHall(_mapper.Map<HallModel>(hall));
                 return RedirectToAction("ListHalls");
             }
             return RedirectToAction("Error", "Home");
@@ -73,18 +69,11 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult EditHall(int id)
         {
-            var hallLogic = new HallLogic(_hall);
-            if (hallLogic.GetHallById(id) != null)
+            
+            if (_hallLogic.GetHallById(id) != null)
             {
-                var hall = hallLogic.GetHallById(id);
-                var viewHall = new HallViewModel
-                {
-                    Id = hall.Id,
-                    Price = hall.Price,
-                    ScreenType = hall.ScreenType,
-                    Seats = hall.Seats,
-                    SeatsTaken = hall.SeatsTaken
-                };
+                var hall = _hallLogic.GetHallById(id);
+                var viewHall = _mapper.Map<HallViewModel>(hall);
                 return View(viewHall);
             }
             return RedirectToAction("Error", "Home");
@@ -94,10 +83,10 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult EditHall(HallModel hall)
         {
-            var hallLogic = new HallLogic(_hall);
+            
             if (ModelState.IsValid)
             {
-                hallLogic.EditHall(hall.Id, hall.Price, hall.ScreenType, hall.Seats, hall.SeatsTaken);
+                _hallLogic.EditHall(_mapper.Map<HallModel>(hall));
                 return RedirectToAction("ListHalls");
             }
             return RedirectToAction("Error", "Home");
@@ -106,18 +95,11 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult DeleteHall(int id)
         {
-            var hallLogic = new HallLogic(_hall);
-            if (hallLogic.GetHallById(id) != null)
+            
+            if (_hallLogic.GetHallById(id) != null)
             {
-                var hall = hallLogic.GetHallById(id);
-                var viewHall = new HallViewModel
-                {
-                    Id = hall.Id,
-                    Price = hall.Price,
-                    ScreenType = hall.ScreenType,
-                    Seats = hall.Seats,
-                    SeatsTaken = hall.SeatsTaken
-                };
+                var hall = _hallLogic.GetHallById(id);
+                var viewHall = _mapper.Map<HallViewModel>(hall);
                 return View(viewHall);
             }
             return RedirectToAction("Error", "Home");
@@ -127,8 +109,8 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult DeleteHall(HallViewModel hall)
         {
-            var hallLogic = new HallLogic(_hall);
-            hallLogic.DeleteHall(hall.Id);
+            
+            _hallLogic.DeleteHall(hall.Id);
             return RedirectToAction("ListHalls");
         }
 

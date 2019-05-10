@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using DAL;
-using Interfaces;
 using DAL.Dtos;
+using ASPNETCinema.Models;
 
 namespace ASPNETCinema.DAL
 {
@@ -25,26 +25,28 @@ namespace ASPNETCinema.DAL
         //Delete
 
 
-        public IEnumerable<IMovie> GetMovies(string orderBy)
+        public List<MovieDto> GetMovies(string orderBy)
         {
             _connection.SqlConnection.Open();
 
-            var movies = new List<IMovie>();
+            var movies = new List<MovieDto>();
             SqlCommand command;
             if (orderBy == "MoviesToday")
             {
-                command = new SqlCommand(@"SELECT Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString, BannerImageString FROM Movie 
-                    GROUP BY Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString, BannerImageString HAVING ReleaseDate = @Today", _connection.SqlConnection);
+                command = new SqlCommand("EXEC dbo.spMovie_GetAllMoviesToday @Today", _connection.SqlConnection);
                 command.Parameters.AddWithValue("@Today", DateTime.Today);
             }
-            else if (orderBy == "Name" || orderBy == "ReleaseDate" || orderBy == "MovieType")
+            else if (orderBy == null)
             {
-                command = new SqlCommand("SELECT * FROM Movie ORDER BY @OrderBy", _connection.SqlConnection);
-                command.Parameters.AddWithValue("@OrderBy", orderBy);
+                command = new SqlCommand("SELECT * FROM Movie", _connection.SqlConnection);
             }
             else
             {
-                command = new SqlCommand("SELECT * FROM Movie", _connection.SqlConnection);
+                command = new SqlCommand(@"SELECT * FROM Movie order by 
+                case when @var = 'Name' then Name end desc,
+                case when @var = 'ReleaseDate' then ReleaseDate end desc,
+                case when @var = 'MovieType' then MovieType end desc", _connection.SqlConnection);
+                command.Parameters.AddWithValue("@var", orderBy);
             }
 
             
@@ -72,10 +74,9 @@ namespace ASPNETCinema.DAL
             return (movies);
         }
 
-        public void AddMovie(IMovie movie)
+        public void AddMovie(MovieModel movie)
         {
             _connection.SqlConnection.Open();
-
             SqlCommand command = new SqlCommand(@"INSERT INTO Movie OUTPUT Inserted.Id VALUES (@Name, @Description, @ReleaseDate, @LastScreeningDate, 
             @MovieType, @MovieLenght, @ImageString, @BannerImageString)", _connection.SqlConnection);
             command.Parameters.AddWithValue("@Name", movie.Name);
@@ -90,7 +91,7 @@ namespace ASPNETCinema.DAL
             _connection.SqlConnection.Close();
         }
 
-        public IMovie GetMovieById(int id)
+        public MovieDto GetMovieById(int id)
         {
             _connection.SqlConnection.Open();
 
@@ -121,7 +122,7 @@ namespace ASPNETCinema.DAL
             return null;
         }
 
-        public void EditMovie(IMovie movie)
+        public void EditMovie(MovieModel movie)
         {
             _connection.SqlConnection.Open();
 
@@ -145,18 +146,20 @@ namespace ASPNETCinema.DAL
         public void DeleteMovie(int id)
         {
             _connection.SqlConnection.Open();
-
-            SqlCommand command = new SqlCommand("DELETE FROM Movie WHERE Id = @Id", _connection.SqlConnection);
-            command.Parameters.AddWithValue("@Id", id);
+            //EXEC SelectAllCustomers City = "London";
+            SqlCommand command = new SqlCommand("spMovie_DeleteMovie", _connection.SqlConnection);
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            //SqlCommand command = new SqlCommand("DELETE FROM Movie WHERE Id = @Id", _connection.SqlConnection);
+            command.Parameters.AddWithValue("@movieId", id);
             command.ExecuteNonQuery();
             _connection.SqlConnection.Close();
         }
 
-        public IEnumerable<IScreening> GetScreeningsForMovie(int idMovie)
+        public List<ScreeningDto> GetScreeningsForMovie(int idMovie)
         {
             _connection.SqlConnection.Open();
             SqlCommand command;
-            var screenings = new List<IScreening>();
+            var screenings = new List<ScreeningDto>();
             DateTime ScreeningDateCheck = new DateTime(1800, 2, 3);
             command = new SqlCommand(@"SELECT Id, IdMovie, IdHall, DateOfScreening, TimeOfScreening FROM Screening WHERE 
             IdMovie = @IdMovie ORDER BY TimeOfScreening", _connection.SqlConnection);

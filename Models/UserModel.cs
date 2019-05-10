@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Interfaces;
 
 namespace ASPNETCinema.Models
 {
-    public class UserModel : IUser
+    public class UserModel
     {
         public UserModel()
         {

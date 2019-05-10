@@ -1,7 +1,8 @@
-﻿using System;
+﻿using ASPNETCinema.Models;
+using DAL.Dtos;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using Interfaces;
 
 namespace DAL.Repository
 {
@@ -14,22 +15,22 @@ namespace DAL.Repository
             _context = context;
         }
 
-        public IEnumerable<IUser> GetUsers()
+        public List<UserDto> GetUsers()
         {
             return _context.GetUsers();
         }
 
-        public void AddUser(IUser user)
+        public void AddUser(UserModel user)
         {
             _context.AddUser(user);
         }
 
-        public IUser GetUser(string name, string password)
+        public UserDto GetUser(string name, string password)
         {
             return _context.GetUser(name, password);
         }
 
-        public void EditUser(IUser user)
+        public void EditUser(UserModel user)
         {
             _context.EditUser(user);
         }

@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ASPNETCinema.Logic;
+using ASPNETCinema.Models;
 using ASPNETCinema.ViewModels;
+using AutoMapper;
 using DAL;
+using LogicLayer.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,33 +15,23 @@ namespace ASPNETCinema.Controllers
 {
     public class TaskController : Controller
     {
-        private readonly ITaskContext _task;
-        
-        public TaskController(ITaskContext task)
+        private readonly ITaskLogic _taskLogic;
+        private readonly IMapper _mapper;
+
+        public TaskController(ITaskLogic taskLogic, IMapper mapper)
         {
-            _task = task;
+            _mapper = mapper;
+            _taskLogic = taskLogic;
         }
 
         [Authorize(Roles = "Administrator, Employee")]
         public ActionResult ListTasks()
         {
-            var taskLogic = new TaskLogic(_task);
+            
             List<TaskViewModel> tasks = new List<TaskViewModel>();
-            foreach (var task in taskLogic.GetTasks())
+            foreach (var task in _taskLogic.GetTasks())
             {
-                tasks.Add(new TaskViewModel
-                {
-                    Id = task.Id,
-                    EmployeeId = task.EmployeeId,
-                    EmployeeName = task.EmployeeName,
-                    DateOfScreening = task.DateOfScreening,
-                    TimeOfScreening = task.TimeOfScreening,
-                    HallId = task.HallId,
-                    TaskType = task.TaskType,
-                    TaskLenght = task.TaskLenght,
-                    Screening = task.Screening,
-                    Employees = task.Employees
-                });
+                tasks.Add(_mapper.Map<TaskViewModel>(task));
             }
             return View(tasks);
         }
@@ -54,10 +47,10 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult AddTask(TaskViewModel task)
         {
-            var taskLogic = new TaskLogic(_task);
+            
             if (ModelState.IsValid)
             {
-                taskLogic.AddTask(task.Id, task.IdScreening, task.TaskType, task.TaskLenght, task.Screening, task.Employees);
+                _taskLogic.AddTask(_mapper.Map<TaskModel>(task));
                 return RedirectToAction("ListTasks");
             }
             return View();
@@ -66,19 +59,11 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator, Employee")]
         public ActionResult DetailsTask(int id)
         {
-            var taskLogic = new TaskLogic(_task);
-            if (taskLogic.GetTaskById(id) != null)
+            
+            if (_taskLogic.GetTaskById(id) != null)
             {
-                var task = taskLogic.GetTaskById(id);
-                var viewTask = new TaskViewModel
-                {
-                    Id = task.Id,
-                    IdScreening = task.IdScreening,
-                    TaskType = task.TaskType,
-                    TaskLenght = task.TaskLenght,
-                    Screening = task.Screening,
-                    Employees = task.Employees
-                };
+                var task = _taskLogic.GetTaskById(id);
+                var viewTask = _mapper.Map<TaskViewModel>(task);
                 return View(viewTask);
             }
             return RedirectToAction("Error", "Home");
@@ -88,19 +73,11 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult EditTask(int id)
         {
-            var taskLogic = new TaskLogic(_task);
-            if (taskLogic.GetTaskById(id) != null)
+            
+            if (_taskLogic.GetTaskById(id) != null)
             {
-                var task = taskLogic.GetTaskById(id);
-                var viewTask = new TaskViewModel
-                {
-                    Id = task.Id,
-                    IdScreening = task.IdScreening,
-                    TaskType = task.TaskType,
-                    TaskLenght = task.TaskLenght,
-                    Screening = task.Screening,
-                    Employees = task.Employees
-                };
+                var task = _taskLogic.GetTaskById(id);
+                var viewTask = _mapper.Map<TaskViewModel>(task);
                 return View(viewTask);
             }
             return RedirectToAction("Error", "Home");
@@ -110,10 +87,10 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult EditTask(TaskViewModel task)
         {
-            var taskLogic = new TaskLogic(_task);
+            
             if (ModelState.IsValid)
             {
-                taskLogic.EditTask(task.Id, task.IdScreening, task.TaskType, task.TaskLenght, task.Screening, task.Employees);
+                _taskLogic.EditTask(_mapper.Map<TaskModel>(task));
                 return RedirectToAction("ListTasks");
             }
             return RedirectToAction("Error", "Home");
@@ -122,19 +99,11 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult DeleteTask(int id)
         {
-            var taskLogic = new TaskLogic(_task);
-            if (taskLogic.GetTaskById(id) != null)
+            
+            if (_taskLogic.GetTaskById(id) != null)
             {
-                var task = taskLogic.GetTaskById(id);
-                var viewTask = new TaskViewModel
-                {
-                    Id = task.Id,
-                    IdScreening = task.IdScreening,
-                    TaskType = task.TaskType,
-                    TaskLenght = task.TaskLenght,
-                    Screening = task.Screening,
-                    Employees = task.Employees
-                };
+                var task = _taskLogic.GetTaskById(id);
+                var viewTask = _mapper.Map<TaskViewModel>(task);
                 return View(viewTask);
             }
             return RedirectToAction("Error", "Home");
@@ -145,10 +114,10 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult DeleteTask(TaskViewModel task)
         {
-            var taskLogic = new TaskLogic(_task);
+            
             if (ModelState.IsValid)
             {
-                taskLogic.DeleteTask(task.Id);
+                _taskLogic.DeleteTask(task.Id);
                 return RedirectToAction("ListTasks");
             }
             return RedirectToAction("Error", "Home");

@@ -1,4 +1,7 @@
-﻿using Interfaces;
+﻿
+using ASPNETCinema.DAL;
+using ASPNETCinema.Models;
+using DAL.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,29 +17,22 @@ namespace DAL.Repository
             _context = context;
         }
 
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
-
-        public IEnumerable<IHall> GetHalls()
+        public List<HallDto> GetHalls()
         {
             return _context.GetHalls();
         }
 
-        public void AddHall(IHall hall)
+        public void AddHall(HallModel hall)
         {
             _context.AddHall(hall);
         }
 
-        public IHall GetHallById(int id)
+        public HallDto GetHallById(int id)
         {
             return _context.GetHallById(id);
         }
 
-        public void EditHall(IHall hall)
+        public void EditHall(HallModel hall)
         {
             _context.EditHall(hall);
         }

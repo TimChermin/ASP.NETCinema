@@ -1,11 +1,11 @@
-﻿using DAL;
-using DAL.Dtos;
-using Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL.Dtos;
+using ASPNETCinema.Models;
+using ASPNETCinema.DAL;
 
 namespace ASPNETCinema.DAL
 {
@@ -25,11 +25,11 @@ namespace ASPNETCinema.DAL
         //Edit
         //Delete
 
-        public IEnumerable<IHall> GetHalls()
+        public List<HallDto> GetHalls()
         {
             _connection.SqlConnection.Open();
             
-            var halls = new List<IHall>();
+            var halls = new List<HallDto>();
             SqlCommand command = new SqlCommand("SELECT Id, Price, ScreenType, Seats, SeatsTaken FROM Hall", _connection.SqlConnection);
 
             using (SqlDataReader reader = command.ExecuteReader())
@@ -51,7 +51,7 @@ namespace ASPNETCinema.DAL
             return (halls);
         }
 
-        public void AddHall(IHall hall)
+        public void AddHall(HallModel hall)
         {
             _connection.SqlConnection.Open();
 
@@ -64,7 +64,7 @@ namespace ASPNETCinema.DAL
             _connection.SqlConnection.Close();
         }
 
-        public void EditHall(IHall hall)
+        public void EditHall(HallModel hall)
         {
             _connection.SqlConnection.Open();
 
@@ -90,7 +90,7 @@ namespace ASPNETCinema.DAL
             _connection.SqlConnection.Close();
         }
 
-        public IHall GetHallById(int id)
+        public HallDto GetHallById(int id)
         {
             _connection.SqlConnection.Open();
 

@@ -1,8 +1,9 @@
 ﻿using ASPNETCinema.DAL;
 using ASPNETCinema.Models;
+using AutoMapper;
 using DAL;
 using DAL.Repository;
-using Interfaces;
+using LogicLayer.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,94 +11,73 @@ using System.Threading.Tasks;
 
 namespace ASPNETCinema.Logic
 {
-    public class ScreeningLogic
+    public class ScreeningLogic : IScreeningLogic
     {
-        //List<IScreening> screeningsWithMovies;
         private ScreeningRepository Repository { get; }
-        List<IScreening> Screenings = new List<IScreening>();
+        List<ScreeningModel> Screenings = new List<ScreeningModel>();
+        private IMapper _mapper;
 
-        public ScreeningLogic(IScreeningContext context)
+        public ScreeningLogic(IScreeningContext context, IMapper mapper)
         {
             Repository = new ScreeningRepository(context);
+            _mapper = mapper;
         }
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
 
-        public IScreening GetScreeningById(int id)
+        public ScreeningModel GetScreeningById(int id)
         {
-            var screenings = new List<IScreening>();
+            var screenings = new List<ScreeningModel>();
             if (Repository.GetScreeningById(id) == null)
             {
                 return null;
             }
-            screenings.Add(Repository.GetScreeningById(id));
+            screenings.Add(_mapper.Map<ScreeningModel>(Repository.GetScreeningById(id)));
             screenings = GetAndAddMoviesToScreenings(screenings);
             screenings = GetAndAddHallsToScreenings(screenings);
             return screenings[0];
         }
 
 
-        public List<IScreening> GetAndAddMoviesToScreenings(List<IScreening> screenings)
+        public List<ScreeningModel> GetAndAddMoviesToScreenings(List<ScreeningModel> screenings)
         {
-            var screeningsWithMovies = new List<IScreening>();
+            var screeningsWithMovies = new List<ScreeningModel>();
             foreach (var screening in screenings)
             {
-                screening.Movie = Repository.GetMovie(screening.MovieId);
-                screening.Movies = Repository.GetMovies();
+                screening.Movie = _mapper.Map<MovieModel>(Repository.GetMovie(screening.MovieId));
+                screening.Movies = _mapper.Map<List<MovieModel>>(Repository.GetMovies());
                 screeningsWithMovies.Add(screening);
             }
             return screeningsWithMovies;
         }
 
-        public List<IScreening> GetAndAddHallsToScreenings(List<IScreening> screenings)
+        public List<ScreeningModel> GetAndAddHallsToScreenings(List<ScreeningModel> screenings)
         {
-            var screeningsWithHalls = new List<IScreening>();
+            var screeningsWithHalls = new List<ScreeningModel>();
             foreach (var screening in screenings)
             {
-                screening.Hall = Repository.GetHall(screening.HallId);
-                screening.Halls = Repository.GetHalls();
+                screening.Hall = _mapper.Map<HallModel>(Repository.GetHall(screening.HallId));
+                screening.Halls = _mapper.Map<List<HallModel>>(Repository.GetHalls());
                 screeningsWithHalls.Add(screening);
             }
             return screeningsWithHalls;
         }
 
-        public IEnumerable<IScreening> GetScreenings()
+        public List<ScreeningModel> GetScreenings()
         {
-            var screenings = new List<IScreening>();
-            screenings = Repository.GetScreenings().ToList();
+            var screenings = new List<ScreeningModel>();
+            screenings = _mapper.Map<List<ScreeningModel>>(Repository.GetScreenings().ToList());
             screenings = GetAndAddMoviesToScreenings(screenings);
             screenings = GetAndAddHallsToScreenings(screenings);
             return screenings;
         }
         
 
-        public void AddScreening(int id, int movieId, int hallId, DateTime dateOfScreening, TimeSpan timeOfScreening)
+        public void AddScreening(ScreeningModel screening)
         {
-            var screening = new ScreeningModel
-            {
-                Id = id,
-                MovieId = movieId,
-                HallId = hallId,
-                DateOfScreening = dateOfScreening,
-                TimeOfScreening = timeOfScreening
-            };
             Repository.AddScreening(screening);
         }
 
-        public void EditScreening(int id, int movieId, int hallId, DateTime dateOfScreening, TimeSpan timeOfScreening)
+        public void EditScreening(ScreeningModel screening)
         {
-            var screening = new ScreeningModel
-            {
-                Id = id,
-                MovieId = movieId,
-                HallId = hallId,
-                DateOfScreening = dateOfScreening,
-                TimeOfScreening = timeOfScreening
-            };
             Repository.EditScreening(screening);
         }
 
@@ -122,7 +102,7 @@ namespace ASPNETCinema.Logic
         }
 
 
-        public bool IsItAfterOrBeforeTheScreening(int hallId, DateTime dateOfScreening, TimeSpan timeOfScreening, int movieId, IScreening screeningDatabase)
+        public bool IsItAfterOrBeforeTheScreening(int hallId, DateTime dateOfScreening, TimeSpan timeOfScreening, int movieId, ScreeningModel screeningDatabase)
         {
             foreach (var movieAlreadyScreening in Repository.GetMovies())
             {

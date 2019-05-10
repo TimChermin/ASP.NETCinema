@@ -1,4 +1,6 @@
-﻿using Interfaces;
+﻿
+using ASPNETCinema.Models;
+using DAL.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,19 +9,13 @@ namespace DAL
 {
     public interface IMovieContext
     {
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
-        IEnumerable<IMovie> GetMovies(string orderBy);
-        void AddMovie(IMovie movie);
-        IMovie GetMovieById(int id);
-        void EditMovie(IMovie movie);
+        List<MovieDto> GetMovies(string orderBy);
+        void AddMovie(MovieModel movie);
+        MovieDto GetMovieById(int id);
+        void EditMovie(MovieModel movie);
         void DeleteMovie(int id);
 
-        IEnumerable<IScreening> GetScreeningsForMovie(int idMovie);
+        List<ScreeningDto> GetScreeningsForMovie(int idMovie);
 
     }
 }
