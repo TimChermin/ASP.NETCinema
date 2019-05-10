@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ASPNETCinema.Logic;
+using ASPNETCinema.Models;
 using ASPNETCinema.ViewModels;
 using AutoMapper;
 using DAL;
@@ -49,7 +50,7 @@ namespace ASPNETCinema.Controllers
             
             if (ModelState.IsValid)
             {
-                _taskLogic.AddTask(task.Id, task.IdScreening, task.TaskType, task.TaskLenght, task.Screening, task.Employees);
+                _taskLogic.AddTask(_mapper.Map<TaskModel>(task));
                 return RedirectToAction("ListTasks");
             }
             return View();
@@ -89,7 +90,7 @@ namespace ASPNETCinema.Controllers
             
             if (ModelState.IsValid)
             {
-                _taskLogic.EditTask(task.Id, task.IdScreening, task.TaskType, task.TaskLenght, task.Screening, task.Employees);
+                _taskLogic.EditTask(_mapper.Map<TaskModel>(task));
                 return RedirectToAction("ListTasks");
             }
             return RedirectToAction("Error", "Home");

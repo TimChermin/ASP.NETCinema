@@ -1,4 +1,5 @@
-﻿using Interfaces;
+﻿using ASPNETCinema.Models;
+using DAL.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,17 +8,11 @@ namespace DAL
 {
     public interface IUserContext
     {
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
-        IEnumerable<IUser> GetUsers();
-        void AddUser(IUser user);
-        IUser GetUser(string name, string password);
+        List<UserDto> GetUsers();
+        void AddUser(UserModel user);
+        UserDto GetUser(string name, string password);
         int GetUserRole(int id);
-        void EditUser(IUser user);
+        void EditUser(UserModel user);
         void DeleteUser(int id);
     }
 }

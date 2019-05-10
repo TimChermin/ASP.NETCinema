@@ -1,6 +1,6 @@
-﻿using DAL;
+﻿using ASPNETCinema.Models;
+using DAL;
 using DAL.Dtos;
-using Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -29,9 +29,9 @@ namespace ASPNETCinema.DAL
             /// tasks with employees asigned.
             /// </summary>
             /// <returns></returns>
-        public IEnumerable<ITask> GetTasksAssigned()
+        public List<TaskDto> GetTasksAssigned()
         {
-            var tasks = new List<ITask>();
+            var tasks = new List<TaskDto>();
             _connection.SqlConnection.Open();
             SqlCommand command = new SqlCommand(@"SELECT Task.Id, Employee.Id, Employee.Name, Task.TaskType, Screening.DateOfScreening, Screening.TimeOfScreening, Screening.IdHall 
             FROM Employee 
@@ -59,9 +59,9 @@ namespace ASPNETCinema.DAL
         return (tasks);
         }
 
-        public IEnumerable<ITask> GetTasksNotAssigned()
+        public List<TaskDto> GetTasksNotAssigned()
         {
-            var tasks = new List<ITask>();
+            var tasks = new List<TaskDto>();
             _connection.SqlConnection.Open();
             SqlCommand command = new SqlCommand(@"SELECT Task.Id, Task.TaskType, Screening.DateOfScreening, Screening.TimeOfScreening, Screening.IdHall 
             FROM Task 
@@ -85,9 +85,9 @@ namespace ASPNETCinema.DAL
             return (tasks);
         }
 
-        public IEnumerable<ITask> GetTasks()
+        public List<TaskDto> GetTasks()
         {
-            var tasks = new List<ITask>();
+            var tasks = new List<TaskDto>();
             _connection.SqlConnection.Open();
             SqlCommand command = new SqlCommand(@"SELECT Task.Id AS IdTask, Employee.Id AS IdEmployee, Employee.Name, Task.TaskType, Screening.DateOfScreening, Screening.TimeOfScreening, Screening.IdHall 
             FROM Employee 
@@ -117,7 +117,7 @@ namespace ASPNETCinema.DAL
         }
 
 
-        public void AddTask(ITask task)
+        public void AddTask(TaskModel task)
         {
             _connection.SqlConnection.Open();
             SqlCommand command = new SqlCommand("INSERT INTO Task OUTPUT Inserted.Id VALUES (@IdScreening, @TaskType)", _connection.SqlConnection);
@@ -127,7 +127,7 @@ namespace ASPNETCinema.DAL
             _connection.SqlConnection.Close();
         }
 
-        public ITask GetTaskById(int id)
+        public TaskDto GetTaskById(int id)
         {
             _connection.SqlConnection.Open();
 
@@ -151,7 +151,7 @@ namespace ASPNETCinema.DAL
         return null;
         }
 
-        public void EditTask(ITask task)
+        public void EditTask(TaskModel task)
         {
             _connection.SqlConnection.Open();
 

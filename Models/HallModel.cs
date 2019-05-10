@@ -1,12 +1,11 @@
-﻿using Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ASPNETCinema.Models
 {
-    public class HallModel : IHall
+    public class HallModel
     {
         public HallModel()
         {
@@ -19,6 +18,6 @@ namespace ASPNETCinema.Models
         public int SeatsTaken { get; set; }
         public string ScreenType { get; set; }
         public decimal Price { get; set; }
-        public List<IScreening> Screenings { get; set; }
+        public List<ScreeningModel> Screenings { get; set; }
     }
 }

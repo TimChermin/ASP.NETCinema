@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using ASPNETCinema.DAL;
-using Interfaces;
 using ASPNETCinema.Models;
+using AutoMapper;
 using DAL.Repository;
 using LogicLayer.Interfaces;
 
@@ -12,27 +12,23 @@ namespace ASPNETCinema.Logic
     public class EmployeeLogic: IEmployeeLogic
     {
         private EmployeeRepository Repository { get; }
+        private readonly IMapper _mapper;
 
-        public EmployeeLogic(IEmployeeContext context)
+        public EmployeeLogic(IEmployeeContext context, IMapper mapper)
         {
             Repository = new EmployeeRepository(context);
+            _mapper = mapper;
+        }
+        
+        public EmployeeModel GetEmployeeById(int id)
+        {
+            return _mapper.Map<EmployeeModel>(Repository.GetEmployeeById(id));
+            
         }
 
-        //other things
-        //details
-        //List
-        //Add
-        //Edit
-        //Delete
-
-        public IEmployee GetEmployeeById(int id)
+        public List<EmployeeModel> GetEmployees()
         {
-            return Repository.GetEmployeeById(id);
-        }
-
-        public IEnumerable<IEmployee> GetEmployees()
-        {
-            return Repository.GetEmployees();
+            return _mapper.Map<List<EmployeeModel>>(Repository.GetEmployees());
         }
 
         public void AddEmployee(int id, string name)

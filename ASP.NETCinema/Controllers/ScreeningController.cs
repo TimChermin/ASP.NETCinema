@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ASPNETCinema.Logic;
+using ASPNETCinema.Models;
 using ASPNETCinema.ViewModels;
 using AutoMapper;
 using DAL;
-using Interfaces;
 using LogicLayer.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -34,7 +34,6 @@ namespace ASPNETCinema.Controllers
 
         public ActionResult ListScreenings()
         {
-            
             List<ScreeningViewModel> screenings = new List<ScreeningViewModel>();
             foreach (var screening in _screeningLogic.GetScreenings())
             {
@@ -48,19 +47,8 @@ namespace ASPNETCinema.Controllers
         {
             
             List<ScreeningViewModel> screenings = new List<ScreeningViewModel>();
-            foreach (var screening in _screeningLogic.GetScreenings())
-            {
-                screenings.Add(new ScreeningViewModel
-                {
-                    Id = screening.Id,
-                    Movie = screening.Movie,
-                    Hall = screening.Hall,
-                    DateOfScreening = screening.DateOfScreening,
-                    TimeOfScreening = screening.TimeOfScreening,
-                    Movies = screening.Movies,
-                    Halls = screening.Halls
-                });
-            }
+
+            screenings = _mapper.Map<List<ScreeningViewModel>>(_screeningLogic.GetScreenings());
             return View(screenings[0]);
         }
 
@@ -74,7 +62,7 @@ namespace ASPNETCinema.Controllers
             {
                 if (_screeningLogic.IsThisDateAndTimeAvailable(screening.HallId, screening.DateOfScreening, screening.TimeOfScreening, screening.MovieId, screening.Id))
                 {
-                    _screeningLogic.AddScreening(screening.Id, screening.MovieId, screening.HallId, screening.DateOfScreening, screening.TimeOfScreening);
+                    _screeningLogic.AddScreening(_mapper.Map<ScreeningModel>(screening));
                     return RedirectToAction("ListScreenings");
                 }
                 ModelState.AddModelError("TimeOfScreening", "Another movie is already showing in this hall at this time");
@@ -116,7 +104,7 @@ namespace ASPNETCinema.Controllers
             
             if (ModelState.IsValid && _screeningLogic.IsThisDateAndTimeAvailable(screening.HallId, screening.DateOfScreening, screening.TimeOfScreening, screening.MovieId, screening.Id))
             {
-                _screeningLogic.EditScreening(screening.Id, screening.MovieId, screening.HallId, screening.DateOfScreening, screening.TimeOfScreening);
+                _screeningLogic.EditScreening(_mapper.Map<ScreeningModel>(screening));
                 return RedirectToAction("ListScreenings");
             }
             else

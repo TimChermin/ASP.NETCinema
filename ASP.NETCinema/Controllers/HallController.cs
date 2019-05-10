@@ -7,7 +7,6 @@ using ASPNETCinema.Models;
 using ASPNETCinema.ViewModels;
 using AutoMapper;
 using DAL;
-using Interfaces;
 using LogicLayer.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -61,7 +60,7 @@ namespace ASPNETCinema.Controllers
             
             if (ModelState.IsValid)
             {
-                _hallLogic.AddHall(hall.Id, hall.Price, hall.ScreenType, hall.Seats, hall.SeatsTaken);
+                _hallLogic.AddHall(_mapper.Map<HallModel>(hall));
                 return RedirectToAction("ListHalls");
             }
             return RedirectToAction("Error", "Home");
@@ -87,7 +86,7 @@ namespace ASPNETCinema.Controllers
             
             if (ModelState.IsValid)
             {
-                _hallLogic.EditHall(hall.Id, hall.Price, hall.ScreenType, hall.Seats, hall.SeatsTaken);
+                _hallLogic.EditHall(_mapper.Map<HallModel>(hall));
                 return RedirectToAction("ListHalls");
             }
             return RedirectToAction("Error", "Home");

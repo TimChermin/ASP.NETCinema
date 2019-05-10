@@ -7,8 +7,8 @@ using System.Data.SqlClient;
 using ASPNETCinema.DAL;
 using DAL.Repository;
 using DAL;
-using Interfaces;
 using Models.Interfaces;
+using AutoMapper;
 
 namespace ASPNETCinema.Logic
 {
@@ -17,10 +17,12 @@ namespace ASPNETCinema.Logic
         private MovieRepository Repository { get; }
         public DateTime ScreeningDate { get; set; }
         public string ScreeningFilter { get; set; }
+        private IMapper _mapper;
 
-        public MovieLogic(IMovieContext context)
+        public MovieLogic(IMovieContext context, IMapper mapper)
         {
             Repository = new MovieRepository(context);
+            _mapper = mapper;
         }
         
         //List
@@ -30,35 +32,35 @@ namespace ASPNETCinema.Logic
         //Delete
         //other things
 
-        public List<IMovie> GetAndAddScreeningsToMovie(List<IMovie> movies)
+        public List<MovieModel> GetAndAddScreeningsToMovie(List<MovieModel> movies)
         {
-            var moviesWithScreenings = new List<IMovie>();
+            var moviesWithScreenings = new List<MovieModel>();
             foreach (var movie in movies)
             {
-                movie.Screenings = Repository.GetScreeningsForMovie(movie.Id);
+                movie.Screenings = _mapper.Map<List<ScreeningModel>>(Repository.GetScreeningsForMovie(movie.Id));
                 moviesWithScreenings.Add(movie);
             }
             return moviesWithScreenings;
         }
 
 
-        public IMovie GetMovieById(int id)
+        public MovieModel GetMovieById(int id)
         {
-            var movies = new List<IMovie>();
+            var movies = new List<MovieModel>();
             if (Repository.GetMovieById(id) == null)
             {
                 return null;
             }
-            movies.Add(Repository.GetMovieById(id));
+            movies.Add(_mapper.Map<MovieModel>(Repository.GetMovieById(id)));
             ScreeningDate = new DateTime(1800, 2, 3);
             movies = GetAndAddScreeningsToMovie(movies);
             return movies[0];
         }
 
-        public IEnumerable<IMovie> GetMovies(string orderBy)
+        public List<MovieModel> GetMovies(string orderBy)
         {
-            var movies = new List<IMovie>();
-            movies = Repository.GetMovies(orderBy).ToList();
+            var movies = new List<MovieModel>();
+            movies = _mapper.Map<List<MovieModel>>(Repository.GetMovies(orderBy));
             if (ScreeningFilter == "" || ScreeningFilter == null)
             {
                 ScreeningDate = DateTime.Today;
@@ -84,24 +86,13 @@ namespace ASPNETCinema.Logic
             return movies;
         }
 
-        public void AddMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString, string bannerImageString)
+        public void AddMovie(MovieModel movie)
         {
-            var _movie = new MovieModel
-            { Id = id, Name = name, Description = description, ReleaseDate = releaseDate,
-              LastScreeningDate = lastScreeningDate, MovieType = movieType,
-              MovieLenght = movieLenght, ImageString = imageString,
-                BannerImageString = bannerImageString
-            };
-            Repository.AddMovie(_movie);
+            Repository.AddMovie(movie);
         }
 
-        public void EditMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString, string bannerImageString)
+        public void EditMovie(MovieModel movie)
         {
-            var movie = new MovieModel
-            { Id = id,Name = name,Description = description,ReleaseDate = releaseDate,
-              LastScreeningDate = lastScreeningDate,MovieType = movieType,
-              MovieLenght = movieLenght, ImageString = imageString, BannerImageString = bannerImageString
-            };
             Repository.EditMovie(movie);
         }
 

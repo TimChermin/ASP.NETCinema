@@ -12,6 +12,7 @@ using DAL;
 using ASPNETCinema.ViewModels;
 using AutoMapper;
 using LogicLayer.Interfaces;
+using ASPNETCinema.Models;
 
 namespace ASPNETCinema.Controllers
 {
@@ -79,7 +80,8 @@ namespace ASPNETCinema.Controllers
             
             if (ModelState.IsValid)
             {
-                _userLogic.AddUser(user.Id, user.Name, user.Password, user.ConfirmPassword, user.Administrator);
+
+                _userLogic.AddUser(_mapper.Map<UserModel>(user));
                 
                 await LoginUser(user);
                 return RedirectToAction("ListMovies", "Movie");

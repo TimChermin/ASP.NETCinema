@@ -1,4 +1,4 @@
-﻿using ASPNETCinema.Models;
+﻿
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -36,7 +36,7 @@ namespace ASPNETCinema.ViewModels
         [Required(ErrorMessage = "The Price field is required.")]
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
-        public List<ScreeningModel> Screenings { get; set; }
+        public List<ScreeningViewModel> Screenings { get; set; }
 
 
 
