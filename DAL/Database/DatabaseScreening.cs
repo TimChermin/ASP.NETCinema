@@ -1,6 +1,6 @@
-﻿using DAL;
+﻿using ASPNETCinema.Models;
+using DAL;
 using DAL.Dtos;
-using Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -25,11 +25,11 @@ namespace ASPNETCinema.DAL
         //Edit
         //Delete
 
-        public IEnumerable<IScreening> GetScreenings()
+        public List<ScreeningDto> GetScreenings()
         {
             _connection.SqlConnection.Open();
 
-            var screenings = new List<IScreening>();
+            var screenings = new List<ScreeningDto>();
             SqlCommand command = new SqlCommand("SELECT Id, IdMovie, IdHall, DateOfScreening, TimeOfScreening FROM Screening", _connection.SqlConnection);
             
             using (SqlDataReader reader = command.ExecuteReader())
@@ -53,7 +53,7 @@ namespace ASPNETCinema.DAL
         }
 
 
-        public void AddScreening(IScreening screening)
+        public void AddScreening(ScreeningModel screening)
         {
             _connection.SqlConnection.Open();
 
@@ -66,7 +66,7 @@ namespace ASPNETCinema.DAL
             _connection.SqlConnection.Close();
         }
 
-        public void EditScreening(IScreening screening)
+        public void EditScreening(ScreeningModel screening)
         {
             _connection.SqlConnection.Open();
             SqlCommand command = new SqlCommand(@"UPDATE Screening SET IdMovie = @IdMovie, IdHall = @IdHall, DateOfScreening = @DateOfScreening, 
@@ -90,7 +90,7 @@ namespace ASPNETCinema.DAL
             _connection.SqlConnection.Close();
         }
 
-        public IScreening GetScreeningById(int id)
+        public ScreeningDto GetScreeningById(int id)
         {
             _connection.SqlConnection.Open();
 
@@ -116,25 +116,25 @@ namespace ASPNETCinema.DAL
             return null;
         }
 
-        public IHall GetHall(int idHall)
+        public HallDto GetHall(int idHall)
         {
             DatabaseHall databaseHall = new DatabaseHall(_connection);
             return databaseHall.GetHallById(idHall);
         }
 
-        public IMovie GetMovie(int idMovie)
+        public MovieDto GetMovie(int idMovie)
         {
             DatabaseMovie databaseMovie = new DatabaseMovie(_connection);
             return databaseMovie.GetMovieById(idMovie);
         }
 
-        public IEnumerable<IMovie> GetMovies()
+        public List<MovieDto> GetMovies()
         {
             DatabaseMovie databaseMovie = new DatabaseMovie(_connection);
             return databaseMovie.GetMovies(null);
         }
 
-        public IEnumerable<IHall> GetHalls()
+        public List<HallDto> GetHalls()
         {
             DatabaseHall databaseHall = new DatabaseHall(_connection);
             return databaseHall.GetHalls();

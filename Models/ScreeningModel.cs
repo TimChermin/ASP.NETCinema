@@ -1,5 +1,4 @@
-﻿using Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ASPNETCinema.Models
 {
-    public class ScreeningModel : IScreening
+    public class ScreeningModel
     {
         public ScreeningModel()
         {
@@ -19,11 +18,11 @@ namespace ASPNETCinema.Models
         public int HallId { get; set; }
         public DateTime DateOfScreening { get; set; }
         public TimeSpan TimeOfScreening { get; set; }
-        public IMovie Movie { get; set; }
-        public IHall Hall { get; set; }
-        public ITask Task { get; set; }
+        public MovieModel Movie { get; set; }
+        public HallModel Hall { get; set; }
+        public TaskModel Task { get; set; }
 
-        public IEnumerable<IMovie> Movies { get; set; }
-        public IEnumerable<IHall> Halls { get; set; }
+        public List<MovieModel> Movies { get; set; }
+        public List<HallModel> Halls { get; set; }
     }
 }

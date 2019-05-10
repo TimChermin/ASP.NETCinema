@@ -1,12 +1,11 @@
-﻿using Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ASPNETCinema.Models
 {
-    public class EmployeeModel : IEmployee
+    public class EmployeeModel
     {
         public EmployeeModel(int id, string name)
         {

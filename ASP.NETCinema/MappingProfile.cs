@@ -1,7 +1,6 @@
 ﻿using ASPNETCinema.Models;
 using ASPNETCinema.ViewModels;
 using AutoMapper;
-using Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,7 +21,6 @@ namespace ASPNETCinema
 
             CreateMap<MovieViewModel, MovieModel>();
             CreateMap<MovieModel, MovieViewModel>();
-            CreateMap<IMovie, MovieViewModel>();
 
             CreateMap<ScreeningViewModel, ScreeningModel>();
             CreateMap<ScreeningModel, ScreeningViewModel>();

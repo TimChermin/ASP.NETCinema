@@ -7,10 +7,10 @@ using ASPNETCinema.Logic;
 using Microsoft.AspNetCore.Authorization;
 using ASPNETCinema.ViewModels;
 using DAL;
-using Interfaces;
 using static aMVCLayer.Enums.MovieType;
 using AutoMapper;
 using Models.Interfaces;
+using ASPNETCinema.Models;
 
 namespace ASPNETCinema.Controllers
 {
@@ -70,8 +70,7 @@ namespace ASPNETCinema.Controllers
         {
             if (_movieLogic.DoesThisMovieExist(movie.Name) == false && movie.ReleaseDate <= movie.LastScreeningDate)
             {
-                _movieLogic.AddMovie(movie.Id, movie.Name, movie.Description, movie.ReleaseDate, movie.LastScreeningDate,
-                movie.MovieType, movie.MovieLenght, movie.ImageString, movie.BannerImageString);
+                _movieLogic.AddMovie(_mapper.Map<MovieModel>(movie));
                 return RedirectToAction("ListMovies");
             }
             else if (_movieLogic.DoesThisMovieExist(movie.Name) == true)
@@ -87,8 +86,7 @@ namespace ASPNETCinema.Controllers
             if (_movieLogic.GetMovieById(id) != null)
             {
                 var movie = _movieLogic.GetMovieById(id);
-                var viewMovie = _mapper.Map<MovieViewModel>(movie);
-                return View(viewMovie);
+                return View(_mapper.Map<MovieViewModel>(movie));
             }
             return RedirectToAction("Error", "Home");
         }
@@ -103,8 +101,7 @@ namespace ASPNETCinema.Controllers
             if (_movieLogic.GetMovieById(id) != null)
             {
                 var movie = _movieLogic.GetMovieById(id);
-                var viewMovie = _mapper.Map<MovieViewModel>(movie);
-                return View(viewMovie);
+                return View(_mapper.Map<MovieViewModel>(movie));
             }
             return RedirectToAction("Error", "Home");
         }
@@ -114,9 +111,7 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult EditMovie(MovieViewModel movie)
         {
-            
-            _movieLogic.EditMovie(movie.Id, movie.Name, movie.Description, movie.ReleaseDate, movie.LastScreeningDate,
-                movie.MovieType, movie.MovieLenght, movie.ImageString, movie.BannerImageString);
+            _movieLogic.EditMovie(_mapper.Map<MovieModel>(movie));
             return RedirectToAction("DetailsMovie", new { id = movie.Id });
         }
 
@@ -128,8 +123,7 @@ namespace ASPNETCinema.Controllers
             if (_movieLogic.GetMovieById(id) != null)
             {
                 var movie = _movieLogic.GetMovieById(id);
-                var viewMovie = _mapper.Map<MovieViewModel>(movie);
-                return View(viewMovie);
+                return View(_mapper.Map<MovieViewModel>(movie));
             }
             return RedirectToAction("Error", "Home");
         }
@@ -141,7 +135,6 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult DeleteMovie(MovieViewModel movie)
         {
-            
             _movieLogic.DeleteMovie(movie.Id);
             return RedirectToAction("ListMovies");
         }

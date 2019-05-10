@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Security.Claims;
 using DAL.Repository;
 using DAL;
-using Interfaces;
 using LogicLayer;
 using LogicLayer.Interfaces;
 
@@ -31,7 +30,7 @@ namespace ASPNETCinema.Logic
         //Delete
         
 
-        public IUser GetUser(string name, string password)
+        public UserModel GetUser(string name, string password)
         {
             var users = Repository.GetUsers();
             foreach (var user in users)

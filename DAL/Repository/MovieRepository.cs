@@ -1,4 +1,6 @@
-﻿using Interfaces;
+﻿
+using ASPNETCinema.Models;
+using DAL.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,27 +23,27 @@ namespace DAL.Repository
         //Edit
         //Delete
 
-        public IEnumerable<IScreening> GetScreeningsForMovie(int idMovie)
+        public List<ScreeningDto> GetScreeningsForMovie(int idMovie)
         {
             return _context.GetScreeningsForMovie(idMovie);
         }
 
-        public IEnumerable<IMovie> GetMovies(string orderBy)
+        public List<MovieDto> GetMovies(string orderBy)
         {
             return _context.GetMovies(orderBy);
         }
 
-        public void AddMovie(IMovie movie)
+        public void AddMovie(MovieModel movie)
         {
             _context.AddMovie(movie);
         }
 
-        public IMovie GetMovieById(int id)
+        public MovieDto GetMovieById(int id)
         {
             return _context.GetMovieById(id);
         }
 
-        public void EditMovie(IMovie movie)
+        public void EditMovie(MovieModel movie)
         {
             _context.EditMovie(movie);
         }

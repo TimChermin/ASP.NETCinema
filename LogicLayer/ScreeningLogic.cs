@@ -2,7 +2,6 @@
 using ASPNETCinema.Models;
 using DAL;
 using DAL.Repository;
-using Interfaces;
 using LogicLayer.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -15,7 +14,7 @@ namespace ASPNETCinema.Logic
     {
         //List<IScreening> screeningsWithMovies;
         private ScreeningRepository Repository { get; }
-        List<IScreening> Screenings = new List<IScreening>();
+        List<ScreeningModel> Screenings = new List<ScreeningModel>();
 
         public ScreeningLogic(IScreeningContext context)
         {
@@ -28,9 +27,9 @@ namespace ASPNETCinema.Logic
         //Edit
         //Delete
 
-        public IScreening GetScreeningById(int id)
+        public ScreeningModel GetScreeningById(int id)
         {
-            var screenings = new List<IScreening>();
+            var screenings = new List<ScreeningModel>();
             if (Repository.GetScreeningById(id) == null)
             {
                 return null;
@@ -42,9 +41,9 @@ namespace ASPNETCinema.Logic
         }
 
 
-        public List<IScreening> GetAndAddMoviesToScreenings(List<IScreening> screenings)
+        public List<ScreeningModel> GetAndAddMoviesToScreenings(List<ScreeningModel> screenings)
         {
-            var screeningsWithMovies = new List<IScreening>();
+            var screeningsWithMovies = new List<ScreeningModel>();
             foreach (var screening in screenings)
             {
                 screening.Movie = Repository.GetMovie(screening.MovieId);
@@ -54,9 +53,9 @@ namespace ASPNETCinema.Logic
             return screeningsWithMovies;
         }
 
-        public List<IScreening> GetAndAddHallsToScreenings(List<IScreening> screenings)
+        public List<ScreeningModel> GetAndAddHallsToScreenings(List<ScreeningModel> screenings)
         {
-            var screeningsWithHalls = new List<IScreening>();
+            var screeningsWithHalls = new List<ScreeningModel>();
             foreach (var screening in screenings)
             {
                 screening.Hall = Repository.GetHall(screening.HallId);
@@ -66,9 +65,9 @@ namespace ASPNETCinema.Logic
             return screeningsWithHalls;
         }
 
-        public IEnumerable<IScreening> GetScreenings()
+        public IEnumerable<ScreeningModel> GetScreenings()
         {
-            var screenings = new List<IScreening>();
+            var screenings = new List<ScreeningModel>();
             screenings = Repository.GetScreenings().ToList();
             screenings = GetAndAddMoviesToScreenings(screenings);
             screenings = GetAndAddHallsToScreenings(screenings);

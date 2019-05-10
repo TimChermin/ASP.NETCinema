@@ -1,4 +1,5 @@
-﻿using Interfaces;
+﻿using ASPNETCinema.Models;
+using ASPNETCinema.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,10 +11,10 @@ namespace Models.Interfaces
         string ScreeningFilter { get; set; }
 
         bool DoesThisMovieExist(string name);
-        IEnumerable<IMovie> GetMovies(string orderBy);
-        void AddMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString, string bannerImageString);
-        IMovie GetMovieById(int id);
-        void EditMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString, string bannerImageString);
+        List<MovieModel> GetMovies(string orderBy);
+        void AddMovie(MovieModel movie);
+        MovieModel GetMovieById(int id);
+        void EditMovie(MovieModel movie);
         void DeleteMovie(int id);
         
     }

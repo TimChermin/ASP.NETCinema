@@ -7,7 +7,6 @@ using System.Data.SqlClient;
 using ASPNETCinema.DAL;
 using DAL.Repository;
 using DAL;
-using Interfaces;
 using Models.Interfaces;
 
 namespace ASPNETCinema.Logic
@@ -30,9 +29,9 @@ namespace ASPNETCinema.Logic
         //Delete
         //other things
 
-        public List<IMovie> GetAndAddScreeningsToMovie(List<IMovie> movies)
+        public List<MovieModel> GetAndAddScreeningsToMovie(List<MovieModel> movies)
         {
-            var moviesWithScreenings = new List<IMovie>();
+            var moviesWithScreenings = new List<MovieModel>();
             foreach (var movie in movies)
             {
                 movie.Screenings = Repository.GetScreeningsForMovie(movie.Id);
@@ -42,9 +41,9 @@ namespace ASPNETCinema.Logic
         }
 
 
-        public IMovie GetMovieById(int id)
+        public MovieModel GetMovieById(int id)
         {
-            var movies = new List<IMovie>();
+            var movies = new List<MovieModel>();
             if (Repository.GetMovieById(id) == null)
             {
                 return null;
@@ -55,9 +54,9 @@ namespace ASPNETCinema.Logic
             return movies[0];
         }
 
-        public IEnumerable<IMovie> GetMovies(string orderBy)
+        public List<MovieModel> GetMovies(string orderBy)
         {
-            var movies = new List<IMovie>();
+            var movies = new List<MovieModel>();
             movies = Repository.GetMovies(orderBy).ToList();
             if (ScreeningFilter == "" || ScreeningFilter == null)
             {
@@ -84,24 +83,13 @@ namespace ASPNETCinema.Logic
             return movies;
         }
 
-        public void AddMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString, string bannerImageString)
+        public void AddMovie(MovieModel movie)
         {
-            var _movie = new MovieModel
-            { Id = id, Name = name, Description = description, ReleaseDate = releaseDate,
-              LastScreeningDate = lastScreeningDate, MovieType = movieType,
-              MovieLenght = movieLenght, ImageString = imageString,
-                BannerImageString = bannerImageString
-            };
-            Repository.AddMovie(_movie);
+            Repository.AddMovie(movie);
         }
 
-        public void EditMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString, string bannerImageString)
+        public void EditMovie(MovieModel movie)
         {
-            var movie = new MovieModel
-            { Id = id,Name = name,Description = description,ReleaseDate = releaseDate,
-              LastScreeningDate = lastScreeningDate,MovieType = movieType,
-              MovieLenght = movieLenght, ImageString = imageString, BannerImageString = bannerImageString
-            };
             Repository.EditMovie(movie);
         }
 

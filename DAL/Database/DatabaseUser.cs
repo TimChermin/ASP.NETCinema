@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using ASPNETCinema.Models;
 using System.Data.SqlClient;
 using DAL;
-using Interfaces;
 using DAL.Dtos;
 
 namespace ASPNETCinema.DAL
@@ -27,7 +26,7 @@ namespace ASPNETCinema.DAL
         //Delete
 
 
-        public IEnumerable<IUser> GetUsers()
+        public List<UserDto> GetUsers()
         {
             _connection.SqlConnection.Open();
             var users = new List<UserDto>();
@@ -52,7 +51,7 @@ namespace ASPNETCinema.DAL
             return users;
         }
 
-        public void AddUser(IUser user)
+        public void AddUser(UserModel user)
         {
             _connection.SqlConnection.Open();
 
@@ -64,7 +63,7 @@ namespace ASPNETCinema.DAL
             _connection.SqlConnection.Close();
         }
 
-        public IUser GetUser(string name, string password)
+        public UserDto GetUser(string name, string password)
         {
             _connection.SqlConnection.Open();
             var users = new List<UserModel>();
@@ -91,7 +90,7 @@ namespace ASPNETCinema.DAL
             return null;
         }
 
-        public void EditUser(IUser user)
+        public void EditUser(UserModel user)
         {
             _connection.SqlConnection.Open();
 

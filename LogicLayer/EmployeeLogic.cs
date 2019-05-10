@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using ASPNETCinema.DAL;
-using Interfaces;
 using ASPNETCinema.Models;
 using DAL.Repository;
 using LogicLayer.Interfaces;
@@ -17,20 +16,13 @@ namespace ASPNETCinema.Logic
         {
             Repository = new EmployeeRepository(context);
         }
-
-        //other things
-        //details
-        //List
-        //Add
-        //Edit
-        //Delete
-
-        public IEmployee GetEmployeeById(int id)
+        
+        public EmployeeModel GetEmployeeById(int id)
         {
             return Repository.GetEmployeeById(id);
         }
 
-        public IEnumerable<IEmployee> GetEmployees()
+        public List<EmployeeModel> GetEmployees()
         {
             return Repository.GetEmployees();
         }

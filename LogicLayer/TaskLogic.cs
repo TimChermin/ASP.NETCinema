@@ -2,7 +2,6 @@
 using ASPNETCinema.Models;
 using DAL;
 using DAL.Repository;
-using Interfaces;
 using LogicLayer.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -26,14 +25,14 @@ namespace ASPNETCinema.Logic
         //Edit
         //Delete
 
-        public ITask GetTaskById(int id)
+        public TaskModel GetTaskById(int id)
         {
             return Repository.GetTaskById(id);
         }
 
-        public IEnumerable<ITask> GetTasks()
+        public List<TaskModel> GetTasks()
         {
-            var tasks = new List<ITask>();
+            var tasks = new List<TaskModel>();
             foreach (var task in Repository.GetTasks())
             {
                 if (task.EmployeeName == "")

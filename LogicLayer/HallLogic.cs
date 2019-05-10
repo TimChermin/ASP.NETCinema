@@ -31,12 +31,12 @@ namespace ASPNETCinema.Logic
         {
         }
 
-        public IHall GetHallById(int id)
+        public HallModel GetHallById(int id)
         {
             return Repository.GetHallById(id);
         }
 
-        public IEnumerable<IHall> GetHalls()
+        public List<HallModel> GetHalls()
         {
             return Repository.GetHalls();
         }

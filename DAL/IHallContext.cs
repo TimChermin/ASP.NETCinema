@@ -1,23 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Interfaces;
+using ASPNETCinema.Models;
+using DAL.Dtos;
 
-namespace DAL
+namespace ASPNETCinema.DAL
 {
     public interface IHallContext
     {
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
-
-        IEnumerable<IHall> GetHalls();
-        void AddHall(IHall hall);
-        IHall GetHallById(int id);
-        void EditHall(IHall hall);
+        List<HallDto> GetHalls();
+        void AddHall(HallModel hall);
+        HallDto GetHallById(int id);
+        void EditHall(HallModel hall);
         void DeleteHall(int id);
 
 

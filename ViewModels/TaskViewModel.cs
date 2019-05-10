@@ -1,5 +1,4 @@
-﻿using ASPNETCinema.Models;
-using Interfaces;
+﻿
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -25,8 +24,8 @@ namespace ASPNETCinema.ViewModels
         public string TaskType { get; set; }
         
         public TimeSpan TaskLenght { get; set; }
-        public IScreening Screening { get; set; }
-        public List<IEmployee> Employees { get; set; }
+        public ScreeningViewModel Screening { get; set; }
+        public List<EmployeeViewModel> Employees { get; set; }
 
         public int EmployeeId { get; set; }
         public string EmployeeName { get; set; }
