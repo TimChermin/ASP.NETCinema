@@ -11,18 +11,19 @@ using System.Net;
 using DAL;
 using ASPNETCinema.ViewModels;
 using AutoMapper;
+using LogicLayer.Interfaces;
 
 namespace ASPNETCinema.Controllers
 {
     public class UserController : Controller
     {
-        private readonly IUserContext _user;
+        private readonly IUserLogic _userLogic;
         private readonly IMapper _mapper;
 
-        public UserController(IUserContext user, IMapper mapper)
+        public UserController(IUserLogic userLogic, IMapper mapper)
         {
             _mapper = mapper;
-            _user = user;
+            _userLogic = userLogic;
         }
 
         [HttpGet]
@@ -39,11 +40,11 @@ namespace ASPNETCinema.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LoginUser(UserViewModel user)
         {
-            var userLogic = new UserLogic(_user);
-            if (userLogic.CheckIfThisLoginIsCorrect(user.Name, user.Password))
+            
+            if (_userLogic.CheckIfThisLoginIsCorrect(user.Name, user.Password))
             {
-                int userId = userLogic.GetUser(user.Name, user.Password).Id;
-                string userRole = userLogic.GetRoleUser(userId);
+                int userId = _userLogic.GetUser(user.Name, user.Password).Id;
+                string userRole = _userLogic.GetRoleUser(userId);
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, user.Name),
@@ -75,10 +76,10 @@ namespace ASPNETCinema.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddUser(UserViewModel user)
         {
-            var userLogic = new UserLogic(_user);
+            
             if (ModelState.IsValid)
             {
-                userLogic.AddUser(user.Id, user.Name, user.Password, user.ConfirmPassword, user.Administrator);
+                _userLogic.AddUser(user.Id, user.Name, user.Password, user.ConfirmPassword, user.Administrator);
                 
                 await LoginUser(user);
                 return RedirectToAction("ListMovies", "Movie");

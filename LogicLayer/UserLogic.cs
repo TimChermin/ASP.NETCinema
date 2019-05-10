@@ -9,10 +9,11 @@ using DAL.Repository;
 using DAL;
 using Interfaces;
 using LogicLayer;
+using LogicLayer.Interfaces;
 
 namespace ASPNETCinema.Logic
 {
-    public class UserLogic
+    public class UserLogic : IUserLogic
     {
         private UserRepository Repository { get; }
         

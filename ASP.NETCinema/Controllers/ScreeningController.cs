@@ -7,6 +7,7 @@ using ASPNETCinema.ViewModels;
 using AutoMapper;
 using DAL;
 using Interfaces;
+using LogicLayer.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,13 +15,13 @@ namespace ASPNETCinema.Controllers
 {
     public class ScreeningController : Controller
     {
-        private readonly IScreeningContext _screening;
+        private readonly IScreeningLogic _screeningLogic;
         private readonly IMapper _mapper;
         
-        public ScreeningController(IScreeningContext screening, IMapper mapper)
+        public ScreeningController(IScreeningLogic screeningLogic, IMapper mapper)
         {
             _mapper = mapper;
-            _screening = screening;
+            _screeningLogic = screeningLogic;
         }
 
         //other things
@@ -33,9 +34,9 @@ namespace ASPNETCinema.Controllers
 
         public ActionResult ListScreenings()
         {
-            var screeningLogic = new ScreeningLogic(_screening);
+            
             List<ScreeningViewModel> screenings = new List<ScreeningViewModel>();
-            foreach (var screening in screeningLogic.GetScreenings())
+            foreach (var screening in _screeningLogic.GetScreenings())
             {
                 screenings.Add( _mapper.Map<ScreeningViewModel>(screening));
             }
@@ -45,9 +46,9 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult AddScreening()
         {
-            var screeningLogic = new ScreeningLogic(_screening);
+            
             List<ScreeningViewModel> screenings = new List<ScreeningViewModel>();
-            foreach (var screening in screeningLogic.GetScreenings())
+            foreach (var screening in _screeningLogic.GetScreenings())
             {
                 screenings.Add(new ScreeningViewModel
                 {
@@ -68,12 +69,12 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult AddScreening(ScreeningViewModel screening)
         {
-            var screeningLogic = new ScreeningLogic(_screening);
+            
             if (ModelState.IsValid)
             {
-                if (screeningLogic.IsThisDateAndTimeAvailable(screening.HallId, screening.DateOfScreening, screening.TimeOfScreening, screening.MovieId, screening.Id))
+                if (_screeningLogic.IsThisDateAndTimeAvailable(screening.HallId, screening.DateOfScreening, screening.TimeOfScreening, screening.MovieId, screening.Id))
                 {
-                    screeningLogic.AddScreening(screening.Id, screening.MovieId, screening.HallId, screening.DateOfScreening, screening.TimeOfScreening);
+                    _screeningLogic.AddScreening(screening.Id, screening.MovieId, screening.HallId, screening.DateOfScreening, screening.TimeOfScreening);
                     return RedirectToAction("ListScreenings");
                 }
                 ModelState.AddModelError("TimeOfScreening", "Another movie is already showing in this hall at this time");
@@ -84,10 +85,10 @@ namespace ASPNETCinema.Controllers
         
         public ActionResult DetailsScreening(int id)
         {
-            var screeningLogic = new ScreeningLogic(_screening);
-            if (screeningLogic.GetScreeningById(id) != null)
+            
+            if (_screeningLogic.GetScreeningById(id) != null)
             {
-                var screening = screeningLogic.GetScreeningById(id);
+                var screening = _screeningLogic.GetScreeningById(id);
                 var viewScreening = _mapper.Map<ScreeningViewModel>(screening);
                 return View(viewScreening);
             }
@@ -97,10 +98,10 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult EditScreening(int id)
         {
-            var screeningLogic = new ScreeningLogic(_screening);
-            if (screeningLogic.GetScreeningById(id) != null)
+            
+            if (_screeningLogic.GetScreeningById(id) != null)
             {
-                var screening = screeningLogic.GetScreeningById(id);
+                var screening = _screeningLogic.GetScreeningById(id);
                 var viewScreening = _mapper.Map<ScreeningViewModel>(screening);
                 return View(viewScreening);
             }
@@ -112,10 +113,10 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult EditScreening(ScreeningViewModel screening)
         {
-            var screeningLogic = new ScreeningLogic(_screening);
-            if (ModelState.IsValid && screeningLogic.IsThisDateAndTimeAvailable(screening.HallId, screening.DateOfScreening, screening.TimeOfScreening, screening.MovieId, screening.Id))
+            
+            if (ModelState.IsValid && _screeningLogic.IsThisDateAndTimeAvailable(screening.HallId, screening.DateOfScreening, screening.TimeOfScreening, screening.MovieId, screening.Id))
             {
-                screeningLogic.EditScreening(screening.Id, screening.MovieId, screening.HallId, screening.DateOfScreening, screening.TimeOfScreening);
+                _screeningLogic.EditScreening(screening.Id, screening.MovieId, screening.HallId, screening.DateOfScreening, screening.TimeOfScreening);
                 return RedirectToAction("ListScreenings");
             }
             else
@@ -129,10 +130,10 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult DeleteScreening(int id)
         {
-            var screeningLogic = new ScreeningLogic(_screening);
-            if (screeningLogic.GetScreeningById(id) != null)
+            
+            if (_screeningLogic.GetScreeningById(id) != null)
             {
-                var screening = screeningLogic.GetScreeningById(id);
+                var screening = _screeningLogic.GetScreeningById(id);
                 var viewScreening = _mapper.Map<ScreeningViewModel>(screening);
                 return View(viewScreening);
             }
@@ -144,14 +145,14 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult DeleteScreening(ScreeningViewModel screening)
         {
-            var screeningLogic = new ScreeningLogic(_screening);
-            screeningLogic.DeleteScreening(screening.Id);
+            
+            _screeningLogic.DeleteScreening(screening.Id);
             return RedirectToAction("ListScreenings");
         }
 
         public ActionResult SeatSelector(ScreeningViewModel screening)
         {
-            var screeningLogic = new ScreeningLogic(_screening);
+            
             var viewScreening = _mapper.Map<ScreeningViewModel>(screening);
             return View(viewScreening);
         }

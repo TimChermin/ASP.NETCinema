@@ -3,6 +3,7 @@ using ASPNETCinema.Models;
 using DAL;
 using DAL.Repository;
 using Interfaces;
+using LogicLayer.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ASPNETCinema.Logic
 {
-    public class TaskLogic
+    public class TaskLogic : ITaskLogic
     {
         private TaskRepository Repository { get; }
 

@@ -5,10 +5,11 @@ using ASPNETCinema.DAL;
 using Interfaces;
 using ASPNETCinema.Models;
 using DAL.Repository;
+using LogicLayer.Interfaces;
 
 namespace ASPNETCinema.Logic
 {
-    public class EmployeeLogic
+    public class EmployeeLogic: IEmployeeLogic
     {
         private EmployeeRepository Repository { get; }
 

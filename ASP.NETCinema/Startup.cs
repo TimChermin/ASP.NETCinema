@@ -18,6 +18,7 @@ using DAL;
 using AutoMapper;
 using ASPNETCinema.Logic;
 using Models.Interfaces;
+using LogicLayer.Interfaces;
 
 namespace ASPNETCinema
 {
@@ -61,12 +62,18 @@ namespace ASPNETCinema
 
             //test
             services.AddScoped<IEmployeeContext, DatabaseEmployee>();
+            services.AddScoped<IEmployeeLogic, EmployeeLogic>();
             services.AddScoped<IMovieContext, DatabaseMovie>();
             services.AddScoped<IMovieLogic, MovieLogic>();
             services.AddScoped<IHallContext, DatabaseHall>();
+            services.AddScoped<IHallLogic, HallLogic>();
             services.AddScoped<IScreeningContext, DatabaseScreening>();
+            services.AddScoped<IScreeningLogic, ScreeningLogic>();
             services.AddScoped<IUserContext, DatabaseUser>();
+            services.AddScoped<IUserLogic, UserLogic>();
             services.AddScoped<ITaskContext, DatabaseTask>();
+            services.AddScoped<ITaskLogic, TaskLogic>();
+
             // Add the whole configuration object here.
             services.AddSingleton<IConfiguration>(Configuration);
             //services.AddTransient(_ => new DatabaseConnection(Configuration.GetConnectionString("ASPNETCinemaContextAZUREServer")));
