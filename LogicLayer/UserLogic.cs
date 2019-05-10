@@ -9,26 +9,20 @@ using DAL.Repository;
 using DAL;
 using LogicLayer;
 using LogicLayer.Interfaces;
+using AutoMapper;
 
 namespace ASPNETCinema.Logic
 {
     public class UserLogic : IUserLogic
     {
         private UserRepository Repository { get; }
-        
+        private IMapper _mapper;
 
-        public UserLogic(IUserContext context)
+        public UserLogic(IUserContext context, IMapper mapper)
         {
             Repository = new UserRepository(context);
+            _mapper = mapper;
         }
-
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
-        
 
         public UserModel GetUser(string name, string password)
         {
@@ -37,24 +31,17 @@ namespace ASPNETCinema.Logic
             {
                 if (name == user.Name && SecurePasswordHasher.Verify(password, user.Password) == true)
                 {
-                    return user;
+                    return _mapper.Map<UserModel>(user);
                 }
             }
             return null;
         }
 
-        public bool AddUser(int id, string name, string password, string confirmPassword, int administrator)
+        public bool AddUser(UserModel user)
         {
-            if (password == confirmPassword && password != null)
+            if (user.Password == user.ConfirmPassword && user.Password != null)
             {
-                var hash = SecurePasswordHasher.Hash(password);
-                var user = new UserModel
-                {
-                    Id = id,
-                    Name = name,
-                    Password = hash,
-                    Administrator = administrator
-                };
+                var hash = SecurePasswordHasher.Hash(user.Password);
                 Repository.AddUser(user);
                 return true;
             }

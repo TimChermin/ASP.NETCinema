@@ -1,5 +1,6 @@
 ﻿using ASPNETCinema.DAL;
 using ASPNETCinema.Models;
+using AutoMapper;
 using DAL;
 using DAL.Repository;
 using LogicLayer.Interfaces;
@@ -13,10 +14,12 @@ namespace ASPNETCinema.Logic
     public class TaskLogic : ITaskLogic
     {
         private TaskRepository Repository { get; }
+        private readonly IMapper _mapper;
 
-        public TaskLogic(ITaskContext context)
+        public TaskLogic(ITaskContext context, IMapper mapper)
         {
             Repository = new TaskRepository(context);
+            _mapper = mapper;
         }
         //other things
         //Listt
@@ -27,7 +30,7 @@ namespace ASPNETCinema.Logic
 
         public TaskModel GetTaskById(int id)
         {
-            return Repository.GetTaskById(id);
+            return _mapper.Map<TaskModel>(Repository.GetTaskById(id));
         }
 
         public List<TaskModel> GetTasks()
@@ -35,44 +38,27 @@ namespace ASPNETCinema.Logic
             var tasks = new List<TaskModel>();
             foreach (var task in Repository.GetTasks())
             {
-                if (task.EmployeeName == "")
+                var taskModel = _mapper.Map<TaskModel>(task);
+                if (taskModel.EmployeeName == "")
                 {
-                    task.EmployeeName = "Unassigned";
+                    taskModel.EmployeeName = "Unassigned";
                 }
-                if (task.TaskType == "")
+                if (taskModel.TaskType == "")
                 {
-                    task.TaskType = "No TaskType Assigned";
+                    taskModel.TaskType = "No TaskType Assigned";
                 }
-                tasks.Add(task);
+                tasks.Add(taskModel);
             }
             return tasks;
         }
 
-        public void AddTask(int id, int idScreening, string taskType, TimeSpan taskLenght, IScreening screening, List<IEmployee> employees)
+        public void AddTask(TaskModel task)
         {
-            var task = new TaskModel
-            {
-                Id = id,
-                IdScreening = idScreening,
-                TaskType = taskType,
-                TaskLenght = taskLenght,
-                Screening = screening,
-                Employees = employees
-            };
             Repository.AddTask(task);
         }
 
-        public void EditTask(int id, int idScreening, string taskType, TimeSpan taskLenght, IScreening screening, List<IEmployee> employees)
+        public void EditTask(TaskModel task)
         {
-            var task = new TaskModel
-            {
-                Id = id,
-                IdScreening = idScreening,
-                TaskType = taskType,
-                TaskLenght = taskLenght,
-                Screening = screening,
-                Employees = employees
-            };
             Repository.EditTask(task);
         }
 

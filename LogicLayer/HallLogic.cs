@@ -1,8 +1,8 @@
 ﻿using ASPNETCinema.DAL;
 using ASPNETCinema.Models;
+using AutoMapper;
 using DAL;
 using DAL.Repository;
-using Interfaces;
 using LogicLayer.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -14,56 +14,31 @@ namespace ASPNETCinema.Logic
     public class HallLogic : IHallLogic
     {
         private HallRepository Repository { get; }
+        private IMapper _mapper;
 
-        public HallLogic(IHallContext context)
+        public HallLogic(IHallContext context, IMapper mapper)
         {
             Repository = new HallRepository(context);
-        }
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
-
-
-        public HallLogic()
-        {
+            _mapper = mapper;
         }
 
         public HallModel GetHallById(int id)
         {
-            return Repository.GetHallById(id);
+            return _mapper.Map<HallModel>(Repository.GetHallById(id));
         }
 
         public List<HallModel> GetHalls()
         {
-            return Repository.GetHalls();
+            return _mapper.Map<List<HallModel>>(Repository.GetHalls());
         }
 
-        public void AddHall(int id, decimal price, string screenType, int seats, int seatsTaken)
+        public void AddHall(HallModel hall)
         {
-            var hall = new HallModel
-            {
-                Id = id,
-                Price = price,
-                ScreenType = screenType,
-                Seats = seats,
-                SeatsTaken = seatsTaken
-            };
             Repository.AddHall(hall);
         }
 
-        public void EditHall(int id, decimal price, string screenType, int seats, int seatsTaken)
+        public void EditHall(HallModel hall)
         {
-            var hall = new HallModel
-            {
-                Id = id,
-                Price = price,
-                ScreenType = screenType,
-                Seats = seats,
-                SeatsTaken = seatsTaken
-            };
             Repository.EditHall(hall);
         }
 

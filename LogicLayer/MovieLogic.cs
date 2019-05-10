@@ -8,6 +8,7 @@ using ASPNETCinema.DAL;
 using DAL.Repository;
 using DAL;
 using Models.Interfaces;
+using AutoMapper;
 
 namespace ASPNETCinema.Logic
 {
@@ -16,10 +17,12 @@ namespace ASPNETCinema.Logic
         private MovieRepository Repository { get; }
         public DateTime ScreeningDate { get; set; }
         public string ScreeningFilter { get; set; }
+        private IMapper _mapper;
 
-        public MovieLogic(IMovieContext context)
+        public MovieLogic(IMovieContext context, IMapper mapper)
         {
             Repository = new MovieRepository(context);
+            _mapper = mapper;
         }
         
         //List
@@ -34,7 +37,7 @@ namespace ASPNETCinema.Logic
             var moviesWithScreenings = new List<MovieModel>();
             foreach (var movie in movies)
             {
-                movie.Screenings = Repository.GetScreeningsForMovie(movie.Id);
+                movie.Screenings = _mapper.Map<List<ScreeningModel>>(Repository.GetScreeningsForMovie(movie.Id));
                 moviesWithScreenings.Add(movie);
             }
             return moviesWithScreenings;
@@ -48,7 +51,7 @@ namespace ASPNETCinema.Logic
             {
                 return null;
             }
-            movies.Add(Repository.GetMovieById(id));
+            movies.Add(_mapper.Map<MovieModel>(Repository.GetMovieById(id)));
             ScreeningDate = new DateTime(1800, 2, 3);
             movies = GetAndAddScreeningsToMovie(movies);
             return movies[0];
@@ -57,7 +60,7 @@ namespace ASPNETCinema.Logic
         public List<MovieModel> GetMovies(string orderBy)
         {
             var movies = new List<MovieModel>();
-            movies = Repository.GetMovies(orderBy).ToList();
+            movies = _mapper.Map<List<MovieModel>>(Repository.GetMovies(orderBy));
             if (ScreeningFilter == "" || ScreeningFilter == null)
             {
                 ScreeningDate = DateTime.Today;
