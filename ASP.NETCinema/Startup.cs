@@ -16,6 +16,8 @@ using ASPNETCinema.DAL;
 using Microsoft.VisualStudio.Web.BrowserLink;
 using DAL;
 using AutoMapper;
+using ASPNETCinema.Logic;
+using Models.Interfaces;
 
 namespace ASPNETCinema
 {
@@ -60,6 +62,7 @@ namespace ASPNETCinema
             //test
             services.AddScoped<IEmployeeContext, DatabaseEmployee>();
             services.AddScoped<IMovieContext, DatabaseMovie>();
+            services.AddScoped<IMovieLogic, MovieLogic>();
             services.AddScoped<IHallContext, DatabaseHall>();
             services.AddScoped<IScreeningContext, DatabaseScreening>();
             services.AddScoped<IUserContext, DatabaseUser>();

@@ -1,5 +1,5 @@
 ﻿CREATE PROCEDURE dbo.spMovie_DeleteMovie
-@movieId DATETIME
+@movieId int
 AS
 BEGIN 
 	DELETE Employee_Task WHERE IdTask = (SELECT Task.Id From Task WHERE Task.IdScreening = (SELECT Screening.Id FROM Screening WHERE Screening.IdMovie = @movieId))

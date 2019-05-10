@@ -1,17 +1,14 @@
-﻿
-
---(BEFORE | AFTER)_Movie_(INSERT| UPDATE | DELETE)
-
-
- 
-
-CREATE TRIGGER before_movie_delete
-ON dbo.Movie
-INSTEAD OF delete
+﻿CREATE PROCEDURE dbo.spMovie_DeleteMovie
+@movieId int
 AS
-BEGIN
-   DELETE FROM Screening WHERE 1002 = Screening.IdMovie;
-   
-   DELETE FROM Movie WHERE Movie.Id = 1002
-END
+BEGIN 
+	DELETE Employee_Task WHERE IdTask = (SELECT Task.Id From Task WHERE Task.IdScreening = (SELECT Screening.Id FROM Screening WHERE Screening.IdMovie = @movieId))
 
+	DELETE Task WHERE Task.IdScreening = (SELECT Screening.Id FROM Screening WHERE Screening.IdMovie = @movieId)
+
+	DELETE Users WHERE Users.IdScreening = (SELECT Screening.Id FROM Screening WHERE Screening.IdMovie = @movieId)
+
+	DELETE Screening WHERE Screening.IdMovie = @movieId
+
+	DELETE Movie WHERE Movie.Id = @movieId
+END

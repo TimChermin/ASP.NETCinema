@@ -7,12 +7,14 @@ namespace Models.Interfaces
 {
     public interface IMovieLogic
     {
-        IEnumerable<IMovie> GetMovies(string orderBy);
-        void AddMovie(IMovie movie);
-        IMovie GetMovieById(int id);
-        void EditMovie(IMovie movie);
-        void DeleteMovie(int id);
+        string ScreeningFilter { get; set; }
 
-        IEnumerable<IScreening> GetScreeningsForMovie(int idMovie);
+        bool DoesThisMovieExist(string name);
+        IEnumerable<IMovie> GetMovies(string orderBy);
+        void AddMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString, string bannerImageString);
+        IMovie GetMovieById(int id);
+        void EditMovie(int id, string name, string description, DateTime releaseDate, DateTime lastScreeningDate, string movieType, string movieLenght, string imageString, string bannerImageString);
+        void DeleteMovie(int id);
+        
     }
 }

@@ -8,10 +8,11 @@ using ASPNETCinema.DAL;
 using DAL.Repository;
 using DAL;
 using Interfaces;
+using Models.Interfaces;
 
 namespace ASPNETCinema.Logic
 {
-    public class MovieLogic
+    public class MovieLogic : IMovieLogic
     {
         private MovieRepository Repository { get; }
         public DateTime ScreeningDate { get; set; }
