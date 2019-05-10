@@ -13,7 +13,6 @@ namespace ASPNETCinema.Logic
 {
     public class ScreeningLogic : IScreeningLogic
     {
-        //List<IScreening> screeningsWithMovies;
         private ScreeningRepository Repository { get; }
         List<ScreeningModel> Screenings = new List<ScreeningModel>();
         private IMapper _mapper;

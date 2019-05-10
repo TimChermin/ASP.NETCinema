@@ -40,6 +40,9 @@ namespace ASPNETCinema.ViewModels
         [DataType(DataType.Time)]
         public TimeSpan TimeOfScreening { get; set; }
 
+        public List<MovieViewModel> Movies { get; set; }
+        public List<HallViewModel> Halls { get; set; }
+
         public TaskViewModel Task { get; set; }
 
 

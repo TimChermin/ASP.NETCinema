@@ -24,13 +24,6 @@ namespace ASPNETCinema.Logic
             Repository = new MovieRepository(context);
             _mapper = mapper;
         }
-        
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
-        //other things
 
         public List<MovieModel> GetAndAddScreeningsToMovie(List<MovieModel> movies)
         {

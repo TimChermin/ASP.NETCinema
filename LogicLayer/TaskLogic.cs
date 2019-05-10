@@ -21,13 +21,6 @@ namespace ASPNETCinema.Logic
             Repository = new TaskRepository(context);
             _mapper = mapper;
         }
-        //other things
-        //Listt
-        //Add
-        //details
-        //Edit
-        //Delete
-
         public TaskModel GetTaskById(int id)
         {
             return _mapper.Map<TaskModel>(Repository.GetTaskById(id));
