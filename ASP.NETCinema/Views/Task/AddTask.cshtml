@@ -19,8 +19,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="TaskType" class="control-label"></label>
-                <input asp-for="TaskType" class="form-control" />
-                <span asp-validation-for="TaskType" class="text-danger"></span>
+                <select name="TaskType" class="form-control">
+                    <option value="Cleaning">Cleaning</option>
+                    <option value="Projectionist">Projectionist</option>
+                    <option value="TicketChecking">TicketChecking</option>
+                </select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
