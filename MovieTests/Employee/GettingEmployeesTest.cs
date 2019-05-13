@@ -1,7 +1,8 @@
-﻿using ASPNETCinema.Controllers;
+﻿using ASPNETCinema;
+using ASPNETCinema.Controllers;
 using ASPNETCinema.Logic;
 using ASPNETCinema.Models;
-using Interfaces;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,20 +14,23 @@ namespace EmployeeTests
     public class GettingEmployeesTest
     {
         EmployeeLogic _employeeLogic;
+        IMapper _mapper;
         ThingEqualityComparer comparer = new ThingEqualityComparer();
-        List<IEmployee> employees = new List<IEmployee>();
-        List<IEmployee> employees2 = new List<IEmployee>();
+        List<EmployeeModel> employees = new List<EmployeeModel>();
+        List<EmployeeModel> employees2 = new List<EmployeeModel>();
 
         public GettingEmployeesTest()
         {
-            _employeeLogic = new EmployeeLogic(new EmployeeContextMock());
+            var mockMapper = new MapperConfiguration(cfg => cfg.AddProfile(new MappingProfile()));
+            _mapper = mockMapper.CreateMapper();
+            _employeeLogic = new EmployeeLogic(new EmployeeContextMock(), _mapper);
         }
 
         [Fact]
         public void Should_ReturnTheSameEmployees_WhenGettingEmployees()
         {
             //Arrange
-            var employeeLogic = new EmployeeLogic(new EmployeeContextMock());
+            var employeeLogic = new EmployeeLogic(new EmployeeContextMock(), _mapper);
             employees = employeeLogic.GetEmployees().ToList();
             employees2 = employeeLogic.GetEmployees().ToList();
 
@@ -47,9 +51,9 @@ namespace EmployeeTests
             Assert.Equal(employees.Count, matchCount);
         }
 
-        class ThingEqualityComparer : IEqualityComparer<IEmployee>
+        class ThingEqualityComparer : IEqualityComparer<EmployeeModel>
         {
-            public bool Equals(IEmployee x, IEmployee y)
+            public bool Equals(EmployeeModel x, EmployeeModel y)
             {
                 if (x == null || y == null)
                     return false;
@@ -57,7 +61,7 @@ namespace EmployeeTests
                 return (x.Id == y.Id && x.Name == y.Name);
             }
 
-            public int GetHashCode(IEmployee obj)
+            public int GetHashCode(EmployeeModel obj)
             {
                 return obj.GetHashCode();
             }

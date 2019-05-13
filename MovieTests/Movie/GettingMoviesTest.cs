@@ -1,10 +1,11 @@
+using ASPNETCinema;
 using ASPNETCinema.Controllers;
 using ASPNETCinema.Logic;
-using Interfaces;
+using ASPNETCinema.Models;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnitTests.Movie.Dtos;
 using UnitTests.Movie.MockContext;
 using Xunit;
 
@@ -13,20 +14,23 @@ namespace MovieTests
     public class GettingMoviesTest
     {
         MovieLogic _movieLogic;
+        IMapper _mapper;
         ThingEqualityComparer comparer = new ThingEqualityComparer();
         string orderBy = "";
-        List<IMovie> movies = new List<IMovie>();
-        List<IMovie> movies2 = new List<IMovie>();
+        List<MovieModel> movies = new List<MovieModel>();
+        List<MovieModel> movies2 = new List<MovieModel>();
 
         public GettingMoviesTest()
         {
-            _movieLogic = new MovieLogic(new MovieContextMock());
+            var mockMapper = new MapperConfiguration(cfg => cfg.AddProfile(new MappingProfile()));
+            _mapper = mockMapper.CreateMapper();
+            _movieLogic = new MovieLogic(new MovieContextMock(), _mapper);
         }
 
         [Fact]
         public void Should_ReturnAListOfMovies_WhenGettingMovies()
         {
-            var movieLogic = new MovieLogic(new MovieContextMock());
+            var movieLogic = new MovieLogic(new MovieContextMock(), _mapper);
             
             //var result =  movieLogic.GetAllCustomers();
             movies = movieLogic.GetMovies(orderBy).ToList();
@@ -38,7 +42,7 @@ namespace MovieTests
         [Fact]
         public void Should_ReturnAListOfMoviesInADifferentOrder_WhenGettingMovies()
         {
-            var movieLogic = new MovieLogic(new MovieContextMock());
+            var movieLogic = new MovieLogic(new MovieContextMock(), _mapper);
             //var result =  movieLogic.GetAllCustomers();
             movies = movieLogic.GetMovies(orderBy).ToList();
             orderBy = "Name";
@@ -51,10 +55,10 @@ namespace MovieTests
         [Fact]
         public void Should_AddAMovieToTheList_WhenAddingAMovie()
         {
-            var movieLogic = new MovieLogic(new MovieContextMock());
+            var movieLogic = new MovieLogic(new MovieContextMock(), _mapper);
             //var result =  movieLogic.GetAllCustomers();
             movies = movieLogic.GetMovies(orderBy).ToList();
-            movieLogic.AddMovie(3, "DFilm", "Mooie film", DateTime.Today, new DateTime(2220, 10, 3), "3D Imax", "100", "TestString", "TestString");
+            movieLogic.AddMovie(new MovieModel { Id = 3, Name = "DFilm", Description = "Mooie film", ReleaseDate = DateTime.Today, LastScreeningDate = new DateTime(2220, 10, 3), MovieType = "3D Imax", MovieLenght = "100", ImageString = "TestString", BannerImageString = "TestString" });
             movies2 = movieLogic.GetMovies(orderBy).ToList();
             
             Assert.True(movies.Count() != movies2.Count());
@@ -63,10 +67,10 @@ namespace MovieTests
         [Fact]
         public void Should_ReturnAMovieListWithAnEditedMovie_WhenEditingAMovie()
         {
-            var movieLogic = new MovieLogic(new MovieContextMock());
+            var movieLogic = new MovieLogic(new MovieContextMock(), _mapper);
             //var result =  movieLogic.GetAllCustomers();
             movies = movieLogic.GetMovies(orderBy).ToList();
-            movieLogic.EditMovie(3, "Edited", "Mooie film", DateTime.Today, new DateTime(2220, 10, 3), "3D Imax", "100", "TestString", "TestString");
+            movieLogic.EditMovie(new MovieModel { Id = 3, Name = "Edited", Description = "Mooie film", ReleaseDate = DateTime.Today, LastScreeningDate = new DateTime(2220, 10, 3), MovieType = "3D Imax", MovieLenght = "100", ImageString = "TestString", BannerImageString = "TestString" });
             movies2 = movieLogic.GetMovies(orderBy).ToList();
 
             foreach (var movie in movies)
@@ -88,9 +92,9 @@ namespace MovieTests
         [Fact]
         public void Should_ReturnAMovie_WhenGettingAMovieById()
         {
-            var movieLogic = new MovieLogic(new MovieContextMock());
-            movieLogic.AddMovie(10, "Getting", "Mooie film", DateTime.Today, new DateTime(2220, 10, 3), "3D Imax", "100", "TestString", "TestString");
-            IMovie movie = movieLogic.GetMovieById(10);
+            var movieLogic = new MovieLogic(new MovieContextMock(), _mapper);
+            movieLogic.AddMovie(new MovieModel { Id = 10, Name = "Getting", Description = "Mooie film", ReleaseDate = DateTime.Today, LastScreeningDate = new DateTime(2220, 10, 3), MovieType = "3D Imax", MovieLenght = "100", ImageString = "TestString", BannerImageString = "TestString" });
+            MovieModel movie = movieLogic.GetMovieById(10);
             
 
             Assert.Equal(10, movie.Id);
@@ -99,7 +103,7 @@ namespace MovieTests
         [Fact]
         public void Should_ReturnAMovieListWithAnDeleteMovie_WhenDeleteingAMovie()
         {
-            var movieLogic = new MovieLogic(new MovieContextMock());
+            var movieLogic = new MovieLogic(new MovieContextMock(), _mapper);
             //var result =  movieLogic.GetAllCustomers();
             movies = movieLogic.GetMovies(orderBy).ToList();
             movieLogic.DeleteMovie(3);
@@ -122,7 +126,7 @@ namespace MovieTests
 
         }
 
-        public bool AreTheyInTheSameOrder(IEnumerable<IMovie> movies, IEnumerable<IMovie> movies2)
+        public bool AreTheyInTheSameOrder(List<MovieModel> movies, List<MovieModel> movies2)
         {
             bool found;
             int movieNr = 0;
@@ -150,9 +154,9 @@ namespace MovieTests
 
 
        
-        class ThingEqualityComparer : IEqualityComparer<IMovie>
+        class ThingEqualityComparer : IEqualityComparer<MovieModel>
         {
-            public bool Equals(IMovie x, IMovie y)
+            public bool Equals(MovieModel x, MovieModel y)
             {
                 if (x == null || y == null)
                     return false;
@@ -162,7 +166,7 @@ namespace MovieTests
                     && x.ImageString == y.ImageString);
             }
 
-            public int GetHashCode(IMovie obj)
+            public int GetHashCode(MovieModel obj)
             {
                 return obj.GetHashCode();
             }

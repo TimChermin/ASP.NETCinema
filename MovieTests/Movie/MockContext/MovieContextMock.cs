@@ -1,25 +1,21 @@
-﻿using DAL;
-using Interfaces;
+﻿using ASPNETCinema.Models;
+using DAL;
+using DAL.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using UnitTests.Movie.Dtos;
+using MovieDto = DAL.Dtos.MovieDto;
 
 namespace UnitTests.Movie.MockContext
 {
     class MovieContextMock : IMovieContext
     {
-        List<IMovie> movies = new List<IMovie>();
-        List<IMovie> moviesTemp = new List<IMovie>();
+        List<MovieDto> movies = new List<MovieDto>();
+        List<MovieDto> moviesTemp = new List<MovieDto>();
 
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
-        public IEnumerable<IMovie> GetMovies(string orderBy)
+        
+        public List<MovieDto> GetMovies(string orderBy)
         {
             movies.Clear();
             foreach (var movie in moviesTemp)
@@ -30,7 +26,7 @@ namespace UnitTests.Movie.MockContext
             return movies;
         }
 
-        public List<IMovie> AddMoviesInOrderBy(List<IMovie> movies, string orderBy)
+        public List<MovieDto> AddMoviesInOrderBy(List<MovieDto> movies, string orderBy)
         {
             movies.Add(new MovieDto
             {
@@ -93,7 +89,7 @@ namespace UnitTests.Movie.MockContext
             }
             else if (orderBy == "MovieToday")
             {
-                var moviesToday = new List<IMovie>();
+                var moviesToday = new List<MovieDto>();
                 foreach (var movie in movies)
                 {
                     if (movie.ReleaseDate == DateTime.Today)
@@ -106,7 +102,7 @@ namespace UnitTests.Movie.MockContext
             return movies;
         }
 
-        public void AddMovie(IMovie movie)
+        public void AddMovie(MovieModel movie)
         {
             moviesTemp.Add(new MovieDto
             {
@@ -121,7 +117,7 @@ namespace UnitTests.Movie.MockContext
             });
         }
 
-        public void EditMovie(IMovie movie)
+        public void EditMovie(MovieModel movie)
         {
             foreach (var mov in GetMovies(null))
             {
@@ -151,7 +147,7 @@ namespace UnitTests.Movie.MockContext
             }
         }
 
-        public IMovie GetMovieById(int id)
+        public MovieDto GetMovieById(int id)
         {
             foreach (var movie in GetMovies(null))
             {
@@ -163,7 +159,7 @@ namespace UnitTests.Movie.MockContext
             return null;
         }
 
-        public IEnumerable<IScreening> GetScreeningsForMovie(int idMovie)
+        public List<ScreeningDto> GetScreeningsForMovie(int idMovie)
         {
             return null;
         }

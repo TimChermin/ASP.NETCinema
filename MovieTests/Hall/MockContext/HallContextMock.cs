@@ -1,24 +1,19 @@
-﻿using DAL;
-using Interfaces;
+﻿using ASPNETCinema.DAL;
+using ASPNETCinema.Models;
+using DAL;
+using DAL.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using UnitTests.Hall.Dtos;
 
 namespace UnitTests.Hall.MockContext
 {
     class HallContextMock : IHallContext
     {
-        List<IHall> halls = new List<IHall>();
-        List<IHall> hallsTemp = new List<IHall>();
-
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
-        public IEnumerable<IHall> GetHalls()
+        List<HallDto> halls = new List<HallDto>();
+        List<HallDto> hallsTemp = new List<HallDto>();
+        
+        public List<HallDto> GetHalls()
         {
             halls.Clear();
             foreach (var hall in hallsTemp)
@@ -29,7 +24,7 @@ namespace UnitTests.Hall.MockContext
             return halls;
         }
 
-        public List<IHall> AddHallsInOrderBy(List<IHall> halls)
+        public List<HallDto> AddHallsInOrderBy(List<HallDto> halls)
         {
             halls.Add(new HallDto
             {
@@ -69,7 +64,7 @@ namespace UnitTests.Hall.MockContext
             return halls;
         }
 
-        public void AddHall(IHall hall)
+        public void AddHall(HallModel hall)
         {
             hallsTemp.Add(new HallDto
             {
@@ -81,7 +76,7 @@ namespace UnitTests.Hall.MockContext
             });
         }
 
-        public void EditHall(IHall hall)
+        public void EditHall(HallModel hall)
         {
             foreach (var hal in GetHalls())
             {
@@ -108,7 +103,7 @@ namespace UnitTests.Hall.MockContext
             }
         }
 
-        public IHall GetHallById(int id)
+        public HallDto GetHallById(int id)
         {
             foreach (var hall in GetHalls())
             {

@@ -1,5 +1,7 @@
-﻿using ASPNETCinema.Logic;
-using Interfaces;
+﻿using ASPNETCinema;
+using ASPNETCinema.Logic;
+using ASPNETCinema.Models;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,49 +13,50 @@ namespace UserTests
     public class LoginAndRegisterUsersTest
     {
         UserLogic _userLogic;
-        ThingEqualityComparer comparer = new ThingEqualityComparer();
-        List<IUser> users = new List<IUser>();
-        List<IUser> users2 = new List<IUser>();
+        UserModel user = new UserModel();
+        UserModel user2 = new UserModel();
+        UserModel user3 = new UserModel();
+        UserModel user1 = new UserModel();
+        IMapper _mapper;
+        List<UserModel> users = new List<UserModel>();
+        List<UserModel> users2 = new List<UserModel>();
 
         public LoginAndRegisterUsersTest()
         {
-            _userLogic = new UserLogic(new UserContextMock());
+            var mockMapper = new MapperConfiguration(cfg => cfg.AddProfile(new MappingProfile()));
+            _mapper = mockMapper.CreateMapper();
+            _userLogic = new UserLogic(new UserContextMock(), _mapper);
         }
-
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
+        
 
         [Fact]
         public void Should_RegisterAnUser_WhenRegisteringAnUser()
         {
             //Arrange
-            var userLogic = new UserLogic(new UserContextMock());
+            var userLogic = new UserLogic(new UserContextMock(), _mapper);
             if (userLogic.GetUser("AddName", "AddPassword") != null)
             {
                 Assert.True(false);
             }
-            
+
             //Act
-            userLogic.AddUser(1, "AddName", "AddPassword", "AddPassword", 0);
-            var user = userLogic.GetUser("AddName", "AddPassword");
-            var user2 = userLogic.GetUser("AddName", "AddPassword");
+            UserModel user = new UserModel { Id = 1, Name = "AddName", Password = "AddPassword", ConfirmPassword = "AddPassword", Administrator = 0 };
+            UserModel user2 = new UserModel { Id = 1, Name = "AddName", Password = "AddPassword", ConfirmPassword = "AddPassword", Administrator = 0 };
+            userLogic.AddUser(user);
+            user = userLogic.GetUser("AddName", "AddPassword");
+            user2 = userLogic.GetUser("AddName", "AddPassword");
 
             //Assert
             Assert.True(user.Id == 1 && user.Name == "AddName" && user.Administrator == 0);
-            Assert.False(userLogic.AddUser(1, "AddName", "AddPassword", "NotTheSamePassword", 0));
-            Assert.False(userLogic.AddUser(1, "AddName", "NotTheSamePassword", "AddPassword", 0));
-            Assert.True(user.Equals(user2));
+            Assert.False(userLogic.AddUser(new UserModel { Id = 1, Name = "AddName", Password = "AddPassword", ConfirmPassword = "NotTheSamePassword", Administrator = 0 }));
+            Assert.False(userLogic.AddUser(new UserModel { Id = 1, Name = "AddName", Password = "NotTheSamePassword", ConfirmPassword = "AddPassword", Administrator = 0 }));
         }
 
         [Fact]
         public void Should_ReturnTrue_WhenTheLoginIsCorrect()
         {
-            var userLogic = new UserLogic(new UserContextMock());
-            userLogic.AddUser(1, "AddName", "AddPassword", "AddPassword", 0);
+            var userLogic = new UserLogic(new UserContextMock(), _mapper);
+            userLogic.AddUser(new UserModel { Id = 1, Name = "AddName", Password = "AddPassword", ConfirmPassword = "AddPassword", Administrator = 0 });
 
             Assert.True(userLogic.CheckIfThisLoginIsCorrect("AddName", "AddPassword"));
             Assert.False(userLogic.CheckIfThisLoginIsCorrect("AddName", "WRONGPASSWORD"));
@@ -63,13 +66,18 @@ namespace UserTests
         [Fact]
         public void Should_GetRoleUser_WhenGettingRoleUser()
         {
-            var userLogic = new UserLogic(new UserContextMock());
-            userLogic.AddUser(1, "RoleName", "RolePassword", "RolePassword", 1);
-            userLogic.AddUser(2, "RoleName", "RolePassword", "RolePassword", 0);
-            userLogic.AddUser(3, "RoleName", "RolePassword", "RolePassword", 2);
-            var user = userLogic.GetUser("RoleName", "RolePassword");
+            var userLogic = new UserLogic(new UserContextMock(), _mapper);
+            UserModel user = new UserModel { Id = 1, Name = "RoleName", Password = "RolePassword", ConfirmPassword = "RolePassword", Administrator = 1 };
+            UserModel user2 = new UserModel { Id = 2, Name = "RoleName", Password = "RolePassword", ConfirmPassword = "RolePassword", Administrator = 0 };
+            UserModel user3 = new UserModel { Id = 3, Name = "RoleName", Password = "RolePassword", ConfirmPassword = "RolePassword", Administrator = 2 };
+            userLogic.AddUser(user);
+            userLogic.AddUser(user2);
+            userLogic.AddUser(user3);
+
+            UserModel user1 = new UserModel();
+            user1 = userLogic.GetUser("RoleName", "RolePassword");
             
-            Assert.True(userLogic.GetRoleUser(user.Id) == "Administrator");
+            Assert.True(userLogic.GetRoleUser(user1.Id) == "Administrator");
             Assert.True(userLogic.GetRoleUser(2) == "Normal");
             Assert.True(userLogic.GetRoleUser(3) == "Employee");
             Assert.False(userLogic.GetRoleUser(1) == "Normal" || userLogic.GetRoleUser(1) == "Employee");
@@ -97,24 +105,6 @@ namespace UserTests
             Assert.False(LogicLayer.SecurePasswordHasher.Verify("SOMETHINGRANDOM4145", hash3));
             Assert.False(LogicLayer.SecurePasswordHasher.Verify("mypassword", hash3));
             Assert.False(LogicLayer.SecurePasswordHasher.Verify(hash3, hash3));
-        }
-       
-        
-
-        class ThingEqualityComparer : IEqualityComparer<IUser>
-        {
-            public bool Equals(IUser x, IUser y)
-            {
-                if (x == null || y == null)
-                    return false;
-
-                return (x.Id == y.Id && x.Name == y.Name);
-            }
-
-            public int GetHashCode(IUser obj)
-            {
-                return obj.GetHashCode();
-            }
         }
     }
 }
