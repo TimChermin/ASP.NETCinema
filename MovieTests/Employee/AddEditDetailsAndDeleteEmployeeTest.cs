@@ -1,5 +1,7 @@
-﻿using ASPNETCinema.Logic;
-using Interfaces;
+﻿using ASPNETCinema;
+using ASPNETCinema.Logic;
+using ASPNETCinema.Models;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,28 +14,23 @@ namespace EmployeeTests
     public class AddEditDetailsAndDeleteEmployeeTest
     {
         EmployeeLogic _employeeLogic;
-        ThingEqualityComparer comparer = new ThingEqualityComparer();
-        List<IEmployee> employees = new List<IEmployee>();
-        List<IEmployee> employees2 = new List<IEmployee>();
+        IMapper _mapper;
+        List<EmployeeModel> employees = new List<EmployeeModel>();
+        List<EmployeeModel> employees2 = new List<EmployeeModel>();
 
         public AddEditDetailsAndDeleteEmployeeTest()
         {
-            _employeeLogic = new EmployeeLogic(new EmployeeContextMock());
+            var mockMapper = new MapperConfiguration(cfg => cfg.AddProfile(new MappingProfile()));
+            _mapper = mockMapper.CreateMapper();
+            _employeeLogic = new EmployeeLogic(new EmployeeContextMock(), _mapper);
         }
-
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
 
         [Fact]
         public void Should_AddAnEmployeeToTheList_WhenAddingAnEmployee()
         {
             //Arrange
-            var employeeLogic = new EmployeeLogic(new EmployeeContextMock());
-            employees = employeeLogic.GetEmployees().ToList();
+            var employeeLogic = new EmployeeLogic(new EmployeeContextMock(), _mapper);
+            employees = employeeLogic.GetEmployees();
             bool found = false;
             bool count = false;
 
@@ -62,7 +59,7 @@ namespace EmployeeTests
         public void Should_GetAnEmployeeFromTheList_WhenGettingAnEmployee()
         {
             //Arrange
-            var employeeLogic = new EmployeeLogic(new EmployeeContextMock());
+            var employeeLogic = new EmployeeLogic(new EmployeeContextMock(), _mapper);
             employees = employeeLogic.GetEmployees().ToList();
             bool found = false;
             bool count = false;
@@ -90,7 +87,7 @@ namespace EmployeeTests
         public void Should_EditAnEmployeeFromTheList_WhenEditingAnEmployee()
         {
             //Arrange
-            var employeeLogic = new EmployeeLogic(new EmployeeContextMock());
+            var employeeLogic = new EmployeeLogic(new EmployeeContextMock(), _mapper);
             employees = employeeLogic.GetEmployees().ToList();
             int id = employees[0].Id;
             string name = employees[0].Name;
@@ -123,7 +120,7 @@ namespace EmployeeTests
         public void Should_DeleteAnEmployeeFromTheList_WhenDeleteingAnEmployee()
         {
             //Arrange
-            var employeeLogic = new EmployeeLogic(new EmployeeContextMock());
+            var employeeLogic = new EmployeeLogic(new EmployeeContextMock(), _mapper);
             employees = employeeLogic.GetEmployees().ToList();
             int id = employees[0].Id;
             string name = employees[0].Name;
@@ -149,24 +146,6 @@ namespace EmployeeTests
 
             Assert.False(found);
             Assert.True(count);
-        }
-
-       
-
-        class ThingEqualityComparer : IEqualityComparer<IEmployee>
-        {
-            public bool Equals(IEmployee x, IEmployee y)
-            {
-                if (x == null || y == null)
-                    return false;
-
-                return (x.Id == y.Id && x.Name == y.Name);
-            }
-
-            public int GetHashCode(IEmployee obj)
-            {
-                return obj.GetHashCode();
-            }
         }
     }
 }

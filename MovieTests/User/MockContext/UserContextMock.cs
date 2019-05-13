@@ -1,28 +1,23 @@
-﻿using DAL;
-using Interfaces;
+﻿using ASPNETCinema.Models;
+using DAL;
+using DAL.Dtos;
 using LogicLayer;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using UnitTests.User.Dtos;
+using UserDto = DAL.Dtos.UserDto;
 
 namespace UnitTests.User.MockContext
 {
     class UserContextMock : IUserContext
     {
-        List<IUser> users = new List<IUser>();
-        List<IUser> usersAdded = new List<IUser>();
+        List<UserDto> users = new List<UserDto>();
+        List<UserDto> usersAdded = new List<UserDto>();
         int delete = 0;
         int edit = 0;
         string editName = "";
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
 
-        public IEnumerable<IUser> GetUsers()
+        public List<UserDto> GetUsers()
         {
             users.Clear();
             users.Add(new UserDto
@@ -92,28 +87,28 @@ namespace UnitTests.User.MockContext
         }
 
 
-        public void AddUser(IUser user)
+        public void AddUser(UserModel user)
         {
             usersAdded.Add(new UserDto
             {
                 Id = user.Id,
                 Name = user.Name,
-                Password = user.Password,
+                Password = SecurePasswordHasher.Hash(user.Password),
                 Administrator = user.Administrator
             });
         }
 
         public void DeleteUser(int id)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
-        public void EditUser(IUser user)
+        public void EditUser(UserModel user)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
-        public IUser GetUser(string name, string password)
+        public UserDto GetUser(string name, string password)
         {
             foreach (var user in users)
             {
@@ -136,7 +131,5 @@ namespace UnitTests.User.MockContext
             }
             return -1;
         }
-
-        
     }
 }

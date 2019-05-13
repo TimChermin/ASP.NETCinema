@@ -1,28 +1,23 @@
 ﻿using ASPNETCinema.DAL;
-using Interfaces;
+using ASPNETCinema.Models;
+using DAL.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using UnitTests.Employee.Dtos;
+using EmployeeDto = DAL.Dtos.EmployeeDto;
 
 namespace UnitTests.Employee.MockContext
 {
     class EmployeeContextMock : IEmployeeContext
     {
-        List<IEmployee> employees = new List<IEmployee>();
-        List<IEmployee> employeesTemp = new List<IEmployee>();
-        List<IEmployee> employeesTempDeleted = new List<IEmployee>();
+        List<EmployeeDto> employees = new List<EmployeeDto>();
+        List<EmployeeDto> employeesTemp = new List<EmployeeDto>();
+        List<EmployeeDto> employeesTempDeleted = new List<EmployeeDto>();
         int delete = 0;
         int edit = 0;
         string editName = "";
 
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
-        public IEnumerable<IEmployee> GetEmployees()
+        public List<EmployeeDto> GetEmployees()
         {
             employees.Clear();
             SetEmployees();
@@ -56,6 +51,12 @@ namespace UnitTests.Employee.MockContext
                 Name = "DFilm"
             });
 
+            WasSomethingDeleted();
+            WasSomethingEdited();
+        }
+
+        public void WasSomethingDeleted()
+        {
             if (delete != 0)
             {
                 foreach (var employee in employees)
@@ -67,7 +68,10 @@ namespace UnitTests.Employee.MockContext
                     }
                 }
             }
+        }
 
+        public void WasSomethingEdited()
+        {
             if (edit != 0)
             {
                 foreach (var employee in employees)
@@ -79,10 +83,9 @@ namespace UnitTests.Employee.MockContext
                     }
                 }
             }
-
         }
 
-        public void AddEmployee(IEmployee employee)
+        public void AddEmployee(EmployeeModel employee)
         {
             employeesTemp.Add(new EmployeeDto
             {
@@ -104,13 +107,13 @@ namespace UnitTests.Employee.MockContext
             delete = id;
         }
 
-        public void EditEmployee(IEmployee employee)
+        public void EditEmployee(EmployeeModel employee)
         {
             edit = employee.Id;
             editName = employee.Name;
         }
 
-        public IEmployee GetEmployeeById(int id)
+        public EmployeeDto GetEmployeeById(int id)
         {
             foreach (var employee in employees)
             {
@@ -121,7 +124,5 @@ namespace UnitTests.Employee.MockContext
             }
             return null;
         }
-
-        
     }
 }

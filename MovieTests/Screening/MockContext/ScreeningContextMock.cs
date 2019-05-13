@@ -1,26 +1,21 @@
-﻿using DAL;
-using Interfaces;
+﻿using ASPNETCinema.Models;
+using DAL;
+using DAL.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using UnitTests.Movie.Dtos;
-using UnitTests.Screening.Dtos;
+using MovieDto = DAL.Dtos.MovieDto;
+using ScreeningDto = DAL.Dtos.ScreeningDto;
 
 namespace UnitTests.Screening.MockContext
 {
     class ScreeningContextMock : IScreeningContext
     {
-        List<IScreening> screenings = new List<IScreening>();
-        List<IScreening> screeningsTemp = new List<IScreening>();
-        List<IMovie> movies = new List<IMovie>();
-
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
-        public IEnumerable<IScreening> GetScreenings()
+        List<ScreeningDto> screenings = new List<ScreeningDto>();
+        List<ScreeningDto> screeningsTemp = new List<ScreeningDto>();
+        List<MovieDto> movies = new List<MovieDto>();
+        
+        public List<ScreeningDto> GetScreenings()
         {
             screenings.Clear();
             foreach (var screening in screeningsTemp)
@@ -31,7 +26,7 @@ namespace UnitTests.Screening.MockContext
             return screenings;
         }
 
-        public List<IScreening> AddScreeningsInOrderBy(List<IScreening> screenings)
+        public List<ScreeningDto> AddScreeningsInOrderBy(List<ScreeningDto> screenings)
         {
             screenings.Add(new ScreeningDto
             {
@@ -76,17 +71,17 @@ namespace UnitTests.Screening.MockContext
 
         }
 
-        public void EditScreening(IScreening screening)
+        public void EditScreening(ScreeningModel screening)
         {
 
         }
 
-        public IHall GetHall(int idHall)
+        public HallDto GetHall(int idHall)
         {
             return null;
         }
 
-        public IMovie GetMovie(int idMovie)
+        public MovieDto GetMovie(int idMovie)
         {
             foreach (var movie in GetMovies())
             {
@@ -98,7 +93,7 @@ namespace UnitTests.Screening.MockContext
             return null;
         }
 
-        public IEnumerable<IMovie> GetMovies()
+        public List<MovieDto> GetMovies()
         {
             movies.Add(new MovieDto
             {
@@ -150,7 +145,7 @@ namespace UnitTests.Screening.MockContext
             return movies;
         }
 
-        public IScreening GetScreeningById(int id)
+        public ScreeningDto GetScreeningById(int id)
         {
             foreach (var screening in GetScreenings())
             {
@@ -162,7 +157,7 @@ namespace UnitTests.Screening.MockContext
             return null;
         }
 
-        public void AddScreening(IScreening screening)
+        public void AddScreening(ScreeningModel screening)
         {
             screeningsTemp.Add(new ScreeningDto
             {
@@ -174,7 +169,7 @@ namespace UnitTests.Screening.MockContext
             });
         }
 
-        public IEnumerable<IHall> GetHalls()
+        public List<HallDto> GetHalls()
         {
             return null;
         }

@@ -1,5 +1,6 @@
-﻿using DAL;
-using Interfaces;
+﻿using ASPNETCinema.Models;
+using DAL;
+using DAL.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +9,7 @@ namespace UnitTests.Task.MockContext
 {
     class TaskContextMock : ITaskContext
     {
-        public void AddTask(ITask task)
+        public void AddTask(TaskModel task)
         {
 
         }
@@ -18,27 +19,27 @@ namespace UnitTests.Task.MockContext
 
         }
 
-        public void EditTask(ITask task)
+        public void EditTask(TaskModel task)
         {
 
         }
 
-        public ITask GetTaskById(int id)
-        {
-            return null;
-        }
-
-        public IEnumerable<ITask> GetTasks()
+        public TaskDto GetTaskById(int id)
         {
             return null;
         }
 
-        public IEnumerable<ITask> GetTasksAssigned()
+        public List<TaskDto> GetTasks()
         {
             return null;
         }
 
-        public IEnumerable<ITask> GetTasksNotAssigned()
+        public List<TaskDto> GetTasksAssigned()
+        {
+            return null;
+        }
+
+        public List<TaskDto> GetTasksNotAssigned()
         {
             return null;
         }

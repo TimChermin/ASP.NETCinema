@@ -1,11 +1,13 @@
+using ASPNETCinema;
 using ASPNETCinema.Controllers;
 using ASPNETCinema.Logic;
 using ASPNETCinema.Models;
-using Interfaces;
+using AutoMapper;
+using DAL.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnitTests.Screening.Dtos;
+using UnitTests;
 using UnitTests.Screening.MockContext;
 using Xunit;
 
@@ -14,22 +16,27 @@ namespace ScreeningTests
     public class GettingScreeningsTest
     {
         ScreeningLogic _screeningLogic;
+        IMapper _mapper;
         ThingEqualityComparer comparer = new ThingEqualityComparer();
-        List<IScreening> screenings = new List<IScreening>();
-        List<IScreening> screenings2 = new List<IScreening>();
+        List<ScreeningModel> screenings = new List<ScreeningModel>();
+        List<ScreeningModel> screenings2 = new List<ScreeningModel>();
 
         public GettingScreeningsTest()
         {
-            _screeningLogic = new ScreeningLogic(new ScreeningContextMock());
-        }
+            var mockMapper = new MapperConfiguration(cfg => cfg.AddProfile(new MappingProfile()));
+            _mapper = mockMapper.CreateMapper();
 
-        [Fact]
+            _screeningLogic = new ScreeningLogic(new ScreeningContextMock(), _mapper);
+        }
+        
+
+            [Fact]
         public void Should_ReturnAListOfScreenings_WhenLoadingScreenings()
         {
             //Arrange
-            var screeningLogic = new ScreeningLogic(new ScreeningContextMock());
-            screenings = screeningLogic.GetScreenings().ToList();
-            screenings2 = screeningLogic.GetScreenings().ToList();
+            var screeningLogic = new ScreeningLogic(new ScreeningContextMock(), _mapper);
+            screenings = _screeningLogic.GetScreenings().ToList();
+            screenings2 = _screeningLogic.GetScreenings().ToList();
 
             //Act
             Assert.True(AreTheyInTheSameOrder(screenings, screenings2));
@@ -38,10 +45,10 @@ namespace ScreeningTests
         [Fact]
         public void Should_AddAScreeningToTheList_WhenAddingAScreening()
         {
-            var screeningLogic = new ScreeningLogic(new ScreeningContextMock());
+            var screeningLogic = new ScreeningLogic(new ScreeningContextMock(), _mapper);
             //var result =  screeningLogic.GetAllCustomers();
             screenings = screeningLogic.GetScreenings().ToList();
-            screeningLogic.AddScreening(3, 3, 3, new DateTime(2020, 1, 1), new TimeSpan(1, 0, 0));
+            screeningLogic.AddScreening(new ScreeningModel { Id = 3, MovieId = 3, HallId = 3, DateOfScreening = new DateTime(2020, 1, 1), TimeOfScreening = new TimeSpan(1, 0, 0) });
             screenings2 = screeningLogic.GetScreenings().ToList();
 
             Assert.True(screenings.Count() != screenings2.Count());
@@ -50,7 +57,7 @@ namespace ScreeningTests
         [Fact]
         public void Should_NotAddAScreeningToTheList_WhenAddingAScreeningOnTheSameTimeInTheSameHall()
         {
-            var screeningLogic = new ScreeningLogic(new ScreeningContextMock());
+            var screeningLogic = new ScreeningLogic(new ScreeningContextMock(), _mapper);
             ScreeningDto screening = new ScreeningDto
             {
                 Id = 2,
@@ -76,8 +83,8 @@ namespace ScreeningTests
         [Fact]
         public void Should_ReturnAScreening_WhenGettingAScreeningById()
         {
-            var screeningLogic = new ScreeningLogic(new ScreeningContextMock());
-            ScreeningDto screening = new ScreeningDto
+            var screeningLogic = new ScreeningLogic(new ScreeningContextMock(), _mapper);
+            ScreeningModel screening = new ScreeningModel
             {
                 Id = 2,
                 MovieId = 1,
@@ -87,8 +94,8 @@ namespace ScreeningTests
             };
             Assert.True(null == screeningLogic.GetScreeningById(2));
 
-            screeningLogic.AddScreening(screening.Id, screening.MovieId, screening.HallId, screening.DateOfScreening, screening.TimeOfScreening);
-            IScreening getscreening = screeningLogic.GetScreeningById(2);
+            screeningLogic.AddScreening(screening);
+            ScreeningModel getscreening = screeningLogic.GetScreeningById(2);
 
 
             Assert.Equal(2, getscreening.Id);
@@ -97,7 +104,7 @@ namespace ScreeningTests
 
 
 
-        public bool AreTheyInTheSameOrder(IEnumerable<IScreening> screenings, IEnumerable<IScreening> screenings2)
+        public bool AreTheyInTheSameOrder(List<ScreeningModel> screenings, List<ScreeningModel> screenings2)
         {
             bool found;
             int screeningNr = 0;
@@ -124,9 +131,9 @@ namespace ScreeningTests
         }
 
 
-        class ThingEqualityComparer : IEqualityComparer<IScreening>
+        class ThingEqualityComparer : List<ScreeningModel>
         {
-            public bool Equals(IScreening x, IScreening y)
+            public bool Equals(ScreeningModel x, ScreeningModel y)
             {
                 if (x == null || y == null)
                     return false;
@@ -135,7 +142,7 @@ namespace ScreeningTests
                     && x.TimeOfScreening == y.TimeOfScreening);
             }
 
-            public int GetHashCode(IScreening obj)
+            public int GetHashCode(ScreeningModel obj)
             {
                 return obj.GetHashCode();
             }

@@ -59,8 +59,7 @@ namespace ASPNETCinema
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-
-            //test
+            
             services.AddScoped<IEmployeeContext, DatabaseEmployee>();
             services.AddScoped<IEmployeeLogic, EmployeeLogic>();
             services.AddScoped<IMovieContext, DatabaseMovie>();

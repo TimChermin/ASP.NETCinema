@@ -1,5 +1,7 @@
-﻿using ASPNETCinema.Logic;
-using Interfaces;
+﻿using ASPNETCinema;
+using ASPNETCinema.Logic;
+using ASPNETCinema.Models;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,19 +14,22 @@ namespace UnitTests.Hall
     public class GettingHallsTest
     {
         HallLogic _hallLogic;
+        IMapper _mapper;
         ThingEqualityComparer comparer = new ThingEqualityComparer();
-        List<IHall> halls = new List<IHall>();
-        List<IHall> halls2 = new List<IHall>();
+        List<HallModel> halls = new List<HallModel>();
+        List<HallModel> halls2 = new List<HallModel>();
 
         public GettingHallsTest()
         {
-            _hallLogic = new HallLogic(new HallContextMock());
+            var mockMapper = new MapperConfiguration(cfg => cfg.AddProfile(new MappingProfile()));
+            _mapper = mockMapper.CreateMapper();
+            _hallLogic = new HallLogic(new HallContextMock(), _mapper);
         }
 
         [Fact]
         public void Should_ReturnAListOfHalls_WhenGettingHalls()
         {
-            var hallLogic = new HallLogic(new HallContextMock());
+            var hallLogic = new HallLogic(new HallContextMock(), _mapper);
             
             halls = hallLogic.GetHalls().ToList();
             halls2 = hallLogic.GetHalls().ToList();
@@ -35,10 +40,10 @@ namespace UnitTests.Hall
         [Fact]
         public void Should_AddAHallToTheList_WhenAddingAHall()
         {
-            var hallLogic = new HallLogic(new HallContextMock());
+            var hallLogic = new HallLogic(new HallContextMock(), _mapper);
             //var result =  hallLogic.GetAllCustomers();
             halls = hallLogic.GetHalls().ToList();
-            hallLogic.AddHall(5, 5, "IMAX", 30, 0);
+            hallLogic.AddHall(new HallModel{ Id = 5, Price = 5, ScreenType = "IMAX", Seats = 30, SeatsTaken = 0 });
             halls2 = hallLogic.GetHalls().ToList();
 
             Assert.True(halls2[0].Id == 5 && halls2[0].Price == 5 && halls2[0].ScreenType == "IMAX" 
@@ -49,10 +54,11 @@ namespace UnitTests.Hall
         [Fact]
         public void Should_ReturnAHallListWithAnEditedHall_WhenEditingAHall()
         {
-            var hallLogic = new HallLogic(new HallContextMock());
+            var hallLogic = new HallLogic(new HallContextMock(), _mapper);
             //var result =  hallLogic.GetAllCustomers();
             halls = hallLogic.GetHalls().ToList();
-            hallLogic.EditHall(5, 5, "IMAX", 30, 0);
+
+            hallLogic.EditHall(new HallModel { Id = 5, Price = 5, ScreenType = "IMAX", Seats = 30, SeatsTaken = 0 });
             halls2 = hallLogic.GetHalls().ToList();
 
             foreach (var hall in halls)
@@ -74,9 +80,9 @@ namespace UnitTests.Hall
         [Fact]
         public void Should_ReturnAHall_WhenGettingAHallById()
         {
-            var hallLogic = new HallLogic(new HallContextMock());
-            hallLogic.AddHall(5, 5, "IMAX", 30, 0);
-            IHall hall = hallLogic.GetHallById(5);
+            var hallLogic = new HallLogic(new HallContextMock(), _mapper);
+            hallLogic.AddHall(new HallModel { Id = 5, Price = 5, ScreenType = "IMAX", Seats = 30, SeatsTaken = 0 });
+            HallModel hall = hallLogic.GetHallById(5);
 
 
             Assert.Equal(5, hall.Id);
@@ -85,7 +91,7 @@ namespace UnitTests.Hall
         [Fact]
         public void Should_ReturnAHallListWithAnDeleteHall_WhenDeleteingAHall()
         {
-            var hallLogic = new HallLogic(new HallContextMock());
+            var hallLogic = new HallLogic(new HallContextMock(), _mapper);
             halls = hallLogic.GetHalls().ToList();
             hallLogic.DeleteHall(3);
             halls2 = hallLogic.GetHalls().ToList();
@@ -108,7 +114,7 @@ namespace UnitTests.Hall
         }
 
 
-        public bool AreTheyInTheSameOrder(IEnumerable<IHall> halls, IEnumerable<IHall> halls2)
+        public bool AreTheyInTheSameOrder(IEnumerable<HallModel> halls, IEnumerable<HallModel> halls2)
         {
             bool found;
             int hallNr = 0;
@@ -136,9 +142,9 @@ namespace UnitTests.Hall
         }
 
 
-        class ThingEqualityComparer : IEqualityComparer<IHall>
+        class ThingEqualityComparer : IEqualityComparer<HallModel>
         {
-            public bool Equals(IHall x, IHall y)
+            public bool Equals(HallModel x, HallModel y)
             {
                 if (x == null || y == null)
                     return false;
@@ -147,7 +153,7 @@ namespace UnitTests.Hall
                     && x.SeatsTaken == y.SeatsTaken);
             }
 
-            public int GetHashCode(IHall obj)
+            public int GetHashCode(HallModel obj)
             {
                 return obj.GetHashCode();
             }
