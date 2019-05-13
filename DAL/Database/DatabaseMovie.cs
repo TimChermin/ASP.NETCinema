@@ -149,7 +149,6 @@ namespace ASPNETCinema.DAL
             //EXEC SelectAllCustomers City = "London";
             SqlCommand command = new SqlCommand("spMovie_DeleteMovie", _connection.SqlConnection);
             command.CommandType = System.Data.CommandType.StoredProcedure;
-            //SqlCommand command = new SqlCommand("DELETE FROM Movie WHERE Id = @Id", _connection.SqlConnection);
             command.Parameters.AddWithValue("@movieId", id);
             command.ExecuteNonQuery();
             _connection.SqlConnection.Close();
