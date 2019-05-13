@@ -1,36 +1,17 @@
 WAYY later:
 Adding seat picker.
-Deleting tasks.
-Adding Employees
-Deleting Employees
-GROUP BY
-INNER JOIN/OUTER JOIN
 
 
 Later:
-Adding Employees.
 Adding daily screenings.
 Adding ticket reserveration.
 Adding employees to tasks.
-Adding task view.
 
 
 TODO:
-Adding starting unit tests.
 
 
 ONGOING: 
-Adding tasks.
-
+When adding a Screening add the Standard tasks without the Employees with triggers
 
 FINISHED:
-Movies Add/Edit/Remove/Details.
-place everything in the right order (first add the list enz....)
-Halls Add/Edit/Remove/Details.
-adding/removeing/editing screenings
-changeing int id to object instance
-Adding halls.
-Adding users.
-Deleting screenings.
-
-Screening date logic (only specific time for now)

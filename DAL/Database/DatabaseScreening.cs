@@ -57,7 +57,7 @@ namespace ASPNETCinema.DAL
         {
             _connection.SqlConnection.Open();
 
-            SqlCommand command = new SqlCommand("INSERT INTO Screening OUTPUT Inserted.Id VALUES (@IdMovie, @IdHall, @DateOfScreening, @TimeOfScreening)", _connection.SqlConnection);
+            SqlCommand command = new SqlCommand("INSERT INTO Screening VALUES (@IdMovie, @IdHall, @DateOfScreening, @TimeOfScreening)", _connection.SqlConnection);
             command.Parameters.AddWithValue("@IdMovie", screening.MovieId);
             command.Parameters.AddWithValue("@IdHall", screening.HallId);
             command.Parameters.AddWithValue("@DateOfScreening", screening.DateOfScreening);

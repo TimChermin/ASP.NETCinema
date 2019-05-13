@@ -17,18 +17,8 @@ namespace ASPNETCinema.DAL
         {
             _connection = connection;
         }
-
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
-
-            /// <summary>
-            /// tasks with employees asigned.
-            /// </summary>
-            /// <returns></returns>
+        
+        
         public List<TaskDto> GetTasksAssigned()
         {
             var tasks = new List<TaskDto>();
@@ -120,7 +110,7 @@ namespace ASPNETCinema.DAL
         public void AddTask(TaskModel task)
         {
             _connection.SqlConnection.Open();
-            SqlCommand command = new SqlCommand("INSERT INTO Task OUTPUT Inserted.Id VALUES (@IdScreening, @TaskType)", _connection.SqlConnection);
+            SqlCommand command = new SqlCommand("INSERT INTO Task VALUES (@IdScreening, @TaskType)", _connection.SqlConnection);
             command.Parameters.AddWithValue("@IdScreening", task.IdScreening);
             command.Parameters.AddWithValue("@TaskType", task.TaskType);
             command.ExecuteNonQuery();
