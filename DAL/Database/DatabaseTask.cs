@@ -157,9 +157,8 @@ namespace ASPNETCinema.DAL
         public void DeleteTask(int id)
         {
             _connection.SqlConnection.Open();
-
-            SqlCommand command = new SqlCommand("DELETE FROM Task WHERE Id = @Id", _connection.SqlConnection);
-            command.Parameters.AddWithValue("@Id", id);
+            SqlCommand command = new SqlCommand("EXEC dbo.spTask_DeleteTask @taskId", _connection.SqlConnection);
+            command.Parameters.AddWithValue("@taskId", id);
             command.ExecuteNonQuery();
             _connection.SqlConnection.Close();
         }

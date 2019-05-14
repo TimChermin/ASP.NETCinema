@@ -114,13 +114,8 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult DeleteTask(TaskViewModel task)
         {
-            
-            if (ModelState.IsValid)
-            {
                 _taskLogic.DeleteTask(task.Id);
                 return RedirectToAction("ListTasks");
-            }
-            return RedirectToAction("Error", "Home");
         }
     }
 }
