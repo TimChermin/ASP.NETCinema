@@ -12,6 +12,7 @@ TODO:
 
 
 ONGOING: 
-When adding a Screening add the Standard tasks without the Employees with triggers
+When adding a hall the screen type has basic stuff
 
 FINISHED:
+When adding a Screening add the Standard tasks without the Employees with triggers

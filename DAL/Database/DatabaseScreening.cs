@@ -84,8 +84,8 @@ namespace ASPNETCinema.DAL
         public void DeleteScreening(int id)
         {
             _connection.SqlConnection.Open();
-            SqlCommand command = new SqlCommand("DELETE FROM Screening WHERE Id = @Id", _connection.SqlConnection);
-            command.Parameters.AddWithValue("@Id", id);
+            SqlCommand command = new SqlCommand("EXEC dbo.spScreening_DeleteScreening @screeningId", _connection.SqlConnection);
+            command.Parameters.AddWithValue("@screeningId", id);
             command.ExecuteNonQuery();
             _connection.SqlConnection.Close();
         }
