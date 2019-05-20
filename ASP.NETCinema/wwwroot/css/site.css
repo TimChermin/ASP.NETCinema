@@ -5,6 +5,11 @@ body {
     padding-bottom: 20px;
 }
 
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {

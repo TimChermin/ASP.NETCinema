@@ -106,9 +106,9 @@ namespace ASPNETCinema
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Movie}/{action=ListMovies}/{id?}");
-                
-                
             });
+
+
         }
     }
 }

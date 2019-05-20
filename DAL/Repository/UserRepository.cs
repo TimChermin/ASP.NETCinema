@@ -44,5 +44,10 @@ namespace DAL.Repository
         {
             return _context.GetUserRole(id);
         }
+
+        public UserDto DoesThisUserExist(string name)
+        {
+            return _context.DoesThisUserExist(name);
+        }
     }
 }

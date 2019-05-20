@@ -18,13 +18,6 @@ namespace ASPNETCinema.DAL
             _connection = connection;
         }
 
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
-
         public List<ScreeningDto> GetScreenings()
         {
             _connection.SqlConnection.Open();
@@ -57,7 +50,7 @@ namespace ASPNETCinema.DAL
         {
             _connection.SqlConnection.Open();
 
-            SqlCommand command = new SqlCommand("INSERT INTO Screening OUTPUT Inserted.Id VALUES (@IdMovie, @IdHall, @DateOfScreening, @TimeOfScreening)", _connection.SqlConnection);
+            SqlCommand command = new SqlCommand("INSERT INTO Screening VALUES (@IdMovie, @IdHall, @DateOfScreening, @TimeOfScreening)", _connection.SqlConnection);
             command.Parameters.AddWithValue("@IdMovie", screening.MovieId);
             command.Parameters.AddWithValue("@IdHall", screening.HallId);
             command.Parameters.AddWithValue("@DateOfScreening", screening.DateOfScreening);
@@ -84,8 +77,8 @@ namespace ASPNETCinema.DAL
         public void DeleteScreening(int id)
         {
             _connection.SqlConnection.Open();
-            SqlCommand command = new SqlCommand("DELETE FROM Screening WHERE Id = @Id", _connection.SqlConnection);
-            command.Parameters.AddWithValue("@Id", id);
+            SqlCommand command = new SqlCommand("EXEC dbo.spScreening_DeleteScreening @screeningId", _connection.SqlConnection);
+            command.Parameters.AddWithValue("@screeningId", id);
             command.ExecuteNonQuery();
             _connection.SqlConnection.Close();
         }

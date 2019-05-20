@@ -1,11 +1,12 @@
-﻿CREATE PROCEDURE dbo.spMovie_GetAllMovies
+﻿CREATE PROCEDURE dbo.spScreening_DeleteScreening
+@screeningId int
 AS
 BEGIN 
-	SET NOCOUNT ON;
-	SELECT Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString, BannerImageString 
-	FROM Movie 
+	DELETE Employee_Task WHERE Employee_Task.IdTask = (SELECT Task.Id FROM Task WHERE Task.IdScreening = @screeningId)
+
+	DELETE Task WHERE Task.IdScreening = @screeningId
+
+	DELETE Users WHERE Users.IdScreening = @screeningId
+
+	DELETE Screening WHERE Screening.Id = @screeningId
 END
-
-EXEC dbo.spMovie_GetAllMoviesToday 
-
-GRANT EXECUTE to dbStoredProcedureOnlyAcces

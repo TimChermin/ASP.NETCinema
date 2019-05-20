@@ -13,7 +13,7 @@ namespace ASPNETCinema.ViewModels
         public ScreeningViewModel()
         {
             DateTime today = new DateTime();
-           todayString  = today.ToShortDateString();
+           string todayString  = today.ToShortDateString();
         }
         public int Id { get; set; }
 
@@ -32,6 +32,7 @@ namespace ASPNETCinema.ViewModels
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         [Required(ErrorMessage = "The Date field is required.")]
         [DataType(DataType.Date)]
+        [DateMustBeEqualOrGreaterThanCurrentDateValidation]
         public DateTime DateOfScreening { get; set; }
 
 
@@ -47,5 +48,31 @@ namespace ASPNETCinema.ViewModels
 
 
 
+    }
+    public sealed class DateMustBeEqualOrGreaterThanCurrentDateValidation : ValidationAttribute
+    {
+
+        private const string DefaultErrorMessage = "Date selected {0} must be on or after today";
+
+        public DateMustBeEqualOrGreaterThanCurrentDateValidation()
+            : base(DefaultErrorMessage)
+        {
+        }
+
+        public override string FormatErrorMessage(string name)
+        {
+            return string.Format(DefaultErrorMessage, name);
+        }
+
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            var dateEntered = (DateTime)value;
+            if (dateEntered < DateTime.Today)
+            {
+                var message = FormatErrorMessage(dateEntered.ToShortDateString());
+                return new ValidationResult(message);
+            }
+            return null;
+        }
     }
 }

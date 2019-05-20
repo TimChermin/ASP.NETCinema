@@ -56,11 +56,10 @@ namespace ASPNETCinema.Controllers
 
                 ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
                 await HttpContext.SignInAsync(principal);
-
-                //Just redirect to our index after logging in. 
+                
                 return RedirectToAction("ListMovies", "Movie");
             }
-
+            ViewBag.Error = "The Username or Password is incorrect.";
             return View();
         }
 
@@ -77,15 +76,14 @@ namespace ASPNETCinema.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddUser(UserViewModel user)
         {
-            
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && _userLogic.DoesThisUserExist(user.Name) != true)
             {
-
                 _userLogic.AddUser(_mapper.Map<UserModel>(user));
                 
                 await LoginUser(user);
                 return RedirectToAction("ListMovies", "Movie");
             }
+            ViewBag.Error = "This user already exists.";
             return View();
         }
 

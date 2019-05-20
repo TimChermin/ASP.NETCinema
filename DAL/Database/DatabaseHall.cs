@@ -18,13 +18,6 @@ namespace ASPNETCinema.DAL
             _connection = connection;
         }
 
-        //other things
-        //List
-        //Add
-        //Details
-        //Edit
-        //Delete
-
         public List<HallDto> GetHalls()
         {
             _connection.SqlConnection.Open();
@@ -83,9 +76,8 @@ namespace ASPNETCinema.DAL
         public void DeleteHall(int id)
         {
             _connection.SqlConnection.Open();
-
-            SqlCommand command = new SqlCommand("DELETE FROM Hall WHERE Id = @Id", _connection.SqlConnection);
-            command.Parameters.AddWithValue("@Id", id);
+            SqlCommand command = new SqlCommand("EXEC dbo.spHall_DeleteHall @hallId", _connection.SqlConnection);
+            command.Parameters.AddWithValue("@hallId", id);
             command.ExecuteNonQuery();
             _connection.SqlConnection.Close();
         }

@@ -32,7 +32,7 @@ namespace ASPNETCinema.ViewModels
         public string ScreenType { get; set; }
 
         [Display(Name = "Price")]
-        [Range(typeof(decimal), "0,00", "99,00")]
+        [Range(typeof(decimal), "0.00", "99.00")]
         [Required(ErrorMessage = "The Price field is required.")]
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }

@@ -224,7 +224,7 @@
     </div>
     <div class="restart-div"><button onclick="restart()" class="restart-button">Restart Selecting</button></div>
 
-
+    <div><button onclick="goToNextPage()" >NEXT</button></div>
     <br /><br />
 
     <div class="displayerBoxes">
@@ -260,6 +260,9 @@
                 $(".seatStructure *").prop("disabled", false);
                 document.getElementById("notification").innerHTML = "<b style='margin-bottom:0px;background:yellow;'>Please Select your Seats NOW!</b>";
             }
+        }
+
+        function goToNextPage() {
         }
 
         function restart() {
@@ -317,9 +320,11 @@
                 // then stringify the whole object
                 dataToPost = JSON.stringify({ methodParam: operationCollection });
 
+                $.post("/Screening/SeatConfirm", { $allNumerVals: JSONstring });
+
                 $.ajax({
                     type: "POST",
-                    url: "/Screening/TicketConfirm",
+                    url: "/Screening/SeatConfirm",
                     contentType: "application/json; charset=utf-8", // specify the content type
                     dataType: 'JSON', // make sure you use the correct case for dataType
                     data: dataToPost,

@@ -23,15 +23,7 @@ namespace ASPNETCinema.Controllers
             _mapper = mapper;
             _screeningLogic = screeningLogic;
         }
-
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
-        
-
+       
         public ActionResult ListScreenings()
         {
             List<ScreeningViewModel> screenings = new List<ScreeningViewModel>();
@@ -145,7 +137,12 @@ namespace ASPNETCinema.Controllers
             return View(viewScreening);
         }
 
-        public ActionResult TicketConfirm(string[] methodParam)
+        public ActionResult SeatConfirm(string jsonData)
+        {
+            return View();
+        }
+
+        public ActionResult SeatConfirm()
         {
             return View();
         }

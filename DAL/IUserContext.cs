@@ -14,5 +14,6 @@ namespace DAL
         int GetUserRole(int id);
         void EditUser(UserModel user);
         void DeleteUser(int id);
+        UserDto DoesThisUserExist(string name);
     }
 }

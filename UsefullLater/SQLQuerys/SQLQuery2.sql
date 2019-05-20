@@ -1,11 +1,13 @@
-﻿CREATE PROCEDURE dbo.spMovie_GetAllMovies
-AS
-BEGIN 
-	SET NOCOUNT ON;
-	SELECT Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString, BannerImageString 
-	FROM Movie 
+﻿create trigger TRG_AddTasksAfterAddingScreening 
+ON Screening
+AFTER INSERT AS
+BEGIN
+INSERT INTO Task (IdScreening, TaskType)
+VALUES (Screening.Id, "Cleaning")
+
+INSERT INTO Task (IdScreening, TaskType)
+VALUES (Screening.Id, "Projectionist")
+
+INSERT INTO Task (IdScreening, TaskType)
+VALUES (Screening.Id, "TicketChecking")
 END
-
-EXEC dbo.spMovie_GetAllMoviesToday 
-
-GRANT EXECUTE to dbStoredProcedureOnlyAcces

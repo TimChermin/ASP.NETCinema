@@ -15,13 +15,6 @@ namespace DAL.Repository
             _context = context;
         }
 
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
-
         public List<ScreeningDto> GetScreenings()
         {
             return _context.GetScreenings();

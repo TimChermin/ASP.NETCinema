@@ -18,20 +18,11 @@ namespace ASPNETCinema.DAL
             _connection = connection;
         }
 
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
-
-
         public List<UserDto> GetUsers()
         {
             _connection.SqlConnection.Open();
             var users = new List<UserDto>();
             SqlCommand command = new SqlCommand("SELECT Id, Username, Password, Administrator FROM Users", _connection.SqlConnection);
-            //command.Parameters.AddWithValue("@ReleaseDate", user.ReleaseDate);
 
             using (SqlDataReader reader = command.ExecuteReader())
             {
@@ -68,7 +59,6 @@ namespace ASPNETCinema.DAL
             _connection.SqlConnection.Open();
             var users = new List<UserModel>();
             SqlCommand command = new SqlCommand("SELECT Id, Username, Password, Administrator FROM Users WHERE (Username = @Username AND Password = @Password)", _connection.SqlConnection);
-            //command.Parameters.AddWithValue("@ReleaseDate", user.ReleaseDate);
             command.Parameters.AddWithValue("@Username", name);
             command.Parameters.AddWithValue("@Password", password);
             using (SqlDataReader reader = command.ExecuteReader())
@@ -120,7 +110,6 @@ namespace ASPNETCinema.DAL
         {
             _connection.SqlConnection.Open();
             SqlCommand command = new SqlCommand("SELECT Administrator FROM Users WHERE Id = @Id", _connection.SqlConnection);
-            //command.Parameters.AddWithValue("@ReleaseDate", user.ReleaseDate);
             command.Parameters.AddWithValue("@Id", id);
             int role = (int)command.ExecuteScalar();
 
@@ -128,6 +117,30 @@ namespace ASPNETCinema.DAL
             return role;
         }
         
+        public UserDto DoesThisUserExist(string name)
+        {
+            _connection.SqlConnection.Open();
+            var users = new List<UserModel>();
+            SqlCommand command = new SqlCommand("SELECT Id, Username, Password, Administrator FROM Users WHERE Username = @Username", _connection.SqlConnection);
+            command.Parameters.AddWithValue("@Username", name);
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    var user = new UserDto
+                    {
+                        Id = (int)reader["Id"],
+                        Name = reader["Username"]?.ToString(),
+                        Password = reader["Password"]?.ToString(),
+                        Administrator = (int)reader["Administrator"]
+                    };
+                    _connection.SqlConnection.Close();
+                    return user;
+                }
+            }
+            _connection.SqlConnection.Close();
+            return null;
+        }
 
        
     }
