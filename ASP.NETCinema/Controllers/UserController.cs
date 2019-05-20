@@ -59,7 +59,7 @@ namespace ASPNETCinema.Controllers
                 
                 return RedirectToAction("ListMovies", "Movie");
             }
-
+            ViewBag.Test = "The Username or Password is incorrect.";
             return View();
         }
 
@@ -76,10 +76,8 @@ namespace ASPNETCinema.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddUser(UserViewModel user)
         {
-            
             if (ModelState.IsValid)
             {
-
                 _userLogic.AddUser(_mapper.Map<UserModel>(user));
                 
                 await LoginUser(user);
