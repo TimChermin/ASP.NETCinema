@@ -18,13 +18,6 @@ namespace ASPNETCinema.DAL
             _connection = connection;
         }
 
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
-
         public List<ScreeningDto> GetScreenings()
         {
             _connection.SqlConnection.Open();

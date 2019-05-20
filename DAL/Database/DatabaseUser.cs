@@ -18,14 +18,6 @@ namespace ASPNETCinema.DAL
             _connection = connection;
         }
 
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
-
-
         public List<UserDto> GetUsers()
         {
             _connection.SqlConnection.Open();
@@ -68,7 +60,6 @@ namespace ASPNETCinema.DAL
             _connection.SqlConnection.Open();
             var users = new List<UserModel>();
             SqlCommand command = new SqlCommand("SELECT Id, Username, Password, Administrator FROM Users WHERE (Username = @Username AND Password = @Password)", _connection.SqlConnection);
-            //command.Parameters.AddWithValue("@ReleaseDate", user.ReleaseDate);
             command.Parameters.AddWithValue("@Username", name);
             command.Parameters.AddWithValue("@Password", password);
             using (SqlDataReader reader = command.ExecuteReader())
@@ -120,7 +111,6 @@ namespace ASPNETCinema.DAL
         {
             _connection.SqlConnection.Open();
             SqlCommand command = new SqlCommand("SELECT Administrator FROM Users WHERE Id = @Id", _connection.SqlConnection);
-            //command.Parameters.AddWithValue("@ReleaseDate", user.ReleaseDate);
             command.Parameters.AddWithValue("@Id", id);
             int role = (int)command.ExecuteScalar();
 

@@ -18,8 +18,7 @@ namespace ASPNETCinema.Controllers
     {
         private readonly IMovieLogic _movieLogic;
         private readonly IMapper _mapper;
-
-        //added scoped stuff in startup 
+        
         public MovieController(IMovieLogic movieLogic, IMapper mapper)
         {
             _movieLogic = movieLogic;
@@ -120,9 +119,7 @@ namespace ASPNETCinema.Controllers
             }
             return RedirectToAction("Error", "Home");
         }
-
-        // POST: Movies/Delete/5
-        //[HttpPost, ActionName("Delete")]
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]

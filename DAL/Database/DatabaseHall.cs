@@ -18,13 +18,6 @@ namespace ASPNETCinema.DAL
             _connection = connection;
         }
 
-        //other things
-        //List
-        //Add
-        //Details
-        //Edit
-        //Delete
-
         public List<HallDto> GetHalls()
         {
             _connection.SqlConnection.Open();

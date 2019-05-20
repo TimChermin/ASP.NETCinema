@@ -17,12 +17,6 @@ namespace ASPNETCinema.DAL
         {
             _connection = connection;
         }
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
 
 
         public List<MovieDto> GetMovies(string orderBy)

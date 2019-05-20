@@ -17,19 +17,12 @@ namespace ASPNETCinema.Controllers
     {
         private readonly IHallLogic _hallLogic;
         private readonly IMapper _mapper;
-
-        //added scoped stuff in startup 
+        
         public HallController(IHallLogic hallLogic, IMapper mapper)
         {
             _hallLogic = hallLogic;
             _mapper = mapper;
         }
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
 
 
         [Authorize(Roles = "Administrator, Employee")]
@@ -49,9 +42,7 @@ namespace ASPNETCinema.Controllers
         {
             return View();
         }
-
-
-        // POST: Hall/AddHall
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrator")]
@@ -95,7 +86,6 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult DeleteHall(int id)
         {
-            
             if (_hallLogic.GetHallById(id) != null)
             {
                 var hall = _hallLogic.GetHallById(id);

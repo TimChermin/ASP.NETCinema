@@ -5,6 +5,27 @@
 
 <h1 class="text-danger">Error.</h1>
 <h2 class="text-danger">An error occurred while processing your request.</h2>
+<div>
+    <p>
+        The page could not be found.
+
+        Mogelijke oorzaken:
+        <ul>
+            <li>You have made a typing error in the internet address.</li>
+            <li>The website contains a link to a page that no longer exists.</li>
+            <li>The link or bookmark that you used is outdated.</li>
+        </ul>
+
+
+        Probeer het volgende:
+        <ul>
+            <li>Click on the "Refresh" button at the top of your browser.</li>
+            <li>Re-enter the address</li>
+            <li>Go to the homepage to search for the information from there.</li>
+            <li>Click on the "Back" button at the top of your browser to return to the page you came from.</li>
+        </ul>
+    </p>
+</div>
 
 @if (Model.ShowRequestId)
 {
@@ -12,6 +33,7 @@
         <strong>Request ID:</strong> <code>@Model.RequestId</code>
     </p>
 }
+    
 
 <h3>Development Mode</h3>
 <p>

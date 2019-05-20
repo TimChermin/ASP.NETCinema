@@ -14,20 +14,12 @@ namespace ASPNETCinema.Controllers
     {
         private readonly IEmployeeLogic _employeeLogic;
         private readonly IMapper _mapper;
-
-        //added scoped stuff in startup 
+        
         public EmployeeController(IEmployeeLogic employeeLogic, IMapper mapper)
         {
             _employeeLogic = employeeLogic;
             _mapper = mapper;
         }
-        
-
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
 
         [Authorize(Roles = "Administrator, Employee")]
         public ActionResult ListEmployees()

@@ -16,13 +16,6 @@ namespace DAL.Repository
             _context = context;
         }
 
-        //other things
-        //List
-        //Add
-        //details
-        //Edit
-        //Delete
-
         public List<ScreeningDto> GetScreeningsForMovie(int idMovie)
         {
             return _context.GetScreeningsForMovie(idMovie);

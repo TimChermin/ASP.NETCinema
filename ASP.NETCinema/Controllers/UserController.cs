@@ -56,8 +56,7 @@ namespace ASPNETCinema.Controllers
 
                 ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
                 await HttpContext.SignInAsync(principal);
-
-                //Just redirect to our index after logging in. 
+                
                 return RedirectToAction("ListMovies", "Movie");
             }
 
