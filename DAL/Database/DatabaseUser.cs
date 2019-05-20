@@ -23,7 +23,6 @@ namespace ASPNETCinema.DAL
             _connection.SqlConnection.Open();
             var users = new List<UserDto>();
             SqlCommand command = new SqlCommand("SELECT Id, Username, Password, Administrator FROM Users", _connection.SqlConnection);
-            //command.Parameters.AddWithValue("@ReleaseDate", user.ReleaseDate);
 
             using (SqlDataReader reader = command.ExecuteReader())
             {
@@ -118,6 +117,30 @@ namespace ASPNETCinema.DAL
             return role;
         }
         
+        public UserDto DoesThisUserExist(string name)
+        {
+            _connection.SqlConnection.Open();
+            var users = new List<UserModel>();
+            SqlCommand command = new SqlCommand("SELECT Id, Username, Password, Administrator FROM Users WHERE Username = @Username", _connection.SqlConnection);
+            command.Parameters.AddWithValue("@Username", name);
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    var user = new UserDto
+                    {
+                        Id = (int)reader["Id"],
+                        Name = reader["Username"]?.ToString(),
+                        Password = reader["Password"]?.ToString(),
+                        Administrator = (int)reader["Administrator"]
+                    };
+                    _connection.SqlConnection.Close();
+                    return user;
+                }
+            }
+            _connection.SqlConnection.Close();
+            return null;
+        }
 
        
     }

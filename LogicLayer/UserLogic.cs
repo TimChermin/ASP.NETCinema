@@ -74,5 +74,14 @@ namespace ASPNETCinema.Logic
             
             return "Normal";
         }
+
+        public bool DoesThisUserExist(string name)
+        {
+            if (Repository.DoesThisUserExist(name) != null)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

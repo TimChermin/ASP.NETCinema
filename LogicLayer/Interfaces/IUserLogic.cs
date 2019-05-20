@@ -12,5 +12,6 @@ namespace LogicLayer.Interfaces
         UserModel GetUser(string name, string password);
         bool CheckIfThisLoginIsCorrect(string name, string password);
         string GetRoleUser(int id);
+        bool DoesThisUserExist(string name);
     }
 }
