@@ -20,92 +20,101 @@ namespace ASPNETCinema.DAL
 
         public List<HallDto> GetHalls()
         {
-            _connection.SqlConnection.Open();
-            
-            var halls = new List<HallDto>();
-            SqlCommand command = new SqlCommand("SELECT Id, Price, ScreenType, Seats, SeatsTaken FROM Hall", _connection.SqlConnection);
-
-            using (SqlDataReader reader = command.ExecuteReader())
+            using (SqlConnection conn = new SqlConnection(_connection.connectionString))
             {
-                while (reader.Read())
+                conn.Open();
+
+                var halls = new List<HallDto>();
+                SqlCommand command = new SqlCommand("SELECT Id, Price, ScreenType, Seats, SeatsTaken FROM Hall", conn);
+
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    var hall = new HallDto
+                    while (reader.Read())
                     {
-                        Id = (int)reader["Id"],
-                        Price = (decimal)reader["Price"],
-                        ScreenType = reader["ScreenType"].ToString(),
-                        Seats = (int)reader["Seats"],
-                        SeatsTaken = (int)reader["SeatsTaken"]
-                    };
-                    halls.Add(hall);
+                        var hall = new HallDto
+                        {
+                            Id = (int)reader["Id"],
+                            Price = (decimal)reader["Price"],
+                            ScreenType = reader["ScreenType"].ToString(),
+                            Seats = (int)reader["Seats"],
+                            SeatsTaken = (int)reader["SeatsTaken"]
+                        };
+                        halls.Add(hall);
+                    }
                 }
+                return (halls);
             }
-            _connection.SqlConnection.Close();
-            return (halls);
         }
 
         public void AddHall(HallModel hall)
         {
-            _connection.SqlConnection.Open();
+            using (SqlConnection conn = new SqlConnection(_connection.connectionString))
+            {
+                conn.Open();
 
-            SqlCommand command = new SqlCommand("INSERT INTO Hall OUTPUT Inserted.ID VALUES (@Price, @ScreenType, @Seats, @SeatsTaken)", _connection.SqlConnection);
-            command.Parameters.AddWithValue("@Price", hall.Price);
-            command.Parameters.AddWithValue("@ScreenType", hall.ScreenType);
-            command.Parameters.AddWithValue("@Seats", hall.Seats);
-            command.Parameters.AddWithValue("@SeatsTaken", hall.SeatsTaken);
-            command.ExecuteNonQuery();
-            _connection.SqlConnection.Close();
+                SqlCommand command = new SqlCommand("INSERT INTO Hall OUTPUT Inserted.ID VALUES (@Price, @ScreenType, @Seats, @SeatsTaken)", conn);
+                command.Parameters.AddWithValue("@Price", hall.Price);
+                command.Parameters.AddWithValue("@ScreenType", hall.ScreenType);
+                command.Parameters.AddWithValue("@Seats", hall.Seats);
+                command.Parameters.AddWithValue("@SeatsTaken", hall.SeatsTaken);
+                command.ExecuteNonQuery();
+            }
         }
 
         public void EditHall(HallModel hall)
         {
-            _connection.SqlConnection.Open();
+            using (SqlConnection conn = new SqlConnection(_connection.connectionString))
+            {
+                conn.Open();
 
-            SqlCommand command = new SqlCommand(@"UPDATE Hall SET Price = @Price, ScreenType = @ScreenType, Seats = @Seats, 
-            SeatsTaken = @SeatsTaken WHERE Id = @Id", _connection.SqlConnection);
-            command.Parameters.AddWithValue("@Id", hall.Id);
-            command.Parameters.AddWithValue("@Price", hall.Price);
-            command.Parameters.AddWithValue("@ScreenType", hall.ScreenType);
-            command.Parameters.AddWithValue("@Seats", hall.Seats);
-            command.Parameters.AddWithValue("@SeatsTaken", hall.SeatsTaken);
+                SqlCommand command = new SqlCommand(@"UPDATE Hall SET Price = @Price, ScreenType = @ScreenType, Seats = @Seats, 
+            SeatsTaken = @SeatsTaken WHERE Id = @Id", conn);
+                command.Parameters.AddWithValue("@Id", hall.Id);
+                command.Parameters.AddWithValue("@Price", hall.Price);
+                command.Parameters.AddWithValue("@ScreenType", hall.ScreenType);
+                command.Parameters.AddWithValue("@Seats", hall.Seats);
+                command.Parameters.AddWithValue("@SeatsTaken", hall.SeatsTaken);
 
-            command.ExecuteNonQuery();
-            _connection.SqlConnection.Close();
+                command.ExecuteNonQuery();
+            }
         }
 
         public void DeleteHall(int id)
         {
-            _connection.SqlConnection.Open();
-            SqlCommand command = new SqlCommand("EXEC dbo.spHall_DeleteHall @hallId", _connection.SqlConnection);
-            command.Parameters.AddWithValue("@hallId", id);
-            command.ExecuteNonQuery();
-            _connection.SqlConnection.Close();
+            using (SqlConnection conn = new SqlConnection(_connection.connectionString))
+            {
+                conn.Open();
+                SqlCommand command = new SqlCommand("EXEC dbo.spHall_DeleteHall @hallId", conn);
+                command.Parameters.AddWithValue("@hallId", id);
+                command.ExecuteNonQuery();
+            }
         }
 
         public HallDto GetHallById(int id)
         {
-            _connection.SqlConnection.Open();
-
-            SqlCommand command = new SqlCommand("SELECT Id, Price, ScreenType, Seats, SeatsTaken FROM Hall WHERE Id = @Id", _connection.SqlConnection);
-            command.Parameters.AddWithValue("@Id", id);
-            using (SqlDataReader reader = command.ExecuteReader())
+            using (SqlConnection conn = new SqlConnection(_connection.connectionString))
             {
-                while (reader.Read())
+                conn.Open();
+
+                SqlCommand command = new SqlCommand("SELECT Id, Price, ScreenType, Seats, SeatsTaken FROM Hall WHERE Id = @Id", conn);
+                command.Parameters.AddWithValue("@Id", id);
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    var hall = new HallDto
+                    while (reader.Read())
                     {
-                        Id = (int)reader["Id"],
-                        Price = (decimal)reader["Price"],
-                        ScreenType = reader["ScreenType"]?.ToString(),
-                        Seats = (int)reader["Seats"],
-                        SeatsTaken = (int)reader["SeatsTaken"]
-                    };
-                    _connection.SqlConnection.Close();
-                    return hall;
+                        var hall = new HallDto
+                        {
+                            Id = (int)reader["Id"],
+                            Price = (decimal)reader["Price"],
+                            ScreenType = reader["ScreenType"]?.ToString(),
+                            Seats = (int)reader["Seats"],
+                            SeatsTaken = (int)reader["SeatsTaken"]
+                        };
+                        return hall;
+                    }
                 }
+                return null;
             }
-            _connection.SqlConnection.Close();
-            return null;
         }
     }
 }

@@ -9,9 +9,10 @@ namespace ASPNETCinema.DAL
     {
         public DatabaseConnection(string connectionString)
         {
-            SqlConnection = new SqlConnection(connectionString);
+            this.connectionString = connectionString;
         }
 
         internal SqlConnection SqlConnection { get; }
+        internal string connectionString { get; set; }
     }
 }
