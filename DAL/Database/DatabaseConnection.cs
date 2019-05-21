@@ -11,8 +11,7 @@ namespace ASPNETCinema.DAL
         {
             this.connectionString = connectionString;
         }
-
-        internal SqlConnection SqlConnection { get; }
+        
         internal string connectionString { get; set; }
     }
 }
