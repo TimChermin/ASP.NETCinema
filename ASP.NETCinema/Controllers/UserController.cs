@@ -59,7 +59,7 @@ namespace ASPNETCinema.Controllers
                 
                 return RedirectToAction("ListMovies", "Movie");
             }
-            ViewBag.Error = "The Username or Password is incorrect.";
+            ModelState.AddModelError("Password", "The Username or Password is incorrect.");
             return View();
         }
 
@@ -83,7 +83,7 @@ namespace ASPNETCinema.Controllers
                 await LoginUser(user);
                 return RedirectToAction("ListMovies", "Movie");
             }
-            ViewBag.Error = "This user already exists.";
+            ModelState.AddModelError("Name", "This user already exists.");
             return View();
         }
 

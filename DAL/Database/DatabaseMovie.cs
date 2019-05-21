@@ -187,5 +187,37 @@ namespace ASPNETCinema.DAL
                 return screenings;
             }
         }
+
+
+        public MovieDto GetMovieByName(string name)
+        {
+            using (SqlConnection conn = new SqlConnection(_connection.connectionString))
+            {
+                conn.Open();
+                SqlCommand command = new SqlCommand(@"SELECT Id, Name, Description, ReleaseDate, LastScreeningDate, MovieType, MovieLenght, ImageString, BannerImageString FROM Movie 
+            WHERE Name = @Name", conn);
+                command.Parameters.AddWithValue("@Name", name);
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var movie = new MovieDto
+                        {
+                            Id = (int)reader["Id"],
+                            Name = reader["Name"]?.ToString(),
+                            Description = reader["Description"]?.ToString(),
+                            ReleaseDate = (DateTime)reader["ReleaseDate"],
+                            LastScreeningDate = (DateTime)reader["LastScreeningDate"],
+                            MovieType = reader["MovieType"]?.ToString(),
+                            MovieLenght = reader["MovieLenght"]?.ToString(),
+                            ImageString = reader["ImageString"]?.ToString(),
+                            BannerImageString = reader["BannerImageString"]?.ToString()
+                        };
+                        return movie;
+                    }
+                }
+                return null;
+            }
+        }
     }
 }

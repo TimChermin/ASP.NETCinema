@@ -14,6 +14,7 @@ namespace DAL
         MovieDto GetMovieById(int id);
         void EditMovie(MovieModel movie);
         void DeleteMovie(int id);
+        MovieDto GetMovieByName(string name);
 
         List<ScreeningDto> GetScreeningsForMovie(int idMovie);
 

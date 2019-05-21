@@ -96,12 +96,9 @@ namespace ASPNETCinema.Logic
 
         public bool DoesThisMovieExist(string name)
         {
-            foreach (var movie in GetMovies("Name"))
+            if (Repository.GetMovieByName(name) != null)
             {
-                if (movie.Name == name)
-                {
-                    return true;
-                }
+                return true;
             }
             return false;
         }

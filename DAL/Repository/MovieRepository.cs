@@ -45,5 +45,10 @@ namespace DAL.Repository
         {
             _context.DeleteMovie(id);
         }
+
+        public MovieDto GetMovieByName(string name)
+        {
+            return _context.GetMovieByName(name);
+        }
     }
 }

@@ -89,11 +89,12 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult EditMovie(int id)
         {
-            
             if (_movieLogic.GetMovieById(id) != null)
             {
                 var movie = _movieLogic.GetMovieById(id);
-                return View(_mapper.Map<MovieViewModel>(movie));
+                var movieView = _mapper.Map<MovieViewModel>(movie);
+                movieView.MovieTypes = Enum.GetValues(typeof(MovieTypes)).Cast<MovieTypes>().ToList();
+                return View(movieView);
             }
             return RedirectToAction("Error", "Home");
         }
