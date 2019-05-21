@@ -131,5 +131,10 @@ namespace UnitTests.User.MockContext
             }
             return -1;
         }
+
+        public UserDto DoesThisUserExist(string name)
+        {
+            return null;
+        }
     }
 }

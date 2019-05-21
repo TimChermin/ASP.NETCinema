@@ -90,8 +90,8 @@ namespace ASPNETCinema.DAL
         public void DeleteEmployee(int id)
         {
             _connection.SqlConnection.Open();
-            SqlCommand command = new SqlCommand("EXEC dbo.spEmployee_DeleteEmployee @employeeId", _connection.SqlConnection);
-            command.Parameters.AddWithValue("@employeeId", id);
+            SqlCommand command = new SqlCommand("DELETE FROM Employee WHERE Employee.Id = @EmployeeId", _connection.SqlConnection);
+            command.Parameters.AddWithValue("@EmployeeId", id);
             command.ExecuteNonQuery();
             _connection.SqlConnection.Close();
         }
