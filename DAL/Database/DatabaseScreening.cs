@@ -68,7 +68,7 @@ namespace ASPNETCinema.DAL
             {
                 conn.Open();
                 SqlCommand command = new SqlCommand(@"UPDATE Screening SET IdMovie = @IdMovie, IdHall = @IdHall, DateOfScreening = @DateOfScreening, 
-            TimeOfScreening = @TimeOfScreening WHERE Id = @Id", conn);
+                TimeOfScreening = @TimeOfScreening WHERE Id = @Id", conn);
                 command.Parameters.AddWithValue("@Id", screening.Id);
                 command.Parameters.AddWithValue("@IdMovie", screening.MovieId);
                 command.Parameters.AddWithValue("@IdHall", screening.HallId);

@@ -50,7 +50,6 @@ namespace ASPNETCinema.DAL
                 conn.Open();
 
                 SqlCommand command = new SqlCommand("SELECT Id, Name FROM Employee", conn);
-
                 var employees = new List<EmployeeDto>();
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
@@ -74,7 +73,6 @@ namespace ASPNETCinema.DAL
             using (SqlConnection conn = new SqlConnection(_connection.connectionString))
             {
                 conn.Open();
-
                 SqlCommand command = new SqlCommand("INSERT INTO Employee OUTPUT Inserted.Id VALUES (@Name)", conn);
                 command.Parameters.AddWithValue("@Name", employee.Name);
                 command.ExecuteNonQuery();
@@ -86,11 +84,9 @@ namespace ASPNETCinema.DAL
             using (SqlConnection conn = new SqlConnection(_connection.connectionString))
             {
                 conn.Open();
-
                 SqlCommand command = new SqlCommand("UPDATE Employee SET Name = @Name WHERE Id = @Id", conn);
                 command.Parameters.AddWithValue("@Id", employee.Id);
                 command.Parameters.AddWithValue("@Name", employee.Name);
-
                 command.ExecuteNonQuery();
             }
         }

@@ -17,7 +17,7 @@
                 <select name="MovieId" style="color: black;" class="form-control">
                     @foreach (var movie in Model.Movies)
                     {
-                        if (movie.Id == Model.MovieId)
+                        if (movie.Id == Model.MovieId && movie != null)
                         {
                             <option value="@movie.Id" selected>@movie.Name</option>
                         }
@@ -33,7 +33,7 @@
                 <select name="HallId" style="color: black;" class="form-control">
                     @foreach (var hall in Model.Halls)
                     {
-                        if (hall.Id == Model.HallId)
+                        if (hall.Id == Model.HallId && hall != null)
                         {
                             <option value="@hall.Id" selected>@hall.Id</option>
                         }

@@ -163,5 +163,10 @@ namespace UnitTests.Movie.MockContext
         {
             return null;
         }
+
+        public MovieDto GetMovieByName(string name)
+        {
+            return null;
+        }
     }
 }
