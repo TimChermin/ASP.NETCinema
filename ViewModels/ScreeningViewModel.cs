@@ -15,8 +15,8 @@ namespace ASPNETCinema.ViewModels
             DateTime today = new DateTime();
            string todayString  = today.ToShortDateString();
         }
-        public int Id { get; set; }
 
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "The Movie Id field is required.")]
         public int MovieId { get; set; }
