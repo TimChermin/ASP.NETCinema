@@ -133,14 +133,23 @@ namespace ASPNETCinema.Controllers
             return View(viewScreening);
         }
 
-        public ActionResult SeatConfirm(string jsonData)
+        public ActionResult SeatConfirm()
         {
             return View();
         }
 
-        public ActionResult SeatConfirm()
+        public ActionResult BuyingTickets(int id)
         {
-            return View();
+            var screening = _screeningLogic.GetScreeningById(id);
+            var viewScreening = _mapper.Map<ScreeningViewModel>(screening);
+            return View(viewScreening);
+        }
+
+        [HttpPost]
+        public ActionResult BuyingTickets(ScreeningViewModel screening)
+        {
+
+            return RedirectToAction("SeatConfirm");
         }
     }
 }

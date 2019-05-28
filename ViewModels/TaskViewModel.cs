@@ -40,7 +40,6 @@ namespace ASPNETCinema.ViewModels
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         [Required(ErrorMessage = "The Date field is required.")]
         [DataType(DataType.Date)]
-        [DateMustBeEqualOrGreaterThanCurrentDateValidation]
         public DateTime DateOfScreening { get; set; }
 
         [Display(Name = "Screening Time")]

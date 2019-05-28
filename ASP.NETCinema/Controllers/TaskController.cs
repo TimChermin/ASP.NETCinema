@@ -27,7 +27,6 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator, Employee")]
         public ActionResult ListTasks()
         {
-            
             List<TaskViewModel> tasks = new List<TaskViewModel>();
             foreach (var task in _taskLogic.GetTasks())
             {
