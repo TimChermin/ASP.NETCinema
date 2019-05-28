@@ -1,0 +1,54 @@
+﻿@model ASPNETCinema.ViewModels.ScreeningViewModel
+
+@{
+    ViewData["Title"] = "BuyingTickets";
+}
+
+<h2>BuyingTickets</h2>
+
+<h4>ScreeningViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="BuyingTickets">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Movie.Name" class="control-label"></label>
+                @Html.DisplayFor(model => model.Movie.Name)
+            </div>
+            <div class="form-group">
+                <label asp-for="HallId" class="control-label"></label>
+                @Html.DisplayFor(model => model.HallId)
+            </div>
+            <div class="form-group">
+                <label asp-for="Hall.Seats" class="control-label"></label>
+                @Html.DisplayFor(model => model.Hall.Seats)
+            </div>
+            <div class="form-group">
+                <label asp-for="Hall.SeatsTaken" class="control-label"></label>
+                @Html.DisplayFor(model => model.Hall.SeatsTaken)
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfScreening" class="control-label"></label>
+                @Html.DisplayFor(model => model.DateOfScreening)
+            </div>
+            <div class="form-group">
+                <label asp-for="TimeOfScreening" class="control-label"></label>
+                @Html.DisplayFor(model => model.TimeOfScreening)
+            </div>
+            <div class="form-group">
+                <label asp-for="Tickets" class="control-label"></label>
+                <input asp-for="Tickets" class="form-control" />
+                <span asp-validation-for="Tickets" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

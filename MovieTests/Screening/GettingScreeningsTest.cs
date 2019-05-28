@@ -13,6 +13,14 @@ using Xunit;
 
 namespace ScreeningTests
 {
+    /*
+     * 
+     * 
+     * TEST VANUIT DE CONTROLLER NAAR DE LOGIC OMDAT ZE DAT WILLEN?
+     * 
+     * 
+     * 
+     */
     public class GettingScreeningsTest
     {
         ScreeningLogic _screeningLogic;
