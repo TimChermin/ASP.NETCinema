@@ -37,7 +37,6 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult AddScreening()
         {
-            
             List<ScreeningViewModel> screenings = new List<ScreeningViewModel>();
 
             screenings = _mapper.Map<List<ScreeningViewModel>>(_screeningLogic.GetScreenings());
@@ -49,18 +48,16 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult AddScreening(ScreeningViewModel screening)
         {
-            
-            if (ModelState.IsValid)
+            if (_screeningLogic.IsThisDateAndTimeAvailable(screening.HallId, screening.DateOfScreening, screening.TimeOfScreening, screening.MovieId, screening.Id))
             {
-                if (_screeningLogic.IsThisDateAndTimeAvailable(screening.HallId, screening.DateOfScreening, screening.TimeOfScreening, screening.MovieId, screening.Id))
-                {
-                    _screeningLogic.AddScreening(_mapper.Map<ScreeningModel>(screening));
-                    return RedirectToAction("ListScreenings");
-                }
-                ModelState.AddModelError("TimeOfScreening", "Another movie is already showing in this hall at this time");
-                return View();
+                _screeningLogic.AddScreening(_mapper.Map<ScreeningModel>(screening));
+                return RedirectToAction("ListScreenings");
             }
-            return RedirectToAction("Error", "Home");
+            ModelState.AddModelError("TimeOfScreening", "Another movie is already showing in this hall at this time");
+
+            List<ScreeningViewModel> screenings = new List<ScreeningViewModel>();
+            screenings = _mapper.Map<List<ScreeningViewModel>>(_screeningLogic.GetScreenings());
+            return View(screenings[0]);
         }
         
         public ActionResult DetailsScreening(int id)
@@ -94,7 +91,7 @@ namespace ASPNETCinema.Controllers
         public ActionResult EditScreening(ScreeningViewModel screening)
         {
             
-            if (ModelState.IsValid && _screeningLogic.IsThisDateAndTimeAvailable(screening.HallId, screening.DateOfScreening, screening.TimeOfScreening, screening.MovieId, screening.Id))
+            if (_screeningLogic.IsThisDateAndTimeAvailable(screening.HallId, screening.DateOfScreening, screening.TimeOfScreening, screening.MovieId, screening.Id))
             {
                 _screeningLogic.EditScreening(_mapper.Map<ScreeningModel>(screening));
                 return RedirectToAction("ListScreenings");
@@ -103,8 +100,7 @@ namespace ASPNETCinema.Controllers
             {
                 ModelState.AddModelError("TimeOfScreening", "Another movie is already showing in this hall at this time");
             }
-
-            return View();
+            return View(_mapper.Map<ScreeningViewModel>(_screeningLogic.GetScreeningById(screening.Id)));
         }
 
         [Authorize(Roles = "Administrator")]
@@ -137,14 +133,23 @@ namespace ASPNETCinema.Controllers
             return View(viewScreening);
         }
 
-        public ActionResult SeatConfirm(string jsonData)
+        public ActionResult SeatConfirm()
         {
             return View();
         }
 
-        public ActionResult SeatConfirm()
+        public ActionResult BuyingTickets(int id)
         {
-            return View();
+            var screening = _screeningLogic.GetScreeningById(id);
+            var viewScreening = _mapper.Map<ScreeningViewModel>(screening);
+            return View(viewScreening);
+        }
+
+        [HttpPost]
+        public ActionResult BuyingTickets(ScreeningViewModel screening)
+        {
+
+            return RedirectToAction("SeatConfirm");
         }
     }
 }
