@@ -13,7 +13,7 @@ namespace EmployeeTests
 {
     public class EmployeeBasicsTests
     {
-        EmployeeLogic _employeeLogic;
+        EmployeeLogic employeeLogic;
         IMapper _mapper;
         
 
@@ -21,7 +21,7 @@ namespace EmployeeTests
         {
             var mockMapper = new MapperConfiguration(cfg => cfg.AddProfile(new MappingProfile()));
             _mapper = mockMapper.CreateMapper();
-            _employeeLogic = new EmployeeLogic(new EmployeeContextMock(), _mapper);
+            employeeLogic = new EmployeeLogic(new EmployeeContextMock(), _mapper);
         }
 
         [Fact]
@@ -29,7 +29,6 @@ namespace EmployeeTests
         {
             //Arrange
             List<EmployeeModel> employees = new List<EmployeeModel>();
-            var employeeLogic = new EmployeeLogic(new EmployeeContextMock(), _mapper);
             EmployeeModel employee = new EmployeeModel(10, "TimAddTest");
 
             //Act
@@ -44,10 +43,9 @@ namespace EmployeeTests
         {
             //Arrange
             List<EmployeeModel> employees = new List<EmployeeModel>();
-            var employeeLogic = new EmployeeLogic(new EmployeeContextMock(), _mapper);
             EmployeeModel employee = new EmployeeModel(10, "TimGetTest");
             employeeLogic.AddEmployee(employee);
-            employees = employeeLogic.GetEmployees().ToList();
+            employees = employeeLogic.GetEmployees();
             bool found = false;
 
             //Act
@@ -66,7 +64,6 @@ namespace EmployeeTests
         {
             //Arrange
             List<EmployeeModel> employees = new List<EmployeeModel>();
-            var employeeLogic = new EmployeeLogic(new EmployeeContextMock(), _mapper);
             employees = employeeLogic.GetEmployees().ToList();
             EmployeeModel employee = new EmployeeModel(1, "TimEditTest");
 
@@ -78,13 +75,24 @@ namespace EmployeeTests
             Assert.True(employees[0].Name == "TimEditTest");
         }
 
+        [Fact]
+        public void Should_ReturnAEmployee_WhenGettingAEmployeeById()
+        {
+            //Arrange
+            employeeLogic.AddEmployee(new EmployeeModel(5, "GetByIdTest"));
+
+            //Act
+            EmployeeModel employee = employeeLogic.GetEmployeeById(5);
+
+            //Assert
+            Assert.True(employee.Id == 5 && employee.Name == "GetByIdTest");
+        }
 
         [Fact]
         public void Should_DeleteAnEmployee_WhenDeleteingAnEmployee()
         {
             //Arrange
             List<EmployeeModel> employees = new List<EmployeeModel>();
-            var employeeLogic = new EmployeeLogic(new EmployeeContextMock(), _mapper);
             employees = employeeLogic.GetEmployees().ToList();
             string name = employees[0].Name;
 

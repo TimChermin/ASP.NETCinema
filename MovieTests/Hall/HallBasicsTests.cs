@@ -28,7 +28,7 @@ namespace HallTests
         {
             //Arrange
             List<HallModel> halls = new List<HallModel>();
-            halls = hallLogic.GetHalls().ToList();
+            halls = hallLogic.GetHalls();
             
             //Act
             hallLogic.AddHall(new HallModel { Id = 5, Price = 5, ScreenType = "AddTest", Seats = 30, SeatsTaken = 0 });
@@ -42,15 +42,14 @@ namespace HallTests
         {
             //Arrange
             List<HallModel> halls = new List<HallModel>();
-            halls = hallLogic.GetHalls().ToList();
+            halls = hallLogic.GetHalls();
             HallModel hall = new HallModel { Id = 1, Price = 5, ScreenType = "EditTest", Seats = 30, SeatsTaken = 0 };
 
             //Act
             hallLogic.EditHall(hall);
-            halls = hallLogic.GetHalls().ToList();
 
             //Assert
-            Assert.True(halls[0].ScreenType == "EditTest");
+            Assert.True(hallLogic.GetHalls()[0].ScreenType == "EditTest");
         }
         
 
@@ -80,6 +79,27 @@ namespace HallTests
 
             //Assert
             Assert.False(halls[0].ScreenType != screenType);
+        }
+
+        [Fact]
+        public void Should_GetHallsFromTheList_WhenGettingHalls()
+        {
+            //Arrange
+            List<HallModel> halls = new List<HallModel>();
+            var hallLogic = new HallLogic(new HallContextMock(), _mapper);
+            HallModel hall = new HallModel { Id = 10, Price = 5, ScreenType = "GetTest", Seats = 30, SeatsTaken = 0 };
+            hallLogic.AddHall(hall);
+            halls = hallLogic.GetHalls();
+            bool found = false;
+
+            //Act
+            if (hallLogic.GetHalls()[4].Id == 10 && hallLogic.GetHalls()[4].ScreenType == "GetTest")
+            {
+                found = true;
+            }
+
+            //Assert
+            Assert.True(found);
         }
     }
 }
