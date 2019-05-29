@@ -12,19 +12,20 @@ namespace UnitTests.Hall.MockContext
     {
         List<HallDto> halls = new List<HallDto>();
         List<HallDto> hallsTemp = new List<HallDto>();
-        
+        List<HallDto> hallsTempDeleted = new List<HallDto>();
+        int delete = 0;
+        int edit = 0;
+        string editName = "";
+
         public List<HallDto> GetHalls()
         {
             halls.Clear();
-            foreach (var hall in hallsTemp)
-            {
-                halls.Add(hall);
-            }
-            halls = AddHallsInOrderBy(halls);
+            SetHalls();
+            AddedHalls();
             return halls;
         }
 
-        public List<HallDto> AddHallsInOrderBy(List<HallDto> halls)
+        public void SetHalls()
         {
             halls.Add(new HallDto
             {
@@ -61,7 +62,39 @@ namespace UnitTests.Hall.MockContext
                 ScreenType = "3D",
                 Price = 5
             });
-            return halls;
+
+            WasSomethingDeleted();
+            WasSomethingEdited();
+        }
+
+        public void WasSomethingDeleted()
+        {
+            if (delete != 0)
+            {
+                foreach (var hall in halls)
+                {
+                    if (hall.Id == delete)
+                    {
+                        halls.Remove(hall);
+                        break;
+                    }
+                }
+            }
+        }
+
+        public void WasSomethingEdited()
+        {
+            if (edit != 0)
+            {
+                foreach (var hall in halls)
+                {
+                    if (hall.Id == edit && editName != "")
+                    {
+                        halls[0].ScreenType = editName;
+                        break;
+                    }
+                }
+            }
         }
 
         public void AddHall(HallModel hall)
@@ -76,36 +109,35 @@ namespace UnitTests.Hall.MockContext
             });
         }
 
+        private void AddedHalls()
+        {
+            foreach (var hall in hallsTemp)
+            {
+                halls.Add(hall);
+            }
+        }
+
         public void EditHall(HallModel hall)
         {
-            foreach (var hal in GetHalls())
-            {
-                if (hal.Id == hall.Id)
-                {
-                    hal.Id = hall.Id;
-                    hal.Seats = hall.Seats;
-                    hal.SeatsTaken = hall.SeatsTaken;
-                    hal.ScreenType = hall.ScreenType;
-                    hal.Price = hall.Price;
-                }
-            }
+            edit = hall.Id;
+            editName = hall.ScreenType;
         }
 
         public void DeleteHall(int id)
         {
-            foreach (var hall in GetHalls())
-            {
-                if (hall.Id == id)
-                {
-                    hall.ScreenType = "Deleted";
-                    hallsTemp.Add(hall);
-                }
-            }
+            delete = id;
         }
 
         public HallDto GetHallById(int id)
         {
-            foreach (var hall in GetHalls())
+            foreach (var hall in halls)
+            {
+                if (hall.Id == id)
+                {
+                    return hall;
+                }
+            }
+            foreach (var hall in hallsTemp)
             {
                 if (hall.Id == id)
                 {
