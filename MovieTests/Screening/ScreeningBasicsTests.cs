@@ -13,12 +13,12 @@ using Xunit;
 
 namespace ScreeningTests
 {
-    public class GettingScreeningsTest
+    public class ScreeningBasicsTests
     {
         ScreeningLogic screeningLogic;
         IMapper _mapper;
 
-        public GettingScreeningsTest()
+        public ScreeningBasicsTests()
         {
             var mockMapper = new MapperConfiguration(cfg => cfg.AddProfile(new MappingProfile()));
             _mapper = mockMapper.CreateMapper();

@@ -67,7 +67,7 @@ namespace HallTests
         {
             //Arrange
             List<HallModel> halls = new List<HallModel>();
-            halls = hallLogic.GetHalls().ToList();
+            halls = hallLogic.GetHalls();
             string screenType = halls[0].ScreenType;
 
             //Act
