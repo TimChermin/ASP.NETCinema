@@ -45,7 +45,7 @@ namespace ASPNETCinema.Controllers
         {
             if (ModelState.IsValid)
             {
-                _employeeLogic.AddEmployee(employee.Id, employee.Name);
+                _employeeLogic.AddEmployee(_mapper.Map<EmployeeModel>(employee));
                 return RedirectToAction("ListMovies");
             }
             return RedirectToAction("Error", "Home");
@@ -82,7 +82,7 @@ namespace ASPNETCinema.Controllers
         {
             if (ModelState.IsValid)
             {
-                _employeeLogic.EditEmployee(employee.Id, employee.Name);
+                _employeeLogic.AddEmployee(_mapper.Map<EmployeeModel>(employee));
                 return RedirectToAction("ListEmployees");
             }
             return RedirectToAction("Error", "Home");

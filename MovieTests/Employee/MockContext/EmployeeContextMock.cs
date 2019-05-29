@@ -122,6 +122,13 @@ namespace UnitTests.Employee.MockContext
                     return employee;
                 }
             }
+            foreach (var employee in employeesTemp)
+            {
+                if (employee.Id == id)
+                {
+                    return employee;
+                }
+            }
             return null;
         }
     }
