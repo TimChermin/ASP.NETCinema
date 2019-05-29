@@ -27,8 +27,6 @@ namespace HallTests
         public void Should_AddAHall_WhenAddingAHall()
         {
             //Arrange
-            List<HallModel> halls = new List<HallModel>();
-            halls = hallLogic.GetHalls();
             
             //Act
             hallLogic.AddHall(new HallModel { Id = 5, Price = 5, ScreenType = "AddTest", Seats = 30, SeatsTaken = 0 });
@@ -41,8 +39,6 @@ namespace HallTests
         public void Should_EditAHall_WhenEditingAnHall()
         {
             //Arrange
-            List<HallModel> halls = new List<HallModel>();
-            halls = hallLogic.GetHalls();
             HallModel hall = new HallModel { Id = 1, Price = 5, ScreenType = "EditTest", Seats = 30, SeatsTaken = 0 };
 
             //Act
@@ -85,11 +81,9 @@ namespace HallTests
         public void Should_GetHallsFromTheList_WhenGettingHalls()
         {
             //Arrange
-            List<HallModel> halls = new List<HallModel>();
             var hallLogic = new HallLogic(new HallContextMock(), _mapper);
             HallModel hall = new HallModel { Id = 10, Price = 5, ScreenType = "GetTest", Seats = 30, SeatsTaken = 0 };
             hallLogic.AddHall(hall);
-            halls = hallLogic.GetHalls();
             bool found = false;
 
             //Act

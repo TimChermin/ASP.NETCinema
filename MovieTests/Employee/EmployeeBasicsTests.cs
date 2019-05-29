@@ -28,7 +28,6 @@ namespace EmployeeTests
         public void Should_AddAnEmployee_WhenAddingAnEmployee()
         {
             //Arrange
-            List<EmployeeModel> employees = new List<EmployeeModel>();
             EmployeeModel employee = new EmployeeModel(10, "TimAddTest");
 
             //Act
@@ -42,10 +41,8 @@ namespace EmployeeTests
         public void Should_GetEmployeesFromTheList_WhenGettingEmployees()
         {
             //Arrange
-            List<EmployeeModel> employees = new List<EmployeeModel>();
             EmployeeModel employee = new EmployeeModel(10, "TimGetTest");
             employeeLogic.AddEmployee(employee);
-            employees = employeeLogic.GetEmployees();
             bool found = false;
 
             //Act
@@ -69,10 +66,9 @@ namespace EmployeeTests
 
             //Act
             employeeLogic.EditEmployee(employee);
-            employees = employeeLogic.GetEmployees().ToList();
             
             //Assert
-            Assert.True(employees[0].Name == "TimEditTest");
+            Assert.True(employeeLogic.GetEmployees()[0].Name == "TimEditTest");
         }
 
         [Fact]
