@@ -12,76 +12,85 @@ namespace UserTests
 {
     public class LoginAndRegisterUsersTest
     {
-        UserLogic _userLogic;
-        UserModel user = new UserModel();
-        UserModel user2 = new UserModel();
-        UserModel user3 = new UserModel();
-        UserModel user1 = new UserModel();
+        UserLogic userLogic;
         IMapper _mapper;
-        List<UserModel> users = new List<UserModel>();
-        List<UserModel> users2 = new List<UserModel>();
 
         public LoginAndRegisterUsersTest()
         {
             var mockMapper = new MapperConfiguration(cfg => cfg.AddProfile(new MappingProfile()));
             _mapper = mockMapper.CreateMapper();
-            _userLogic = new UserLogic(new UserContextMock(), _mapper);
+            userLogic = new UserLogic(new UserContextMock(), _mapper);
         }
-        
+
 
         [Fact]
-        public void Should_RegisterAnUser_WhenRegisteringAnUser()
+        public void Should_RegisterAnUser_WhenEverythingIsFilledInCorrectly()
         {
             //Arrange
-            var userLogic = new UserLogic(new UserContextMock(), _mapper);
-            if (userLogic.GetUser("AddName", "AddPassword") != null)
-            {
-                Assert.True(false);
-            }
-
-            //Act
             UserModel user = new UserModel { Id = 1, Name = "AddName", Password = "AddPassword", ConfirmPassword = "AddPassword", Administrator = 0 };
-            UserModel user2 = new UserModel { Id = 1, Name = "AddName", Password = "AddPassword", ConfirmPassword = "AddPassword", Administrator = 0 };
-            userLogic.AddUser(user);
-            user = userLogic.GetUser("AddName", "AddPassword");
-            user2 = userLogic.GetUser("AddName", "AddPassword");
+            
+            //Act
+            bool userAdded = userLogic.AddUser(user);
 
             //Assert
-            Assert.True(user.Id == 1 && user.Name == "AddName" && user.Administrator == 0);
-            Assert.False(userLogic.AddUser(new UserModel { Id = 1, Name = "AddName", Password = "AddPassword", ConfirmPassword = "NotTheSamePassword", Administrator = 0 }));
-            Assert.False(userLogic.AddUser(new UserModel { Id = 1, Name = "AddName", Password = "NotTheSamePassword", ConfirmPassword = "AddPassword", Administrator = 0 }));
+            Assert.True(userAdded);
         }
+        
+        [Fact]
+        public void Should_NotRegisterAnUser_WhenNotEverythingIsFilledInCorrectly()
+        {
+            //Arrange
+            UserModel user = new UserModel { Id = 1, Name = "AddName", Password = "NotTheSamePassword", ConfirmPassword = "AddPassword", Administrator = 0 };
+
+            //Act
+            bool userAdded = userLogic.AddUser(user);
+
+            //Assert
+            Assert.False(userAdded);
+        }
+
 
         [Fact]
         public void Should_ReturnTrue_WhenTheLoginIsCorrect()
         {
-            var userLogic = new UserLogic(new UserContextMock(), _mapper);
+            //Arrange
             userLogic.AddUser(new UserModel { Id = 1, Name = "AddName", Password = "AddPassword", ConfirmPassword = "AddPassword", Administrator = 0 });
 
-            Assert.True(userLogic.CheckIfThisLoginIsCorrect("AddName", "AddPassword"));
-            Assert.False(userLogic.CheckIfThisLoginIsCorrect("AddName", "WRONGPASSWORD"));
-            Assert.False(userLogic.CheckIfThisLoginIsCorrect("NotAName", "AddPassword"));
+            //Act
+            bool userLoggedIn = userLogic.CheckIfThisLoginIsCorrect("AddName", "AddPassword");
+
+            //Assert
+            Assert.True(userLoggedIn);
         }
 
         [Fact]
-        public void Should_GetRoleUser_WhenGettingRoleUser()
+        public void Should_ReturnFalse_WhenThePasswordIsWrongWhenLoggingIn()
         {
-            var userLogic = new UserLogic(new UserContextMock(), _mapper);
-            UserModel user = new UserModel { Id = 1, Name = "RoleName", Password = "RolePassword", ConfirmPassword = "RolePassword", Administrator = 1 };
-            UserModel user2 = new UserModel { Id = 2, Name = "RoleName", Password = "RolePassword", ConfirmPassword = "RolePassword", Administrator = 0 };
-            UserModel user3 = new UserModel { Id = 3, Name = "RoleName", Password = "RolePassword", ConfirmPassword = "RolePassword", Administrator = 2 };
-            userLogic.AddUser(user);
-            userLogic.AddUser(user2);
-            userLogic.AddUser(user3);
+            //Arrange
+            userLogic.AddUser(new UserModel { Id = 1, Name = "AddName", Password = "AddPassword", ConfirmPassword = "AddPassword", Administrator = 0 });
 
-            UserModel user1 = new UserModel();
-            user1 = userLogic.GetUser("RoleName", "RolePassword");
-            
-            Assert.True(userLogic.GetRoleUser(user1.Id) == "Administrator");
-            Assert.True(userLogic.GetRoleUser(2) == "Normal");
-            Assert.True(userLogic.GetRoleUser(3) == "Employee");
-            Assert.False(userLogic.GetRoleUser(1) == "Normal" || userLogic.GetRoleUser(1) == "Employee");
+            //Act
+            bool userLoggedIn = userLogic.CheckIfThisLoginIsCorrect("AddName", "WRONGPASSWORD");
+
+            //Assert
+            Assert.False(userLoggedIn);
         }
+
+        [Fact]
+        public void Should_ReturnFalse_WhenTheNameDoesNotExistWhenLoggingIn()
+        {
+            //Arrange
+            userLogic.AddUser(new UserModel { Id = 1, Name = "AddName", Password = "AddPassword", ConfirmPassword = "AddPassword", Administrator = 0 });
+
+            //Act
+            bool userLoggedIn = userLogic.CheckIfThisLoginIsCorrect("NotAName", "AddPassword");
+
+            //Assert
+            Assert.False(userLoggedIn);
+        }
+
+
+
 
         [Fact]
         public void Should_HashPassword_WhenHashing()
