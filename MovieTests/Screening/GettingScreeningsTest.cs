@@ -13,59 +13,22 @@ using Xunit;
 
 namespace ScreeningTests
 {
-    /*
-     * 
-     * 
-     * TEST VANUIT DE CONTROLLER NAAR DE LOGIC OMDAT ZE DAT WILLEN?
-     * 
-     * 
-     * 
-     */
     public class GettingScreeningsTest
     {
-        ScreeningLogic _screeningLogic;
+        ScreeningLogic screeningLogic;
         IMapper _mapper;
-        ThingEqualityComparer comparer = new ThingEqualityComparer();
-        List<ScreeningModel> screenings = new List<ScreeningModel>();
-        List<ScreeningModel> screenings2 = new List<ScreeningModel>();
 
         public GettingScreeningsTest()
         {
             var mockMapper = new MapperConfiguration(cfg => cfg.AddProfile(new MappingProfile()));
             _mapper = mockMapper.CreateMapper();
-
-            _screeningLogic = new ScreeningLogic(new ScreeningContextMock(), _mapper);
+            screeningLogic = new ScreeningLogic(new ScreeningContextMock(), _mapper);
         }
-        
 
-            [Fact]
-        public void Should_ReturnAListOfScreenings_WhenLoadingScreenings()
+        [Fact]
+        public void Should_ReturnFalse_WhenAddingAScreeningOnTheSameTimeInTheSameHall()
         {
             //Arrange
-            var screeningLogic = new ScreeningLogic(new ScreeningContextMock(), _mapper);
-            screenings = _screeningLogic.GetScreenings().ToList();
-            screenings2 = _screeningLogic.GetScreenings().ToList();
-
-            //Act
-            Assert.True(AreTheyInTheSameOrder(screenings, screenings2));
-        }
-
-        [Fact]
-        public void Should_AddAScreeningToTheList_WhenAddingAScreening()
-        {
-            var screeningLogic = new ScreeningLogic(new ScreeningContextMock(), _mapper);
-            //var result =  screeningLogic.GetAllCustomers();
-            screenings = screeningLogic.GetScreenings().ToList();
-            screeningLogic.AddScreening(new ScreeningModel { Id = 3, MovieId = 3, HallId = 3, DateOfScreening = new DateTime(2020, 1, 1), TimeOfScreening = new TimeSpan(1, 0, 0) });
-            screenings2 = screeningLogic.GetScreenings().ToList();
-
-            Assert.True(screenings.Count() != screenings2.Count());
-        }
-
-        [Fact]
-        public void Should_NotAddAScreeningToTheList_WhenAddingAScreeningOnTheSameTimeInTheSameHall()
-        {
-            var screeningLogic = new ScreeningLogic(new ScreeningContextMock(), _mapper);
             ScreeningDto screening = new ScreeningDto
             {
                 Id = 2,
@@ -74,7 +37,19 @@ namespace ScreeningTests
                 DateOfScreening = new DateTime(2020, 1, 1),
                 TimeOfScreening = new TimeSpan(1, 0, 0)
             };
-            ScreeningDto screening2 = new ScreeningDto
+            
+            //Act
+            bool timeAvailable = screeningLogic.IsThisDateAndTimeAvailable(screening.HallId, screening.DateOfScreening, screening.TimeOfScreening, screening.MovieId, screening.Id);
+
+            //Assert
+            Assert.False(timeAvailable);
+        }
+
+        [Fact]
+        public void Should_ReturnTrue_WhenNotAddingAScreeningOnTheSameTimeInTheSameHall()
+        {
+            //Arrange
+            ScreeningDto screening = new ScreeningDto
             {
                 Id = 2,
                 MovieId = 1,
@@ -83,77 +58,94 @@ namespace ScreeningTests
                 TimeOfScreening = new TimeSpan(4, 0, 0)
             };
 
-            Assert.False(screeningLogic.IsThisDateAndTimeAvailable(screening.HallId, screening.DateOfScreening, screening.TimeOfScreening, screening.MovieId, screening.Id));
-            Assert.True(screeningLogic.IsThisDateAndTimeAvailable(screening2.HallId, screening2.DateOfScreening, screening2.TimeOfScreening, screening2.MovieId, screening2.Id));
+            //Act
+            bool timeAvailable = screeningLogic.IsThisDateAndTimeAvailable(screening.HallId, screening.DateOfScreening, screening.TimeOfScreening, screening.MovieId, screening.Id);
 
+            //Assert
+            Assert.True(timeAvailable);
+        }
+
+
+
+
+        [Fact]
+        public void Should_AddAnScreening_WhenAddingAScreening()
+        {
+            //Arrange
+            ScreeningModel screening = new ScreeningModel { Id = 10, DateOfScreening = DateTime.Today.AddYears(100) };
+
+            //Act
+            screeningLogic.AddScreening(screening);
+
+            //Assert
+            Assert.True(screeningLogic.GetScreeningById(10).DateOfScreening == DateTime.Today.AddYears(100));
+        }
+
+        [Fact]
+        public void Should_EditAnScreening_WhenEditingAScreening()
+        {
+            //Arrange
+            ScreeningModel screening = new ScreeningModel { Id = 1, DateOfScreening = DateTime.Today.AddYears(101) };
+
+            //Act
+            screeningLogic.EditScreening(screening);
+
+            //Assert
+            Assert.True(screeningLogic.GetScreenings()[0].DateOfScreening == DateTime.Today.AddYears(101));
         }
 
         [Fact]
         public void Should_ReturnAScreening_WhenGettingAScreeningById()
         {
-            var screeningLogic = new ScreeningLogic(new ScreeningContextMock(), _mapper);
-            ScreeningModel screening = new ScreeningModel
-            {
-                Id = 2,
-                MovieId = 1,
-                HallId = 1,
-                DateOfScreening = new DateTime(2020, 1, 1),
-                TimeOfScreening = new TimeSpan(1, 0, 0)
-            };
-            Assert.True(null == screeningLogic.GetScreeningById(2));
+            //Arrange
+            screeningLogic.AddScreening(new ScreeningModel { Id = 5, DateOfScreening = DateTime.Today.AddYears(102) });
 
+            //Act
+            ScreeningModel screening = screeningLogic.GetScreeningById(5);
+
+            //Assert
+            Assert.True(screening.Id == 5 && screening.DateOfScreening == DateTime.Today.AddYears(102));
+        }
+
+        [Fact]
+        public void Should_DeleteAnScreening_WhenDeleteingAScreening()
+        {
+            //Arrange
+            List<ScreeningModel> screenings = new List<ScreeningModel>();
+            screenings = screeningLogic.GetScreenings();
+            DateTime date = screenings[0].DateOfScreening;
+
+            //Act
+            screeningLogic.DeleteScreening(screenings[0].Id);
+
+            //Assert
+            Assert.False(screenings[0].DateOfScreening != date);
+        }
+
+        [Fact]
+        public void Should_GetScreeningsFromTheList_WhenGettingScreenings()
+        {
+            //Arrange
+            ScreeningModel screening = new ScreeningModel { Id = 10, DateOfScreening = DateTime.Today.AddYears(103) };
             screeningLogic.AddScreening(screening);
-            ScreeningModel getscreening = screeningLogic.GetScreeningById(2);
+            bool found = false;
 
+            //Act
+            if (screeningLogic.GetScreenings()[4].Id == 10 && screeningLogic.GetScreenings()[4].DateOfScreening == DateTime.Today.AddYears(103))
+            {
+                found = true;
+            }
 
-            Assert.Equal(2, getscreening.Id);
+            //Assert
+            Assert.True(found);
         }
 
 
 
 
-        public bool AreTheyInTheSameOrder(List<ScreeningModel> screenings, List<ScreeningModel> screenings2)
-        {
-            bool found;
-            int screeningNr = 0;
-            int screening2Nr = 0;
-            foreach (var screening in screenings)
-            {
-                screening2Nr = 0;
-                found = false;
-                foreach (var screening2 in screenings2)
-                {
-                    if (comparer.Equals(screening, screening2) && screeningNr == screening2Nr)
-                    {
-                        found = true;
-                    }
-                    screening2Nr++;
-                }
-                if (found == false)
-                {
-                    return false;
-                }
-                screeningNr++;
-            }
-            return true;
-        }
 
 
-        class ThingEqualityComparer : List<ScreeningModel>
-        {
-            public bool Equals(ScreeningModel x, ScreeningModel y)
-            {
-                if (x == null || y == null)
-                    return false;
 
-                return (x.Id == y.Id && x.MovieId == y.MovieId && x.HallId == y.HallId && x.DateOfScreening == y.DateOfScreening
-                    && x.TimeOfScreening == y.TimeOfScreening);
-            }
 
-            public int GetHashCode(ScreeningModel obj)
-            {
-                return obj.GetHashCode();
-            }
-        }
     }
 }
