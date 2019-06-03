@@ -31,23 +31,13 @@ namespace ASPNETCinema.Logic
             return _mapper.Map<List<EmployeeModel>>(Repository.GetEmployees());
         }
 
-        public void AddEmployee(int id, string name)
+        public void AddEmployee(EmployeeModel employee)
         {
-            var employee = new EmployeeModel
-            {
-                Id = id,
-                Name = name
-            };
             Repository.AddEmployee(employee);
         }
 
-        public void EditEmployee(int id, string name)
+        public void EditEmployee(EmployeeModel employee)
         {
-            var employee = new EmployeeModel
-            {
-                Id = id,
-                Name = name
-            };
             Repository.EditEmployee(employee);
         }
 

@@ -8,9 +8,9 @@ namespace LogicLayer.Interfaces
     public interface IEmployeeLogic
     {
         List<EmployeeModel> GetEmployees();
-        void AddEmployee(int id, string name);
+        void AddEmployee(EmployeeModel employee);
         EmployeeModel GetEmployeeById(int id);
-        void EditEmployee(int id, string name);
+        void EditEmployee(EmployeeModel employee);
         void DeleteEmployee(int id);
     }
 }

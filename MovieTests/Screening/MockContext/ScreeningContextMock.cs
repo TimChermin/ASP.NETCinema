@@ -11,22 +11,23 @@ namespace UnitTests.Screening.MockContext
 {
     class ScreeningContextMock : IScreeningContext
     {
+        List<MovieDto> movies = new List<MovieDto>();
         List<ScreeningDto> screenings = new List<ScreeningDto>();
         List<ScreeningDto> screeningsTemp = new List<ScreeningDto>();
-        List<MovieDto> movies = new List<MovieDto>();
-        
+        List<ScreeningDto> screeningsTempDeleted = new List<ScreeningDto>();
+        int delete = 0;
+        int edit = 0;
+        DateTime editDate = DateTime.Today;
+
         public List<ScreeningDto> GetScreenings()
         {
             screenings.Clear();
-            foreach (var screening in screeningsTemp)
-            {
-                screenings.Add(screening);
-            }
-            screenings = AddScreeningsInOrderBy(screenings);
+            SetScreenings();
+            AddedScreenings();
             return screenings;
         }
 
-        public List<ScreeningDto> AddScreeningsInOrderBy(List<ScreeningDto> screenings)
+        public void SetScreenings()
         {
             screenings.Add(new ScreeningDto
             {
@@ -63,21 +64,88 @@ namespace UnitTests.Screening.MockContext
                 DateOfScreening = new DateTime(2020, 10, 10),
                 TimeOfScreening = new TimeSpan(2, 0, 0)
             });
-            return screenings;
+
+            WasSomethingDeleted();
+            WasSomethingEdited();
         }
 
-        public void DeleteScreening(int id)
+        public void WasSomethingDeleted()
         {
+            if (delete != 0)
+            {
+                foreach (var screening in screenings)
+                {
+                    if (screening.Id == delete)
+                    {
+                        screenings.Remove(screening);
+                        break;
+                    }
+                }
+            }
+        }
 
+        public void WasSomethingEdited()
+        {
+            if (edit != 0)
+            {
+                foreach (var screening in screenings)
+                {
+                    if (screening.Id == edit && editDate != DateTime.Today)
+                    {
+                        screenings[0].DateOfScreening = editDate;
+                        break;
+                    }
+                }
+            }
+        }
+
+        public void AddScreening(ScreeningModel screening)
+        {
+            screeningsTemp.Add(new ScreeningDto
+            {
+                Id = screening.Id,
+                MovieId = screening.MovieId,
+                HallId = screening.HallId,
+                DateOfScreening = screening.DateOfScreening,
+                TimeOfScreening = screening.TimeOfScreening
+            });
+        }
+
+        private void AddedScreenings()
+        {
+            foreach (var screening in screeningsTemp)
+            {
+                screenings.Add(screening);
+            }
         }
 
         public void EditScreening(ScreeningModel screening)
         {
-
+            edit = screening.Id;
+            editDate = screening.DateOfScreening;
         }
 
-        public HallDto GetHall(int idHall)
+        public void DeleteScreening(int id)
         {
+            delete = id;
+        }
+
+        public ScreeningDto GetScreeningById(int id)
+        {
+            foreach (var screening in screenings)
+            {
+                if (screening.Id == id)
+                {
+                    return screening;
+                }
+            }
+            foreach (var screening in screeningsTemp)
+            {
+                if (screening.Id == id)
+                {
+                    return screening;
+                }
+            }
             return null;
         }
 
@@ -145,31 +213,12 @@ namespace UnitTests.Screening.MockContext
             return movies;
         }
 
-        public ScreeningDto GetScreeningById(int id)
+        public List<HallDto> GetHalls()
         {
-            foreach (var screening in GetScreenings())
-            {
-                if (screening.Id == id)
-                {
-                    return screening;
-                }
-            }
             return null;
         }
 
-        public void AddScreening(ScreeningModel screening)
-        {
-            screeningsTemp.Add(new ScreeningDto
-            {
-                Id = screening.Id,
-                MovieId = screening.MovieId,
-                HallId = screening.HallId,
-                DateOfScreening = screening.DateOfScreening,
-                TimeOfScreening = screening.TimeOfScreening
-            });
-        }
-
-        public List<HallDto> GetHalls()
+        public HallDto GetHall(int idHall)
         {
             return null;
         }
