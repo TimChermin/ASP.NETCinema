@@ -88,32 +88,5 @@ namespace UserTests
             //Assert
             Assert.False(userLoggedIn);
         }
-
-
-
-
-        [Fact]
-        public void Should_HashPassword_WhenHashing()
-        {
-            //Arrange
-            var hash = LogicLayer.SecurePasswordHasher.Hash("mypassword");
-            var hash2 = LogicLayer.SecurePasswordHasher.Hash("SOMETHINGRANDOM4145");
-            string hash3 = "$MYHASH$V1$10000$sgoGDeKC4L2yrnVoyPfyxZHh4WrKyimN6uztpEOHd8gEJ9+/";
-
-
-            Assert.True(LogicLayer.SecurePasswordHasher.Verify("mypassword", hash));
-            Assert.False(LogicLayer.SecurePasswordHasher.Verify("mypassworde", hash));
-            Assert.False(LogicLayer.SecurePasswordHasher.Verify("mypasswor", hash));
-            Assert.False(LogicLayer.SecurePasswordHasher.Verify(hash, hash));
-
-            Assert.True(LogicLayer.SecurePasswordHasher.Verify("SOMETHINGRANDOM4145", hash2));
-            Assert.False(LogicLayer.SecurePasswordHasher.Verify("SOMETHINGRANDOM41", hash2));
-            Assert.False(LogicLayer.SecurePasswordHasher.Verify("SOMERANDOM4145", hash2));
-            Assert.False(LogicLayer.SecurePasswordHasher.Verify(hash, hash2));
-
-            Assert.False(LogicLayer.SecurePasswordHasher.Verify("SOMETHINGRANDOM4145", hash3));
-            Assert.False(LogicLayer.SecurePasswordHasher.Verify("mypassword", hash3));
-            Assert.False(LogicLayer.SecurePasswordHasher.Verify(hash3, hash3));
-        }
     }
 }

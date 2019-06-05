@@ -46,7 +46,7 @@ namespace ASPNETCinema.Controllers
             if (ModelState.IsValid)
             {
                 _employeeLogic.AddEmployee(_mapper.Map<EmployeeModel>(employee));
-                return RedirectToAction("ListMovies");
+                return RedirectToAction("ListEmployees");
             }
             return RedirectToAction("Error", "Home");
         }
