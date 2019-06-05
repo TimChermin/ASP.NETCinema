@@ -19,8 +19,4 @@
     <ProjectReference Include="..\ASP.NETCinema\aMVCLayer.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Integration Tests\" />
-  </ItemGroup>
-
 </Project>

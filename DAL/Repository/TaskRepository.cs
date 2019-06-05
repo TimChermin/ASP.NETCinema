@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DAL.Repository
 {
-    public class TaskRepository
+    public class TaskRepository : ITaskContext
     {
         private readonly ITaskContext _context;
 

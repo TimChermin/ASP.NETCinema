@@ -7,7 +7,7 @@ using DAL.Dtos;
 
 namespace DAL.Repository
 {
-    public class EmployeeRepository
+    public class EmployeeRepository : IEmployeeContext
     {
         private readonly IEmployeeContext _context;
 
