@@ -38,7 +38,7 @@ namespace MovieTests
              //GetByIdTest Movie is in the database
 
              //Act
-             bool MovieExists = movieLogic.DoesThisMovieExist("GetByIdTest");
+             bool MovieExists = movieLogic.DoesThisMovieExist("Exists");
 
              //Assert
              Assert.True(MovieExists);
@@ -56,6 +56,18 @@ namespace MovieTests
             //Assert
             Assert.False(MovieExists);
         }
-        
+
+        [Fact]
+        public void Should_ReturnMovie_WhenGettingTheMovieById()
+        {
+            //Arrange
+            //Id = 1010 and Name = 
+
+            //Act
+            var Movie = movieLogic.GetMovieById(1010);
+
+            //Assert
+            Assert.True(Movie.Id == 1010 && Movie.Name == "GetByIdTest");
+        }
     }
 }
