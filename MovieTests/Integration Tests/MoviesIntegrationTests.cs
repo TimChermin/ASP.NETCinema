@@ -17,14 +17,13 @@ using Xunit;
 
 namespace MovieTests
 {
-    public class GettingMoviesIntegrationTest
+    public class MoviesIntegrationTests
     {
         MovieLogic movieLogic;
         IMapper _mapper;
-        string orderBy = "";
         
 
-        public GettingMoviesIntegrationTest()
+        public MoviesIntegrationTests()
         {
             var mockMapper = new MapperConfiguration(cfg => cfg.AddProfile(new MappingProfile()));
             _mapper = mockMapper.CreateMapper();
