@@ -16,7 +16,7 @@ using UnitTests.Movie.MockContext;
 using Xunit;
 
 
-namespace UnitTests.Integration_Tests
+namespace UserTests
 {
     public class UserIntegrationTests
     {
@@ -37,10 +37,10 @@ namespace UnitTests.Integration_Tests
             //Id = 1012 and Name = Admin
 
             //Act
-            //UserModel user = userLogic.DoesThisUserExist(1012);
+            var exists = userLogic.DoesThisUserExist("Admin");
 
             //Assert
-           // Assert.True(user.Id == 1012 && user.Name == "Admin");
+            Assert.True(exists);
         }
 
         [Fact]
@@ -50,10 +50,10 @@ namespace UnitTests.Integration_Tests
             //Not in DB
 
             //Act
-            //var user = userLogic.GetUserById(9999999);
+            var exists = userLogic.DoesThisUserExist("ThisNameIsNotInTheDB");
 
             //Assert
-            //Assert.True(user == null);
+            Assert.False(exists);
         }
     }
 }

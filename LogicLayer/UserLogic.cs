@@ -41,7 +41,7 @@ namespace ASPNETCinema.Logic
         {
             if (user.Password == user.ConfirmPassword && user.Password != null)
             {
-                var hash = SecurePasswordHasher.Hash(user.Password);
+                user.Password = SecurePasswordHasher.Hash(user.Password);
                 Repository.AddUser(user);
                 return true;
             }

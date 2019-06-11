@@ -15,7 +15,7 @@ using System.Linq;
 using UnitTests.Movie.MockContext;
 using Xunit;
 
-namespace UnitTests.Integration_Tests
+namespace ScreeningTests
 {
     public class ScreeningIntegrationTests
     {

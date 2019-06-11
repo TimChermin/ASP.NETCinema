@@ -16,7 +16,7 @@ using UnitTests.Movie.MockContext;
 using Xunit;
 
 
-namespace UnitTests.Integration_Tests
+namespace TaskTests
 {
     public class TaskIntegrationTests
     {
@@ -34,13 +34,13 @@ namespace UnitTests.Integration_Tests
         public void Should_ReturnATask_WhenGettingATaskById()
         {
             //Arrange
-            //Id = 1010 and ScreenType = Special
+            //Id = 5 and TaskType = TEST
 
             //Act
-            var task = taskLogic.GetTaskById(1010);
+            var task = taskLogic.GetTaskById(5);
 
             //Assert
-            Assert.True(task.Id == 1010);
+            Assert.True(task.Id == 5 && task.TaskType == "TEST");
         }
 
         [Fact]
