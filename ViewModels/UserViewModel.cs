@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using static aMVCLayer.Enums.UserType;
 
 namespace ASPNETCinema.ViewModels
 {
@@ -29,12 +30,16 @@ namespace ASPNETCinema.ViewModels
         [Required(ErrorMessage = "This field is required")]
         [Compare("Password", ErrorMessage = "Your password and confirm password do not match.")]
         public string ConfirmPassword { get; set; }
-
-        [Range(0, 2, ErrorMessage = "Can only be between 0 and 2: 0 = Normal - 1 = Admin - 2 = Employee")]
-        [Required(ErrorMessage = "This field is required")]
-        public int Administrator { get; set; }
         
         public List<ScreeningViewModel> Tickets { get; set; }
+
+        [Display(Name = "User Role")]
+        [Required(ErrorMessage = "The User Roile field is required.")]
+        public List<UserTypes> UserTypes { get; set; }
+
+        [Display(Name = "User Role")]
+        [Required(ErrorMessage = "The User Role field is required.")]
+        public string Role { get; set; }
 
 
 

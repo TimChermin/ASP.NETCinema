@@ -10,6 +10,7 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="AddUser">
+            @Html.AntiForgeryToken()
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -27,14 +28,17 @@
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="form-group">
-                    <label>
-                        <input asp-for="Administrator" /> @Html.DisplayNameFor(model => model.Administrator)
-                        <span asp-validation-for="Administrator" class="text-danger"></span>
-                    </label>
+                <label asp-for="Role" class="control-label"></label>
+                <select name="Role" class="form-control">
+                    @foreach (var userType in Model.UserTypes)
+                    {
+                        <option value="@userType.ToString()" selected>@userType</option>
+                    }
+                </select>
             </div>
             <div class="text-danger">@ViewBag.Error</div>
             <div class="form-group">
-                <input type="submit" value="Register" class="btn btn-default" />
+                <input type="submit" value="AddUser" class="btn btn-default" />
             </div>
         </form>
     </div>
@@ -45,4 +49,6 @@
     <p>@Html.ActionLink("Login", "LoginUser", "User")</p>
 </div>
 
-
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

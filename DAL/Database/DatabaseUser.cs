@@ -24,7 +24,7 @@ namespace ASPNETCinema.DAL
             {
                 conn.Open();
                 var users = new List<UserDto>();
-                SqlCommand command = new SqlCommand("SELECT Id, Username, Password, Administrator FROM Users", conn);
+                SqlCommand command = new SqlCommand("SELECT Id, Username, Password, Role FROM Users", conn);
 
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
@@ -35,7 +35,7 @@ namespace ASPNETCinema.DAL
                             Id = (int)reader["Id"],
                             Name = reader["Username"]?.ToString(),
                             Password = reader["Password"]?.ToString(),
-                            Administrator = (int)reader["Administrator"]
+                            Role = reader["Role"]?.ToString()
                         };
                         users.Add(user);
                     }
@@ -49,10 +49,10 @@ namespace ASPNETCinema.DAL
             using (SqlConnection conn = new SqlConnection(_connection.connectionString))
             {
                 conn.Open();
-                SqlCommand command = new SqlCommand("INSERT INTO Users (Username, Password, Administrator) OUTPUT Inserted.Id VALUES (@Username, @Password, @Administrator)", conn);
+                SqlCommand command = new SqlCommand("INSERT INTO Users (Username, Password, Role) OUTPUT Inserted.Id VALUES (@Username, @Password, @Role)", conn);
                 command.Parameters.AddWithValue("@Username", user.Name);
                 command.Parameters.AddWithValue("@Password", user.Password);
-                command.Parameters.AddWithValue("@Administrator", user.Administrator);
+                command.Parameters.AddWithValue("@Role", user.Role);
                 command.ExecuteNonQuery();
             }
         }
@@ -63,7 +63,7 @@ namespace ASPNETCinema.DAL
             {
                 conn.Open();
                 var users = new List<UserModel>();
-                SqlCommand command = new SqlCommand("SELECT Id, Username, Password, Administrator FROM Users WHERE (Username = @Username AND Password = @Password)", conn);
+                SqlCommand command = new SqlCommand("SELECT Id, Username, Password, Role FROM Users WHERE (Username = @Username AND Password = @Password)", conn);
                 command.Parameters.AddWithValue("@Username", name);
                 command.Parameters.AddWithValue("@Password", password);
                 using (SqlDataReader reader = command.ExecuteReader())
@@ -75,7 +75,7 @@ namespace ASPNETCinema.DAL
                             Id = (int)reader["Id"],
                             Name = reader["Username"]?.ToString(),
                             Password = reader["Password"]?.ToString(),
-                            Administrator = (int)reader["Administrator"]
+                            Role = reader["Role"]?.ToString()
                         };
                         return user;
                     }
@@ -89,12 +89,12 @@ namespace ASPNETCinema.DAL
             using (SqlConnection conn = new SqlConnection(_connection.connectionString))
             {
                 conn.Open();
-                SqlCommand command = new SqlCommand(@"UPDATE User SET IdScreening = @IdScreening, Username = @Username, Password = @Password, Administrator = @Administrator 
+                SqlCommand command = new SqlCommand(@"UPDATE User SET IdScreening = @IdScreening, Username = @Username, Password = @Password, Role = @Role 
             WHERE Id = @Id", conn);
                 command.Parameters.AddWithValue("@IdScreening", user.IdScreening);
                 command.Parameters.AddWithValue("@Username", user.Name);
                 command.Parameters.AddWithValue("@Password", user.Password);
-                command.Parameters.AddWithValue("@Administrator", user.Administrator);
+                command.Parameters.AddWithValue("@Role", user.Role);
                 command.Parameters.AddWithValue("@Id", user.Id);
 
                 command.ExecuteNonQuery();
@@ -112,14 +112,14 @@ namespace ASPNETCinema.DAL
             }
         }
 
-        public int GetUserRole(int id)
+        public string GetUserRole(int id)
         {
             using (SqlConnection conn = new SqlConnection(_connection.connectionString))
             {
                 conn.Open();
-                SqlCommand command = new SqlCommand("SELECT Administrator FROM Users WHERE Id = @Id", conn);
+                SqlCommand command = new SqlCommand("SELECT Role FROM Users WHERE Id = @Id", conn);
                 command.Parameters.AddWithValue("@Id", id);
-                int role = (int)command.ExecuteScalar();
+                string role = command.ExecuteScalar()?.ToString();
 
 
                 return role;
@@ -132,7 +132,7 @@ namespace ASPNETCinema.DAL
             {
                 conn.Open();
                 var users = new List<UserModel>();
-                SqlCommand command = new SqlCommand("SELECT Id, Username, Password, Administrator FROM Users WHERE Username = @Username", conn);
+                SqlCommand command = new SqlCommand("SELECT Id, Username, Password, Role FROM Users WHERE Username = @Username", conn);
                 command.Parameters.AddWithValue("@Username", name);
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
@@ -143,7 +143,7 @@ namespace ASPNETCinema.DAL
                             Id = (int)reader["Id"],
                             Name = reader["Username"]?.ToString(),
                             Password = reader["Password"]?.ToString(),
-                            Administrator = (int)reader["Administrator"]
+                            Role = reader["Role"]?.ToString()
                         };
                         return user;
                     }

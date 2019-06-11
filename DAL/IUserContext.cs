@@ -11,7 +11,7 @@ namespace DAL
         List<UserDto> GetUsers();
         void AddUser(UserModel user);
         UserDto GetUser(string name, string password);
-        int GetUserRole(int id);
+        string GetUserRole(int id);
         void EditUser(UserModel user);
         void DeleteUser(int id);
         UserDto DoesThisUserExist(string name);

@@ -5,6 +5,7 @@ using LogicLayer;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using static aMVCLayer.Enums.UserType;
 using UserDto = DAL.Dtos.UserDto;
 
 namespace UnitTests.User.MockContext
@@ -33,7 +34,7 @@ namespace UnitTests.User.MockContext
                 Id = 1,
                 Name = "Normal",
                 Password = SecurePasswordHasher.Hash("IdOne"),
-                Administrator = 0
+                Role = UserTypes.Normal.ToString()
             });
 
             users.Add(new UserDto
@@ -41,7 +42,7 @@ namespace UnitTests.User.MockContext
                 Id = 5,
                 Name = "Employee",
                 Password = SecurePasswordHasher.Hash("IdFive"),
-                Administrator = 2
+                Role = UserTypes.Employee.ToString()
             });
 
             users.Add(new UserDto
@@ -49,7 +50,7 @@ namespace UnitTests.User.MockContext
                 Id = 2,
                 Name = "NormalTwo",
                 Password = SecurePasswordHasher.Hash("IdTwo"),
-                Administrator = 0
+                Role = UserTypes.Normal.ToString()
             });
 
             users.Add(new UserDto
@@ -57,7 +58,7 @@ namespace UnitTests.User.MockContext
                 Id = 3,
                 Name = "Admin",
                 Password = SecurePasswordHasher.Hash("IdThree"),
-                Administrator = 1
+                Role = UserTypes.Administrator.ToString()
             });
 
             WasSomethingDeleted();
@@ -100,8 +101,8 @@ namespace UnitTests.User.MockContext
             {
                 Id = user.Id,
                 Name = user.Name,
-                Password = SecurePasswordHasher.Hash(user.Password),
-                Administrator = user.Administrator
+                Password = user.Password,
+                Role = user.Role
             });
         }
 
@@ -136,23 +137,23 @@ namespace UnitTests.User.MockContext
             return null;
         }
 
-        public int GetUserRole(int id)
+        public string GetUserRole(int id)
         {
             foreach (var user in users)
             {
                 if (user.Id == id)
                 {
-                    return user.Administrator;
+                    return user.Role;
                 }
             }
             foreach (var user in usersTemp)
             {
                 if (user.Id == id)
                 {
-                    return user.Administrator;
+                    return user.Role;
                 }
             }
-            return -1;
+            return "Null";
         }
 
         public UserDto DoesThisUserExist(string name)

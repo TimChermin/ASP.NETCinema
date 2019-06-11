@@ -40,7 +40,7 @@ namespace DAL.Repository
             _context.DeleteUser(id);
         }
 
-        public int GetUserRole(int id)
+        public string GetUserRole(int id)
         {
             return _context.GetUserRole(id);
         }

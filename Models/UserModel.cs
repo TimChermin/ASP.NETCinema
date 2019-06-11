@@ -18,7 +18,7 @@ namespace ASPNETCinema.Models
         public string Name { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
-        public int Administrator { get; set; }
+        public string Role { get; set; }
         public List<ScreeningModel> Tickets { get; set; }
         public int IdScreening { get; set; }
     }

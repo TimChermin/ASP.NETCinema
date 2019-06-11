@@ -26,7 +26,7 @@ namespace UserTests
         public void Should_ReturnEmployeeRole_WhenGettingUserRole()
         {
             //Arrange
-            UserModel user = new UserModel { Id = 3, Name = "RoleName", Password = "RolePassword", ConfirmPassword = "RolePassword", Administrator = 2 };
+            UserModel user = new UserModel { Id = 3, Name = "RoleName", Password = "RolePassword", ConfirmPassword = "RolePassword", Role = "Employee" };
 
             //Act
             userLogic.AddUser(user);
@@ -40,7 +40,7 @@ namespace UserTests
         public void Should_ReturnNormalRole_WhenGettingUserRole()
         {
             //Arrange
-            UserModel user = new UserModel { Id = 2, Name = "RoleName", Password = "RolePassword", ConfirmPassword = "RolePassword", Administrator = 0 };
+            UserModel user = new UserModel { Id = 2, Name = "RoleName", Password = "RolePassword", ConfirmPassword = "RolePassword", Role = "Normal" };
 
             //Act
             userLogic.AddUser(user);
@@ -54,7 +54,7 @@ namespace UserTests
         public void Should_ReturnAdminRole_WhenGettingUserRole()
         {
             //Arrange
-            UserModel user = new UserModel { Id = 1, Name = "RoleName", Password = "RolePassword", ConfirmPassword = "RolePassword", Administrator = 1 };
+            UserModel user = new UserModel { Id = 1, Name = "RoleName", Password = "RolePassword", ConfirmPassword = "RolePassword", Role = "Admin" };
 
             //Act
             userLogic.AddUser(user);
