@@ -13,6 +13,7 @@ using ASPNETCinema.ViewModels;
 using AutoMapper;
 using LogicLayer.Interfaces;
 using ASPNETCinema.Models;
+using static aMVCLayer.Enums.UserType;
 
 namespace ASPNETCinema.Controllers
 {
@@ -65,11 +66,15 @@ namespace ASPNETCinema.Controllers
 
         public ActionResult AddUser()
         {
-            if (User.Identity.IsAuthenticated == true)
+            var viewUser = new UserViewModel
             {
-                return RedirectToAction("ListMovies", "Movie");
+                UserTypes = Enum.GetValues(typeof(UserTypes)).Cast<UserTypes>().ToList(),
+            };
+            if (User.Identity.IsAuthenticated == false)
+            {
+                return View(viewUser);
             }
-            return View();
+            return RedirectToAction("ListMovies", "Movie");
         }
         
         [HttpPost]
@@ -84,7 +89,12 @@ namespace ASPNETCinema.Controllers
                 return RedirectToAction("ListMovies", "Movie");
             }
             ModelState.AddModelError("Name", "This user already exists.");
-            return View();
+
+            var viewUser = new UserViewModel
+            {
+                UserTypes = Enum.GetValues(typeof(UserTypes)).Cast<UserTypes>().ToList(),
+            };
+            return View(viewUser);
         }
 
         public async Task<IActionResult> LogoutUser()

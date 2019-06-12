@@ -8,7 +8,7 @@ using System.Text;
 
 namespace DAL.Repository
 {
-    public class HallRepository
+    public class HallRepository : IHallContext
     {
         private readonly IHallContext _context;
 

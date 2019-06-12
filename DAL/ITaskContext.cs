@@ -8,8 +8,6 @@ namespace DAL
 {
     public interface ITaskContext
     {
-        List<TaskDto> GetTasksAssigned();
-        List<TaskDto> GetTasksNotAssigned();
         List<TaskDto> GetTasks();
         void AddTask(TaskModel task);
         TaskDto GetTaskById(int id);

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DAL.Repository
 {
-    public class ScreeningRepository
+    public class ScreeningRepository : IScreeningContext
     {
         private readonly IScreeningContext _context;
 

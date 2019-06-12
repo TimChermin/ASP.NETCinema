@@ -92,7 +92,7 @@ namespace ASPNETCinema.Logic
             {
                 if (screeningDatabase.HallId == hallId && screeningDatabase.DateOfScreening == dateOfScreening && screeningDatabase.Id != screeningId)
                 {
-                    if (IsItAfterOrBeforeTheScreening(hallId, dateOfScreening, timeOfScreening, movieId, screeningDatabase) == false)
+                    if (IsItAfterOrBeforeTheScreening(timeOfScreening, movieId, screeningDatabase) == false)
                     {
                         return false;
                     }
@@ -102,7 +102,7 @@ namespace ASPNETCinema.Logic
         }
 
 
-        public bool IsItAfterOrBeforeTheScreening(int hallId, DateTime dateOfScreening, TimeSpan timeOfScreening, int movieId, ScreeningModel screeningDatabase)
+        public bool IsItAfterOrBeforeTheScreening(TimeSpan timeOfScreening, int movieId, ScreeningModel screeningDatabase)
         {
             foreach (var movieAlreadyScreening in Repository.GetMovies())
             {

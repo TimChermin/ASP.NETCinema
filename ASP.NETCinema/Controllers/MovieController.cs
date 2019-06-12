@@ -69,7 +69,12 @@ namespace ASPNETCinema.Controllers
             {
                 ModelState.AddModelError("Name", movie.Name + " already exists");
             }
-            return View();
+
+            var viewMovie = new MovieViewModel
+            {
+                MovieTypes = Enum.GetValues(typeof(MovieTypes)).Cast<MovieTypes>().ToList(),
+            };
+            return View(viewMovie);
         }
 
 
@@ -104,8 +109,18 @@ namespace ASPNETCinema.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult EditMovie(MovieViewModel movie)
         {
-            _movieLogic.EditMovie(_mapper.Map<MovieModel>(movie));
-            return RedirectToAction("DetailsMovie", new { id = movie.Id });
+            if (_movieLogic.DoesThisMovieExist(movie.Name) == false)
+            {
+                _movieLogic.EditMovie(_mapper.Map<MovieModel>(movie));
+                return RedirectToAction("DetailsMovie", new { id = movie.Id });
+            }
+
+            ModelState.AddModelError("Name", movie.Name + " already exists");
+            var viewMovie = new MovieViewModel
+            {
+                MovieTypes = Enum.GetValues(typeof(MovieTypes)).Cast<MovieTypes>().ToList(),
+            };
+            return View(viewMovie);
         }
 
         

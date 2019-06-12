@@ -5,6 +5,7 @@ using LogicLayer;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using static aMVCLayer.Enums.UserType;
 using UserDto = DAL.Dtos.UserDto;
 
 namespace UnitTests.User.MockContext
@@ -12,7 +13,8 @@ namespace UnitTests.User.MockContext
     class UserContextMock : IUserContext
     {
         List<UserDto> users = new List<UserDto>();
-        List<UserDto> usersAdded = new List<UserDto>();
+        List<UserDto> usersTemp = new List<UserDto>();
+        List<UserDto> usersTempDeleted = new List<UserDto>();
         int delete = 0;
         int edit = 0;
         string editName = "";
@@ -20,12 +22,19 @@ namespace UnitTests.User.MockContext
         public List<UserDto> GetUsers()
         {
             users.Clear();
+            SetUsers();
+            AddedUsers();
+            return users;
+        }
+
+        public void SetUsers()
+        {
             users.Add(new UserDto
             {
                 Id = 1,
                 Name = "Normal",
                 Password = SecurePasswordHasher.Hash("IdOne"),
-                Administrator = 0
+                Role = UserTypes.Normal.ToString()
             });
 
             users.Add(new UserDto
@@ -33,7 +42,7 @@ namespace UnitTests.User.MockContext
                 Id = 5,
                 Name = "Employee",
                 Password = SecurePasswordHasher.Hash("IdFive"),
-                Administrator = 2
+                Role = UserTypes.Employee.ToString()
             });
 
             users.Add(new UserDto
@@ -41,7 +50,7 @@ namespace UnitTests.User.MockContext
                 Id = 2,
                 Name = "NormalTwo",
                 Password = SecurePasswordHasher.Hash("IdTwo"),
-                Administrator = 0
+                Role = UserTypes.Normal.ToString()
             });
 
             users.Add(new UserDto
@@ -49,15 +58,15 @@ namespace UnitTests.User.MockContext
                 Id = 3,
                 Name = "Admin",
                 Password = SecurePasswordHasher.Hash("IdThree"),
-                Administrator = 1
+                Role = UserTypes.Administrator.ToString()
             });
 
-            foreach (var user in usersAdded)
-            {
-                users.Add(user);
-            }
-            /*
-             * later use 
+            WasSomethingDeleted();
+            WasSomethingEdited();
+        }
+
+        public void WasSomethingDeleted()
+        {
             if (delete != 0)
             {
                 foreach (var user in users)
@@ -69,8 +78,10 @@ namespace UnitTests.User.MockContext
                     }
                 }
             }
-            
+        }
 
+        public void WasSomethingEdited()
+        {
             if (edit != 0)
             {
                 foreach (var user in users)
@@ -82,30 +93,36 @@ namespace UnitTests.User.MockContext
                     }
                 }
             }
-            */
-            return users;
         }
-
 
         public void AddUser(UserModel user)
         {
-            usersAdded.Add(new UserDto
+            usersTemp.Add(new UserDto
             {
                 Id = user.Id,
                 Name = user.Name,
-                Password = SecurePasswordHasher.Hash(user.Password),
-                Administrator = user.Administrator
+                Password = user.Password,
+                Role = user.Role
             });
         }
 
-        public void DeleteUser(int id)
+        private void AddedUsers()
         {
-            //throw new NotImplementedException();
+            foreach (var user in usersTemp)
+            {
+                users.Add(user);
+            }
         }
 
         public void EditUser(UserModel user)
         {
-            //throw new NotImplementedException();
+            edit = user.Id;
+            editName = user.Name;
+        }
+
+        public void DeleteUser(int id)
+        {
+            delete = id;
         }
 
         public UserDto GetUser(string name, string password)
@@ -120,20 +137,41 @@ namespace UnitTests.User.MockContext
             return null;
         }
 
-        public int GetUserRole(int id)
+        public string GetUserRole(int id)
         {
-            foreach (var user in usersAdded)
+            foreach (var user in users)
             {
                 if (user.Id == id)
                 {
-                    return user.Administrator;
+                    return user.Role;
                 }
             }
-            return -1;
+            foreach (var user in usersTemp)
+            {
+                if (user.Id == id)
+                {
+                    return user.Role;
+                }
+            }
+            return "Null";
         }
 
         public UserDto DoesThisUserExist(string name)
         {
+            foreach (var user in users)
+            {
+                if (user.Name == name)
+                {
+                    return user;
+                }
+            }
+            foreach (var user in usersTemp)
+            {
+                if (user.Name == name)
+                {
+                    return user;
+                }
+            }
             return null;
         }
     }

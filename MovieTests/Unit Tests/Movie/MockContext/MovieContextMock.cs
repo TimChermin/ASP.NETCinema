@@ -13,20 +13,21 @@ namespace UnitTests.Movie.MockContext
     {
         List<MovieDto> movies = new List<MovieDto>();
         List<MovieDto> moviesTemp = new List<MovieDto>();
+        List<MovieDto> moviesTempDeleted = new List<MovieDto>();
+        int delete = 0;
+        int edit = 0;
+        string editName = "";
 
-        
+
         public List<MovieDto> GetMovies(string orderBy)
         {
             movies.Clear();
-            foreach (var movie in moviesTemp)
-            {
-                movies.Add(movie);
-            }
-            movies = AddMoviesInOrderBy(movies, orderBy);
+            SetMovies(orderBy);
+            AddedMovies();
             return movies;
         }
 
-        public List<MovieDto> AddMoviesInOrderBy(List<MovieDto> movies, string orderBy)
+        private void SetMovies(string orderBy)
         {
             movies.Add(new MovieDto
             {
@@ -77,15 +78,15 @@ namespace UnitTests.Movie.MockContext
             });
             if (orderBy == "Name")
             {
-                return movies.OrderBy(movie => movie.Name).ToList();
+                movies = movies.OrderBy(movie => movie.Name).ToList();
             }
             else if (orderBy == "ReleaseDate")
             {
-                return movies.OrderBy(movie => movie.ReleaseDate).ToList();
+                movies = movies.OrderBy(movie => movie.ReleaseDate).ToList();
             }
             else if (orderBy == "MovieType")
             {
-                return movies.OrderBy(movie => movie.MovieType).ToList();
+                movies = movies.OrderBy(movie => movie.MovieType).ToList();
             }
             else if (orderBy == "MovieToday")
             {
@@ -97,9 +98,41 @@ namespace UnitTests.Movie.MockContext
                         moviesToday.Add(movie);
                     }
                 }
-                return moviesToday;
+                movies = moviesToday;
             }
-            return movies;
+
+            WasSomethingDeleted();
+            WasSomethingEdited();
+        }
+
+        public void WasSomethingDeleted()
+        {
+            if (delete != 0)
+            {
+                foreach (var movie in movies)
+                {
+                    if (movie.Id == delete)
+                    {
+                        movies.Remove(movie);
+                        break;
+                    }
+                }
+            }
+        }
+
+        public void WasSomethingEdited()
+        {
+            if (edit != 0)
+            {
+                foreach (var movie in movies)
+                {
+                    if (movie.Id == edit && editName != "")
+                    {
+                        movies[0].Name = editName;
+                        break;
+                    }
+                }
+            }
         }
 
         public void AddMovie(MovieModel movie)
@@ -117,39 +150,35 @@ namespace UnitTests.Movie.MockContext
             });
         }
 
+        private void AddedMovies()
+        {
+            foreach (var movie in moviesTemp)
+            {
+                movies.Add(movie);
+            }
+        }
+
         public void EditMovie(MovieModel movie)
         {
-            foreach (var mov in GetMovies(null))
-            {
-                if (mov.Id == movie.Id)
-                {
-                    mov.Name = movie.Name;
-                    mov.Description = movie.Description;
-                    mov.ReleaseDate = movie.ReleaseDate;
-                    mov.LastScreeningDate = movie.LastScreeningDate;
-                    mov.MovieType = movie.MovieType;
-                    mov.MovieLenght = movie.MovieLenght;
-                    mov.ImageString = movie.ImageString;
-                    moviesTemp.Add(mov);
-                }
-            }
+            edit = movie.Id;
+            editName = movie.Name;
         }
 
         public void DeleteMovie(int id)
         {
-            foreach (var movie in GetMovies(null))
-            {
-                if (movie.Id == id)
-                {
-                    movie.Name = "Deleted";
-                    moviesTemp.Add(movie);
-                }
-            }
+            delete = id;
         }
 
         public MovieDto GetMovieById(int id)
         {
-            foreach (var movie in GetMovies(null))
+            foreach (var movie in movies)
+            {
+                if (movie.Id == id)
+                {
+                    return movie;
+                }
+            }
+            foreach (var movie in moviesTemp)
             {
                 if (movie.Id == id)
                 {

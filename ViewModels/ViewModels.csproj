@@ -45,6 +45,7 @@
     <Compile Include="EmployeeViewModel.cs" />
     <Compile Include="Enums\MovieType.cs" />
     <Compile Include="Enums\TaskType.cs" />
+    <Compile Include="Enums\UserType.cs" />
     <Compile Include="ErrorViewModel.cs" />
     <Compile Include="HallViewModel.cs" />
     <Compile Include="MovieViewModel.cs" />

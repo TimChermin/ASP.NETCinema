@@ -41,7 +41,7 @@ namespace ASPNETCinema.Logic
         {
             if (user.Password == user.ConfirmPassword && user.Password != null)
             {
-                var hash = SecurePasswordHasher.Hash(user.Password);
+                user.Password = SecurePasswordHasher.Hash(user.Password);
                 Repository.AddUser(user);
                 return true;
             }
@@ -63,16 +63,7 @@ namespace ASPNETCinema.Logic
 
         public string GetRoleUser(int id)
         {
-            if (Repository.GetUserRole(id) == 1)
-            {
-                return "Administrator";
-            }
-            else if (Repository.GetUserRole(id) == 2)
-            {
-                return "Employee";
-            }
-            
-            return "Normal";
+            return Repository.GetUserRole(id);
         }
 
         public bool DoesThisUserExist(string name)

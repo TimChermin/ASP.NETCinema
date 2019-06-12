@@ -7,7 +7,7 @@ using System.Text;
 
 namespace DAL.Repository
 {
-    public class MovieRepository
+    public class MovieRepository : IMovieContext
     {
         private readonly IMovieContext _context;
 
