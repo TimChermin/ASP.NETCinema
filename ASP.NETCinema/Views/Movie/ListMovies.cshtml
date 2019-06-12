@@ -99,7 +99,7 @@
         <button href="javascript:void(0)" class="tablink" onclick="openPage('Tomorrow', this, 'green')" >@today.AddDays(1).DayOfWeek @today.AddDays(1).Day @today.AddDays(1).ToString("MMM")</button>
         <button href="javascript:void(0)" class="tablink" onclick="openPage('Day3', this, 'blue')">@today.AddDays(2).DayOfWeek @today.AddDays(2).Day @today.AddDays(2).ToString("MMM")</button>
         <button href="javascript:void(0)" class="tablink" onclick="openPage('Day4', this, 'orange')">@today.AddDays(3).DayOfWeek @today.AddDays(3).Day @today.AddDays(3).ToString("MMM")</button>
-        <button href="javascript:void(0)" class="tablink" onclick="openPage('Day5', this, 'orange')">@today.AddDays(4).DayOfWeek @today.AddDays(4).Day @today.AddDays(4).ToString("MMM")</button>
+        <button href="javascript:void(0)" class="tablink" onclick="openPage('Day5', this, 'brown')">@today.AddDays(4).DayOfWeek @today.AddDays(4).Day @today.AddDays(4).ToString("MMM")</button>
     </div>
 </div>
 
@@ -115,7 +115,7 @@
                             <img src="@Html.DisplayFor(modelItem => item.ImageString)" alt="Image: @Html.DisplayFor(modelItem => item.Name)" width="160" height="220">
                         </a>
                     </td>
-                    <td>
+                    <td width="60%">
                         <p>
                             <a class="small" href="/Movie/DetailsMovie/@Html.DisplayFor(modelItem => item.Id)">
                                 <i class="fas fa-3x">@Html.DisplayFor(modelItem => item.Name)</i>
@@ -171,7 +171,7 @@
                             <img src="@Html.DisplayFor(modelItem => item.ImageString)" alt="Image: @Html.DisplayFor(modelItem => item.Name)" width="160" height="220">
                         </a>
                     </td>
-                    <td>
+                    <td width="60%">
                         <p>
                             <a class="small" href="/Movie/DetailsMovie/@Html.DisplayFor(modelItem => item.Id)">
                                 <i class="fas fa-3x">@Html.DisplayFor(modelItem => item.Name)</i>
@@ -226,7 +226,7 @@
                             <img src="@Html.DisplayFor(modelItem => item.ImageString)" alt="Image: @Html.DisplayFor(modelItem => item.Name)" width="160" height="220">
                         </a>
                     </td>
-                    <td>
+                    <td width="60%">
                         <p>
                             <a class="small" href="/Movie/DetailsMovie/@Html.DisplayFor(modelItem => item.Id)">
                                 <i class="fas fa-3x">@Html.DisplayFor(modelItem => item.Name)</i>
@@ -281,7 +281,7 @@
                             <img src="@Html.DisplayFor(modelItem => item.ImageString)" alt="Image: @Html.DisplayFor(modelItem => item.Name)" width="160" height="220">
                         </a>
                     </td>
-                    <td>
+                    <td width="60%">
                         <p>
                             <a class="small" href="/Movie/DetailsMovie/@Html.DisplayFor(modelItem => item.Id)">
                                 <i class="fas fa-3x">@Html.DisplayFor(modelItem => item.Name)</i>
@@ -336,7 +336,7 @@
                             <img src="@Html.DisplayFor(modelItem => item.ImageString)" alt="Image: @Html.DisplayFor(modelItem => item.Name)" width="160" height="220">
                         </a>
                     </td>
-                    <td>
+                    <td width="60%">
                         <p>
                             <a class="small" href="/Movie/DetailsMovie/@Html.DisplayFor(modelItem => item.Id)">
                                 <i class="fas fa-3x">@Html.DisplayFor(modelItem => item.Name)</i>
